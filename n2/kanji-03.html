@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 漢字 Bài 3</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="漢">
+  <div class="header-badge">N2 JLPT • KANJI ③</div>
+  <h1>N2 漢字<span>クイズ</span>③</h1>
+  <p class="sub">Trắc nghiệm Kanji N2 · Bài 3 · Đọc và viết Hán tự</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 12</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/12</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 12,
+  questions: [
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "彼らは、公聴会で発言する明確なメッセージと、ありとあらゆる想定<u><strong>問答</strong></u>を用意してくれた。\n\n「問答」の読み方は？",
+    vocab: [
+      { word: "公聴会", reading: "こうちょうかい", type: "Danh từ", meaning: "Phiên điều trần công khai", example: "公聴会で意見を述べる。\n(Phát biểu tại phiên điều trần.)" },
+      { word: "想定", reading: "そうてい", type: "Danh từ・Suru động từ", meaning: "Giả định, tình huống giả sử", example: "最悪の事態を想定する。\n(Giả định tình huống xấu nhất.)" },
+      { word: "用意", reading: "ようい", type: "Danh từ・Suru động từ", meaning: "Chuẩn bị, sắp xếp", example: "資料を用意する。\n(Chuẩn bị tài liệu.)" },
+    ],
+    choices: ["もんとう", "といとう", "といどう", "もんどう"],
+    answer: 3,
+    explanation: `<strong>問答（もんどう）</strong> — hỏi đáp, đối thoại.<br><br>• 問（もん）: hỏi → âm on: もん, âm kun: と(う/い) — âm Hán-Việt: vấn<br>• 答（どう）: trả lời → âm on: とう→どう (biến âm khi ghép), âm kun: こた(える) — âm Hán-Việt: đáp<br><br>Chú ý: 答 khi ghép sau 問 → biến âm có声 thành <strong>どう</strong> (hiện tượng 濁音化/だくおんか).<br><br>• <strong>といとう / といどう</strong>: 問 âm kun là とい (問い), nhưng trong từ Hán ghép phải dùng âm on もん.<br>• <strong>もんとう</strong>: 答 âm on là とう, nhưng khi ghép sau 問 biến thành どう.<div class="tip">💡 問答（もんどう）= hỏi đáp — 禅問答（ぜんもんどう）= công án thiền</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "飾り綱の向こうの階段は、いっそう<u><strong>けわしい</strong></u>螺旋を描きながら真っ暗闇へとくだっている。\n\n「けわしい」の漢字は？",
+    vocab: [
+      { word: "いっそう", reading: "いっそう", type: "Phó từ", meaning: "Càng thêm, lại càng hơn", example: "いっそう難しくなった。\n(Càng trở nên khó hơn.)" },
+      { word: "螺旋", reading: "らせん", type: "Danh từ", meaning: "Xoắn ốc", example: "螺旋状の階段。\n(Cầu thang xoắn ốc.)" },
+      { word: "真っ暗闇", reading: "まっくらやみ", type: "Danh từ", meaning: "Tối đen như mực", example: "真っ暗闇の中を歩く。\n(Đi trong bóng tối mịt mù.)" },
+    ],
+    choices: ["剣しい", "検しい", "険しい", "倹しい"],
+    answer: 2,
+    explanation: `<strong>険しい（けわしい）</strong> — dốc đứng, gian nan; (nét mặt) nghiêm khắc.<br><br>• 険（けん）: hiểm trở, nguy hiểm → âm on: けん, âm kun: けわ(しい) — âm Hán-Việt: hiểm<br>• 険 = bộ 阜（đất dốc）+ 僉 → vách đất dốc đứng<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>剣しい</strong>: 剣（けん/つるぎ）= kiếm, gươm — không có tính từ 剣しい.<br>• <strong>検しい</strong>: 検（けん）= kiểm tra — không có tính từ 検しい.<br>• <strong>倹しい（つましい）</strong>: tiết kiệm, giản dị — chữ khác, nghĩa khác hoàn toàn.<div class="tip">💡 険しい（けわしい）= dốc đứng, hiểm trở — 険しい山道（con đường núi hiểm trở）</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "Facebook広告は、掲出して短期間で結果が出ますから、どんどん改善をして、より良い成果を<u><strong>目指す</strong></u>ことができます。\n\n「目指す」の読み方は？",
+    vocab: [
+      { word: "改善", reading: "かいぜん", type: "Danh từ・Suru động từ", meaning: "Cải thiện, cải tiến", example: "業務を改善する。\n(Cải tiến nghiệp vụ.)" },
+      { word: "成果", reading: "せいか", type: "Danh từ", meaning: "Kết quả, thành quả", example: "努力の成果が出た。\n(Kết quả nỗ lực đã hiện ra.)" },
+    ],
+    choices: ["めなす", "めざす", "めだす", "めざます"],
+    answer: 1,
+    explanation: `<strong>目指す（めざす）</strong> — nhắm đến, hướng tới, đặt mục tiêu.<br><br>• 目（め）: mắt, nhìn → âm kun: め<br>• 指す（さす）: chỉ vào → biến âm khi ghép: ざす<br>• 目指す = hướng mắt nhìn vào = nhắm đến mục tiêu<br><br>Chú ý: 指 âm kun là さ(す), khi ghép sau 目 biến âm thành ざす (有声化).<br><br>• <strong>めなす</strong>: なす（成す）= thực hiện — 目なす không phải từ.<br>• <strong>めだす</strong>: 目立つ（めだつ）= nổi bật — sai chữ.<br>• <strong>めざます（目覚ます）</strong>: đánh thức, thức tỉnh — chữ khác, nghĩa khác.<div class="tip">💡 目指す（めざす）= nhắm đến — 夢を目指す（nhắm tới giấc mơ）</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "速度計の数字が<u><strong>じそく</strong></u>百キロを越えようとしている。\n\n「じそく」の漢字は？",
+    vocab: [
+      { word: "速度計", reading: "そくどけい", type: "Danh từ", meaning: "Đồng hồ tốc độ, tốc kế", example: "速度計を確認する。\n(Kiểm tra đồng hồ tốc độ.)" },
+      { word: "越える", reading: "こえる", type: "Động từ nhóm 2", meaning: "Vượt qua, vượt hơn", example: "山を越える。\n(Vượt qua ngọn núi.)" },
+    ],
+    choices: ["時束", "時速", "時疎", "時勅"],
+    answer: 1,
+    explanation: `<strong>時速（じそく）</strong> — tốc độ mỗi giờ, km/h.<br><br>• 時（じ）: thời gian, giờ → âm on: じ/し — âm Hán-Việt: thời<br>• 速（そく）: tốc độ, nhanh → âm on: そく — âm Hán-Việt: tốc<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>時束</strong>: 束（たば/そく）= bó, buộc — 束 tuy có âm そく nhưng nghĩa là "bó/buộc", không phải "tốc độ".<br>• <strong>時疎</strong>: 疎（そ/うと）= xa cách, lơ là — không liên quan đến tốc độ.<br>• <strong>時勅</strong>: 勅（ちょく）= chiếu chỉ của thiên hoàng — hoàn toàn sai.<div class="tip">💡 時速（じそく）= tốc độ/giờ — 時速100キロ（100 km/h）; cf. 分速（ふんそく）= tốc độ/phút</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "英語は、単語よりもフレーズで<u><strong>捉える</strong></u>ことが重要です。\n\n「捉える」の読み方は？",
+    vocab: [
+      { word: "単語", reading: "たんご", type: "Danh từ", meaning: "Từ đơn, từ vựng", example: "単語を暗記する。\n(Học thuộc từ vựng.)" },
+      { word: "重要", reading: "じゅうよう", type: "Tính từ -na", meaning: "Quan trọng", example: "重要なポイントを押さえる。\n(Nắm vững các điểm quan trọng.)" },
+    ],
+    choices: ["たとえる", "そろえる", "こごえる", "とらえる"],
+    answer: 3,
+    explanation: `<strong>捉える（とらえる）</strong> — nắm bắt, hiểu được, lĩnh hội.<br><br>• 捉（とら）える: bắt lấy, nắm bắt → âm on: さく, âm kun: とら(える)<br>• 捉 = bộ 手（手）+ 足 → dùng tay chân để bắt/giữ<br><br>Phân biệt với các cách đọc sai:<br>• <strong>たとえる（例える）</strong>: ví dụ, ví von — chữ và nghĩa khác.<br>• <strong>そろえる（揃える）</strong>: sắp xếp gọn, thu thập đủ — chữ khác.<br>• <strong>こごえる（凍える）</strong>: cóng lạnh, tê buốt — chữ và nghĩa khác.<div class="tip">💡 捉える（とらえる）= nắm bắt, lĩnh hội — 意味を捉える（nắm bắt ý nghĩa）, 犯人を捉える（bắt tội phạm）</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "水野さんは農家の娘を演じるので、健康的に見せるため、<u><strong>さつえい</strong></u>の２ヶ月ぐらい前から３食お米を食べて５キロ増量したそうです。\n\n「さつえい」の漢字は？",
+    vocab: [
+      { word: "演じる", reading: "えんじる", type: "Động từ nhóm 2", meaning: "Diễn, thủ vai", example: "主役を演じる。\n(Thủ vai chính.)" },
+      { word: "増量", reading: "ぞうりょう", type: "Danh từ・Suru động từ", meaning: "Tăng cân, tăng số lượng", example: "体重を増量する。\n(Tăng cân nặng.)" },
+    ],
+    choices: ["最景", "撮影", "最影", "撮景"],
+    answer: 1,
+    explanation: `<strong>撮影（さつえい）</strong> — quay phim, chụp ảnh.<br><br>• 撮（さつ）: chụp, quay → âm on: さつ, âm kun: と(る) — âm Hán-Việt: toát<br>• 影（えい）: bóng, hình ảnh → âm on: えい — âm Hán-Việt: ảnh<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>最景 / 最影</strong>: 最（さい/もっと）= tối, nhất — さつ không phải cách đọc của 最.<br>• <strong>撮景</strong>: 景（けい/かげ）= cảnh vật — えい không phải cách đọc của 景 (景 đọc là けい/かげ).<div class="tip">💡 撮影（さつえい）= quay phim/chụp ảnh — 撮影禁止（さつえいきんし）= cấm chụp ảnh</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "この地域の多くの国々はどのような国家<u><strong>体制</strong></u>が自国の社会と環境に最も合っているかという問題に悩んでいた。\n\n「体制」の読み方は？",
+    vocab: [
+      { word: "地域", reading: "ちいき", type: "Danh từ", meaning: "Khu vực, vùng", example: "この地域に住む。\n(Sống ở khu vực này.)" },
+      { word: "自国", reading: "じこく", type: "Danh từ", meaning: "Đất nước mình, tổ quốc", example: "自国の文化を守る。\n(Bảo vệ văn hóa đất nước mình.)" },
+    ],
+    choices: ["ていせい", "たいそう", "ていし", "たいせい"],
+    answer: 3,
+    explanation: `<strong>体制（たいせい）</strong> — thể chế, chế độ, hệ thống tổ chức.<br><br>• 体（たい）: thân thể, hệ thống → âm on: たい/てい — âm Hán-Việt: thể<br>• 制（せい）: chế độ, kiểm soát → âm on: せい — âm Hán-Việt: chế<br><br>Chú ý: 体 có hai âm on là たい và てい → trong 体制 đọc là <strong>たい</strong>.<br><br>• <strong>ていせい（体制）</strong>: sai vì 体 trong từ này đọc là たい, không phải てい.<br>• <strong>たいそう（体操）</strong>: thể dục, tập thể dục — chữ 操 khác.<br>• <strong>ていし（停止）</strong>: dừng lại — chữ hoàn toàn khác.<div class="tip">💡 体制（たいせい）= thể chế — 政治体制（せいじたいせい）= thể chế chính trị</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "これから創業を目指している方は、できるだけ多くの融資を受けられるように知恵を<u><strong>しぼり</strong></u>、行動してください。\n\n「しぼり」の漢字は？",
+    vocab: [
+      { word: "創業", reading: "そうぎょう", type: "Danh từ・Suru động từ", meaning: "Khởi nghiệp, sáng lập", example: "会社を創業する。\n(Sáng lập công ty.)" },
+      { word: "融資", reading: "ゆうし", type: "Danh từ・Suru động từ", meaning: "Cho vay, tài trợ vốn", example: "銀行から融資を受ける。\n(Nhận vốn vay từ ngân hàng.)" },
+      { word: "知恵", reading: "ちえ", type: "Danh từ", meaning: "Trí tuệ, sự khôn ngoan", example: "知恵を借りる。\n(Mượn trí tuệ/ý kiến.)" },
+    ],
+    choices: ["絵り", "絶り", "絞り", "縛り"],
+    answer: 2,
+    explanation: `<strong>絞り（しぼり）</strong> — (ở đây) vắt kiệt trí tuệ, vận dụng hết sức suy nghĩ.<br><br>• 絞（しぼ）る: vắt, siết chặt, vận dụng hết → âm on: こう, âm kun: しぼ(る)<br>• 知恵を絞る = vắt óc suy nghĩ, tận dụng hết trí tuệ<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>絵（え）</strong>: tranh vẽ — 絵り không phải từ.<br>• <strong>絶（ぜつ）り</strong>: 絶 = tuyệt, cắt đứt — しぼり không phải cách đọc của 絶.<br>• <strong>縛り（しばり）</strong>: ràng buộc — 縛 đọc là しば(る), không phải しぼ(る); chữ khác.<div class="tip">💡 絞る（しぼる）= vắt, siết — 知恵を絞る（vắt óc）, タオルを絞る（vắt khăn）</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "声も肉体の一部と考え、筋トレと同じ感覚で、毎日、声を出すトレーニングを<u><strong>重ねる</strong></u>ことが必要です。\n\n「重ねる」の読み方は？",
+    vocab: [
+      { word: "肉体", reading: "にくたい", type: "Danh từ", meaning: "Thể xác, thân thể", example: "肉体を鍛える。\n(Rèn luyện thể xác.)" },
+      { word: "感覚", reading: "かんかく", type: "Danh từ", meaning: "Cảm giác, cảm nhận", example: "感覚を磨く。\n(Mài giũa cảm nhận.)" },
+    ],
+    choices: ["ひねる", "おもねる", "かさねる", "つらねる"],
+    answer: 2,
+    explanation: `<strong>重ねる（かさねる）</strong> — chồng lên, tích lũy, lặp lại nhiều lần.<br><br>• 重（かさ）ねる: chồng thêm, tích lũy → âm on: じゅう/ちょう, âm kun: おも(い)/かさ(ねる)<br>• トレーニングを重ねる = tích lũy luyện tập, luyện tập nhiều lần<br><br>Phân biệt với các cách đọc sai:<br>• <strong>ひねる（捻る）</strong>: vặn, xoắn — chữ khác.<br>• <strong>おもねる（阿る）</strong>: nịnh hót, xu nịnh — chữ khác.<br>• <strong>つらねる（連ねる）</strong>: xếp thành hàng, liên kết — chữ khác (連).<div class="tip">💡 重ねる（かさねる）= tích lũy, chồng lên — 経験を重ねる（tích lũy kinh nghiệm）, 年を重ねる（thêm tuổi）</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "学校で<u><strong>しょうぎょう</strong></u>を学び、卒業後は農薬会社に就職しました。\n\n「しょうぎょう」の漢字は？",
+    vocab: [
+      { word: "農薬", reading: "のうやく", type: "Danh từ", meaning: "Thuốc nông nghiệp, thuốc trừ sâu", example: "農薬を散布する。\n(Phun thuốc trừ sâu.)" },
+      { word: "就職", reading: "しゅうしょく", type: "Danh từ・Suru động từ", meaning: "Tìm được việc làm, đi làm", example: "大企業に就職する。\n(Vào làm ở công ty lớn.)" },
+    ],
+    choices: ["隔業", "商業", "商撲", "商僕"],
+    answer: 1,
+    explanation: `<strong>商業（しょうぎょう）</strong> — thương nghiệp, thương mại.<br><br>• 商（しょう）: buôn bán, thương mại → âm on: しょう — âm Hán-Việt: thương<br>• 業（ぎょう）: nghề nghiệp, sự nghiệp → âm on: ぎょう/ごう — âm Hán-Việt: nghiệp<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>隔業</strong>: 隔（かく）= cách, ngăn cách — しょう không phải cách đọc của 隔.<br>• <strong>商撲</strong>: 撲（ぼく）= đánh, đấm — ぎょう không phải cách đọc của 撲.<br>• <strong>商僕</strong>: 僕（ぼく）= đầy tớ, tôi (nam) — ぎょう không phải cách đọc của 僕.<div class="tip">💡 商業（しょうぎょう）= thương nghiệp — 商業高校（しょうぎょうこうこう）= trường THPT thương mại</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "夏は水の<u><strong>じょうはつ</strong></u>がはやいので、ぬれたタオルもすぐ乾いてしまう。\n\n「じょうはつ」の漢字は？",
+    vocab: [
+      { word: "濡れる", reading: "ぬれる", type: "Động từ nhóm 2", meaning: "Bị ướt, ẩm ướt", example: "雨に濡れる。\n(Bị mưa làm ướt.)" },
+      { word: "乾く", reading: "かわく", type: "Động từ nhóm 1", meaning: "Khô, khô ráo", example: "洗濯物が乾く。\n(Quần áo khô.)" },
+    ],
+    choices: ["上発", "蒸発", "蒸溌", "上溌"],
+    answer: 1,
+    explanation: `<strong>蒸発（じょうはつ）</strong> — bay hơi, bốc hơi.<br><br>• 蒸（じょう）: hơi nước, bốc hơi → âm on: じょう, âm kun: む(す/れる) — âm Hán-Việt: chưng<br>• 発（はつ）: phát ra, bốc lên → âm on: はつ/ほつ — âm Hán-Việt: phát<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>上発 / 上溌</strong>: 上（じょう/うえ）= trên — じょう có thể là âm của 上, nhưng 蒸（hơi nước）mới đúng nghĩa bay hơi.<br>• <strong>蒸溌</strong>: 溌（はつ）= hoạt bát, tung tóe — 蒸溌 không phải từ thông dụng; từ đúng là 蒸<strong>発</strong>.<div class="tip">💡 蒸発（じょうはつ）= bay hơi — 蒸発量（じょうはつりょう）= lượng bay hơi</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "私は仕事の都合で帰宅時間が<u><strong>不規則</strong></u>で、早く帰ることもあれば、夜中になることもある。\n\n「不規則」の読み方は？",
+    vocab: [
+      { word: "都合", reading: "つごう", type: "Danh từ", meaning: "Hoàn cảnh, sự tiện lợi, lịch trình", example: "都合が悪い。\n(Không tiện, bất tiện.)" },
+      { word: "帰宅", reading: "きたく", type: "Danh từ・Suru động từ", meaning: "Về nhà, trở về", example: "夜遅く帰宅する。\n(Về nhà muộn đêm.)" },
+    ],
+    choices: ["ふきそく", "ぶきそく", "ふきさく", "ぶきさく"],
+    answer: 0,
+    explanation: `<strong>不規則（ふきそく）</strong> — không đều đặn, bất quy tắc.<br><br>• 不（ふ）: phủ định → âm on: ふ/ぶ — âm Hán-Việt: bất<br>• 規（き）: quy tắc, chuẩn mực → âm on: き<br>• 則（そく）: nguyên tắc, quy tắc → âm on: そく<br><br>Chú ý: 不 đọc là <strong>ふ</strong> khi từ tiếp theo bắt đầu bằng phụ âm vô thanh (k, s, t...), đọc là <strong>ぶ</strong> khi từ tiếp theo bắt đầu bằng phụ âm hữu thanh.<br>→ 不規則: 規（き）bắt đầu bằng k → đọc là <strong>ふ</strong>きそく.<br><br>• <strong>ぶきそく</strong>: 不 đọc là ぶ khi đứng trước âm hữu thanh (ぶ自然、ぶ礼), không phải ở đây.<div class="tip">💡 不規則（ふきそく）= bất quy tắc ↔ 規則的（きそくてき）= đều đặn, theo quy tắc</div>`,
+  },
+  ]
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

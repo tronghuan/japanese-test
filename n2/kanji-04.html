@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 漢字 Bài 4</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="漢">
+  <div class="header-badge">N2 JLPT • KANJI ④</div>
+  <h1>N2 漢字<span>クイズ</span>④</h1>
+  <p class="sub">Trắc nghiệm Kanji N2 · Bài 4 · Đọc và viết Hán tự</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 12</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/12</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 12,
+  questions: [
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "兵士たちが踏み込んできたときはパニックに駆られ、急場をしのぐ必要に<u><strong>迫られた</strong></u>。\n\n「迫られた」の読み方は？",
+    vocab: [
+      { word: "兵士", reading: "へいし", type: "Danh từ", meaning: "Binh sĩ, chiến sĩ", example: "兵士が行進する。\n(Binh sĩ diễu hành.)" },
+      { word: "駆られる", reading: "かられる", type: "Động từ nhóm 2", meaning: "Bị thúc đẩy bởi, bị cuốn vào", example: "好奇心に駆られる。\n(Bị thúc đẩy bởi tính tò mò.)" },
+      { word: "急場をしのぐ", reading: "きゅうばをしのぐ", type: "Cụm động từ", meaning: "Đối phó tạm thời với tình huống khẩn cấp", example: "急場をしのぐ措置をとる。\n(Áp dụng biện pháp tạm thời.)" },
+    ],
+    choices: ["せまられた", "あばられた", "こごられた", "とがられた"],
+    answer: 0,
+    explanation: `<strong>迫られた（せまられた）</strong> — bị thúc bách, bị ép buộc.<br><br>• 迫（せま）る: áp lại gần, thúc bách, ép buộc → âm on: はく, âm kun: せま(る) — âm Hán-Việt: bách<br>• 迫られる = thể thụ động: bị thúc bách<br><br>Phân biệt với các cách đọc sai:<br>• <strong>あばられた</strong>: không phải cách đọc của 迫 (暴れる = あばれる: quậy phá — chữ khác).<br>• <strong>こごられた</strong>: không phải từ tiêu chuẩn.<br>• <strong>とがられた</strong>: 咎める（とがめる）= khiển trách — chữ khác.<div class="tip">💡 迫る（せまる）= áp sát, thúc bách — 締め切りが迫る（đến hạn), 迫力（はくりょく）= sức mạnh áp đảo</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "砂漠の砂の下に埋れていた遺物を一つ一つ取り出し、<u><strong>そうこ</strong></u>に運び込む。\n\n「そうこ」の漢字は？",
+    vocab: [
+      { word: "砂漠", reading: "さばく", type: "Danh từ", meaning: "Sa mạc", example: "砂漠を横断する。\n(Băng qua sa mạc.)" },
+      { word: "遺物", reading: "いぶつ", type: "Danh từ", meaning: "Di vật, di tích", example: "古代の遺物が発見された。\n(Di vật cổ đại được tìm thấy.)" },
+      { word: "運び込む", reading: "はこびこむ", type: "Động từ nhóm 1", meaning: "Mang vào, chuyển vào", example: "荷物を運び込む。\n(Chuyển đồ đạc vào.)" },
+    ],
+    choices: ["倉麻", "創麻", "倉庫", "創庫"],
+    answer: 2,
+    explanation: `<strong>倉庫（そうこ）</strong> — kho lưu trữ, nhà kho.<br><br>• 倉（そう）: kho thóc, kho chứa → âm on: そう, âm kun: くら — âm Hán-Việt: thương (kho)<br>• 庫（こ）: kho → âm on: こ/く — âm Hán-Việt: khố<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>麻（ま/あさ）</strong>: cây gai, tê liệt — không liên quan đến kho.<br>• <strong>創（そう/きず）</strong>: sáng lập, vết thương — そう nhưng nghĩa khác hoàn toàn.<br>• <strong>創庫</strong>: 創 = sáng lập — kết hợp này không có nghĩa.<div class="tip">💡 倉庫（そうこ）= nhà kho — 冷蔵庫（れいぞうこ）= tủ lạnh, 車庫（しゃこ）= nhà xe/ga-ra</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "一般的に食べ物が胃の中で<u><strong>消化</strong></u>されるのには３～５時間かかると言われています。\n\n「消化」の読み方は？",
+    vocab: [
+      { word: "一般的", reading: "いっぱんてき", type: "Tính từ -na", meaning: "Phổ biến, nói chung", example: "一般的な意見。\n(Ý kiến phổ biến.)" },
+      { word: "胃", reading: "い", type: "Danh từ", meaning: "Dạ dày", example: "胃が痛い。\n(Đau dạ dày.)" },
+    ],
+    choices: ["せいか", "そうか", "しょか", "しょうか"],
+    answer: 3,
+    explanation: `<strong>消化（しょうか）</strong> — tiêu hóa; (nghĩa rộng) tiêu thụ hết, hoàn thành.<br><br>• 消（しょう）: tiêu tan, mất đi → âm on: しょう, âm kun: き(える)/け(す) — âm Hán-Việt: tiêu<br>• 化（か）: biến đổi → âm on: か/け — âm Hán-Việt: hóa<br><br>Chú ý: 消 đọc là <strong>しょう</strong> (không phải せい hay そう).<br><br>• <strong>せいか（成果）</strong>: thành quả — chữ 成 hoàn toàn khác.<br>• <strong>そうか（総花）</strong>: tổng hợp — chữ 総 khác.<br>• <strong>しょか</strong>: thiếu âm う — 消 đọc đầy đủ là しょう.<div class="tip">💡 消化（しょうか）= tiêu hóa — 消化不良（しょうかふりょう）= khó tiêu, 消火（しょうか）= chữa cháy</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "彼はいつも私の心に<u><strong>ひびく</strong></u>役を演じてくるんです。\n\n「ひびく」の漢字は？",
+    vocab: [
+      { word: "俳優", reading: "はいゆう", type: "Danh từ", meaning: "Diễn viên", example: "有名な俳優に会った。\n(Gặp diễn viên nổi tiếng.)" },
+      { word: "演じる", reading: "えんじる", type: "Động từ nhóm 2", meaning: "Diễn, thủ vai", example: "主人公を演じる。\n(Thủ vai nhân vật chính.)" },
+    ],
+    choices: ["驚く", "郷く", "響く", "緊く"],
+    answer: 2,
+    explanation: `<strong>響く（ひびく）</strong> — vang lên, rung động, gây ấn tượng sâu sắc.<br><br>• 響（ひび）く: vang, cộng hưởng, tác động → âm on: きょう, âm kun: ひび(く) — âm Hán-Việt: hưởng<br>• 心に響く = chạm đến trái tim, gây xúc động<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>驚く（おどろく）</strong>: ngạc nhiên — ひびく không phải cách đọc của 驚.<br>• <strong>郷（きょう/ごう）</strong>: quê hương — 郷く không phải từ.<br>• <strong>緊（きん）</strong>: căng thẳng, chặt — 緊く không phải từ tiêu chuẩn.<div class="tip">💡 響く（ひびく）= vang, rộng lên; chạm đến — 音が響く（âm vang）, 心に響く（chạm đến trái tim）</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "ひどい<u><strong>皮膚</strong></u>病の治癒を祈願するためにアメリカからここまでやってきた。\n\n「皮膚」の読み方は？",
+    vocab: [
+      { word: "治癒", reading: "ちゆ", type: "Danh từ・Suru động từ", meaning: "Lành bệnh, hồi phục", example: "傷が治癒する。\n(Vết thương lành lại.)" },
+      { word: "祈願", reading: "きがん", type: "Danh từ・Suru động từ", meaning: "Cầu nguyện, nguyện cầu", example: "合格祈願をする。\n(Cầu nguyện đậu thi.)" },
+    ],
+    choices: ["ひふ", "ひはだ", "かわふ", "かわはだ"],
+    answer: 0,
+    explanation: `<strong>皮膚（ひふ）</strong> — da, bề mặt da.<br><br>• 皮（ひ）: da, vỏ → âm on: ひ, âm kun: かわ — âm Hán-Việt: bì<br>• 膚（ふ）: da → âm on: ふ — âm Hán-Việt: phu<br><br>Đây là từ thuần Hán (音読み): ひ + ふ → <strong>ひふ</strong>.<br><br>• <strong>ひはだ / かわはだ</strong>: はだ là âm kun của 肌（肌/はだ = da, làn da）— không phải cách đọc của 膚.<br>• <strong>かわふ</strong>: 皮 âm kun là かわ, nhưng trong từ ghép Hán phải dùng âm on ひ.<div class="tip">💡 皮膚（ひふ）= da — 皮膚科（ひふか）= khoa da liễu, 皮膚病（ひふびょう）= bệnh da liễu</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "平均<u><strong>じゅみょう</strong></u>が延びれば、最期が「がん」になる人が増えるのは、ある意味、当然ということになります。\n\n「じゅみょう」の漢字は？",
+    vocab: [
+      { word: "平均", reading: "へいきん", type: "Danh từ・Suru動詞", meaning: "Trung bình, bình quân", example: "平均寿命が伸びる。\n(Tuổi thọ trung bình tăng.)" },
+      { word: "延びる", reading: "のびる", type: "Động từ nhóm 2", meaning: "Kéo dài, tăng thêm", example: "寿命が延びる。\n(Tuổi thọ kéo dài.)" },
+    ],
+    choices: ["春命", "鋳命", "寿命", "拝命"],
+    answer: 2,
+    explanation: `<strong>寿命（じゅみょう）</strong> — tuổi thọ, thọ mệnh.<br><br>• 寿（じゅ）: sống lâu, tuổi thọ → âm on: じゅ/す, âm kun: ことぶき — âm Hán-Việt: thọ<br>• 命（みょう/めい）: mạng sống, số mệnh → âm on: めい/みょう — âm Hán-Việt: mệnh<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>春命</strong>: 春（しゅん/はる）= mùa xuân — じゅ không phải âm on của 春.<br>• <strong>鋳命</strong>: 鋳（ちゅう/い）= đúc kim loại — じゅ không phải âm của 鋳.<br>• <strong>拝命（はいめい）</strong>: nhận lệnh/chỉ định (trang trọng) — 拝 đọc là はい, không phải じゅ.<div class="tip">💡 寿命（じゅみょう）= tuổi thọ — 平均寿命（へいきんじゅみょう）= tuổi thọ trung bình</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "間を取ることは、<u><strong>余計</strong></u>なことを話すよりも、ずっと効果的なのです。\n\n「余計」の読み方は？",
+    vocab: [
+      { word: "効果的", reading: "こうかてき", type: "Tính từ -na", meaning: "Hiệu quả, có tác dụng", example: "効果的な方法を使う。\n(Sử dụng phương pháp hiệu quả.)" },
+    ],
+    choices: ["よけい", "じょけい", "よしん", "じょしん"],
+    answer: 0,
+    explanation: `<strong>余計（よけい）</strong> — thừa, không cần thiết; càng thêm.<br><br>• 余（よ）: thừa, dư → âm on: よ, âm kun: あま(る/す) — âm Hán-Việt: dư<br>• 計（けい）: tính toán, kế → âm on: けい — âm Hán-Việt: kế<br><br>Chú ý: 余 đọc là <strong>よ</strong> (không phải じょ). Dễ nhầm với 除（じょ）= loại bỏ.<br><br>• <strong>じょけい</strong>: じょ không phải âm on của 余.<br>• <strong>よしん / じょしん</strong>: しん không phải âm on của 計 trong trường hợp này.<div class="tip">💡 余計（よけい）= thừa, không cần — 余計なお世話（việc thừa/không cần thiết）; 余計に悪くなる（càng tệ hơn）</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "小学校の終了式に出席するために家を出たリンさんは、<u><strong>ぼうはん</strong></u>カメラや人目が少ない。\n\n「ぼうはん」の漢字は？",
+    vocab: [
+      { word: "終了式", reading: "しゅうりょうしき", type: "Danh từ", meaning: "Lễ bế giảng, lễ kết thúc", example: "終了式に参加する。\n(Tham dự lễ bế giảng.)" },
+      { word: "出席", reading: "しゅっせき", type: "Danh từ・Suru động từ", meaning: "Tham dự, có mặt", example: "会議に出席する。\n(Tham dự cuộc họp.)" },
+    ],
+    choices: ["肪犯", "坊犯", "防犯", "妨犯"],
+    answer: 2,
+    explanation: `<strong>防犯（ぼうはん）</strong> — phòng chống tội phạm, phòng ngừa tội ác.<br><br>• 防（ぼう）: ngăn chặn, phòng thủ → âm on: ぼう, âm kun: ふせ(ぐ) — âm Hán-Việt: phòng<br>• 犯（はん）: phạm tội → âm on: はん/ぼん — âm Hán-Việt: phạm<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>肪（ぼう）</strong>: mỡ (脂肪/しぼう) — ぼう nhưng nghĩa là mỡ, không phải phòng thủ.<br>• <strong>坊（ぼう）</strong>: thiếu niên, khu phố — ぼう nhưng nghĩa khác.<br>• <strong>妨（ぼう）</strong>: cản trở, ngăn trở — 妨害（ぼうがい）= cản trở; 防 và 妨 dễ nhầm nhưng 防 = phòng thủ, 妨 = cản trở.<div class="tip">💡 防犯（ぼうはん）= phòng chống tội phạm — 防犯カメラ（camera an ninh）, 防犯グッズ（đồ dùng phòng thủ）</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "私はその傲慢を<u><strong>無数</strong></u>の勇気と呼ぼう。\n\n「無数」の読み方は？",
+    vocab: [
+      { word: "傲慢", reading: "ごうまん", type: "Tính từ -na", meaning: "Kiêu ngạo, ngạo mạn", example: "傲慢な態度をとる。\n(Tỏ thái độ kiêu ngạo.)" },
+      { word: "勇気", reading: "ゆうき", type: "Danh từ", meaning: "Dũng cảm, can đảm", example: "勇気を出す。\n(Lấy can đảm.)" },
+    ],
+    choices: ["ぶすう", "ぶかず", "むかず", "むすう"],
+    answer: 3,
+    explanation: `<strong>無数（むすう）</strong> — vô số, không đếm xuể.<br><br>• 無（む）: không có, vô → âm on: む/ぶ — âm Hán-Việt: vô<br>• 数（すう）: số, đếm → âm on: すう/す, âm kun: かず/かぞ(える)<br><br>Chú ý: 無 đọc là <strong>む</strong> trong từ Hán-Nhật (無数、無限、無駄), đọc là <strong>ぶ</strong> trong một số trường hợp (無礼/ぶれい, 無事/ぶじ).<br>→ 無数 = む + すう (không phải ぶ).<br><br>• <strong>ぶすう / ぶかず</strong>: 無 ở đây đọc là む, không phải ぶ.<br>• <strong>むかず</strong>: かず là âm kun của 数, nhưng trong từ ghép Hán phải dùng âm on すう.<div class="tip">💡 無数（むすう）= vô số — 無限（むげん）= vô hạn, 無数の星（vô số ngôi sao）</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "若い男女が苦難を共にしていく<u><strong>かてい</strong></u>で、そういった感情は、さらに強まっていったと思います。\n\n「かてい」の漢字は？",
+    vocab: [
+      { word: "苦難", reading: "くなん", type: "Danh từ", meaning: "Gian khổ, thống khổ", example: "苦難を乗り越える。\n(Vượt qua gian khổ.)" },
+      { word: "強まる", reading: "つよまる", type: "Động từ nhóm 1", meaning: "Trở nên mạnh hơn, tăng cường độ", example: "絆が強まる。\n(Tình cảm gắn kết trở nên sâu sắc hơn.)" },
+    ],
+    choices: ["咼程", "禍程", "過程", "渦程"],
+    answer: 2,
+    explanation: `<strong>過程（かてい）</strong> — quá trình, tiến trình.<br><br>• 過（か）: qua, vượt qua, quá → âm on: か/こ, âm kun: す(ぎる/ごす) — âm Hán-Việt: quá<br>• 程（てい）: mức độ, quá trình → âm on: てい, âm kun: ほど — âm Hán-Việt: trình<br><br>Chú ý: không nhầm với 家庭（かてい）= gia đình — cùng âm nhưng chữ khác.<br><br>• <strong>咼 / 禍 / 渦</strong>: đều có âm か nhưng nghĩa khác — 禍（わざわい）= tai họa, 渦（うず）= xoáy nước.<div class="tip">💡 過程（かてい）= quá trình — 学習の過程（quá trình học tập）; cf. 家庭（かてい）= gia đình</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "私も職人からスタートして技術を習得しました。今は経営者となり、会社や従業員を動かすことの面白さを<u><strong>実感</strong></u>しています。\n\n「実感」の読み方は？",
+    vocab: [
+      { word: "職人", reading: "しょくにん", type: "Danh từ", meaning: "Thợ thủ công, nghệ nhân", example: "職人の技術は素晴らしい。\n(Kỹ thuật của nghệ nhân thật tuyệt vời.)" },
+      { word: "習得", reading: "しゅうとく", type: "Danh từ・Suru động từ", meaning: "Học hỏi và thành thạo, nắm vững", example: "技術を習得する。\n(Nắm vững kỹ thuật.)" },
+    ],
+    choices: ["みかん", "じつかん", "さねかん", "じっかん"],
+    answer: 3,
+    explanation: `<strong>実感（じっかん）</strong> — cảm nhận thực sự, cảm giác thực tế.<br><br>• 実（じつ→じっ）: thực, thật → âm on: じつ, biến âm khi ghép: じっ (do 感 bắt đầu bằng k)<br>• 感（かん）: cảm giác → âm on: かん — âm Hán-Việt: cảm<br><br>Chú ý: 実 đọc là <strong>じっ</strong> (có っ) khi đứng trước âm bắt đầu bằng k/s/t (促音化):<br>→ 実感（じっかん）, 実際（じっさい）, 実態（じったい）.<br><br>• <strong>みかん</strong>: みかん（蜜柑）= quả quýt — hoàn toàn khác.<br>• <strong>じつかん</strong>: 実 không đọc là じつ khi đứng trước か — phải biến thành じっ.<br>• <strong>さねかん</strong>: さね là âm kun cổ của 実 (hạt, nhân), không dùng trong từ này.<div class="tip">💡 実感（じっかん）= cảm nhận thực tế — 実感がわく（có cảm giác thực sự）; cf. 実際（じっさい）= trên thực tế</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "様々な飲食店で経験を<u><strong>つみ</strong></u>、徐々に自分でお店を開きたいという気持ちが強くなったんです。\n\n「つみ」の漢字は？",
+    vocab: [
+      { word: "飲食店", reading: "いんしょくてん", type: "Danh từ", meaning: "Nhà hàng, quán ăn", example: "飲食店でアルバイトする。\n(Làm thêm ở nhà hàng.)" },
+      { word: "徐々に", reading: "じょじょに", type: "Phó từ", meaning: "Từ từ, dần dần", example: "徐々に回復する。\n(Hồi phục dần dần.)" },
+    ],
+    choices: ["績み", "積み", "漬み", "債み"],
+    answer: 1,
+    explanation: `<strong>積み（つみ）</strong> — (ở đây) tích lũy, chồng thêm.<br><br>• 積（つ）む: chồng chất, tích lũy → âm on: せき, âm kun: つ(む/み) — âm Hán-Việt: tích<br>• 経験を積む = tích lũy kinh nghiệm<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>績み（せきみ）</strong>: 績（せき）= thành tích, kéo sợi — không có cách đọc つみ.<br>• <strong>漬み</strong>: 漬（つ）ける = ngâm, ướp — 漬 âm kun là つ(ける), khác với 積む.<br>• <strong>債み</strong>: 債（さい）= nợ — không có cách đọc つみ.<div class="tip">💡 積む（つむ）= chồng, tích lũy — 経験を積む（tích lũy kinh nghiệm）, 荷物を積む（chất hàng）</div>`,
+  },
+  ]
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

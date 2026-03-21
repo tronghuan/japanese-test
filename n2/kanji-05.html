@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 漢字 Bài 5</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="漢">
+  <div class="header-badge">N2 JLPT • KANJI ⑤</div>
+  <h1>N2 漢字<span>クイズ</span>⑤</h1>
+  <p class="sub">Trắc nghiệm Kanji N2 · Bài 5 · Đọc và viết Hán tự</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 12</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/12</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 12,
+  questions: [
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "がん治療は日々進んでおり、患者さんが受け取れる<u><strong>恩恵</strong></u>は、わずかでも日々増えているのです。\n\n「恩恵」の読み方は？",
+    vocab: [
+      { word: "患者", reading: "かんじゃ", type: "Danh từ", meaning: "Bệnh nhân", example: "患者を診察する。\n(Khám cho bệnh nhân.)" },
+      { word: "受け取る", reading: "うけとる", type: "Động từ nhóm 1", meaning: "Nhận, tiếp nhận", example: "プレゼントを受け取る。\n(Nhận quà tặng.)" },
+    ],
+    choices: ["おんえ", "おんえい", "おんけい", "おんけつ"],
+    answer: 2,
+    explanation: `<strong>恩恵（おんけい）</strong> — ân huệ, ơn ích, phúc lợi.<br><br>• 恩（おん）: ân, ơn → âm on: おん — âm Hán-Việt: ân<br>• 恵（けい）: ban phúc, phúc huệ → âm on: けい/え, âm kun: めぐ(む) — âm Hán-Việt: huệ<br><br>Chú ý: 恵 có hai âm on là <strong>けい</strong> và え. Trong 恩恵 phải đọc là <strong>けい</strong>.<br><br>• <strong>おんえ / おんえい</strong>: 恵 đọc là え trong một số trường hợp (恵まれる/めぐまれる), nhưng trong 恩恵 đọc là けい.<br>• <strong>おんけつ</strong>: けつ không phải âm on của 恵.<div class="tip">💡 恩恵（おんけい）= ân huệ, lợi ích — 恩恵を受ける（được hưởng ân huệ）; cf. 知恵（ちえ）= trí tuệ</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "わたしの研究の大半は、未知のエネルギーの場を<u><strong>そくてい</strong></u>することが中心だから、無関係の放射エネルギーや雑音の届かない場所でおこなう必要がある。\n\n「そくてい」の漢字は？",
+    vocab: [
+      { word: "未知", reading: "みち", type: "Danh từ・Tính từ -na", meaning: "Chưa biết, chưa khám phá", example: "未知の世界を探る。\n(Khám phá thế giới chưa biết.)" },
+      { word: "雑音", reading: "ざつおん", type: "Danh từ", meaning: "Tạp âm, tiếng ồn", example: "雑音が入る。\n(Có tiếng tạp âm.)" },
+    ],
+    choices: ["測定", "側定", "則定", "賄定"],
+    answer: 0,
+    explanation: `<strong>測定（そくてい）</strong> — đo lường, đo đạc.<br><br>• 測（そく）: đo → âm on: そく, âm kun: はか(る) — âm Hán-Việt: trắc<br>• 定（てい）: xác định, quyết → âm on: てい/じょう — âm Hán-Việt: định<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>側（そく/かわ）</strong>: phía, bên cạnh — 側定 không có nghĩa.<br>• <strong>則（そく）</strong>: quy tắc — 則定 không phải từ thông dụng.<br>• <strong>賄（わい）</strong>: hối lộ — そく không phải âm của 賄.<div class="tip">💡 測定（そくてい）= đo lường — 温度を測定する（đo nhiệt độ）; cf. 測る（はかる）= đo</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "思考が質量を持っているなら、思考は<u><strong>重力</strong></u>を持ち、物体を引き寄せることができます。\n\n「重力」の読み方は？",
+    vocab: [
+      { word: "思考", reading: "しこう", type: "Danh từ・Suru動詞", meaning: "Suy nghĩ, tư duy", example: "思考を深める。\n(Suy nghĩ sâu sắc hơn.)" },
+      { word: "引き寄せる", reading: "ひきよせる", type: "Động từ nhóm 2", meaning: "Thu hút, kéo lại gần", example: "幸運を引き寄せる。\n(Thu hút may mắn.)" },
+    ],
+    choices: ["ちょうりき", "じゅうりき", "ちょうりょく", "じゅうりょく"],
+    answer: 3,
+    explanation: `<strong>重力（じゅうりょく）</strong> — trọng lực, lực hấp dẫn.<br><br>• 重（じゅう）: nặng, trọng → âm on: じゅう/ちょう — âm Hán-Việt: trọng/trùng<br>• 力（りょく）: lực, sức mạnh → âm on: りょく/りき — âm Hán-Việt: lực<br><br>Chú ý phân biệt hai âm on của 重 và 力:<br>• 重 + 力: じゅう + りょく → <strong>じゅうりょく</strong> (不 dùng ちょう, dùng じゅう khi nói về vật lý).<br>• 力 đọc là りょく trong từ ghép trừu tượng: 重力、体力、努力; đọc là りき trong: 力士（りきし）, 馬力（ばりき).<div class="tip">💡 重力（じゅうりょく）= trọng lực — 重力加速度（gia tốc trọng lực）; cf. 重量（じゅうりょう）= trọng lượng</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "彼は世論の反戦ムードに押され、北ベトナム爆撃の<u><strong>ていし</strong></u>を表明したテレビ演説の最後に突然、次の大統領選には出馬しないと宣言した。\n\n「ていし」の漢字は？",
+    vocab: [
+      { word: "世論", reading: "せろん/よろん", type: "Danh từ", meaning: "Dư luận xã hội", example: "世論が動く。\n(Dư luận thay đổi.)" },
+      { word: "爆撃", reading: "ばくげき", type: "Danh từ・Suru動詞", meaning: "Ném bom, oanh tạc", example: "都市を爆撃する。\n(Oanh tạc thành phố.)" },
+      { word: "表明", reading: "ひょうめい", type: "Danh từ・Suru動詞", meaning: "Tuyên bố, bày tỏ", example: "反対を表明する。\n(Tuyên bố phản đối.)" },
+    ],
+    choices: ["亮止", "涼止", "停止", "亭止"],
+    answer: 2,
+    explanation: `<strong>停止（ていし）</strong> — dừng lại, đình chỉ, tạm ngừng.<br><br>• 停（てい）: dừng, đình → âm on: てい — âm Hán-Việt: đình<br>• 止（し）: dừng, ngăn → âm on: し, âm kun: と(まる/める) — âm Hán-Việt: chỉ<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>亮（りょう/あきら）</strong>: sáng, rõ ràng — てい không phải âm của 亮.<br>• <strong>涼（りょう/すず）</strong>: mát mẻ — てい không phải âm của 涼.<br>• <strong>亭（てい）</strong>: nhà nghỉ, quán — 亭 tuy đọc là てい nhưng nghĩa là nhà/quán, không phải đình chỉ.<div class="tip">💡 停止（ていし）= dừng, đình chỉ — 一時停止（いちじていし）= dừng tạm thời; cf. 停車（ていしゃ）= dừng xe</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "傾きの急な側面の下に六角形の<u><strong>容器</strong></u>があり、そこに水がたたえられている。\n\n「容器」の読み方は？",
+    vocab: [
+      { word: "傾き", reading: "かたむき", type: "Danh từ", meaning: "Độ nghiêng, xu hướng", example: "傾きが急だ。\n(Độ dốc rất đứng.)" },
+      { word: "六角形", reading: "ろっかっけい", type: "Danh từ", meaning: "Hình lục giác", example: "六角形の形をしている。\n(Có hình lục giác.)" },
+    ],
+    choices: ["よき", "ようき", "よくき", "よっき"],
+    answer: 1,
+    explanation: `<strong>容器（ようき）</strong> — bình chứa, thùng chứa, dụng cụ đựng.<br><br>• 容（よう）: chứa đựng, dung → âm on: よう — âm Hán-Việt: dung<br>• 器（き）: đồ vật, dụng cụ, khí → âm on: き — âm Hán-Việt: khí<br><br>Chú ý: 容 đọc là <strong>よう</strong> (không phải よ hay よく).<br><br>• <strong>よき（良き）</strong>: tốt lành (cổ ngữ) — hoàn toàn khác nghĩa.<br>• <strong>よくき</strong>: よく không phải âm của 容.<br>• <strong>よっき</strong>: よっ (促音) không phải cách đọc của 容.<div class="tip">💡 容器（ようき）= đồ chứa, bình — ガラス容器（bình thủy tinh）; cf. 容量（ようりょう）= dung tích</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "コン・ユが久しぶりに日本の劇場に<u><strong>とうじょう</strong></u>した。\n\n「とうじょう」の漢字は？",
+    vocab: [
+      { word: "劇場", reading: "げきじょう", type: "Danh từ", meaning: "Nhà hát, rạp kịch", example: "劇場で舞台を見る。\n(Xem sân khấu ở nhà hát.)" },
+      { word: "久しぶり", reading: "ひさしぶり", type: "Danh từ", meaning: "Lâu rồi mới gặp/thấy", example: "久しぶりに会った。\n(Lâu rồi mới gặp.)" },
+    ],
+    choices: ["澄場", "廃場", "発場", "登場"],
+    answer: 3,
+    explanation: `<strong>登場（とうじょう）</strong> — xuất hiện (trên sân khấu/màn ảnh), ra mắt.<br><br>• 登（とう）: leo lên, xuất hiện → âm on: とう, âm kun: のぼ(る) — âm Hán-Việt: đăng<br>• 場（じょう）: nơi chốn, sân khấu → âm on: じょう, âm kun: ば — âm Hán-Việt: trường<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>澄（ちょう/す）</strong>: trong sáng, lắng — とう không phải âm của 澄.<br>• <strong>廃（はい）</strong>: phế bỏ — とう không phải âm của 廃.<br>• <strong>発（はつ/ほつ）</strong>: phát — とう không phải âm của 発.<div class="tip">💡 登場（とうじょう）= xuất hiện, ra mắt — 新製品が登場する（sản phẩm mới ra mắt）; cf. 登山（とざん）= leo núi</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "「検診」も有効なのです。戦略的に治療を<u><strong>組み立てる</strong></u>ことができるのですから。\n\n「組み立てる」の読み方は？",
+    vocab: [
+      { word: "把握", reading: "はあく", type: "Danh từ・Suru動詞", meaning: "Nắm bắt, hiểu rõ", example: "状況を把握する。\n(Nắm bắt tình hình.)" },
+      { word: "戦略的", reading: "せんりゃくてき", type: "Tính từ -na", meaning: "Có tính chiến lược", example: "戦略的に考える。\n(Suy nghĩ theo chiến lược.)" },
+    ],
+    choices: ["ぐみたてる", "ぐみだてる", "くみたてる", "くみだてる"],
+    answer: 2,
+    explanation: `<strong>組み立てる（くみたてる）</strong> — lắp ráp, xây dựng, cấu trúc.<br><br>• 組（く）む: ghép, kết hợp → âm kun: く(む) — 組み = くみ<br>• 立（た）てる: dựng lên → âm kun: た(てる)<br>• 組み立てる = lắp ghép + dựng lên → xây dựng, lắp ráp<br><br>Chú ý: 組 âm kun là く(む), không bị hữu thanh hóa ở đây → <strong>くみ</strong>, không phải ぐみ.<br><br>• <strong>ぐみたてる / ぐみだてる</strong>: ぐみ là hữu thanh hóa sai — 組み không biến thành ぐみ trong trường hợp này.<br>• <strong>くみだてる</strong>: 立てる đọc là たてる, không phải だてる (だてる là hữu thanh hóa sai).<div class="tip">💡 組み立てる（くみたてる）= lắp ráp, xây dựng — 家具を組み立てる（lắp ráp nội thất）, 計画を組み立てる（xây dựng kế hoạch）</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "その恐ろしい事件の直後の数時間で、<u><strong>じゅんすい</strong></u>知性科学の分野は大きな発展をとげた。\n\n「じゅんすい」の漢字は？",
+    vocab: [
+      { word: "直後", reading: "ちょくご", type: "Danh từ", meaning: "Ngay sau đó, trực tiếp sau", example: "地震の直後に避難した。\n(Sơ tán ngay sau động đất.)" },
+      { word: "知性", reading: "ちせい", type: "Danh từ", meaning: "Trí tuệ, trí thức", example: "知性を磨く。\n(Mài giũa trí tuệ.)" },
+      { word: "発展", reading: "はってん", type: "Danh từ・Suru動詞", meaning: "Phát triển, tiến bộ", example: "技術が発展する。\n(Công nghệ phát triển.)" },
+    ],
+    choices: ["純粋", "純忰", "鈍粋", "鈍忰"],
+    answer: 0,
+    explanation: `<strong>純粋（じゅんすい）</strong> — thuần túy, trong sáng, nguyên chất.<br><br>• 純（じゅん）: thuần, tinh khiết → âm on: じゅん — âm Hán-Việt: thuần<br>• 粋（すい）: tinh túy, sành điệu → âm on: すい/すい — âm Hán-Việt: túy<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>忰（せがれ/すい）</strong>: con trai (thô tục/khiêm nhường) — không phải 粋 (tinh túy).<br>• <strong>鈍（どん/にぶ）</strong>: chậm chạp, cùn — じゅん không phải âm của 鈍.<br>• <strong>鈍忰</strong>: cả hai chữ đều sai.<div class="tip">💡 純粋（じゅんすい）= thuần túy, trong sáng — 純粋な心（tâm hồn trong sáng）, 純粋な金（vàng nguyên chất）</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "取引を解禁して需要を満たせば、ヤミ市場を壊滅させられるし、密猟<u><strong>対策</strong></u>と保護に必要な資金も得られるというのだ。\n\n「対策」の読み方は？",
+    vocab: [
+      { word: "需要", reading: "じゅよう", type: "Danh từ", meaning: "Cầu (kinh tế), nhu cầu", example: "需要が高まる。\n(Nhu cầu tăng lên.)" },
+      { word: "壊滅", reading: "かいめつ", type: "Danh từ・Suru動詞", meaning: "Tiêu diệt, đập tan", example: "組織を壊滅させる。\n(Tiêu diệt tổ chức.)" },
+      { word: "密猟", reading: "みつりょう", type: "Danh từ・Suru動詞", meaning: "Săn bắt trái phép, stealthy hunting", example: "密猟者を取り締まる。\n(Kiểm soát kẻ săn trái phép.)" },
+    ],
+    choices: ["たいせき", "たいさく", "たいむち", "たいもく"],
+    answer: 1,
+    explanation: `<strong>対策（たいさく）</strong> — biện pháp đối phó, giải pháp.<br><br>• 対（たい）: đối lại, đối phó → âm on: たい/つい — âm Hán-Việt: đối<br>• 策（さく）: kế sách, biện pháp → âm on: さく — âm Hán-Việt: sách<br><br>Chú ý: 策 đọc là <strong>さく</strong>. Không nhầm với 積（せき）hay âm khác.<br><br>• <strong>たいせき（体積）</strong>: thể tích — 積 khác chữ.<br>• <strong>たいむち / たいもく</strong>: むち và もく không phải âm on của 策.<div class="tip">💡 対策（たいさく）= biện pháp đối phó — 対策を立てる（lập biện pháp）; cf. 政策（せいさく）= chính sách</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "彼女は<u><strong>じかんわり</strong></u>を説明しながら、案内図にそれぞれの教室への行き方をマーカーで書き入れると、細長い紙切れをくれた。\n\n「じかんわり」の漢字は？",
+    vocab: [
+      { word: "案内図", reading: "あんないず", type: "Danh từ", meaning: "Sơ đồ hướng dẫn, bản đồ chỉ dẫn", example: "案内図を確認する。\n(Kiểm tra sơ đồ hướng dẫn.)" },
+      { word: "細長い", reading: "ほそながい", type: "Tính từ -i", meaning: "Dài và mảnh, thon dài", example: "細長い廊下。\n(Hành lang dài và hẹp.)" },
+    ],
+    choices: ["時間割", "時間憲", "時間轄", "時間害"],
+    answer: 0,
+    explanation: `<strong>時間割（じかんわり）</strong> — thời khóa biểu, lịch học.<br><br>• 時間（じかん）: thời gian<br>• 割（わり）: phân chia, phân bổ → âm on: かつ, âm kun: わ(る/り) — âm Hán-Việt: hoạt<br>• 時間割 = thời gian được phân chia → thời khóa biểu<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>憲（けん）</strong>: hiến pháp — わり không phải âm của 憲.<br>• <strong>轄（かつ）</strong>: quản hạt, phụ trách — わり không phải âm của 轄.<br>• <strong>害（がい）</strong>: tổn hại — わり không phải âm của 害.<div class="tip">💡 時間割（じかんわり）= thời khóa biểu — 時間割を確認する（kiểm tra thời khóa biểu）</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "需要が刺激された上、違法な象牙を合法と<u><strong>装って</strong></u>取引しやすくなった。\n\n「装って」の読み方は？",
+    vocab: [
+      { word: "刺激", reading: "しげき", type: "Danh từ・Suru動詞", meaning: "Kích thích, gây hứng khởi", example: "好奇心を刺激する。\n(Kích thích tính tò mò.)" },
+      { word: "象牙", reading: "ぞうげ", type: "Danh từ", meaning: "Ngà voi", example: "象牙の取引を禁止する。\n(Cấm buôn bán ngà voi.)" },
+      { word: "合法", reading: "ごうほう", type: "Tính từ -na", meaning: "Hợp pháp", example: "合法的な手段を使う。\n(Dùng biện pháp hợp pháp.)" },
+    ],
+    choices: ["あって", "きそって", "よそおって", "あじわって"],
+    answer: 2,
+    explanation: `<strong>装って（よそおって）</strong> — giả vờ, giả trang, che đậy.<br><br>• 装（よそお）う: ăn mặc, trang điểm; giả vờ → âm on: そう/しょう, âm kun: よそお(う) — âm Hán-Việt: trang<br>• 合法と装う = giả vờ là hợp pháp, giả trang thành hợp lệ<br><br>Phân biệt với các cách đọc sai:<br>• <strong>あって（有って/会って）</strong>: có / gặp — chữ khác.<br>• <strong>きそって（競って）</strong>: cạnh tranh, ganh đua — chữ khác (競).<br>• <strong>あじわって（味わって）</strong>: thưởng thức, nếm — chữ khác (味).<div class="tip">💡 装う（よそおう）= giả vờ, trang phục — 善人を装う（giả vờ là người tốt）; cf. 装置（そうち）= thiết bị, 服装（ふくそう）= trang phục</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "早稲田大学は<u><strong>しりつ</strong></u>で学費も安くない。\n\n「しりつ」の漢字は？",
+    vocab: [
+      { word: "学費", reading: "がくひ", type: "Danh từ", meaning: "Học phí", example: "学費が高い。\n(Học phí cao.)" },
+    ],
+    choices: ["秩立", "私立", "称立", "秋立"],
+    answer: 1,
+    explanation: `<strong>私立（しりつ）</strong> — tư lập, do tư nhân thành lập.<br><br>• 私（し/わたし）: riêng tư, cá nhân → âm on: し — âm Hán-Việt: tư<br>• 立（りつ）: lập, thành lập → âm on: りつ/りゅう — âm Hán-Việt: lập<br><br>Chú ý: 私立（しりつ）phát âm giống 市立（しりつ）= thành phố thành lập → để phân biệt trong hội thoại, 私立 thường đọc là <strong>わたくしりつ</strong>.<br><br>• <strong>秩（ちつ）</strong>: trật tự — し không phải âm của 秩.<br>• <strong>称（しょう）</strong>: danh hiệu — し không phải âm on của 称.<br>• <strong>秋（しゅう/あき）</strong>: mùa thu — し không phải âm của 秋.<div class="tip">💡 私立（しりつ）= tư lập ↔ 国立（こくりつ）= quốc lập, 公立（こうりつ）= công lập, 市立（しりつ）= thành phố thành lập</div>`,
+  },
+  ]
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>
