@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 読解 Bài 3</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+<style>
+.reading-passage {
+  background: var(--surface, #f8f8f8);
+  border-left: 3px solid var(--accent, #e85d04);
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  font-size: 0.88em;
+  line-height: 1.8;
+  color: var(--text, #222);
+}
+.reading-passage .passage-label {
+  font-size: 0.78em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent, #e85d04);
+  margin-bottom: 6px;
+  display: block;
+}
+.blank-box {
+  display: inline-block;
+  background: #fff3e0;
+  border: 2px solid var(--accent, #e85d04);
+  border-radius: 4px;
+  padding: 1px 10px;
+  font-weight: 700;
+  color: var(--accent, #e85d04);
+}
+.reading-question {
+  font-weight: 600;
+  margin-top: 10px;
+  font-size: 0.95em;
+}
+</style>
+</head>
+<body>
+
+<header data-bg-char="読">
+  <div class="header-badge">N2 JLPT • ĐỌC HIỂU ③</div>
+  <h1>N2 読解<span>クイズ</span>③</h1>
+  <p class="sub">Trắc nghiệm đọc hiểu N2 · Bài 3 · Điền vào chỗ trống · 5 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 5</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/5</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 5,
+  questions: [
+  {
+    tag: "ĐỌC HIỂU • N2 • Điền vào chỗ trống",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 Đoạn 1 — Tuổi thọ của nhà ở Nhật Bản</span>
+日本で町を見渡してみると、頑丈そうな建物が並んでいます。ところが、ある調査によると日本の家の平均寿命は、英国77年、米国55年に比べて短く30年ほどだそうです。<span class="blank-box">１</span>結果になったのでしょうか。
+</div>
+<div class="reading-question">問1：<span class="blank-box">１</span> に入る最もよいものはどれか。</div>`,
+    vocab: [
+      { word: "見渡す", reading: "みわたす", type: "Động từ nhóm 1", meaning: "Nhìn bao quát, phóng tầm mắt", example: "町を見渡す。\n(Nhìn bao quát thành phố.)" },
+      { word: "頑丈", reading: "がんじょう", type: "Tính từ -na", meaning: "Chắc chắn, bền vững, kiên cố", example: "頑丈な建物。\n(Tòa nhà kiên cố.)" },
+      { word: "平均寿命", reading: "へいきんじゅみょう", type: "Danh từ", meaning: "Tuổi thọ trung bình", example: "平均寿命が延びる。\n(Tuổi thọ trung bình tăng lên.)" },
+    ],
+    choices: [
+      "なぜこのような",
+      "なぜあのような",
+      "果してどのような",
+      "はたしてそのような"
+    ],
+    answer: 0,
+    explanation: `<strong>正解：①</strong> なぜこのような<br><br>
+空欄の直前で「英国77年・米国55年に比べて短く30年ほど」という具体的な数字の結果が示されています。「このような結果」は<strong>直前で述べた内容</strong>（近距離の情報）を指すのに使う指示語「こ」系が適切です。<br><br>
+また文脈から「なぜ～結果になったのでしょうか」と問題提起する文が自然です。<br><br>
+• ②「あのような」：「あ」系は話し手・聞き手の両方から遠い情報を指す→直前の内容には不自然。<br>
+• ③「果してどのような」：「どのような」は内容が不明な時に使う→直前に内容が明示されているので不自然。<br>
+• ④「はたしてそのような」：「そ」系は相手の話や少し前に述べたことを指す→文脈上、直後に「なったのでしょうか」と疑問が続くため、「はたして～か」という構造にはなるが、「そのような」より「このような」の方がより直前の内容を自然に受ける。<div class="tip">💡 指示語の使い分け：「こ」=直近・話者の近く / 「そ」=相手側・少し前 / 「あ」=両者から遠い / 「ど」=不明</div>`,
+  },
+  {
+    tag: "ĐỌC HIỂU • N2 • Điền vào chỗ trống",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 Đoạn 2 — Nguyên nhân 1: Hoàn cảnh nhà ở thời hậu chiến</span>
+第二次世界大戦後、日本では、家不足が深刻だったため、質より量を優先させて家が作られました。しかし、経済が成長して生活に余裕が生まれると、人々はより質の高い家を求めるようになります。そこで、それまでの家は次々に<span class="blank-box">２</span>そうです。その結果、町には、今のような頑丈そうな質の高い住宅が立ち並ぶことになったのです。
+</div>
+<div class="reading-question">問2：<span class="blank-box">２</span> に入る最もよいものはどれか。</div>`,
+    vocab: [
+      { word: "深刻", reading: "しんこく", type: "Tính từ -na", meaning: "Nghiêm trọng, trầm trọng", example: "深刻な問題。\n(Vấn đề nghiêm trọng.)" },
+      { word: "余裕", reading: "よゆう", type: "Danh từ", meaning: "여유, dư dả,여유", example: "生活に余裕が生まれる。\n(Cuộc sống trở nên dư dả.)" },
+      { word: "次々に", reading: "つぎつぎに", type: "Phó từ", meaning: "Lần lượt, liên tiếp", example: "次々に問題が起きる。\n(Các vấn đề xảy ra liên tiếp.)" },
+    ],
+    choices: [
+      "建て替えていく",
+      "建て替えさせていた",
+      "建て替えさせられている",
+      "建て替えられていった"
+    ],
+    answer: 3,
+    explanation: `<strong>正解：④</strong> 建て替えられていった<br><br>
+この文の主語は「それまでの家」（古い家）です。古い家は人々によって建て替えられる対象なので<strong>受け身形（られる）</strong>が必要です。また「次々に」「その結果…立ち並ぶことになった」という過去の変化の流れを表すので、<strong>過去進行・変化（ていった）</strong>が自然です。<br><br>
+→ 建て替え＋られ（受け身）＋ていった（変化の過去進行）= <strong>建て替えられていった</strong><br><br>
+• ①「建て替えていく」：能動形・現在・未来方向→主語が「家」なので受け身が必要。<br>
+• ②「建て替えさせていた」：使役形→「家が誰かに建て替えさせていた」は意味不明。<br>
+• ③「建て替えさせられている」：使役受け身・現在形→過去の出来事なので不適切。<div class="tip">💡 主語が「物・場所」+「次々に/どんどん」+過去の変化 → 受け身＋ていった（られていった）の組み合わせが定番</div>`,
+  },
+  {
+    tag: "ĐỌC HIỂU • N2 • Điền vào chỗ trống",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 Đoạn 3 — Nguyên nhân 2: Quan niệm về nhà ở</span>
+また、日本人の住宅観も原因として<span class="blank-box">３</span>。日本には、家はそこに住む家族に合わせて建てるという考え方があります。たとえば、将来子供が生まれ家族が増えることを考えて建てた家も、子供が成人して独立してしまうと、夫婦二人だけの生活には合わなくなります。そのため、年をとった夫婦には住むのに適した家へと建て替えるのです。
+</div>
+<div class="reading-question">問3：<span class="blank-box">３</span> に入る最もよいものはどれか。</div>`,
+    vocab: [
+      { word: "住宅観", reading: "じゅうたくかん", type: "Danh từ", meaning: "Quan niệm về nhà ở", example: "住宅観が変わる。\n(Quan niệm về nhà ở thay đổi.)" },
+      { word: "成人", reading: "せいじん", type: "Danh từ・Suru動詞", meaning: "Trưởng thành, người lớn", example: "子供が成人する。\n(Con cái trưởng thành.)" },
+      { word: "独立", reading: "どくりつ", type: "Danh từ・Suru動詞", meaning: "Độc lập, tự lập", example: "子供が独立する。\n(Con cái tự lập.)" },
+    ],
+    choices: [
+      "思われます",
+      "わかります",
+      "考えられます",
+      "調べられます"
+    ],
+    answer: 0,
+    explanation: `<strong>正解：①</strong> 思われます<br><br>
+前段で「原因の一つに…あるようです」と推量表現を使っており、この第３段落も同様に<strong>筆者の推測・見解</strong>として原因を述べています。「思われます」は「（筆者には）そのように思われる」という穏やかな推量・見解の表明で、コラム文体に最も自然です。<br><br>
+• ②「わかります」：断定的すぎる→コラムの推量トーンに合わない。<br>
+• ③「考えられます」：文法的には可能だが、「考えられます」はより客観的・論理的分析に使われる。「思われます」の方が筆者の主観的見解として自然。<br>
+• ④「調べられます」：「調査によって明らかにできる」という意味になり、文脈に合わない。<div class="tip">💡 コラム・エッセイでは「思われます」「ようです」「でしょう」など推量表現で見解を柔らかく述べる</div>`,
+  },
+  {
+    tag: "ĐỌC HIỂU • N2 • Điền vào chỗ trống",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 Đoạn 4 — Kết luận</span>
+<span class="blank-box">４</span>、日本では家を建て替えることが多いために、家の平均寿命が短いという調査結果になったのだと思います。平均寿命30年というのは、30年で壊れてしまうという意味ではないのです。
+</div>
+<div class="reading-question">問4：<span class="blank-box">４</span> に入る最もよいものはどれか。</div>`,
+    vocab: [
+      { word: "調査結果", reading: "ちょうさけっか", type: "Danh từ", meaning: "Kết quả điều tra, kết quả nghiên cứu", example: "調査結果を発表する。\n(Công bố kết quả điều tra.)" },
+      { word: "つまり", reading: "つまり", type: "Liên từ", meaning: "Tức là, nói cách khác, tóm lại", example: "つまり、こういうことだ。\n(Tức là, đây là điều đó.)" },
+    ],
+    choices: [
+      "ところで",
+      "つまり",
+      "なぜなら",
+      "もちろん"
+    ],
+    answer: 1,
+    explanation: `<strong>正解：②</strong> つまり<br><br>
+第２・３段落でそれぞれ「戦後の住宅事情」「日本人の住宅観」という二つの原因を説明してきました。この段落はそれらを<strong>まとめて結論を導く</strong>文です。「つまり」は「前に述べたことを整理して言い換える・結論づける」接続詞で最も適切です。<br><br>
+• ①「ところで」：話題転換の接続詞→結論部分には不自然。<br>
+• ③「なぜなら」：理由を述べる接続詞→この段落は理由ではなく結論。<br>
+• ④「もちろん」：当然のことを述べる副詞→前の説明を踏まえた結論には「つまり」が適切。<div class="tip">💡 接続詞の使い分け：つまり（要約・結論）/ なぜなら（理由）/ ところで（話題転換）/ しかし（逆接）</div>`,
+  },
+  {
+    tag: "ĐỌC HIỂU • N2 • Điền vào chỗ trống",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 Đoạn 4 — Kết thúc bài viết</span>
+もし皆さんが、自分のために、家族のために、日本で家を建てるなら……どんな<span class="blank-box">５</span>。
+</div>
+<div class="reading-question">問5：<span class="blank-box">５</span> に入る最もよいものはどれか。</div>`,
+    vocab: [
+      { word: "皆さん", reading: "みなさん", type: "Danh từ", meaning: "Mọi người, các bạn", example: "皆さんに質問します。\n(Hỏi tất cả mọi người.)" },
+    ],
+    choices: [
+      "家を建てたのですか",
+      "家に住めたのですか",
+      "家を建てますか",
+      "家に住めますか"
+    ],
+    answer: 2,
+    explanation: `<strong>正解：③</strong> 家を建てますか<br><br>
+冒頭の文「もし家を建てるなら、どんな家がいいですか」と対応した<strong>呼応・結びの表現</strong>です。<br>
+• 「もし皆さんが…日本で家を建てるなら」という条件節を受けて「どんな家を建てますか」と問いかけて文章を終えるのが自然です。<br>
+• 文章全体のテーマは「どんな家を建てるか」であり、読者への問いかけで締めくくる構成です。<br><br>
+• ①「家を建てたのですか」：過去形→「これから建てるなら」という文脈に合わない。<br>
+• ②「家に住めたのですか」：過去・可能・住む→テーマが「建てる」なのに「住む」は不自然。<br>
+• ④「家に住めますか」：可能・住む→「建てるなら」という文脈に対して「住む」は主題とズレる。<div class="tip">💡 文章の冒頭「もし家を建てるなら、どんな家がいいですか」と末尾を対応させる → 「家を建てますか」でテーマを締める</div>`,
+  },
+  ]
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

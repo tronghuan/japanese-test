@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 読解 Bài 4</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+<style>
+.reading-passage {
+  background: var(--surface, #f8f8f8);
+  border-left: 3px solid var(--accent, #e85d04);
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  font-size: 0.88em;
+  line-height: 1.8;
+  color: var(--text, #222);
+}
+.reading-passage .passage-label {
+  font-size: 0.78em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent, #e85d04);
+  margin-bottom: 6px;
+  display: block;
+}
+.reading-note {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed #ccc;
+  font-size: 0.85em;
+  color: #555;
+  line-height: 1.7;
+}
+.reading-question {
+  font-weight: 600;
+  margin-top: 10px;
+  font-size: 0.95em;
+}
+</style>
+</head>
+<body>
+
+<header data-bg-char="読">
+  <div class="header-badge">N2 JLPT • ĐỌC HIỂU ④</div>
+  <h1>N2 読解<span>クイズ</span>④</h1>
+  <p class="sub">Trắc nghiệm đọc hiểu N2 · Bài 4 · Đọc hiểu tổng hợp · 5 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 5</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/5</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 5,
+  questions: [
+  {
+    tag: "ĐỌC HIỂU • N2 • Đọc Hiểu 1",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 Đoạn 1 — Chào hỏi của chó</span>
+イヌの散歩をしていると、最近ではイヌも挨拶の仕方を忘れてしまったのではないかと思ってしまいます。集団行動を経験したことがあるイヌ、もしくは、飼い主からイヌらしい教育を受けて順位制を感じることができるようになったイヌは、道でほかのイヌにすれ違い近づいたときには挨拶らしいことをします。ところが、集団行動の経験もなく、家でも甘やかされて育ったイヌは、現代のヒト社会のように挨拶をしないように見えます。挨拶をするイヌが、ほかの挨拶なしのイヌに対して威嚇することが観察されます。ところが、この挨拶犬が子イヌと遭遇したときには、子イヌが挨拶をできなくても威嚇をしないことが多いのです。挨拶犬にとって子イヌであるというシグナルがなんなのかわかりませんが、とにかく子イヌと成犬とを区別したうえで挨拶のあるなしを判断しているようです。<br><br>
+イヌの挨拶行動は、生得的あるいは習得的（学習的）のどちらでしょうか？順位制にしたがった行動ができるようになったイヌでは、イヌ社会での経験がなくてもある程度の挨拶行動ができることから、生得的であるといえます。また、より儀式的な挨拶行動が円滑に実行されるためには、ほかのイヌとの集団生活があったほうがよいことから、習得的な部分もあるといえるでしょう。
+<div class="reading-note">
+（注1）もしくは：または<br>
+（注2）順位制：上下関係にもとづいてできた順序の決まり<br>
+（注3）威嚇する：ここでは、ほえて相手を怖がらせる<br>
+（注4）生得的：生まれたときから持っている<br>
+（注5）円滑に：スムーズに、滑らかに
+</div>
+</div>
+<div class="reading-question">問１：この文章によると、挨拶をしない、またはできないイヌはどれか。</div>`,
+    vocab: [
+      { word: "集団行動", reading: "しゅうだんこうどう", type: "Danh từ", meaning: "Hành động tập thể, sinh hoạt tập thể",
+        example: "集団行動を経験したイヌは挨拶ができる。\n(Chó đã trải qua sinh hoạt tập thể biết cách chào hỏi.)" },
+      { word: "飼い主", reading: "かいぬし", type: "Danh từ", meaning: "Chủ nuôi thú cưng",
+        example: "飼い主から教育を受けたイヌは行儀がいい。\n(Chó được chủ nuôi dạy dỗ sẽ có nề nếp.)" },
+      { word: "甘やかす", reading: "あまやかす", type: "Động từ", meaning: "Nuông chiều, cưng chiều",
+        example: "甘やかされて育った子は自己中心的になりやすい。\n(Trẻ được nuông chiều dễ trở nên ích kỷ.)" },
+      { word: "順位制", reading: "じゅんいせい", type: "Danh từ", meaning: "Hệ thống thứ bậc, trật tự thứ hạng",
+        example: "犬社会には順位制がある。\n(Trong xã hội loài chó có hệ thống thứ bậc.)" }
+    ],
+    choices: [
+      "子イヌと成犬を区別できないイヌ",
+      "挨拶をしない親イヌに育てられた子イヌ",
+      "他のイヌと一緒に生活をしたことがあるイヌ",
+      "イヌ社会の経験も飼い主による教育もないイヌ"
+    ],
+    answer: 3,
+    explanation: `<strong>正解：④</strong> イヌ社会の経験も飼い主による教育もないイヌ<br><br>
+本文によると、挨拶をするイヌの条件は2つです：<br>
+① 集団行動の経験があるイヌ<br>
+② 飼い主からイヌらしい教育を受けて順位制を感じられるようになったイヌ<br><br>
+「集団行動の経験もなく、家でも甘やかされて育ったイヌは現代のヒト社会のように挨拶をしないように見えます」という記述から、<strong>どちらの条件も満たさないイヌ</strong>が挨拶をしない・できないイヌです。<br><br>
+❌ ① → 本文は「子イヌと成犬を区別できる」と述べているので誤り<br>
+❌ ② → 親イヌの挨拶行動が影響するとは述べられていない<br>
+❌ ③ → 集団生活経験のあるイヌは挨拶をする側`
+  },
+  {
+    tag: "ĐỌC HIỂU • N2 • Đọc Hiểu 1",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 Đoạn 1 — Chào hỏi của chó</span>
+イヌの散歩をしていると、最近ではイヌも挨拶の仕方を忘れてしまったのではないかと思ってしまいます。集団行動を経験したことがあるイヌ、もしくは、飼い主からイヌらしい教育を受けて順位制を感じることができるようになったイヌは、道でほかのイヌにすれ違い近づいたときには挨拶らしいことをします。ところが、集団行動の経験もなく、家でも甘やかされて育ったイヌは、現代のヒト社会のように挨拶をしないように見えます。挨拶をするイヌが、ほかの挨拶なしのイヌに対して威嚇することが観察されます。ところが、この挨拶犬が子イヌと遭遇したときには、子イヌが挨拶をできなくても威嚇をしないことが多いのです。挨拶犬にとって子イヌであるというシグナルがなんなのかわかりませんが、とにかく子イヌと成犬とを区別したうえで挨拶のあるなしを判断しているようです。<br><br>
+イヌの挨拶行動は、生得的あるいは習得的（学習的）のどちらでしょうか？順位制にしたがった行動ができるようになったイヌでは、イヌ社会での経験がなくてもある程度の挨拶行動ができることから、生得的であるといえます。また、より儀式的な挨拶行動が円滑に実行されるためには、ほかのイヌとの集団生活があったほうがよいことから、習得的な部分もあるといえるでしょう。
+<div class="reading-note">
+（注1）もしくは：または<br>
+（注2）順位制：上下関係にもとづいてできた順序の決まり<br>
+（注3）威嚇する：ここでは、ほえて相手を怖がらせる<br>
+（注4）生得的：生まれたときから持っている<br>
+（注5）円滑に：スムーズに、滑らかに
+</div>
+</div>
+<div class="reading-question">問２：この文章によると、どんなイヌがどんなイヌにほえて、怖がらせるか。</div>`,
+    vocab: [
+      { word: "威嚇", reading: "いかく", type: "Danh từ / Động từ", meaning: "Uy hiếp, đe dọa, doạ nạt",
+        example: "挨拶しないイヌに対して威嚇することがある。\n(Đôi khi chó sẽ đe dọa những con chó không chào.)" },
+      { word: "遭遇", reading: "そうぐう", type: "Danh từ / Động từ", meaning: "Chạm trán, tình cờ gặp",
+        example: "子イヌと遭遇しても威嚇しないことが多い。\n(Khi gặp chó con, chó thường không đe dọa.)" },
+      { word: "成犬", reading: "せいけん", type: "Danh từ", meaning: "Chó trưởng thành",
+        example: "成犬と子イヌでは扱いが異なる。\n(Cách đối xử với chó trưởng thành và chó con là khác nhau.)" },
+      { word: "区別", reading: "くべつ", type: "Danh từ / Động từ", meaning: "Phân biệt, phân loại",
+        example: "子イヌと成犬を区別して判断している。\n(Chó phân biệt chó con và chó trưởng thành để xử lý.)" }
+    ],
+    choices: [
+      "挨拶できるイヌが挨拶しない成犬に",
+      "挨拶できるイヌが挨拶しない子イヌに",
+      "挨拶できないイヌが挨拶する成犬に",
+      "挨拶できないイヌが挨拶する子イヌに"
+    ],
+    answer: 0,
+    explanation: `<strong>正解：①</strong> 挨拶できるイヌが挨拶しない成犬に<br><br>
+本文に「挨拶をするイヌが、ほかの挨拶なしのイヌに対して威嚇することが観察されます」とあります。<br><br>
+また、「この挨拶犬が子イヌと遭遇したときには、子イヌが挨拶をできなくても威嚇をしないことが多い」という記述から、<strong>挨拶できるイヌが威嚇するのは子イヌではなく成犬（大人のイヌ）</strong>に対してです。<br><br>
+❌ ② → 子イヌに対しては威嚇しない<br>
+❌ ③④ → 威嚇するのは挨拶「できる」イヌの方`
+  },
+  {
+    tag: "ĐỌC HIỂU • N2 • Đọc Hiểu 1",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 Đoạn 1 — Chào hỏi của chó</span>
+イヌの散歩をしていると、最近ではイヌも挨拶の仕方を忘れてしまったのではないかと思ってしまいます。集団行動を経験したことがあるイヌ、もしくは、飼い主からイヌらしい教育を受けて順位制を感じることができるようになったイヌは、道でほかのイヌにすれ違い近づいたときには挨拶らしいことをします。ところが、集団行動の経験もなく、家でも甘やかされて育ったイヌは、現代のヒト社会のように挨拶をしないように見えます。挨拶をするイヌが、ほかの挨拶なしのイヌに対して威嚇することが観察されます。ところが、この挨拶犬が子イヌと遭遇したときには、子イヌが挨拶をできなくても威嚇をしないことが多いのです。挨拶犬にとって子イヌであるというシグナルがなんなのかわかりませんが、とにかく子イヌと成犬とを区別したうえで挨拶のあるなしを判断しているようです。<br><br>
+イヌの挨拶行動は、生得的あるいは習得的（学習的）のどちらでしょうか？順位制にしたがった行動ができるようになったイヌでは、イヌ社会での経験がなくてもある程度の挨拶行動ができることから、生得的であるといえます。また、より儀式的な挨拶行動が円滑に実行されるためには、ほかのイヌとの集団生活があったほうがよいことから、習得的な部分もあるといえるでしょう。
+<div class="reading-note">
+（注4）生得的：生まれたときから持っている<br>
+（注5）円滑に：スムーズに、滑らかに
+</div>
+</div>
+<div class="reading-question">問３：筆者は、イヌの挨拶行動についてどのように述べているか。</div>`,
+    vocab: [
+      { word: "生得的", reading: "せいとくてき", type: "Danh từ", meaning: "Bẩm sinh, tự nhiên, thiên bẩm",
+        example: "生得的な能力は生まれながらに備わっている。\n(Năng lực bẩm sinh là thứ có sẵn từ khi sinh ra.)" },
+      { word: "習得", reading: "しゅうとく", type: "Danh từ / Động từ", meaning: "Học được, tiếp thu, rèn luyện",
+        example: "言語は習得的に身につけるものだ。\n(Ngôn ngữ là thứ được tiếp thu qua học tập.)" },
+      { word: "ある程度", reading: "あるていど", type: "Phó từ", meaning: "Ở mức độ nào đó, phần nào",
+        example: "経験がなくてもある程度はできる。\n(Dù không có kinh nghiệm cũng làm được ở mức độ nào đó.)" },
+      { word: "円滑に", reading: "えんかつに", type: "Phó từ", meaning: "Trôi chảy, suôn sẻ",
+        example: "集団生活があると円滑に実行できる。\n(Nếu có kinh nghiệm sống tập thể sẽ thực hiện được trôi chảy hơn.)" }
+    ],
+    choices: [
+      "イヌ社会での経験より飼い主の教育があったほうが、スムーズにできる。",
+      "イヌ社会での経験は必ずしも必要ではないが、あればスムーズにできる。",
+      "イヌ社会での集団生活と飼い主の教育によって初めて習得できるものだ。",
+      "イヌ社会での集団生活を経験することによって始めて習得できるものだ。"
+    ],
+    answer: 1,
+    explanation: `<strong>正解：②</strong> イヌ社会での経験は必ずしも必要ではないが、あればスムーズにできる。<br><br>
+筆者の主張をまとめると：<br>
+・「イヌ社会での経験がなくてもある程度の挨拶行動ができる」→ <strong>生得的な部分がある</strong>（経験が必ずしも必要ではない）<br>
+・「ほかのイヌとの集団生活があったほうがよい」→ <strong>習得的な部分もある</strong>（あればよりスムーズ）<br><br>
+この2点から、②が最も正確です。<br><br>
+❌ ① → 飼い主の教育と集団経験を比較した記述はない<br>
+❌ ③ → 「初めて」習得できるとは述べていない（経験なしでもある程度できる）<br>
+❌ ④ → 「集団生活のみ」で習得できるとは述べていない`
+  },
+  {
+    tag: "ĐỌC HIỂU • N2 • Đọc Hiểu 2",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 Đoạn A — Quan hệ nơi công sở</span>
+関係の複雑さに驚いているのではないでしょうか。こんなはずではなかったと、抱いていた理想が崩れそうになることがあるかもしれません。特に、自分とは異なる価値観を持った上司や先輩から無理な仕事を頼まれたときなど、強くそう感じることでしょう。時には先輩の言葉についつい反発したくなることもあるでしょう。しかし、そんなときにはまず相手の考え方を受け入れてみてください。信頼関係を築くにはある程度の時間が必要であり、その後で自分の考えを述べればよいのです。それまでは自分を抑えることも大切で、それが社会人としての訓練でもあります。
+<div class="reading-note">（注1）反発する：言い返す</div>
+</div>
+<div class="reading-passage">
+<span class="passage-label">📄 Đoạn B — Tự tin và lắng nghe</span>
+人間にとって心身ともに健康であることが理想的だが、新しく社会に出た若者たちは、時にはうまくいかないことに出会い、自信を失うこともあるだろう。経験から言うと、同僚や先輩の温かい言葉が耳に入らなくなってしまうのは、そういう、自分に自信がなくなったときであることが多い。その結果、今まで築いてきた人間関係まで壊してしまうことさえある。自分の周りの人たちを大切にして、助言を生かしていく気持ちを持つためには、まず自分のこれまでの努力を肯定的にとらえてみよう。結果が完璧でなくても、「よくやった」と自分自身に言えると、他の人の言葉も素直に聞くことができるようになる。
+<div class="reading-note">（注2）助言：アドバイス</div>
+</div>
+<div class="reading-question">問４：A とB に共通して述べられていることは何か。</div>`,
+    vocab: [
+      { word: "理想", reading: "りそう", type: "Danh từ", meaning: "Lý tưởng, mơ ước",
+        example: "抱いていた理想が崩れそうになる。\n(Lý tưởng mà mình ôm ấp dường như sắp sụp đổ.)" },
+      { word: "価値観", reading: "かちかん", type: "Danh từ", meaning: "Quan niệm giá trị, hệ giá trị",
+        example: "異なる価値観を持つ上司と働くのは難しい。\n(Làm việc với cấp trên có quan niệm giá trị khác biệt thật khó.)" },
+      { word: "自信", reading: "じしん", type: "Danh từ", meaning: "Tự tin",
+        example: "失敗して自信を失ってしまった。\n(Vì thất bại mà mất đi sự tự tin.)" },
+      { word: "肯定的", reading: "こうていてき", type: "Tính từ", meaning: "Tích cực, khẳng định",
+        example: "自分の努力を肯定的にとらえよう。\n(Hãy nhìn nhận nỗ lực của bản thân một cách tích cực.)" }
+    ],
+    choices: [
+      "職場での人間関係を大事にするにはどうすればいいか。",
+      "職場で自分の努力を認めてもらうにはどうすればいいか。",
+      "社会人になって職場で自信をなくした時、どうすればいいか。",
+      "社会に出て周囲の人と自分の考えが違った時、どうすればいいか。"
+    ],
+    answer: 2,
+    explanation: `<strong>正解：③</strong> 社会人になって職場で自信をなくした時、どうすればいいか。<br><br>
+AとBに共通するテーマは、<strong>新社会人が職場で困難に直面したとき</strong>にどうすればよいかというアドバイスです。<br><br>
+・A：「こんなはずではなかった」と理想が崩れそうになったとき → まず相手の考えを受け入れる<br>
+・B：「自信を失った」とき → まず自分の努力を肯定的にとらえる<br><br>
+どちらも新社会人が職場で挫折感・自信喪失を感じたときの対処法を述べています。<br><br>
+❌ ① → AとBは「人間関係を大事にする方法」だけを述べているわけではない<br>
+❌ ② → 「努力を認めてもらう」ことが目的ではない<br>
+❌ ④ → Bは価値観の違いではなく自信喪失について述べている`
+  },
+  {
+    tag: "ĐỌC HIỂU • N2 • Đọc Hiểu 2",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 Đoạn A — Quan hệ nơi công sở</span>
+関係の複雑さに驚いているのではないでしょうか。こんなはずではなかったと、抱いていた理想が崩れそうになることがあるかもしれません。特に、自分とは異なる価値観を持った上司や先輩から無理な仕事を頼まれたときなど、強くそう感じることでしょう。時には先輩の言葉についつい反発したくなることもあるでしょう。しかし、そんなときにはまず相手の考え方を受け入れてみてください。信頼関係を築くにはある程度の時間が必要であり、その後で自分の考えを述べればよいのです。それまでは自分を抑えることも大切で、それが社会人としての訓練でもあります。
+<div class="reading-note">（注1）反発する：言い返す</div>
+</div>
+<div class="reading-passage">
+<span class="passage-label">📄 Đoạn B — Tự tin và lắng nghe</span>
+人間にとって心身ともに健康であることが理想的だが、新しく社会に出た若者たちは、時にはうまくいかないことに出会い、自信を失うこともあるだろう。経験から言うと、同僚や先輩の温かい言葉が耳に入らなくなってしまうのは、そういう、自分に自信がなくなったときであることが多い。その結果、今まで築いてきた人間関係まで壊してしまうことさえある。自分の周りの人たちを大切にして、助言を生かしていく気持ちを持つためには、まず自分のこれまでの努力を肯定的にとらえてみよう。結果が完璧でなくても、「よくやった」と自分自身に言えると、他の人の言葉も素直に聞くことができるようになる。
+<div class="reading-note">（注2）助言：アドバイス</div>
+</div>
+<div class="reading-question">問５：A とB では新社会人にどのようにアドバイスをしているか。</div>`,
+    vocab: [
+      { word: "受け入れる", reading: "うけいれる", type: "Động từ", meaning: "Chấp nhận, tiếp nhận",
+        example: "相手の考えをまず受け入れることが大切だ。\n(Điều quan trọng là trước tiên hãy chấp nhận suy nghĩ của đối phương.)" },
+      { word: "信頼関係", reading: "しんらいかんけい", type: "Danh từ", meaning: "Quan hệ tin tưởng, mối quan hệ tín nhiệm",
+        example: "信頼関係を築くには時間が必要だ。\n(Cần có thời gian để xây dựng mối quan hệ tin tưởng.)" },
+      { word: "素直", reading: "すなお", type: "Tính từ", meaning: "Thật thà, ngoan ngoãn, cởi mở",
+        example: "素直に人の言葉を聞くことができるようになった。\n(Đã có thể lắng nghe lời người khác một cách cởi mở.)" },
+      { word: "尊重", reading: "そんちょう", type: "Danh từ / Động từ", meaning: "Tôn trọng, kính trọng",
+        example: "相手の意見を尊重することが大切だ。\n(Việc tôn trọng ý kiến của đối phương là điều quan trọng.)" }
+    ],
+    choices: [
+      "Aでは自分の価値観を重視することが大切だと述べ、Bでは自分の努力してきた姿を振り返ることが大切だと述べている。",
+      "Aでは周りの人に自分の考えを伝えることが大切だと述べ、Bでは相手に認めてもらうことが大切だと述べている。",
+      "Aでは相手の考えを尊重することが大切だと述べ、Bでは自分の努力を認めることが大切だと述べている。",
+      "Aでは相手の意見を認めることが大切だと述べ、Bでは周りの人の言葉を聞くことが大切だと述べている。"
+    ],
+    answer: 3,
+    explanation: `<strong>正解：④</strong> Aでは相手の意見を認めることが大切だと述べ、Bでは周りの人の言葉を聞くことが大切だと述べている。<br><br>
+各文章のアドバイスを確認します：<br><br>
+<strong>A：</strong>「相手の考え方を受け入れてみてください」「信頼関係を築くにはある程度の時間が必要であり、その後で自分の考えを述べればよい」<br>
+→ <strong>相手の意見・考えを認める（受け入れる）</strong>ことが大切<br><br>
+<strong>B：</strong>「他の人の言葉も素直に聞くことができるようになる」「同僚や先輩の温かい言葉を生かしていく」<br>
+→ <strong>周りの人の言葉を聞く</strong>ことが大切<br><br>
+❌ ① → Aは「自分の価値観を重視」ではなく相手を受け入れることを勧めている<br>
+❌ ② → Aは「自分の考えを伝える」より先に受け入れることを、Bは「認めてもらう」ではなく自分が聞くことを述べている<br>
+❌ ③ → ③も近いが、Bは「自分の努力を認める」だけでなく、その結果として「周りの言葉を素直に聞ける」になることを強調している`
+  }
+  ]
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

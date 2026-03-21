@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 読解 Bài 2</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+<style>
+.reading-passage {
+  background: var(--surface, #f8f8f8);
+  border-left: 3px solid var(--accent, #e85d04);
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  font-size: 0.88em;
+  line-height: 1.8;
+  color: var(--text, #222);
+}
+.reading-passage .passage-label {
+  font-size: 0.78em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent, #e85d04);
+  margin-bottom: 6px;
+  display: block;
+}
+.reading-note {
+  font-size: 0.82em;
+  color: #888;
+}
+.reading-question {
+  font-weight: 600;
+  margin-top: 10px;
+  font-size: 0.95em;
+}
+</style>
+</head>
+<body>
+
+<header data-bg-char="読">
+  <div class="header-badge">N2 JLPT • ĐỌC HIỂU ②</div>
+  <h1>N2 読解<span>クイズ</span>②</h1>
+  <p class="sub">Trắc nghiệm đọc hiểu N2 · Bài 2 · 3 đoạn văn · 5 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 5</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/5</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 5,
+  questions: [
+  {
+    tag: "ĐỌC HIỂU • N2 • Đoạn 1",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 ĐOẠN VĂN 1 — Câu 1～3</span>
+これはビジネス文書に限ったことではないのだが、何であれ文書を書いていると、少しばかり緊張感を覚えるものだ。書きながら、頭の中でこんなことを考えている。<br><br>
+　この書き方でいいのかな。<br>
+　これ、ひどく下手な書き方じゃないだろうか。<br>
+　これでわかるかな。<br><br>
+そういう気がしきりに<span class="reading-note">（注1: 何度も）</span>して、ちょっとしたプレッシャーになっている。だからこそ、文章を書くのは苦手だ、と思っている人もいるのじゃないだろうか。<br><br>
+しかし、その逆もまた真である。文章を書く面白さとは、そういうプレッシャーを感じながら、なんとか諸問題をクリアして、一応のものを書き上げることにあるのだ。テレビゲームが楽しいのと同じ理屈<span class="reading-note">（注2: 考え方）</span>である。あれは、攻略する<span class="reading-note">（注3: うまく解決する）</span>のが簡単ではない様々な障害をかわしながら<span class="reading-note">（注4: 避けながら）</span>、次々に問題を解決していって、なんとかクリアしていくところが面白いのである。むずかしいからこそ、うまくやったときに楽しいのだ。<br><br>
+文章を書くのも、<strong>（１）そういうこと</strong>である。これでいいのかな、と一抹の<span class="reading-note">（注5: ほんの少しの）</span>不安を抱えながら、なんとか書いていくってことを楽しまなければならない。<br><br>
+別の言い方にすると、文章というものは、書く人に対して、うまく書いてくれ、と要求してくるのである。なぜなら、文章とは人と人とのコミュニケーションの道具だからだ。この例外は、自分だけにわかればいいメモと、絶対に他人に見せない日記だけである。それ以外の文章は、必ず、書く人間のほかに、<strong>（２）読む人間がいて完成される</strong>のだ。そして、書いた人の伝えたかったことが、読んだ人にちゃんとわかってこそ、文章は役をはたしたことになる。
+</div>
+<div class="reading-question">問1：筆者は、文章を書くときに何が<strong>プレッシャーになっている</strong>と述べているか。</div>`,
+    vocab: [
+      { word: "プレッシャー", reading: "プレッシャー", type: "Danh từ", meaning: "Áp lực, sức ép", example: "プレッシャーを感じる。\n(Cảm thấy áp lực.)" },
+      { word: "一抹の", reading: "いちまつの", type: "Cụm danh từ", meaning: "Một chút, một thoáng (lo lắng)", example: "一抹の不安を覚える。\n(Cảm thấy một chút lo lắng.)" },
+      { word: "要求", reading: "ようきゅう", type: "Danh từ・Suru動詞", meaning: "Yêu cầu, đòi hỏi", example: "高い水準を要求する。\n(Đòi hỏi tiêu chuẩn cao.)" },
+    ],
+    choices: [
+      "このまま最後まで書き上げられるか不安だという気持ち",
+      "読む人が期待する書き方をしているかという気持ち",
+      "自分は字を書くのが下手だから嫌だという気持ち",
+      "書きたいことがうまく書けているかという気持ち"
+    ],
+    answer: 1,
+    explanation: `<strong>正解：②</strong> 読む人が期待する書き方をしているかという気持ち<br><br>
+筆者が書きながら感じるプレッシャーの内容として挙げているのは「この書き方でいいのかな」「ひどく下手な書き方じゃないだろうか」「これでわかるかな」という気持ちです。<br>これらは表面的には「うまく書けているか」の不安ですが、筆者は後段で「文章とは人と人とのコミュニケーションの道具だから、うまく書いてくれと要求してくる」と述べており、<strong>読み手の視点から書けているかどうか</strong>が根本的なプレッシャーだとわかります。<br><br>
+• ①「最後まで書き上げられるか」：本文に該当する記述なし。<br>
+• ③「字を書くのが下手」：「書き方が下手」の話であり「字」の話ではない。<br>
+• ④「書きたいことがうまく書けているか」：一部正しいが、読み手への意識という核心を外している。<div class="tip">💡 「文章とは人と人とのコミュニケーションの道具」→ プレッシャーの本質は「読み手に伝わるか」という点</div>`,
+  },
+  {
+    tag: "ĐỌC HIỂU • N2 • Đoạn 1",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 ĐOẠN VĂN 1 — Câu 1～3（該当箇所）</span>
+文章を書く面白さとは、そういうプレッシャーを感じながら、なんとか諸問題をクリアして、一応のものを<strong>書き上げることにある</strong>のだ。テレビゲームが楽しいのと同じ理屈である。あれは、攻略するのが簡単ではない様々な障害をかわしながら、次々に問題を解決していって、なんとかクリアしていくところが面白いのである。<strong>むずかしいからこそ、うまくやったときに楽しいのだ。</strong><br><br>
+文章を書くのも、<strong>（１）そういうことである。</strong>これでいいのかな、と一抹の不安を抱えながら、なんとか書いていくってことを楽しまなければならない。
+</div>
+<div class="reading-question">問2：<strong>（１）そういうことである</strong>とはどういうことか。</div>`,
+    vocab: [
+      { word: "諸問題", reading: "しょもんだい", type: "Danh từ", meaning: "Nhiều vấn đề, các vấn đề", example: "諸問題を解決する。\n(Giải quyết các vấn đề.)" },
+      { word: "一応", reading: "いちおう", type: "Phó từ", meaning: "Tạm thời, đại khái, dù sao cũng", example: "一応確認しておく。\n(Tạm thời xác nhận trước.)" },
+      { word: "苦労", reading: "くろう", type: "Danh từ・Suru動詞", meaning: "Vất vả, khó khăn, khổ công", example: "苦労して完成させる。\n(Khổ công hoàn thành.)" },
+    ],
+    choices: [
+      "様々な障害をクリアしていくことがむずかしい。",
+      "プレッシャーを忘れ、いろいろ考えるのが楽しい。",
+      "苦労して問題を片付け、課題を仕上げるのが楽しい。",
+      "不安を抱えたままでは問題を解決するのがむずかしい。"
+    ],
+    answer: 2,
+    explanation: `<strong>正解：③</strong> 苦労して問題を片付け、課題を仕上げるのが楽しい。<br><br>
+「そういうこと」は直前の内容を指します。テレビゲームの比喩で「障害をかわしながら問題を解決し、なんとかクリアしていくのが面白い」「むずかしいからこそ、うまくやったときに楽しい」とあります。<br>文章を書くことも同様に、<strong>プレッシャーや不安（苦労）を抱えながら問題を解決し、書き上げる（仕上げる）ことが楽しい</strong>ということです。<br><br>
+• ①「むずかしい」：テレビゲームの例で「むずかしい」とは述べているが、それ自体が楽しいとは言っていない。<br>
+• ②「プレッシャーを忘れ」：本文ではプレッシャーを感じながら楽しむと述べており、忘れるとは述べていない。<br>
+• ④「解決するのがむずかしい」：むずかしい＝楽しいという文脈であり、否定的な意味ではない。<div class="tip">💡 「そういうこと」は直前の内容の言い換え → テレビゲームの比喩（苦労してクリア＝楽しい）を文章執筆に当てはめた内容</div>`,
+  },
+  {
+    tag: "ĐỌC HIỂU • N2 • Đoạn 1",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 ĐOẠN VĂN 1 — Câu 1～3（該当箇所）</span>
+別の言い方にすると、文章というものは、書く人に対して、<strong>うまく書いてくれ、と要求してくる</strong>のである。なぜなら、文章とは人と人とのコミュニケーションの道具だからだ。この例外は、自分だけにわかればいいメモと、絶対に他人に見せない日記だけである。<br><br>
+それ以外の文章は、必ず、書く人間のほかに、<strong>（２）読む人間がいて完成されるのだ。</strong>そして、書いた人の伝えたかったことが、読んだ人にちゃんとわかってこそ、文章は役をはたしたことになる。
+</div>
+<div class="reading-question">問3：<strong>（２）読む人間がいて完成される</strong>とはどういうことか。</div>`,
+    vocab: [
+      { word: "例外", reading: "れいがい", type: "Danh từ", meaning: "Ngoại lệ", example: "例外を認める。\n(Thừa nhận ngoại lệ.)" },
+      { word: "読み手", reading: "よみて", type: "Danh từ", meaning: "Người đọc", example: "読み手の立場で考える。\n(Suy nghĩ từ góc độ người đọc.)" },
+      { word: "成立", reading: "せいりつ", type: "Danh từ・Suru動詞", meaning: "Hình thành, thành lập, tồn tại", example: "条件が成立する。\n(Điều kiện được thỏa mãn.)" },
+    ],
+    choices: [
+      "文章の価値を決めるのは読み手の存在だ。",
+      "文章が成立するには読み手の存在が必要だ。",
+      "文章は人に読まれることでよりよいものになる。",
+      "文章は読み手の要求にこたえることでできあがる。"
+    ],
+    answer: 3,
+    explanation: `<strong>正解：④</strong> 文章は読み手の要求にこたえることでできあがる。<br><br>
+「読む人間がいて完成される」の意味は、直前の「文章というものは、書く人に対して、うまく書いてくれ、と<strong>要求してくる</strong>」という記述と、直後の「書いた人の伝えたかったことが、読んだ人にちゃんとわかってこそ、文章は役をはたしたことになる」から読み解けます。<br>つまり、文章は読み手の要求（うまく伝わること）にこたえることで初めて完成・役割を果たすということです。<br><br>
+• ①「文章の価値を決めるのは読み手」：本文は価値の話ではなく、完成の条件の話。<br>
+• ②「読み手の存在が必要」：一部正しいが、存在するだけでなく「伝わること」が条件。<br>
+• ③「よりよいものになる」：本文の主張は「よりよくなる」ではなく「完成する/役をはたす」。<div class="tip">💡 「～てこそ～になる」→ ～して初めて～という条件を示す表現。「読んだ人にわかってこそ役をはたす」に注目</div>`,
+  },
+  {
+    tag: "ĐỌC HIỂU • N2 • Đoạn 2",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 ĐOẠN VĂN 2 — Câu 4</span>
+大手ハンバーガー店が今月１６日から３０日まで、<strong>新商品がまずかったら全額返金する</strong>というキャンペーン<span class="reading-note">（注: 販売方法）</span>を実施する。通信販売などでは、注文した商品が気に入らなければその代金を客に返金するという保証制度は一般的だが、ハンバーガー店のような外食産業では非常に珍しい試みだ。味への自信を示すことが目的で、全国で一斉に行われる。<strong>返金は当日限りで、期間中１人１回のみ、それから商品を半分以上食べていないことが条件だ。</strong>
+</div>
+<div class="reading-question">問4：大手ハンバーガー店が今月１６日から<strong>実施するのは次のどれか。</strong></div>`,
+    vocab: [
+      { word: "全額返金", reading: "ぜんがくへんきん", type: "Danh từ", meaning: "Hoàn tiền toàn bộ", example: "全額返金を要求する。\n(Yêu cầu hoàn tiền toàn bộ.)" },
+      { word: "一斉に", reading: "いっせいに", type: "Phó từ", meaning: "Đồng thời, cùng một lúc", example: "全国で一斉に始まる。\n(Bắt đầu đồng thời trên toàn quốc.)" },
+      { word: "条件", reading: "じょうけん", type: "Danh từ", meaning: "Điều kiện", example: "条件を満たす。\n(Đáp ứng điều kiện.)" },
+    ],
+    choices: [
+      "新商品がまずければいつでも全額返金する。",
+      "どの商品でもまずければ条件つきで全額返金する。",
+      "新商品の味が気に入らなければ条件つきで全額返金する。",
+      "どの商品でも味が気に入らなければ１回だけ全額返金する。"
+    ],
+    answer: 2,
+    explanation: `<strong>正解：③</strong> 新商品の味が気に入らなければ条件つきで全額返金する。<br><br>
+本文の内容を整理すると：<br>
+• 対象：<strong>新商品</strong>のみ（「どの商品でも」ではない）<br>
+• 条件：当日限り・期間中１人１回のみ・半分以上食べていないこと<br>
+• キャンペーンの目的：味への自信を示す（→「味が気に入らなければ」が正確な表現）<br><br>
+• ①「いつでも」：当日限り・期間中1回のみという条件があるので誤り。<br>
+• ②「どの商品でも」：「新商品」が対象なので誤り。<br>
+• ④「どの商品でも」：対象が新商品に限定されているので誤り。<div class="tip">💡 選択肢の「いつでも」「どの商品でも」「新商品」「条件つき」という細部に注目して本文と照合する</div>`,
+  },
+  {
+    tag: "ĐỌC HIỂU • N2 • Đoạn 3",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 ĐOẠN VĂN 3 — Câu 5</span>
+森はいつも独特な香りに包まれ、さわやかに感じられるが、それはある物質の効果によるものだ。その物質は、木々が動けない体を守るために自ら作り出すもので、<strong>木につく虫や細菌<span class="reading-note">（注: 非常に小さくて目に見えない生物）</span>の増加を防いだり、落ち葉や枯れ木が腐ったときなどに生じる嫌なにおいを消したりする働きを持っている。さらにその物質には、人間の神経を安定させる効果もある</strong>という。私たちが森林に入るとリラックスした気分になるのは、このためだ。
+</div>
+<div class="reading-question">問5：<strong>ある物質の働き</strong>について、この文章からわかることは何か。</div>`,
+    vocab: [
+      { word: "独特", reading: "どくとく", type: "Tính từ -na", meaning: "Độc đáo, đặc trưng riêng", example: "独特な香り。\n(Mùi hương đặc trưng.)" },
+      { word: "神経", reading: "しんけい", type: "Danh từ", meaning: "Thần kinh, cảm giác thần kinh", example: "神経を安定させる。\n(Ổn định thần kinh.)" },
+      { word: "安定", reading: "あんてい", type: "Danh từ・Suru動詞", meaning: "Ổn định", example: "精神が安定する。\n(Tinh thần ổn định.)" },
+    ],
+    choices: [
+      "人間の持つ嫌なにおいを防ぐ。",
+      "人々の気持ちを落ち着かせる。",
+      "落ち葉や枯れ木を腐りにくくする。",
+      "木々がもともと持っているにおいを消す。"
+    ],
+    answer: 1,
+    explanation: `<strong>正解：②</strong> 人々の気持ちを落ち着かせる。<br><br>
+本文には「その物質には、<strong>人間の神経を安定させる効果もある</strong>」とあり、「私たちが森林に入るとリラックスした気分になるのはこのためだ」と続いています。「神経を安定させる」＝「気持ちを落ち着かせる」ということです。<br><br>
+• ①「人間の持つ嫌なにおいを防ぐ」：本文にあるのは「落ち葉や枯れ木が腐ったときに生じる嫌なにおいを消す」であり、人間のにおいの話ではない。<br>
+• ③「落ち葉や枯れ木を腐りにくくする」：本文では「腐ったときのにおいを消す」とあり、腐ること自体を防ぐとは述べていない。<br>
+• ④「木々がもともと持っているにおいを消す」：逆。その物質は木々が作り出す香り（森の香り）の原因であり、消すのは「嫌なにおい」。<div class="tip">💡 「神経を安定させる」＝「気持ちを落ち着かせる」の言い換えに気づくことが鍵</div>`,
+  },
+  ]
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>
