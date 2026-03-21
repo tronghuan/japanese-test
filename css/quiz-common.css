@@ -541,6 +541,18 @@ main {
   box-shadow: 0 6px 20px rgba(192,57,43,0.3);
 }
 
+/* ── MOBILE RESPONSIVE ── */
+@media (max-width: 640px) {
+  main { padding: 0.8rem 0.4rem 3rem; }
+  .back-link { padding: 0.6rem 0.6rem 0; }
+  .progress-wrap { padding: 0 0.6rem; }
+  .q-header { padding: 0.9rem 0.9rem 0.8rem; gap: 0.4rem; flex-direction: column; }
+  .vocab-strip { padding: 0.5rem 0.9rem; }
+  .choices { padding: 0.9rem 0.9rem 0.7rem; }
+  .card-footer { padding: 0.7rem 0.9rem 1rem; }
+  .explanation { margin: 0 0.9rem 0; }
+}
+
 /* ── TOAST ── */
 .toast {
   position: fixed;

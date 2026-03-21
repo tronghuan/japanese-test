@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 読解 Bài 5</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+<style>
+.reading-passage {
+  background: var(--surface, #f8f8f8);
+  border-left: 3px solid var(--accent, #e85d04);
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  font-size: 0.88em;
+  line-height: 1.8;
+  color: var(--text, #222);
+}
+.reading-passage .passage-label {
+  font-size: 0.78em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent, #e85d04);
+  margin-bottom: 6px;
+  display: block;
+}
+.reading-note {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed #ccc;
+  font-size: 0.85em;
+  color: #555;
+  line-height: 1.7;
+}
+.reading-question {
+  font-weight: 600;
+  margin-top: 10px;
+  font-size: 0.95em;
+}
+@media (max-width: 640px) {
+  .reading-passage { padding: 6px 8px; font-size: 0.84em; margin-bottom: 8px; border-radius: 4px; }
+  .reading-note { font-size: 0.79em; }
+  .reading-question { font-size: 0.9em; margin-top: 8px; }
+  .reading-notice { padding: 8px 10px; font-size: 0.84em; }
+}
+.reading-notice {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 14px 16px;
+  font-size: 0.88em;
+  line-height: 1.9;
+  margin-bottom: 14px;
+}
+.reading-notice .notice-title {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.05em;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 6px;
+}
+</style>
+</head>
+<body>
+
+<header data-bg-char="読">
+  <div class="header-badge">N2 JLPT • ĐỌC HIỂU ⑤</div>
+  <h1>N2 読解<span>クイズ</span>⑤</h1>
+  <p class="sub">Trắc nghiệm đọc hiểu N2 · Bài 5 · Đọc hiểu tổng hợp · 5 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 5</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/5</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 5,
+  questions: [
+  {
+    tag: "ĐỌC HIỂU • N2 • Đọc Hiểu 1",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 Đoạn 1 — Hình thức quyên góp mới</span>
+皆さんは寄付をしたことがあるだろうか。異常気象で食べる物が不足して困っている人や、地震で家を失った人のためにわずかながらもお小遣いから寄付した経験を持つ人は多いだろう。その寄付に対する考え方に、今、新しい動きが起こっている。<br><br>
+ある会社では、社員食堂で低カロリーの定食を食べると代金の一部が寄付金となって途上国の子供たちの食生活を支援する、というシステムを取り入れている。社員としては体調管理につながるだけでなく、人を助けることができ、会社としては社員の健康を支えながら社会貢献ができるので、社員にとっても会社にとっても一石二鳥というわけだ。<br><br>
+また、「寄付つき」の商品を販売する企業も増えている。特定の商品を買うと売り上げの一部が寄付されるというもので、他の商品と比べるとやや値段は高いが、商品を買えば、同時に寄付できるという手軽さが消費者に歓迎され、売り上げを伸ばしているという。<br><br>
+これまでの寄付はわざわざ募金の場所へ足を運んだり、銀行からお金を振り込んだりしなければならないものが多く、社会貢献に関心はあっても寄付をするのは面倒だと実際の行動には移さない人も少なくなかった。そこに目をつけたのが新しい寄付の形で、これまでと比べ手軽に寄付できるようになり、社会貢献がしやすくなった。さらに、企業にとっても自社のイメージの向上や売り上げの増加などメリットの多い取り組みとなっている。<br><br>
+このように寄付は慈善のためというばかりでなく、寄付をする側にもプラスになる活動としてとらえ直され始めている。
+<div class="reading-note">（注）途上国：経済成長の途中にある国</div>
+</div>
+<div class="reading-question">問１：社員食堂で低カロリーの定食を食べることがどんな良い結果につながるのか。</div>`,
+    vocab: [
+      { word: "社員食堂", reading: "しゃいんしょくどう", type: "Danh từ", meaning: "Căng-tin nhân viên, nhà ăn công ty",
+        example: "社員食堂で低カロリーの定食を選んだ。\n(Tôi chọn suất ăn ít calo ở căng-tin công ty.)" },
+      { word: "社会貢献", reading: "しゃかいこうけん", type: "Danh từ", meaning: "Đóng góp cho xã hội",
+        example: "企業は社会貢献に力を入れている。\n(Công ty đang chú trọng vào việc đóng góp cho xã hội.)" },
+      { word: "一石二鳥", reading: "いっせきにちょう", type: "Thành ngữ", meaning: "Nhất cử lưỡng tiện, một mũi tên trúng hai đích",
+        example: "運動しながら寄付もできて一石二鳥だ。\n(Vừa tập thể dục vừa quyên góp được — thật nhất cử lưỡng tiện.)" },
+      { word: "支援", reading: "しえん", type: "Danh từ / Động từ", meaning: "Hỗ trợ, viện trợ",
+        example: "途上国の子供たちの食生活を支援する。\n(Hỗ trợ đời sống ăn uống của trẻ em ở các nước đang phát triển.)" }
+    ],
+    choices: [
+      "社員の健康が守られ、社会の役に立つことにもなる。",
+      "社員に定食代の一部が返金され、寄付をする余裕ができる。",
+      "会社で寄付が日常のことになり、食生活に対する意識も高まる。",
+      "会社は社会の役に立つことができ、食堂の経費の節約にもなる。"
+    ],
+    answer: 0,
+    explanation: `<strong>正解：①</strong> 社員の健康が守られ、社会の役に立つことにもなる。<br><br>
+本文に「社員としては体調管理につながるだけでなく、人を助けることができ」とあります。<br>
+・低カロリー定食 → 体調管理（健康維持）<br>
+・定食代の一部が寄付金 → 途上国の子供を支援（社会の役に立つ）<br><br>
+この2点から①が正解です。<br><br>
+❌ ② → 返金されるのではなく、代金の一部が寄付金になる<br>
+❌ ③ → 食生活への意識についての記述はない<br>
+❌ ④ → 経費節約については述べられていない`
+  },
+  {
+    tag: "ĐỌC HIỂU • N2 • Đọc Hiểu 1",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 Đoạn 1 — Hình thức quyên góp mới</span>
+皆さんは寄付をしたことがあるだろうか。異常気象で食べる物が不足して困っている人や、地震で家を失った人のためにわずかながらもお小遣いから寄付した経験を持つ人は多いだろう。その寄付に対する考え方に、今、新しい動きが起こっている。<br><br>
+ある会社では、社員食堂で低カロリーの定食を食べると代金の一部が寄付金となって途上国の子供たちの食生活を支援する、というシステムを取り入れている。社員としては体調管理につながるだけでなく、人を助けることができ、会社としては社員の健康を支えながら社会貢献ができるので、社員にとっても会社にとっても一石二鳥というわけだ。<br><br>
+また、「寄付つき」の商品を販売する企業も増えている。特定の商品を買うと売り上げの一部が寄付されるというもので、他の商品と比べるとやや値段は高いが、商品を買えば、同時に寄付できるという手軽さが消費者に歓迎され、売り上げを伸ばしているという。<br><br>
+これまでの寄付はわざわざ募金の場所へ足を運んだり、銀行からお金を振り込んだりしなければならないものが多く、社会貢献に関心はあっても寄付をするのは面倒だと実際の行動には移さない人も少なくなかった。そこに目をつけたのが新しい寄付の形で、これまでと比べ手軽に寄付できるようになり、社会貢献がしやすくなった。さらに、企業にとっても自社のイメージの向上や売り上げの増加などメリットの多い取り組みとなっている。<br><br>
+このように寄付は慈善のためというばかりでなく、寄付をする側にもプラスになる活動としてとらえ直され始めている。
+<div class="reading-note">（注）途上国：経済成長の途中にある国</div>
+</div>
+<div class="reading-question">問２：この文章では、これまでの寄付にはどのような問題があったと述べているか。</div>`,
+    vocab: [
+      { word: "わざわざ", reading: "わざわざ", type: "Phó từ", meaning: "Đặc biệt đi ra ngoài để làm gì, cất công",
+        example: "わざわざ募金の場所へ足を運ばなければならない。\n(Phải cất công đến tận nơi gây quỹ.)" },
+      { word: "募金", reading: "ぼきん", type: "Danh từ / Động từ", meaning: "Gây quỹ, quyên góp",
+        example: "街頭で募金活動をしている。\n(Đang tổ chức gây quỹ trên đường phố.)" },
+      { word: "振り込む", reading: "ふりこむ", type: "Động từ", meaning: "Chuyển khoản ngân hàng",
+        example: "銀行からお金を振り込む必要がある。\n(Cần phải chuyển tiền qua ngân hàng.)" },
+      { word: "面倒", reading: "めんどう", type: "Tính từ", meaning: "Phiền phức, rắc rối, mất công",
+        example: "手続きが面倒で寄付をしない人が多い。\n(Nhiều người không quyên góp vì thủ tục phiền phức.)" }
+    ],
+    choices: [
+      "寄付をする方法があまり知られていない。",
+      "寄付をすることが社会的に評価されにくい。",
+      "寄付をするのに手間がかかるシステムである。",
+      "寄付をするためには経済的に余裕がなければならない。"
+    ],
+    answer: 2,
+    explanation: `<strong>正解：③</strong> 寄付をするのに手間がかかるシステムである。<br><br>
+本文に「わざわざ募金の場所へ足を運んだり、銀行からお金を振り込んだりしなければならない」「寄付をするのは面倒だと実際の行動には移さない人も少なくなかった」とあります。<br><br>
+つまり、従来の寄付は<strong>手間がかかる（面倒なシステム）</strong>という問題がありました。<br><br>
+❌ ① → 方法が知られていないとは述べていない<br>
+❌ ② → 社会的評価についての記述はない<br>
+❌ ④ → 経済的余裕についての記述はない`
+  },
+  {
+    tag: "ĐỌC HIỂU • N2 • Đọc Hiểu 1",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 Đoạn 1 — Hình thức quyên góp mới</span>
+皆さんは寄付をしたことがあるだろうか。異常気象で食べる物が不足して困っている人や、地震で家を失った人のためにわずかながらもお小遣いから寄付した経験を持つ人は多いだろう。その寄付に対する考え方に、今、新しい動きが起こっている。<br><br>
+ある会社では、社員食堂で低カロリーの定食を食べると代金の一部が寄付金となって途上国の子供たちの食生活を支援する、というシステムを取り入れている。社員としては体調管理につながるだけでなく、人を助けることができ、会社としては社員の健康を支えながら社会貢献ができるので、社員にとっても会社にとっても一石二鳥というわけだ。<br><br>
+また、「寄付つき」の商品を販売する企業も増えている。特定の商品を買うと売り上げの一部が寄付されるというもので、他の商品と比べるとやや値段は高いが、商品を買えば、同時に寄付できるという手軽さが消費者に歓迎され、売り上げを伸ばしているという。<br><br>
+これまでの寄付はわざわざ募金の場所へ足を運んだり、銀行からお金を振り込んだりしなければならないものが多く、社会貢献に関心はあっても寄付をするのは面倒だと実際の行動には移さない人も少なくなかった。そこに目をつけたのが新しい寄付の形で、これまでと比べ手軽に寄付できるようになり、社会貢献がしやすくなった。さらに、企業にとっても自社のイメージの向上や売り上げの増加などメリットの多い取り組みとなっている。<br><br>
+このように寄付は慈善のためというばかりでなく、寄付をする側にもプラスになる活動としてとらえ直され始めている。
+<div class="reading-note">（注）途上国：経済成長の途中にある国</div>
+</div>
+<div class="reading-question">問３：この文章における新しい寄付とはどういうものか。</div>`,
+    vocab: [
+      { word: "手軽", reading: "てがる", type: "Tính từ", meaning: "Dễ dàng, tiện lợi, không cần cầu kỳ",
+        example: "手軽に寄付できる仕組みが広まっている。\n(Cơ chế quyên góp dễ dàng đang được phổ biến.)" },
+      { word: "消費者", reading: "しょうひしゃ", type: "Danh từ", meaning: "Người tiêu dùng",
+        example: "消費者に歓迎されている新商品だ。\n(Đây là sản phẩm mới được người tiêu dùng đón nhận.)" },
+      { word: "企業", reading: "きぎょう", type: "Danh từ", meaning: "Doanh nghiệp, công ty",
+        example: "寄付つき商品を販売する企業が増えている。\n(Ngày càng có nhiều doanh nghiệp bán sản phẩm kèm quyên góp.)" },
+      { word: "慈善", reading: "じぜん", type: "Danh từ", meaning: "Từ thiện",
+        example: "寄付は慈善のためだけではない。\n(Quyên góp không chỉ đơn thuần là từ thiện.)" }
+    ],
+    choices: [
+      "企業が社員や消費者の意思にかかわりなく積極的に行うもの",
+      "企業が慈善事業のためではなく利益を上げるために行うもの",
+      "社員や消費者が手軽に寄付ができて企業側にも利点があるもの",
+      "社員や消費者が気がつかないうちに社会貢献に参加できるもの"
+    ],
+    answer: 2,
+    explanation: `<strong>正解：③</strong> 社員や消費者が手軽に寄付ができて企業側にも利点があるもの<br><br>
+新しい寄付の特徴：<br>
+・社員・消費者にとって：「手軽に寄付できるようになり、社会貢献がしやすくなった」<br>
+・企業にとって：「自社のイメージの向上や売り上げの増加などメリットの多い取り組み」<br><br>
+両者にとってプラスになるものが新しい寄付の形です。③がこれを正確に表しています。<br><br>
+❌ ① → 「意思にかかわりなく」は誤り。社員や消費者が選択している<br>
+❌ ② → 利益のためだけではなく、慈善と利益の両立が特徴<br>
+❌ ④ → 「気がつかないうちに」は誤り。意識的な選択として行われている`
+  },
+  {
+    tag: "ĐỌC HIỂU • N2 • Đọc Hiểu 2",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 Đoạn 2 — Nhiếp ảnh là biểu đạt 50/50</span>
+写真家の北井一夫さんから教えてもらったことでもあるのだが、僕は写真は50:50の表現物だと思っている。カメラを間に置いた向こう側とぼくとの表現性が、フィフティ・フィフティの割合で成り立っている。つまり100パーセント僕の表現だと恐れ多くていえないのだ。向こう側が表現しているものをカメラでサッと横取りしているにすぎない。でも一方で、その表現だと認めてカメラを向ける僕がいるからこそ、向こう側の表現が生かされて像に結実するわけだ。
+<div class="reading-note">
+（注1）フィフティ・フィフティ：50対50、半分ずつ<br>
+（注2）横取りして：奪う<br>
+（注3）～に結実する：～として完成する
+</div>
+</div>
+<div class="reading-question">問４：筆者は写真をどのようにとらえているか。</div>`,
+    vocab: [
+      { word: "写真家", reading: "しゃしんか", type: "Danh từ", meaning: "Nhiếp ảnh gia",
+        example: "有名な写真家から撮影の技術を学んだ。\n(Tôi đã học kỹ thuật chụp ảnh từ một nhiếp ảnh gia nổi tiếng.)" },
+      { word: "割合", reading: "わりあい", type: "Danh từ", meaning: "Tỉ lệ, tỉ số",
+        example: "表現性が半分ずつの割合で成り立っている。\n(Tính biểu đạt được hình thành theo tỉ lệ mỗi bên một nửa.)" },
+      { word: "結実", reading: "けつじつ", type: "Danh từ / Động từ", meaning: "Đơm hoa kết trái, hoàn thành, ra kết quả",
+        example: "向こう側の表現が像に結実する。\n(Sự biểu đạt từ phía bên kia kết thành hình ảnh hoàn chỉnh.)" },
+      { word: "横取り", reading: "よこどり", type: "Danh từ / Động từ", meaning: "Giật lấy, chiếm đoạt",
+        example: "向こう側の表現をカメラで横取りしているにすぎない。\n(Chẳng qua chỉ là đang dùng máy ảnh giật lấy sự biểu đạt từ phía bên kia.)" }
+    ],
+    choices: [
+      "写真家が写される側に刺激されて表現したもの",
+      "写真家が主体的に対象を選んで表現したもの",
+      "写真家が対象を偶然にとらえて表現したもの",
+      "写真家が写される側と共に表現したもの"
+    ],
+    answer: 3,
+    explanation: `<strong>正解：④</strong> 写真家が写される側と共に表現したもの<br><br>
+筆者は写真を「50:50の表現物」ととらえています：<br>
+・「向こう側（写される対象）」の表現 → 50%<br>
+・「カメラを向ける自分（写真家）」の表現 → 50%<br><br>
+「向こう側の表現が生かされて像に結実する」という言葉から、写真は<strong>写す側と写される側が共に作り上げるもの</strong>だという主張がわかります。<br><br>
+❌ ① → 「刺激されて」という表現は本文にない<br>
+❌ ② → 「主体的に」は誤り。向こう側の表現を「横取り」しているだけとも述べている<br>
+❌ ③ → 「偶然に」は述べられていない`
+  },
+  {
+    tag: "ĐỌC HIỂU • N2 • Đọc Hiểu 3",
+    text: `<div class="reading-notice">
+<div class="notice-title">ご案内</div>
+本日は東西インテリア新作ベッド発表会にご来場くださり、まことにありがとうございます。<br><br>
+商品購入をご希望のお客様は、受付でお渡ししたご来場者カードに<strong>商品番号をご記入</strong>いただき、販売スタッフにお渡しください。販売スタッフが<strong>お届け先やご希望日をお伺い</strong>し、その後、<strong>お会計</strong>となります。なお、その際に<strong>会員証を提示</strong>されますと５％割引とさせていただきます。<br><br>
+何かご不明な点がございましたら、お気軽に販売スタッフにお声をおかけください。
+<div class="reading-note">
+（注1）購入：買うこと<br>
+（注2）提示する：見せる
+</div>
+</div>
+<div class="reading-question">問５：商品を買いたい場合はどうすればいいか。</div>`,
+    vocab: [
+      { word: "来場者", reading: "らいじょうしゃ", type: "Danh từ", meaning: "Người tham dự, khách đến thăm",
+        example: "来場者カードに商品番号を記入してください。\n(Vui lòng ghi số sản phẩm vào phiếu của người tham dự.)" },
+      { word: "届け先", reading: "とどけさき", type: "Danh từ", meaning: "Địa chỉ giao hàng",
+        example: "スタッフがお届け先を確認します。\n(Nhân viên sẽ xác nhận địa chỉ giao hàng.)" },
+      { word: "会計", reading: "かいけい", type: "Danh từ", meaning: "Thanh toán, tính tiền",
+        example: "配達の確認後、お会計となります。\n(Sau khi xác nhận giao hàng, sẽ tiến hành thanh toán.)" },
+      { word: "会員証", reading: "かいいんしょう", type: "Danh từ", meaning: "Thẻ hội viên",
+        example: "会員証を提示すると５％割引になる。\n(Xuất trình thẻ hội viên sẽ được giảm 5%.)" }
+    ],
+    choices: [
+      "来場者カードに商品番号と届け先および希望日を記入して販売スタッフに渡した後、代金を支払う。",
+      "来場者カードに商品番号と配達希望日を記入して販売スタッフに渡し、商品が自宅に届いたときに代金を支払う。",
+      "商品番号と希望日などを書いた来場者カードを販売スタッフに渡し、商品を届けてもらった後で代金を支払う。",
+      "商品番号を書いた来場者カードを販売スタッフに渡して配達日などを確認した後、代金を支払う。"
+    ],
+    answer: 3,
+    explanation: `<strong>正解：④</strong> 商品番号を書いた来場者カードを販売スタッフに渡して配達日などを確認した後、代金を支払う。<br><br>
+案内に書かれた手順：<br>
+① 来場者カードに<strong>商品番号を記入</strong>する<br>
+② 販売スタッフにカードを渡す<br>
+③ スタッフが<strong>お届け先やご希望日をお伺い</strong>する（お客様ではなくスタッフが確認）<br>
+④ <strong>お会計</strong>（支払い）<br><br>
+❌ ① → 「届け先および希望日」はお客様がカードに記入するのではなく、スタッフが口頭で確認する<br>
+❌ ② → 支払いは商品到着後ではなく、確認後すぐ（お会計）<br>
+❌ ③ → 希望日などはカードに書くのではなく、スタッフが伺う`
+  }
+  ]
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>
