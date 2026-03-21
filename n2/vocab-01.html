@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 1</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ①</div>
+  <h1>N2 語彙<span>クイズ</span>①</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 1 · 12 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 12</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/12</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 12,
+  questions: [
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `若い大統領には経験不足という <span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> がある。`,
+    vocab: [
+      { word: "大統領", reading: "だいとうりょう", type: "Danh từ", meaning: "Tổng thống",
+        example: "若い大統領が就任した。\n(Tổng thống trẻ nhậm chức.)" },
+      { word: "弱点", reading: "じゃくてん", type: "Danh từ", meaning: "Điểm yếu, nhược điểm",
+        example: "経験不足が弱点だ。\n(Thiếu kinh nghiệm là điểm yếu.)" },
+      { word: "過失", reading: "かしつ", type: "Danh từ", meaning: "Lỗi lầm do sơ ý, sai sót",
+        example: "過失を認めて謝罪した。\n(Thừa nhận sai lầm và xin lỗi.)" },
+      { word: "落第", reading: "らくだい", type: "Danh từ / Động từ", meaning: "Rớt (thi), lưu ban",
+        example: "試験に落第してしまった。\n(Đã bị rớt kỳ thi.)" }
+    ],
+    choices: ["弱点", "過失", "飢饉", "落第"],
+    answer: 0,
+    explanation: `<strong>正解：① 弱点（じゃくてん）</strong><br><br>
+「経験不足という<strong>弱点</strong>がある」＝ có nhược điểm là thiếu kinh nghiệm. <strong>弱点</strong>（nhược điểm）phù hợp nhất với ngữ cảnh mô tả hạn chế của tổng thống trẻ.<br><br>
+❌ 過失（かしつ）: lỗi lầm do sơ ý → không phải nhược điểm tự nhiên<br>
+❌ 飢饉（ききん）: nạn đói → không liên quan<br>
+❌ 落第（らくだい）: rớt thi → không phù hợp`
+  },
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `ここの研究 <span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> の多くは古代言語で記された文章を含んでいる。`,
+    vocab: [
+      { word: "資料", reading: "しりょう", type: "Danh từ", meaning: "Tài liệu, tư liệu",
+        example: "研究資料を集める。\n(Thu thập tài liệu nghiên cứu.)" },
+      { word: "古代", reading: "こだい", type: "Danh từ", meaning: "Cổ đại, thời xưa",
+        example: "古代言語を研究する。\n(Nghiên cứu ngôn ngữ cổ đại.)" },
+      { word: "給料", reading: "きゅうりょう", type: "Danh từ", meaning: "Lương, tiền lương",
+        example: "今月の給料が上がった。\n(Lương tháng này được tăng.)" },
+      { word: "原料", reading: "げんりょう", type: "Danh từ", meaning: "Nguyên liệu thô",
+        example: "この製品の原料は木材だ。\n(Nguyên liệu của sản phẩm này là gỗ.)" }
+    ],
+    choices: ["給料", "資料", "送料", "原料"],
+    answer: 1,
+    explanation: `<strong>正解：② 資料（しりょう）</strong><br><br>
+「研究<strong>資料</strong>」＝ tài liệu nghiên cứu. Kết hợp「研究＋資料」là cụm từ tự nhiên và cố định trong tiếng Nhật.<br><br>
+❌ 給料（きゅうりょう）: lương → 研究給料 không tồn tại<br>
+❌ 送料（そうりょう）: phí vận chuyển → không liên quan<br>
+❌ 原料（げんりょう）: nguyên liệu thô → dùng cho sản xuất, không phải nghiên cứu`
+  },
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> されている象牙の在庫が底を突いた後、大量生産ができなければ、密猟業者が参入してくる。`,
+    vocab: [
+      { word: "貯蔵", reading: "ちょぞう", type: "Danh từ / Động từ", meaning: "Dự trữ, lưu kho",
+        example: "食料を貯蔵しておく。\n(Dự trữ lương thực.)" },
+      { word: "象牙", reading: "ぞうげ", type: "Danh từ", meaning: "Ngà voi",
+        example: "象牙の密売が問題になっている。\n(Buôn bán ngà voi trái phép đang là vấn đề.)" },
+      { word: "密猟", reading: "みつりょう", type: "Danh từ / Động từ", meaning: "Săn bắt trái phép, săn trộm",
+        example: "密猟業者が増加している。\n(Số lượng kẻ săn trộm đang gia tăng.)" },
+      { word: "維持", reading: "いじ", type: "Danh từ / Động từ", meaning: "Duy trì, giữ nguyên",
+        example: "健康を維持するために運動する。\n(Tập thể dục để duy trì sức khỏe.)" }
+    ],
+    choices: ["持続", "維持", "貯蔵", "整備"],
+    answer: 2,
+    explanation: `<strong>正解：③ 貯蔵（ちょぞう）</strong><br><br>
+「<strong>貯蔵</strong>されている在庫」＝ hàng tồn kho đang được dự trữ. <strong>貯蔵</strong> chỉ việc lưu trữ hàng hóa/vật phẩm trong kho.<br><br>
+❌ 持続（じぞく）: duy trì liên tục → không kết hợp với「在庫が底を突く」<br>
+❌ 維持（いじ）: duy trì trạng thái → 維持される在庫 không tự nhiên<br>
+❌ 整備（せいび）: bảo dưỡng, chuẩn bị → dùng cho máy móc, hệ thống`
+  },
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `象牙の売却許可が発表された <span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 、密猟は６６％、密売は７１％増加したとされる。`,
+    vocab: [
+      { word: "直後", reading: "ちょくご", type: "Danh từ", meaning: "Ngay sau đó",
+        example: "発表された直後から反響が広がった。\n(Ngay sau khi công bố, phản ứng đã lan rộng.)" },
+      { word: "売却", reading: "ばいきゃく", type: "Danh từ / Động từ", meaning: "Bán (tài sản, hàng hóa)",
+        example: "土地を売却した。\n(Bán đất.)" },
+      { word: "密売", reading: "みつばい", type: "Danh từ / Động từ", meaning: "Buôn bán trái phép",
+        example: "象牙の密売が増加した。\n(Buôn bán ngà voi trái phép gia tăng.)" },
+      { word: "直接", reading: "ちょくせつ", type: "Phó từ / Tính từ", meaning: "Trực tiếp",
+        example: "直接連絡してください。\n(Vui lòng liên hệ trực tiếp.)" }
+    ],
+    choices: ["直接", "直通", "直線", "直後"],
+    answer: 3,
+    explanation: `<strong>正解：④ 直後（ちょくご）</strong><br><br>
+「発表された<strong>直後</strong>」＝ ngay sau khi công bố. <strong>直後</strong> chỉ thời điểm liền ngay sau một sự kiện, phù hợp với ngữ cảnh số liệu tăng vọt ngay sau khi có quyết định.<br><br>
+❌ 直接（ちょくせつ）: trực tiếp → trạng từ, không chỉ thời điểm<br>
+❌ 直通（ちょくつう）: đi thẳng, không chuyển → dùng cho phương tiện, điện thoại<br>
+❌ 直線（ちょくせん）: đường thẳng → hình học, không phù hợp`
+  },
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `彼は高校の転入 <span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> もすでにすませていて、車を買うのにも協力してくれた。`,
+    vocab: [
+      { word: "手続", reading: "てつづき", type: "Danh từ", meaning: "Thủ tục, quy trình",
+        example: "転入手続をすませた。\n(Đã hoàn thành thủ tục chuyển trường.)" },
+      { word: "転入", reading: "てんにゅう", type: "Danh từ / Động từ", meaning: "Chuyển đến (trường/nơi ở)",
+        example: "新しい学校に転入した。\n(Chuyển đến trường mới.)" },
+      { word: "配置", reading: "はいち", type: "Danh từ / Động từ", meaning: "Bố trí, phân bổ",
+        example: "社員を各部署に配置する。\n(Phân bổ nhân viên vào các bộ phận.)" },
+      { word: "処理", reading: "しょり", type: "Danh từ / Động từ", meaning: "Xử lý, giải quyết",
+        example: "データを処理する。\n(Xử lý dữ liệu.)" }
+    ],
+    choices: ["手続", "配置", "処理", "作業"],
+    answer: 0,
+    explanation: `<strong>正解：① 手続（てつづき）</strong><br><br>
+「転入<strong>手続</strong>をすませる」＝ hoàn thành thủ tục chuyển trường. Cụm「手続をすませる」（xong thủ tục）là cách dùng rất tự nhiên và phổ biến.<br><br>
+❌ 配置（はいち）: bố trí nhân sự/vật → không dùng cho chuyện hành chính cá nhân<br>
+❌ 処理（しょり）: xử lý dữ liệu/vấn đề → 転入処理 không tự nhiên bằng<br>
+❌ 作業（さぎょう）: công việc thực tế, thao tác → không phù hợp`
+  },
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `新たな <span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> になると、気になりはじめるのが健康診断です。`,
+    vocab: [
+      { word: "年度", reading: "ねんど", type: "Danh từ", meaning: "Năm học / năm tài chính (Nhật: bắt đầu từ tháng 4)",
+        example: "新年度が始まった。\n(Năm học mới bắt đầu.)" },
+      { word: "健康診断", reading: "けんこうしんだん", type: "Danh từ", meaning: "Kiểm tra sức khỏe định kỳ",
+        example: "毎年健康診断を受ける。\n(Mỗi năm đều khám sức khỏe định kỳ.)" },
+      { word: "年鑑", reading: "ねんかん", type: "Danh từ", meaning: "Niên giám, sách thống kê hàng năm",
+        example: "統計年鑑を参照する。\n(Tham khảo niên giám thống kê.)" },
+      { word: "年齢", reading: "ねんれい", type: "Danh từ", meaning: "Tuổi tác",
+        example: "年齢を重ねると健康が気になる。\n(Càng nhiều tuổi càng lo về sức khỏe.)" }
+    ],
+    choices: ["年鑑", "年月", "年齢", "年度"],
+    answer: 3,
+    explanation: `<strong>正解：④ 年度（ねんど）</strong><br><br>
+「新たな<strong>年度</strong>になると」＝ khi bắt đầu năm học/tài chính mới. Ở Nhật, năm học và năm tài chính bắt đầu vào tháng 4, và đây là thời điểm nhân viên/học sinh thường được kiểm tra sức khỏe.<br><br>
+❌ 年鑑（ねんかん）: niên giám (sách) → không phải chu kỳ thời gian<br>
+❌ 年月（としつき）: năm tháng, thời gian trôi qua → mang nghĩa thời gian dài, không phải chu kỳ<br>
+❌ 年齢（ねんれい）: tuổi → 新たな年齢 không tự nhiên`
+  },
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `今日は先輩がサッカーの試合に出るので、友達と一緒に <span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> に行った。`,
+    vocab: [
+      { word: "応援", reading: "おうえん", type: "Danh từ / Động từ", meaning: "Cổ vũ, ủng hộ",
+        example: "試合の応援に行く。\n(Đi cổ vũ trận đấu.)" },
+      { word: "参加", reading: "さんか", type: "Danh từ / Động từ", meaning: "Tham gia",
+        example: "大会に参加する。\n(Tham gia giải đấu.)" },
+      { word: "指導", reading: "しどう", type: "Danh từ / Động từ", meaning: "Hướng dẫn, chỉ đạo",
+        example: "コーチが選手を指導する。\n(Huấn luyện viên hướng dẫn vận động viên.)" },
+      { word: "競争", reading: "きょうそう", type: "Danh từ / Động từ", meaning: "Cạnh tranh",
+        example: "企業間の競争が激しい。\n(Cạnh tranh giữa các công ty rất gay gắt.)" }
+    ],
+    choices: ["参加", "指導", "応援", "競争"],
+    answer: 2,
+    explanation: `<strong>正解：③ 応援（おうえん）</strong><br><br>
+「試合の<strong>応援</strong>に行く」＝ đi xem và cổ vũ trận đấu. Người nói không thi đấu mà đi cổ vũ cho tiền bối, nên <strong>応援</strong> là từ chính xác.<br><br>
+❌ 参加（さんか）: tham gia → bản thân thi đấu, nhưng người nói chỉ là khán giả<br>
+❌ 指導（しどう）: hướng dẫn → vai trò huấn luyện, không phải cổ vũ<br>
+❌ 競争（きょうそう）: cạnh tranh → không dùng với「に行く」theo nghĩa này`
+  },
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `受け取った後、必ず箱の <span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> を確認してください。`,
+    vocab: [
+      { word: "中身", reading: "なかみ", type: "Danh từ", meaning: "Nội dung bên trong, ruột",
+        example: "箱の中身を確認してください。\n(Vui lòng kiểm tra nội dung bên trong hộp.)" },
+      { word: "最中", reading: "さいちゅう", type: "Danh từ", meaning: "Đang trong lúc, giữa chừng",
+        example: "会議の最中に電話が来た。\n(Điện thoại reo giữa lúc đang họp.)" },
+      { word: "仲間", reading: "なかま", type: "Danh từ", meaning: "Đồng đội, bạn bè, đồng nghiệp",
+        example: "仲間と協力して仕事を進める。\n(Hợp tác với đồng nghiệp để thực hiện công việc.)" },
+      { word: "以内", reading: "いない", type: "Danh từ", meaning: "Trong vòng, không quá",
+        example: "10分以内に返事してください。\n(Vui lòng trả lời trong vòng 10 phút.)" }
+    ],
+    choices: ["最中", "中身", "仲間", "以内"],
+    answer: 1,
+    explanation: `<strong>正解：② 中身（なかみ）</strong><br><br>
+「箱の<strong>中身</strong>を確認する」＝ kiểm tra nội dung/thứ bên trong hộp. <strong>中身</strong> chỉ thứ gì đó nằm bên trong vật chứa.<br><br>
+❌ 最中（さいちゅう）: đang trong lúc → chỉ thời điểm, không phải đồ vật<br>
+❌ 仲間（なかま）: bạn bè/đồng đội → không liên quan đến hộp<br>
+❌ 以内（いない）: trong vòng → chỉ giới hạn, không phải nội dung`
+  },
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `彼は辛いことがあっても、<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> な顔をしている。`,
+    vocab: [
+      { word: "平気", reading: "へいき", type: "Tính từ -na", meaning: "Bình thản, thản nhiên, không sao",
+        example: "どんなに大変でも平気な顔をしている。\n(Dù khó khăn đến đâu vẫn giữ vẻ mặt bình thản.)" },
+      { word: "辛い", reading: "つらい", type: "Tính từ -i", meaning: "Khó khăn, đau khổ, vất vả",
+        example: "辛いことがあっても前を向く。\n(Dù có điều gì khó khăn vẫn nhìn về phía trước.)" },
+      { word: "得意", reading: "とくい", type: "Tính từ -na", meaning: "Giỏi, tự hào, đắc ý",
+        example: "彼は数学が得意だ。\n(Anh ấy giỏi toán.)" },
+      { word: "不安", reading: "ふあん", type: "Tính từ -na", meaning: "Lo lắng, bất an",
+        example: "将来のことが不安だ。\n(Lo lắng về tương lai.)" }
+    ],
+    choices: ["得意", "不安", "正直", "平気"],
+    answer: 3,
+    explanation: `<strong>正解：④ 平気（へいき）</strong><br><br>
+「辛いことがあっても<strong>平気</strong>な顔をしている」＝ dù gặp điều đau khổ vẫn tỏ ra bình thản. <strong>平気</strong> diễn tả thái độ không bị ảnh hưởng, thản nhiên dù hoàn cảnh khó khăn.<br><br>
+❌ 得意（とくい）: đắc ý/giỏi → không phù hợp với「辛いことがあっても」<br>
+❌ 不安（ふあん）: lo lắng → trái nghĩa với ý muốn diễn đạt<br>
+❌ 正直（しょうじき）: trung thực → không phù hợp ngữ cảnh`
+  },
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `彼の説明はいつも長くて <span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> ので、いらいらする。`,
+    vocab: [
+      { word: "くどい", reading: "くどい", type: "Tính từ -i", meaning: "Dài dòng, lặp đi lặp lại, rườm rà",
+        example: "説明がくどくていらいらする。\n(Giải thích dài dòng khiến bực bội.)" },
+      { word: "えらい", reading: "えらい", type: "Tính từ -i", meaning: "Vĩ đại, xuất sắc; (phương ngữ) mệt mỏi",
+        example: "えらい人の話は長い。\n(Người vĩ đại nói dài.)" },
+      { word: "かゆい", reading: "かゆい", type: "Tính từ -i", meaning: "Ngứa",
+        example: "虫に刺されてかゆい。\n(Bị côn trùng cắn nên ngứa.)" },
+      { word: "ゆるい", reading: "ゆるい", type: "Tính từ -i", meaning: "Lỏng, không chặt, dễ dãi",
+        example: "ゆるいルールでは困る。\n(Quy tắc quá lỏng lẻo thì khó quản lý.)" }
+    ],
+    choices: ["えらい", "くどい", "かゆい", "ゆるい"],
+    answer: 1,
+    explanation: `<strong>正解：② くどい</strong><br><br>
+「説明が長くて<strong>くどい</strong>」＝ giải thích dài và rườm rà, lặp đi lặp lại. <strong>くどい</strong> diễn tả cách nói/viết dài dòng không cần thiết, khiến người nghe bực bội.<br><br>
+❌ えらい: vĩ đại →「えらくていらいら」không tự nhiên<br>
+❌ かゆい: ngứa → không liên quan đến cách giải thích<br>
+❌ ゆるい: lỏng lẻo → không dùng để mô tả giải thích dài`
+  },
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `有名なレストランに出かけたが、店は休みで <span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> が閉まっていた。`,
+    vocab: [
+      { word: "シャッター", reading: "シャッター", type: "Danh từ", meaning: "Cửa cuốn (shutter)",
+        example: "シャッターが閉まっていて入れなかった。\n(Cửa cuốn đóng nên không vào được.)" },
+      { word: "ロッカー", reading: "ロッカー", type: "Danh từ", meaning: "Tủ đựng đồ cá nhân (locker)",
+        example: "駅のロッカーに荷物を預けた。\n(Gửi đồ vào tủ ở ga tàu.)" },
+      { word: "クーラー", reading: "クーラー", type: "Danh từ", meaning: "Máy điều hòa không khí",
+        example: "夏はクーラーが欠かせない。\n(Mùa hè không thể thiếu điều hòa.)" },
+      { word: "メニュー", reading: "メニュー", type: "Danh từ", meaning: "Thực đơn",
+        example: "メニューを見てから注文する。\n(Xem thực đơn rồi mới gọi đồ.)" }
+    ],
+    choices: ["ロッカー", "クーラー", "メニュー", "シャッター"],
+    answer: 3,
+    explanation: `<strong>正解：④ シャッター</strong><br><br>
+「<strong>シャッター</strong>が閉まっていた」＝ cửa cuốn đóng lại. Khi cửa hàng nghỉ, người ta kéo cửa cuốn (シャッター) xuống. Đây là cách diễn đạt rất phổ biến trong tiếng Nhật.<br><br>
+❌ ロッカー: tủ đồ → không liên quan đến việc cửa hàng đóng cửa<br>
+❌ クーラー: điều hòa → 閉まる không dùng với điều hòa<br>
+❌ メニュー: thực đơn → メニューは閉まる không tự nhiên`
+  },
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `きのうは国の友だちに会ったので、<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 遅くまで話し込んでしまった。`,
+    vocab: [
+      { word: "なつかしい", reading: "なつかしい", type: "Tính từ -i", meaning: "Gợi nhớ, nhớ nhung, thân thương",
+        example: "故郷の景色がなつかしい。\n(Cảnh quê hương gợi lên cảm giác nhớ nhung.)" },
+      { word: "話し込む", reading: "はなしこむ", type: "Động từ", meaning: "Say sưa nói chuyện, nói mãi không thôi",
+        example: "友達と話し込んで時間を忘れた。\n(Nói chuyện mãi với bạn mà quên mất thời gian.)" },
+      { word: "くやしい", reading: "くやしい", type: "Tính từ -i", meaning: "Tiếc nuối, ức chế (vì thất bại)",
+        example: "負けてくやしい思いをした。\n(Cảm thấy ức chế vì thua.)" },
+      { word: "したしい", reading: "したしい", type: "Tính từ -i", meaning: "Thân thiết, gần gũi",
+        example: "したしい友人と話す。\n(Nói chuyện với người bạn thân thiết.)" }
+    ],
+    choices: ["おしくて", "くやしくて", "したしくて", "なつかしくて"],
+    answer: 3,
+    explanation: `<strong>正解：④ なつかしくて</strong><br><br>
+「国の友だちに会って<strong>なつかしくて</strong>」＝ gặp lại người bạn ở quê, cảm giác nhớ nhung ùa về nên nói chuyện mãi đến khuya. <strong>なつかしい</strong> diễn tả cảm xúc bồi hồi khi gặp lại người/vật gắn với ký ức.<br><br>
+❌ おしくて（惜しくて）: tiếc → tiếc vì mất mát, không phù hợp<br>
+❌ くやしくて: ức chế vì thất bại → ngữ cảnh không có yếu tố thua kém<br>
+❌ したしくて: thân thiết → mô tả tính chất quan hệ, không phải cảm xúc bộc phát khi gặp lại`
+  }
+  ]
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

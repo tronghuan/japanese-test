@@ -328,7 +328,7 @@ main {
   grid-template-columns: 1fr 1fr;
   gap: 0.7rem;
 }
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .choices { grid-template-columns: 1fr; }
 }
 .choice-btn {
@@ -541,8 +541,19 @@ main {
   box-shadow: 0 6px 20px rgba(192,57,43,0.3);
 }
 
+/* ── VOCAB BLANK ── */
+.blank {
+  display: inline-block;
+  border-bottom: 2px solid var(--red);
+  min-width: 64px;
+  text-align: center;
+  color: var(--red);
+  font-weight: 700;
+  vertical-align: bottom;
+}
+
 /* ── MOBILE RESPONSIVE ── */
-@media (max-width: 640px) {
+@media (max-width: 900px) {
   main { padding: 0.8rem 0.4rem 3rem; }
   .back-link { padding: 0.6rem 0.6rem 0; }
   .progress-wrap { padding: 0 0.6rem; }
