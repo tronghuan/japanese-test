@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(grep -l \"max-width: 640px\" d:/JapaneseTest/n2/reading-*.html)"
+      "Bash(grep -l \"max-width: 640px\" d:/JapaneseTest/n2/reading-*.html)",
+      "Bash(curl -sL \"https://japanesetest4you.com/pdf/n2-listening-2.pdf\" -o \"d:/JapaneseTest/n2/assets/listen-02/transcript.pdf\")",
+      "Bash(python -c \"print\\(''hello''\\)\")",
+      "Bash(where python:*)",
+      "Bash(where node:*)",
+      "Bash(node -e \":*)"
     ]
   }
 }

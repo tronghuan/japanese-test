@@ -541,6 +541,108 @@ main {
   box-shadow: 0 6px 20px rgba(192,57,43,0.3);
 }
 
+/* ── RESULT NAVIGATION ── */
+#resultNav {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+.result-nav-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.2rem;
+}
+.result-next-btn,
+.result-prev-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  text-decoration: none;
+  border-radius: 3px;
+  padding: 0.65rem 1.3rem;
+  font-size: 0.9rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: all 0.2s;
+}
+.result-next-btn { background: var(--green); }
+.result-prev-btn { background: var(--muted); }
+.result-next-btn svg,
+.result-prev-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+.result-next-btn:hover {
+  background: #145530;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(26,107,60,0.3);
+}
+.result-prev-btn:hover {
+  background: #5a4d3a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+.result-nav-title {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 0.75rem;
+  position: relative;
+}
+.result-nav-title::before,
+.result-nav-title::after {
+  content: '';
+  display: inline-block;
+  width: 2rem;
+  height: 1px;
+  background: var(--border);
+  vertical-align: middle;
+  margin: 0 0.5rem;
+}
+.result-nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.result-nav-link {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  background: var(--paper2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.55rem 0.9rem;
+  text-decoration: none;
+  color: var(--ink);
+  transition: all 0.18s;
+  min-width: 70px;
+}
+.result-nav-link:hover {
+  background: white;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+.rnl-icon { font-size: 1.3rem; line-height: 1; }
+.rnl-label { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.04em; white-space: nowrap; }
+
+/* ── LISTENING ── */
+.listen-audio {
+  width: 100%;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  display: block;
+}
+.listen-image {
+  width: 100%;
+  border-radius: 4px;
+  display: block;
+  margin-top: 4px;
+}
+
 /* ── VOCAB BLANK ── */
 .blank {
   display: inline-block;

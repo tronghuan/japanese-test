@@ -178,6 +178,55 @@
     $('resultSub').textContent = sub;
     $('resultScore').innerHTML = score + '<span>/' + QUESTIONS.length + '</span>';
 
+    // ── Render navigation ──
+    var nav = config.navigation;
+    var navEl = $('resultNav');
+    if (!navEl) {
+      navEl = document.createElement('div');
+      navEl.id = 'resultNav';
+      resultScreen.appendChild(navEl);
+    }
+    navEl.innerHTML = '';
+    if (nav) {
+      var ARROW_SVG = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
+      var ARROW_BACK_SVG = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 8H3M7 4l-4 4 4 4"/></svg>';
+      if (nav.prev || nav.next) {
+        var row = document.createElement('div');
+        row.className = 'result-nav-row';
+        if (nav.prev) {
+          var prevA = document.createElement('a');
+          prevA.className = 'result-prev-btn';
+          prevA.href = nav.prev.url;
+          prevA.innerHTML = ARROW_BACK_SVG + ' ' + nav.prev.label;
+          row.appendChild(prevA);
+        }
+        if (nav.next) {
+          var nextA = document.createElement('a');
+          nextA.className = 'result-next-btn';
+          nextA.href = nav.next.url;
+          nextA.innerHTML = nav.next.label + ' ' + ARROW_SVG;
+          row.appendChild(nextA);
+        }
+        navEl.appendChild(row);
+      }
+      if (nav.categories && nav.categories.length) {
+        var title2 = document.createElement('div');
+        title2.className = 'result-nav-title';
+        title2.textContent = 'CHUYỂN SANG';
+        navEl.appendChild(title2);
+        var grid = document.createElement('div');
+        grid.className = 'result-nav-links';
+        nav.categories.forEach(function (c) {
+          var a = document.createElement('a');
+          a.className = 'result-nav-link';
+          a.href = c.url;
+          a.innerHTML = '<span class="rnl-icon">' + c.icon + '</span><span class="rnl-label">' + c.label + '</span>';
+          grid.appendChild(a);
+        });
+        navEl.appendChild(grid);
+      }
+    }
+
     resultScreen.classList.add('show');
   }
 

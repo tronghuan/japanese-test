@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 2</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ②</div>
+  <h1>N2 語彙<span>クイズ</span>②</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 2 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `今、そこの駅前で田中さんに <span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 会った。`,
+    vocab: [
+      { word: "ばったり", reading: "ばったり", type: "Phó từ", meaning: "Tình cờ gặp (bất ngờ); đột ngột dừng lại",
+        example: "駅前で友達にばったり会った。\n(Tình cờ gặp bạn ở trước ga tàu.)" },
+      { word: "つい", reading: "つい", type: "Phó từ", meaning: "Vô tình, không chủ ý; vừa mới (thời gian ngắn)",
+        example: "ついやりすぎてしまった。\n(Vô tình làm quá tay mất.)" },
+      { word: "たまに", reading: "たまに", type: "Phó từ", meaning: "Thỉnh thoảng, đôi khi (tần suất thấp)",
+        example: "たまに映画を見に行く。\n(Thỉnh thoảng đi xem phim.)" },
+      { word: "ときどき", reading: "ときどき", type: "Phó từ", meaning: "Thỉnh thoảng, đôi khi (tần suất cao hơn たまに)",
+        example: "ときどき散歩する。\n(Thỉnh thoảng đi dạo.)" }
+    ],
+    choices: ["ときどき", "たまに", "つい", "ばったり"],
+    answer: 3,
+    explanation: `<strong>正解：④ ばったり</strong><br><br>
+「ばったり会う」＝ tình cờ gặp bất ngờ, không hẹn trước. Đây là cụm cố định diễn tả việc tình cờ chạm mặt ai đó ngoài dự kiến.<br><br>
+❌ ときどき・たまに: trạng từ tần suất → không diễn tả sự bất ngờ của cuộc gặp<br>
+❌ つい: vô tình làm gì → dùng khi vô ý thực hiện hành động, không dùng cho việc "gặp người"`
+  },
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `近所で火事があったが、その家の人たちは幸い <span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> だった。`,
+    vocab: [
+      { word: "幸い", reading: "さいわい", type: "Danh từ / Phó từ", meaning: "May mắn, may thay",
+        example: "幸い誰もけがをしなかった。\n(May mắn là không ai bị thương.)" },
+      { word: "無事", reading: "ぶじ", type: "Danh từ / Tính từ -na", meaning: "Bình an, vô sự, không có chuyện gì",
+        example: "無事に家に帰った。\n(Đã về nhà bình an.)" },
+      { word: "用心", reading: "ようじん", type: "Danh từ / Động từ", meaning: "Cẩn thận, đề phòng",
+        example: "火事に用心する。\n(Đề phòng hỏa hoạn.)" },
+      { word: "不足", reading: "ふそく", type: "Danh từ / Động từ", meaning: "Thiếu, không đủ",
+        example: "食料が不足している。\n(Lương thực đang thiếu hụt.)" }
+    ],
+    choices: ["安定", "用心", "無事", "不足"],
+    answer: 2,
+    explanation: `<strong>正解：③ 無事（ぶじ）</strong><br><br>
+「幸い無事だった」＝ may mắn là tất cả đều vô sự/bình an. <strong>無事</strong> diễn tả trạng thái không bị tổn hại, an toàn sau sự cố. Kết hợp「幸い〜無事」rất tự nhiên.<br><br>
+❌ 安定（あんてい）: ổn định → dùng cho kinh tế, trạng thái → 安定だった không tự nhiên trong ngữ cảnh này<br>
+❌ 用心: đề phòng → là hành động, không phải trạng thái kết quả<br>
+❌ 不足: thiếu → không liên quan đến an toàn của con người`
+  },
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `お父さまに、あさっての午前１１時にうかがうと <span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> ください。`,
+    vocab: [
+      { word: "お伝え", reading: "おつたえ", type: "Động từ (kính ngữ)", meaning: "Truyền đạt, chuyển lời (dạng kính ngữ của 伝える)",
+        example: "よろしくお伝えください。\n(Vui lòng chuyển lời tôi gửi lời hỏi thăm.)" },
+      { word: "伝える", reading: "つたえる", type: "Động từ", meaning: "Truyền đạt, thông báo, chuyển lời",
+        example: "気持ちを言葉で伝える。\n(Truyền đạt cảm xúc bằng lời nói.)" },
+      { word: "お届け", reading: "おとどけ", type: "Động từ (kính ngữ)", meaning: "Giao hàng, chuyển phát (dạng kính ngữ của 届ける)",
+        example: "ご注文の品をお届けします。\n(Chúng tôi sẽ giao món hàng đã đặt.)" },
+      { word: "お配り", reading: "おくばり", type: "Động từ (kính ngữ)", meaning: "Phát, phân phát (dạng kính ngữ của 配る)",
+        example: "資料をお配りします。\n(Chúng tôi sẽ phát tài liệu.)" }
+    ],
+    choices: ["お届け", "お渡し", "お伝え", "お配り"],
+    answer: 2,
+    explanation: `<strong>正解：③ お伝え</strong><br><br>
+「〜とお伝えください」＝ vui lòng chuyển lời rằng... Đây là mẫu câu kính ngữ yêu cầu người đối diện truyền đạt lời nhắn đến người thứ ba (お父さま).<br><br>
+❌ お届け: giao hàng/đồ vật → không phải chuyển lời<br>
+❌ お渡し: trao tận tay đồ vật → không phải thông tin/lời nhắn<br>
+❌ お配り: phân phát (số nhiều) → không phù hợp với việc chuyển lời đến một người`
+  },
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `私は気が <span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 方だから、いつまででも持ちますよ。`,
+    vocab: [
+      { word: "気が長い", reading: "きがながい", type: "Thành ngữ", meaning: "Kiên nhẫn, không nóng vội",
+        example: "彼は気が長いので、どんな状況でも待てる。\n(Anh ấy kiên nhẫn nên có thể chờ trong mọi hoàn cảnh.)" },
+      { word: "気が遠い", reading: "きがとおい", type: "Thành ngữ", meaning: "Choáng váng, ngất xỉu; (cảm giác) xa vời",
+        example: "気が遠くなるほど長い道のりだ。\n(Con đường dài đến mức choáng váng.)" },
+      { word: "気が細い", reading: "きがほそい", type: "Thành ngữ", meaning: "Nhút nhát, không tự tin",
+        example: "気が細くて大勢の前で話せない。\n(Nhút nhát nên không nói được trước đám đông.)" },
+      { word: "気が遅い", reading: "きがおそい", type: "Thành ngữ", meaning: "Chậm chạp, phản ứng chậm (ít dùng)",
+        example: "気が遅い人は判断に時間がかかる。\n(Người phản ứng chậm mất nhiều thời gian để quyết định.)" }
+    ],
+    choices: ["遠い", "長い", "細い", "遅い"],
+    answer: 1,
+    explanation: `<strong>正解：② 長い → 気が長い</strong><br><br>
+「気が長い」＝ kiên nhẫn, không sốt ruột. Câu nói「いつまででも持ちますよ」(có thể chờ bao lâu cũng được) phản ánh sự kiên nhẫn → <strong>気が長い</strong> là cụm thành ngữ đúng.<br><br>
+❌ 気が遠い: choáng váng, ngất xỉu → không liên quan đến sự kiên nhẫn<br>
+❌ 気が細い: nhút nhát → tính cách khác<br>
+❌ 気が遅い: phản ứng chậm → không phải thành ngữ phổ biến, không phù hợp`
+  },
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `コンピューターを使って、国内だけでなく海外とも <span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> が可能になった。`,
+    vocab: [
+      { word: "通信", reading: "つうしん", type: "Danh từ / Động từ", meaning: "Liên lạc, truyền thông, truyền tín hiệu",
+        example: "インターネットで海外と通信する。\n(Liên lạc với nước ngoài qua internet.)" },
+      { word: "通知", reading: "つうち", type: "Danh từ / Động từ", meaning: "Thông báo, thông tri",
+        example: "結果をメールで通知する。\n(Thông báo kết quả qua email.)" },
+      { word: "通行", reading: "つうこう", type: "Danh từ / Động từ", meaning: "Lưu thông, qua lại (người/xe)",
+        example: "この道は通行禁止だ。\n(Con đường này cấm lưu thông.)" },
+      { word: "通用", reading: "つうよう", type: "Danh từ / Động từ", meaning: "Được chấp nhận, có hiệu lực, thông dụng",
+        example: "このパスはここでは通用しない。\n(Thẻ này không có giá trị ở đây.)" }
+    ],
+    choices: ["通知", "通信", "通行", "通用"],
+    answer: 1,
+    explanation: `<strong>正解：② 通信（つうしん）</strong><br><br>
+「海外とも通信が可能になった」＝ việc liên lạc/truyền thông với nước ngoài trở nên khả thi. <strong>通信</strong> đặc biệt dùng cho liên lạc qua mạng, điện thoại, máy tính.<br><br>
+❌ 通知（つうち）: thông báo một chiều → không diễn tả trao đổi hai chiều qua máy tính<br>
+❌ 通行（つうこう）: lưu thông đường bộ → không dùng cho máy tính hay thông tin<br>
+❌ 通用（つうよう）: được chấp nhận → nghĩa hoàn toàn khác`
+  },
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `親が自分の子供をかわいいと思うのは <span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 。`,
+    vocab: [
+      { word: "あたりまえ", reading: "あたりまえ", type: "Danh từ / Tính từ -na", meaning: "Tất nhiên, hiển nhiên, bình thường",
+        example: "努力するのはあたりまえだ。\n(Việc nỗ lực là điều hiển nhiên.)" },
+      { word: "なまいき", reading: "なまいき", type: "Tính từ -na", meaning: "Hỗn láo, xấc xược, vô lễ",
+        example: "なまいきな態度をとる。\n(Có thái độ hỗn láo.)" },
+      { word: "おおざっぱ", reading: "おおざっぱ", type: "Tính từ -na", meaning: "Đại khái, sơ sài, không cẩn thận",
+        example: "おおざっぱな計画では失敗する。\n(Kế hoạch sơ sài thì sẽ thất bại.)" },
+      { word: "えらそう", reading: "えらそう", type: "Tính từ -na", meaning: "Vẻ ta đây, huênh hoang, tự phụ",
+        example: "えらそうな態度が嫌われる。\n(Thái độ huênh hoang bị ghét.)" }
+    ],
+    choices: ["あたりまえだ", "なまいきだ", "おおざっぱだ", "えらそうだ"],
+    answer: 0,
+    explanation: `<strong>正解：① あたりまえだ</strong><br><br>
+「親が子供をかわいいと思うのはあたりまえだ」＝ việc cha mẹ thấy con mình đáng yêu là điều hiển nhiên, tự nhiên. <strong>あたりまえ</strong> diễn tả điều mà ai cũng biết, không cần bàn cãi.<br><br>
+❌ なまいきだ: hỗn láo → đánh giá tiêu cực về thái độ, không phù hợp<br>
+❌ おおざっぱだ: sơ sài → mô tả cách làm việc, không phù hợp<br>
+❌ えらそうだ: huênh hoang → thái độ kiêu ngạo, không phù hợp`
+  },
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> の結果、私たちの活動は社会に認められました。`,
+    vocab: [
+      { word: "努力", reading: "どりょく", type: "Danh từ / Động từ", meaning: "Nỗ lực, cố gắng",
+        example: "努力の結果、夢が叶った。\n(Nhờ nỗ lực, ước mơ đã thành hiện thực.)" },
+      { word: "自慢", reading: "じまん", type: "Danh từ / Động từ", meaning: "Tự hào, khoe khoang",
+        example: "自分の成功を自慢する。\n(Khoe khoang về thành công của mình.)" },
+      { word: "覚悟", reading: "かくご", type: "Danh từ / Động từ", meaning: "Sẵn sàng, quyết tâm, chấp nhận",
+        example: "失敗を覚悟で挑戦する。\n(Thách thức dù đã sẵn sàng chấp nhận thất bại.)" },
+      { word: "活動", reading: "かつどう", type: "Danh từ / Động từ", meaning: "Hoạt động",
+        example: "ボランティア活動に参加する。\n(Tham gia hoạt động tình nguyện.)" }
+    ],
+    choices: ["自慢", "努力", "目的", "覚悟"],
+    answer: 1,
+    explanation: `<strong>正解：② 努力（どりょく）</strong><br><br>
+「<strong>努力</strong>の結果、認められた」＝ nhờ nỗ lực, hoạt động của chúng tôi được xã hội công nhận. Cụm「努力の結果」là cách diễn đạt rất phổ biến và tự nhiên.<br><br>
+❌ 自慢（じまん）: khoe khoang → 自慢の結果 không tự nhiên, và khoe khoang không dẫn đến được công nhận<br>
+❌ 目的（もくてき）: mục đích → 目的の結果 không tự nhiên<br>
+❌ 覚悟（かくご）: quyết tâm chấp nhận → 覚悟の結果 ít phổ biến, không phù hợp ngữ cảnh`
+  },
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `真の国際交流とは何かを考えなければならない <span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> にきている。`,
+    vocab: [
+      { word: "時期", reading: "じき", type: "Danh từ", meaning: "Thời điểm, giai đoạn, thời kỳ thích hợp",
+        example: "考えなければならない時期にきている。\n(Đã đến lúc phải suy nghĩ.)" },
+      { word: "期間", reading: "きかん", type: "Danh từ", meaning: "Khoảng thời gian, giai đoạn (có điểm đầu và cuối)",
+        example: "研修期間は３ヶ月だ。\n(Giai đoạn đào tạo là 3 tháng.)" },
+      { word: "期限", reading: "きげん", type: "Danh từ", meaning: "Thời hạn, deadline",
+        example: "提出の期限は明日だ。\n(Thời hạn nộp là ngày mai.)" },
+      { word: "国際交流", reading: "こくさいこうりゅう", type: "Danh từ", meaning: "Giao lưu quốc tế",
+        example: "国際交流を通じて友好関係を深める。\n(Thắt chặt quan hệ hữu nghị qua giao lưu quốc tế.)" }
+    ],
+    choices: ["期間", "期限", "時間", "時期"],
+    answer: 3,
+    explanation: `<strong>正解：④ 時期（じき）</strong><br><br>
+「〜しなければならない<strong>時期</strong>にきている」＝ đã đến thời điểm/giai đoạn phải làm gì đó. <strong>時期</strong> chỉ một thời điểm/giai đoạn thích hợp trong tiến trình.<br><br>
+❌ 期間（きかん）: khoảng thời gian cụ thể (có đầu-cuối) → 期間にきている không tự nhiên<br>
+❌ 期限（きげん）: deadline → mang nghĩa áp lực thời hạn, không phù hợp<br>
+❌ 時間（じかん）: thời gian (cụ thể, đo được) → 時間にきている không tự nhiên`
+  },
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `今年の夏は天候が非常に悪かった。<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 米の収穫がかなり少なくなりそうだ。`,
+    vocab: [
+      { word: "したがって", reading: "したがって", type: "Liên từ", meaning: "Do đó, vì vậy, cho nên (kết luận logic)",
+        example: "雨が多かった。したがって、収穫が減った。\n(Mưa nhiều. Do đó, vụ mùa giảm sút.)" },
+      { word: "あるいは", reading: "あるいは", type: "Liên từ", meaning: "Hoặc là, hay là (đưa ra lựa chọn khác)",
+        example: "電車あるいはバスで来てください。\n(Vui lòng đến bằng tàu điện hoặc xe buýt.)" },
+      { word: "ただし", reading: "ただし", type: "Liên từ", meaning: "Tuy nhiên, nhưng (đặt điều kiện ngoại lệ)",
+        example: "参加できる。ただし、事前登録が必要だ。\n(Có thể tham gia. Tuy nhiên, cần đăng ký trước.)" },
+      { word: "ところで", reading: "ところで", type: "Liên từ", meaning: "Nhân tiện, à mà (chuyển chủ đề)",
+        example: "ところで、最近どうですか？\n(Nhân tiện, dạo này thế nào?)" }
+    ],
+    choices: ["あるいは", "したがって", "ただし", "ところで"],
+    answer: 1,
+    explanation: `<strong>正解：② したがって</strong><br><br>
+「天候が非常に悪かった → <strong>したがって</strong> 収穫が少なくなりそうだ」＝ thời tiết xấu → do đó vụ mùa có thể giảm. <strong>したがって</strong> nối nguyên nhân-kết quả một cách logic.<br><br>
+❌ あるいは: hoặc là → đưa ra lựa chọn, không phải kết quả<br>
+❌ ただし: tuy nhiên → đặt ngoại lệ/điều kiện, không phải kết luận<br>
+❌ ところで: nhân tiện → chuyển sang chủ đề khác, phá vỡ mạch logic`
+  },
+  {
+    tag: "TỪ VỰNG • N2",
+    text: `ここにある物は、<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 自由に使ってかまいませんよ。`,
+    vocab: [
+      { word: "なんでも", reading: "なんでも", type: "Đại từ / Phó từ", meaning: "Bất cứ thứ gì, tùy ý",
+        example: "なんでも好きなものを選んでください。\n(Hãy chọn bất cứ thứ gì bạn thích.)" },
+      { word: "なんだか", reading: "なんだか", type: "Phó từ", meaning: "Không hiểu tại sao, cứ thấy sao sao",
+        example: "なんだか不安な気がする。\n(Không hiểu sao cứ thấy lo lo.)" },
+      { word: "なんとも", reading: "なんとも", type: "Phó từ", meaning: "Thật là, quả là; (phủ định) không hề, chẳng sao cả",
+        example: "なんとも言えない味だ。\n(Thật khó tả hương vị này.)" },
+      { word: "なんで", reading: "なんで", type: "Đại từ nghi vấn", meaning: "Tại sao, vì lý do gì",
+        example: "なんでそんなことをしたの？\n(Tại sao lại làm vậy?)" }
+    ],
+    choices: ["なんでも", "なんだか", "なんで", "なんとも"],
+    answer: 0,
+    explanation: `<strong>正解：① なんでも</strong><br><br>
+「<strong>なんでも</strong>自由に使ってかまいません」＝ bất cứ thứ gì cũng được tự do sử dụng. <strong>なんでも</strong> chỉ "bất kỳ cái gì", phù hợp với「自由に使ってかまいません」(không sao nếu dùng tự do).<br><br>
+❌ なんだか: cứ thấy sao sao → diễn tả cảm giác mơ hồ, không phải cho phép dùng đồ<br>
+❌ なんで: tại sao → câu hỏi, không phải cho phép<br>
+❌ なんとも: thường dùng với phủ định (なんとも〜ない) hoặc감탄 → không phù hợp`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-01.html", label: "← Từ vựng · Bài 1" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

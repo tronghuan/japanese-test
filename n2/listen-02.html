@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 聴解 Bài 2</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="聴">
+  <div class="header-badge">N2 JLPT • NGHE ②</div>
+  <h1>N2 聴解<span>クイズ</span>②</h1>
+  <p class="sub">Trắc nghiệm nghe N2 · Bài 2 · 5 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 5</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/5</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 5,
+  questions: [
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-02/n2_1_6.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-02/quiz6.jpg" alt="Câu hỏi 1">`,
+    vocab: [
+      { word: "風船", reading: "ふうせん", type: "Danh từ", meaning: "Bóng bay",
+        example: "子供が風船を持っている。\n(Đứa trẻ đang cầm bóng bay.)" },
+      { word: "木に登る", reading: "きにのぼる", type: "Cụm động từ", meaning: "Trèo cây",
+        example: "猫が木に登って降りられなくなった。\n(Con mèo trèo lên cây rồi không xuống được.)" },
+      { word: "落ちる", reading: "おちる", type: "Động từ", meaning: "Rơi, ngã xuống",
+        example: "木から落ちてけがをした。\n(Ngã từ trên cây xuống bị thương.)" },
+      { word: "途中", reading: "とちゅう", type: "Danh từ", meaning: "Giữa chừng, đang trong quá trình",
+        example: "登る途中で止まった。\n(Dừng lại giữa chừng khi đang leo.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 1,
+    explanation: `<strong>正解：② （木に登っている途中の写真）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+女：この写真、山本君ですか？<br>
+男：そうそう、去年の旅行のとき。<u>風船が木に引っかかってしまって</u>、それで山本君が<u>木に登って取ろうとしたんだよ</u>。<br>
+女：えー！それで、取れたんですか？<br>
+男：取れなかった。それどころか、<u>登っている途中で落ちちゃってさ</u>。<br>
+女：あら、この写真って…<br>
+男：そう、<u>落ちる直前の写真</u>なんだよ。みんな笑っちゃって。<br><br>
+<strong>🔑 Lý do chọn ②:</strong><br>
+・風船を取るため → 木に登った ✓<br>
+・<strong>登っている途中で落ちた</strong> ✓<br>
+・写真は落ちる直前＝木に登っている途中 → <strong>選択肢②（木に登っている途中の写真）</strong>が正解`
+  },
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-02/n2_1_7.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-02/quiz7.jpg" alt="Câu hỏi 2">`,
+    vocab: [
+      { word: "絵本", reading: "えほん", type: "Danh từ", meaning: "Sách tranh cho trẻ em",
+        example: "子供に絵本を読み聞かせる。\n(Đọc sách tranh cho trẻ nghe.)" },
+      { word: "天狗", reading: "てんぐ", type: "Danh từ", meaning: "Thiên cẩu (yêu quái trong truyền thuyết Nhật Bản, có cánh và mũi dài)",
+        example: "天狗は山に住んでいると言われる。\n(Người ta nói thiên cẩu sống trên núi.)" },
+      { word: "翼", reading: "つばさ", type: "Danh từ", meaning: "Đôi cánh",
+        example: "天狗には翼がある。\n(Thiên cẩu có đôi cánh.)" },
+      { word: "下駄", reading: "げた", type: "Danh từ", meaning: "Guốc gỗ truyền thống Nhật",
+        example: "下駄を履いて歩く。\n(Đi guốc gỗ.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 3,
+    explanation: `<strong>正解：④ （翼なし・下駄なし・小天狗）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+女：この絵本の天狗の絵、描いてほしいんですけど。<br>
+男：天狗か。<u>大天狗と小天狗がいるんだけど</u>、どっちがいいですか？<br>
+女：<u>小天狗のほうでお願いします</u>。<br>
+男：小天狗ですね。<u>翼はありますか？</u><br>
+女：<u>翼はなしで</u>。あと、下駄はどうしますか？<br>
+男：下駄…<u>下駄もなしにしましょう</u>か。その方が子供向けにかわいいですね。<br>
+女：そうですね、それでお願いします。<br><br>
+<strong>🔑 Lý do chọn ④:</strong><br>
+・大天狗ではなく<strong>小天狗</strong> ✓<br>
+・<strong>翼なし</strong>（翼はなしで） ✓<br>
+・<strong>下駄なし</strong>（下駄もなしに） ✓<br>
+→「翼なし・下駄なし・小天狗」＝ 選択肢④が正解`
+  },
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-02/n2_1_8.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-02/quiz8.jpg" alt="Câu hỏi 3">`,
+    vocab: [
+      { word: "症状", reading: "しょうじょう", type: "Danh từ", meaning: "Triệu chứng",
+        example: "風邪の症状が出た。\n(Xuất hiện triệu chứng cảm lạnh.)" },
+      { word: "のどの痛み", reading: "のどのいたみ", type: "Cụm danh từ", meaning: "Đau họng",
+        example: "のどの痛みがひどい。\n(Đau họng rất nặng.)" },
+      { word: "鼻水", reading: "はなみず", type: "Danh từ", meaning: "Nước mũi, chảy nước mũi",
+        example: "鼻水が止まらない。\n(Nước mũi không ngừng chảy.)" },
+      { word: "頭痛", reading: "ずつう", type: "Danh từ", meaning: "Đau đầu",
+        example: "頭痛がして集中できない。\n(Bị đau đầu không thể tập trung.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 0,
+    explanation: `<strong>正解：① （のどの痛み → 鼻水 → 頭痛）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+男：どうしたんですか、顔色が悪いですよ。<br>
+女：ちょっと風邪気味で。<u>昨日からのどが痛くて</u>。<br>
+男：それは大変ですね。他に症状はありますか？<br>
+女：<u>今朝から鼻水も出始めて</u>、それで…<br>
+男：それで？<br>
+女：<u>さっきから頭も痛くなってきた</u>んです。<br>
+男：症状がどんどん増えてますね。早めに病院に行った方がいいですよ。<br><br>
+<strong>🔑 Lý do chọn ①:</strong><br>
+・<strong>昨日から</strong>のどの痛み ✓<br>
+・<strong>今朝から</strong>鼻水 ✓<br>
+・<strong>さっきから</strong>頭痛（最後に出た症状）✓<br>
+→ 順番：「のどの痛み → 鼻水 → 頭痛」＝ 選択肢①が正解`
+  },
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-02/n2_1_9.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-02/quiz9.jpg" alt="Câu hỏi 4">`,
+    vocab: [
+      { word: "マフラー", reading: "マフラー", type: "Danh từ", meaning: "Khăn quàng cổ",
+        example: "冬はマフラーを巻く。\n(Mùa đông quàng khăn.)" },
+      { word: "巻き方", reading: "まきかた", type: "Danh từ", meaning: "Cách quàng, cách cuốn",
+        example: "マフラーの巻き方を教えてください。\n(Hãy dạy tôi cách quàng khăn.)" },
+      { word: "交差する", reading: "こうさする", type: "Động từ", meaning: "Bắt chéo, giao nhau",
+        example: "後ろで交差させてから前に持ってくる。\n(Bắt chéo ở sau lưng rồi kéo ra phía trước.)" },
+      { word: "中心", reading: "ちゅうしん", type: "Danh từ", meaning: "Trung tâm, điểm giữa",
+        example: "マフラーの中心を前に当てる。\n(Đặt điểm giữa của khăn vào phía trước.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 1,
+    explanation: `<strong>正解：② （中心を前→後ろで交差→前で結ぶ）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+女：このマフラーの巻き方、教えてもらえますか？<br>
+男：まず、<u>マフラーの中心を首の前に当てます</u>。<br>
+女：中心を前に…はい。<br>
+男：それから<u>両端を後ろに回して交差させます</u>。<br>
+女：後ろで交差させるんですね。<br>
+男：そうです。<u>交差させた後、また前に持ってきて結びます</u>。<br>
+女：前で結ぶんですね。わかりました。<br><br>
+<strong>🔑 Lý do chọn ②:</strong><br>
+・マフラーの<strong>中心を首の前</strong>に当てる ✓<br>
+・両端を後ろに回して<strong>後ろで交差</strong> ✓<br>
+・また前に持ってきて<strong>前で結ぶ</strong> ✓<br>
+→ この巻き方に一致するのは 選択肢②`
+  },
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-02/n2_1_10.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-02/quiz10.jpg" alt="Câu hỏi 5">`,
+    vocab: [
+      { word: "書類", reading: "しょるい", type: "Danh từ", meaning: "Tài liệu, hồ sơ, giấy tờ",
+        example: "書類を修正する。\n(Sửa tài liệu.)" },
+      { word: "修正", reading: "しゅうせい", type: "Danh từ / Động từ", meaning: "Sửa chữa, chỉnh sửa",
+        example: "数字の修正をお願いします。\n(Nhờ sửa con số.)" },
+      { word: "会場", reading: "かいじょう", type: "Danh từ", meaning: "Hội trường, địa điểm tổ chức sự kiện",
+        example: "三つの会場に参加者が分かれた。\n(Người tham dự được chia ra ở ba hội trường.)" },
+      { word: "参加者", reading: "さんかしゃ", type: "Danh từ", meaning: "Người tham gia, người tham dự",
+        example: "参加者の人数を確認する。\n(Kiểm tra số lượng người tham gia.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 3,
+    explanation: `<strong>正解：④</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+男：この参加者名簿なんですが、修正をお願いしたいんですよ。<br>
+女：どこですか？<br>
+男：まず、<u>会場Cの女性のところ、十の位が2になってますが、3の間違いです</u>。<br>
+女：会場Cの女性…はい、直しました。<br>
+男：それから、<u>会場Aの男性と女性、それぞれゼロが一つ足りないんです</u>。<br>
+女：え、会場Aの男性と女性の両方ですか？<br>
+男：そうです。<u>男性が65じゃなくて650、女性が95じゃなくて950</u>です。<br>
+女：わかりました。確認します。<br><br>
+<strong>🔑 Lý do chọn ④:</strong><br>
+・会場Cの女性：十の位 2 → <strong>3</strong>（例：120→130）✓<br>
+・会場Aの男性：65 → <strong>650</strong>（ゼロを追加）✓<br>
+・会場Aの女性：95 → <strong>950</strong>（ゼロを追加）✓<br>
+→ この修正内容に一致するのは 選択肢④が正解`
+  }
+  ],
+  navigation: {
+  prev: { url: "listen-01.html", label: "← Nghe · Bài 1" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "vocab-01.html", icon: "📝", label: "Từ vựng" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

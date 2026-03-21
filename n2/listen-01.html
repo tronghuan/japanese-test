@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 聴解 Bài 1</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="聴">
+  <div class="header-badge">N2 JLPT • NGHE ①</div>
+  <h1>N2 聴解<span>クイズ</span>①</h1>
+  <p class="sub">Trắc nghiệm nghe N2 · Bài 1 · 5 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 5</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/5</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 5,
+  questions: [
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-01/n2_1_1.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-01/quiz1.jpg" alt="Câu hỏi 1">`,
+    vocab: [
+      { word: "旅行会社", reading: "りょこうがいしゃ", type: "Danh từ", meaning: "Công ty du lịch, đại lý du lịch",
+        example: "旅行会社でツアーを申し込んだ。\n(Đăng ký tour tại công ty du lịch.)" },
+      { word: "宿泊料金", reading: "しゅくはくりょうきん", type: "Danh từ", meaning: "Phí lưu trú, tiền phòng khách sạn",
+        example: "宿泊料金は一泊いくらですか。\n(Tiền phòng một đêm là bao nhiêu?)" },
+      { word: "平日", reading: "へいじつ", type: "Danh từ", meaning: "Ngày thường, ngày trong tuần (không phải cuối tuần)",
+        example: "平日は割引がある。\n(Có giảm giá vào ngày thường.)" },
+      { word: "日程", reading: "にってい", type: "Danh từ", meaning: "Lịch trình, chương trình",
+        example: "旅行の日程を決める。\n(Quyết định lịch trình du lịch.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 1,
+    explanation: `<strong>正解：② （8月4・5・6日）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+女：沖縄に二泊三日で行きたいんですが。<br>
+男：八月は<u>八日から二十日まで料金が高く</u>なっておりますが。<br>
+女：じゃ、それ以外の日程で。<br>
+男：それと、<u>三日間とも平日でしたら</u>、宿泊料金がお安くなっております。<br>
+女：それだったら、平日のほうがいいですね。じゃ、<u>上旬のこの日程で</u>。<br><br>
+<strong>🔑 Lý do chọn ②:</strong><br>
+・8〜20日は料金が高い → 除外<br>
+・3日間とも平日 → 月〜金の日程を選ぶ<br>
+・上旬（1〜10日）の平日 → <strong>4日(月)・5日(火)・6日(水)</strong> が該当<br>
+→ 選択肢②（4・5・6）が正解`
+  },
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-01/n2_1_2.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-01/quiz2.jpg" alt="Câu hỏi 2">`,
+    vocab: [
+      { word: "包装", reading: "ほうそう", type: "Danh từ / Động từ", meaning: "Gói, đóng gói, bao bì",
+        example: "プレゼントを包装してもらった。\n(Nhờ người ta gói quà hộ.)" },
+      { word: "包装紙", reading: "ほうそうし", type: "Danh từ", meaning: "Giấy gói quà",
+        example: "花柄の包装紙を選んだ。\n(Chọn giấy gói có hoa văn hoa.)" },
+      { word: "花柄", reading: "はながら", type: "Danh từ", meaning: "Họa tiết hoa",
+        example: "花柄のデザインが人気だ。\n(Họa tiết hoa rất được ưa chuộng.)" },
+      { word: "無地", reading: "むじ", type: "Danh từ / Tính từ -na", meaning: "Trơn, không họa tiết",
+        example: "無地の紙を使う。\n(Dùng giấy trơn không họa tiết.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 0,
+    explanation: `<strong>正解：① （無地 + リボンあり）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+女：包装紙はこの四点からお選びいただけますが。<br>
+男：じゃあ、<u>これで（花柄を選ぶ）</u>。<br>
+女：花柄のでございますね。<u>リボンは有料でおつけすることもできますが</u>。<br>
+男：うん、じゃ、お願いします。あっ、<u>だったら包装紙は無地にしてもらおうかな</u>。<br>
+女：かしこまりました。<br><br>
+<strong>🔑 Lý do chọn ①:</strong><br>
+・最初は花柄を選んだが → 後で<strong>無地</strong>に変更<br>
+・リボンを<strong>有料でつける</strong>ことにした<br>
+→ 「無地の包装紙＋リボンあり」＝ 選択肢①が正解`
+  },
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-01/n2_1_3.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-01/quiz3.jpg" alt="Câu hỏi 3">`,
+    vocab: [
+      { word: "優勝", reading: "ゆうしょう", type: "Danh từ / Động từ", meaning: "Vô địch, chiến thắng",
+        example: "全国大会で優勝した。\n(Vô địch giải toàn quốc.)" },
+      { word: "全国大会", reading: "ぜんこくたいかい", type: "Danh từ", meaning: "Đại hội/giải đấu toàn quốc",
+        example: "全国大会に出場する。\n(Tham dự giải đấu toàn quốc.)" },
+      { word: "ようやく", reading: "ようやく", type: "Phó từ", meaning: "Cuối cùng, rốt cuộc, mới được",
+        example: "ようやく初優勝を掴んだ。\n(Cuối cùng đã giành được chức vô địch đầu tiên.)" },
+      { word: "監督", reading: "かんとく", type: "Danh từ", meaning: "Huấn luyện viên trưởng, đạo diễn, giám đốc",
+        example: "新しい監督のもとで練習する。\n(Luyện tập dưới sự dẫn dắt của huấn luyện viên mới.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 2,
+    explanation: `<strong>正解：③ （1977年・1978年・2008年）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+A：2008年全国大会優勝おめでとうございます。30年ぶりの優勝ですが。<br>
+B：<u>1971年にチームができて以来</u>、<u>1977年の初優勝</u>、<u>その翌年にも優勝</u>しましたが、その後なかなか優勝できませんでした。しかし、<u>今年（2008年）ようやく優勝を掴み取ることができました</u>。<br><br>
+<strong>🔑 Lý do chọn ③:</strong><br>
+・1971年 → チーム結成（優勝ではない）<br>
+・<strong>1977年</strong> → 初優勝 ✓<br>
+・<strong>1978年</strong>（翌年）→ 2回目の優勝 ✓<br>
+・<strong>2008年</strong> → 30年ぶり3回目の優勝 ✓<br>
+→ 選択肢③「1977・1978・2008」が正解`
+  },
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-01/n2_1_4.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-01/quiz4.jpg" alt="Câu hỏi 4">`,
+    vocab: [
+      { word: "体操", reading: "たいそう", type: "Danh từ", meaning: "Thể dục, thể dục dụng cụ",
+        example: "毎朝体操をする。\n(Mỗi sáng tập thể dục.)" },
+      { word: "姿勢", reading: "しせい", type: "Danh từ", meaning: "Tư thế, thái độ",
+        example: "正しい姿勢で座る。\n(Ngồi đúng tư thế.)" },
+      { word: "揃える", reading: "そろえる", type: "Động từ", meaning: "Sắp xếp gọn gàng, làm đều nhau",
+        example: "足を揃えて立つ。\n(Đứng khép chân.)" },
+      { word: "挟む", reading: "はさむ", type: "Động từ", meaning: "Kẹp, cắp, gắp",
+        example: "本を脇に挟む。\n(Cắp cuốn sách vào nách.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 1,
+    explanation: `<strong>正解：② （右に体を曲げ・右足を左ひざに・両腕で頭を挟む）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+①足を揃えて立つ<br>
+②手を口の前で合わせて、<u>両手をまっすぐ上に伸ばす</u><br>
+③<u>両腕で頭を挟む</u><br>
+④<u>右足の裏を左足のひざの横につける</u><br>
+⑤息を吐きながら<u>右に体を少し曲げる</u><br>
+⑥<u>左脇が伸びたところで5秒間止まる</u><br><br>
+<strong>🔑 Lý do chọn ②:</strong><br>
+・両腕は頭を挟むように上へ ✓<br>
+・右足を左ひざ横につける（片足立ち）✓<br>
+・体を右に曲げる ✓<br>
+→ この姿勢に一致するのは選択肢②`
+  },
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-01/n2_1_5.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-01/quiz5.jpg" alt="Câu hỏi 5">`,
+    vocab: [
+      { word: "劇場", reading: "げきじょう", type: "Danh từ", meaning: "Nhà hát, rạp chiếu",
+        example: "劇場で演劇を見る。\n(Xem kịch tại nhà hát.)" },
+      { word: "座席", reading: "ざせき", type: "Danh từ", meaning: "Chỗ ngồi, ghế",
+        example: "座席を予約する。\n(Đặt chỗ ngồi trước.)" },
+      { word: "案内係", reading: "あんないがかり", type: "Danh từ", meaning: "Nhân viên hướng dẫn, lễ tân",
+        example: "案内係に席を教えてもらった。\n(Được nhân viên hướng dẫn chỉ chỗ ngồi.)" },
+      { word: "恥ずかしい", reading: "はずかしい", type: "Tính từ -i", meaning: "Xấu hổ, ngượng ngùng",
+        example: "人前で恥ずかしい思いをした。\n(Cảm thấy xấu hổ trước mặt mọi người.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 1,
+    explanation: `<strong>正解：② （2月22日・2階・K-25）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+男：お待ちのチケット、<u>Kの25番</u>でしょうか。<br>
+女：ええ、<u>Kの25</u>って書いてあるわよ。<br>
+男：<u>22日</u>ですので、今日のものなんですが、おかしいですね。<br>
+女：係の人に聞いてみます？<u>一階に降りたら</u>、案内係がいますよ。<br>
+男：え、<u>ここが一階です</u>けど。<br>
+女：あ、あらまあ、<u>恥ずかしい</u>、ごめんなさいね。<br><br>
+<strong>🔑 Lý do chọn ②:</strong><br>
+・日付：<strong>2月22日（今日）</strong> ✓<br>
+・席番号：<strong>K-25</strong> ✓<br>
+・女の人は「一階に降りて」と言ったが、実はすでに1階にいた → 女の人の券は<strong>2階</strong>だったと判明<br>
+→「2月22日・2階-K-25」＝ 選択肢②が正解`
+  }
+  ],
+  navigation: {
+  next: { url: "listen-02.html", label: "→ Nghe · Bài 2" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "vocab-01.html", icon: "📝", label: "Từ vựng" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>
