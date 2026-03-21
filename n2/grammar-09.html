@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 文法 Bài 9</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="文">
+  <div class="header-badge">N2 JLPT • NGỮ PHÁP ⑨</div>
+  <h1>N2 文法<span>クイズ</span>⑨</h1>
+  <p class="sub">Trắc nghiệm ngữ pháp N2 · Bài 9 · Giải thích chi tiết</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  questions: [
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "私、どこか遠くへ行きたい。あの人を思い出す誰かと _______　ところへ行きたい。",
+    vocab: [
+      { word: "思い出す", reading: "おもいだす", type: "Động từ nhóm 1", meaning: "Nhớ lại, hồi tưởng", example: "昔のことを思い出す。\n(Nhớ lại những chuyện ngày xưa.)" },
+      { word: "ずに済む", reading: "ずにすむ", type: "Cụm động từ", meaning: "Không cần phải..., không cần làm... vẫn ổn", example: "病院に行かずに済んだ。\n(Không cần đến bệnh viện vẫn ổn.)" },
+    ],
+    choices: ["会わないですむ", "会わなくてすんだ", "会わずにすんだ", "会わずにすむ"],
+    answer: 3,
+    explanation: `Cấu trúc <strong>Vずに済む</strong> nghĩa là \"không cần phải V, không phải V vẫn ổn\". Đây là ước muốn về tương lai nên dùng thể hiện tại (済む), không phải quá khứ. Ở đây: \"Tôi muốn đến một nơi nào đó xa xôi, nơi không cần gặp bất kỳ ai gợi nhớ đến người đó\".<br><br>• <strong>会わないですむ</strong>: ngữ pháp không chuẩn — ずに/ないで + 済む thì phải dùng ずに (文語的 hơn) hoặc なくて, không dùng ないで + 済む.<br>• <strong>会わなくてすんだ</strong>: thể quá khứ (すんだ) — câu đang diễn tả ước muốn về tương lai, không phù hợp.<br>• <strong>会わずにすんだ</strong>: thể quá khứ — cũng không phù hợp với ngữ cảnh ước muốn hiện tại/tương lai.<div class="tip">💡 Vずに済む = không cần phải V vẫn ổn (ước muốn thoát khỏi tình huống không muốn gặp)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "そのことに伴う生活 _______ の問題を、いくつか見てみましょう。",
+    vocab: [
+      { word: "伴う", reading: "ともなう", type: "Động từ nhóm 1", meaning: "Đi kèm, kéo theo, liên quan đến", example: "リスクを伴う仕事。\n(Công việc đi kèm rủi ro.)" },
+      { word: "生活上", reading: "せいかつじょう", type: "Danh từ", meaning: "Về mặt cuộc sống, trong sinh hoạt", example: "生活上の不便を感じる。\n(Cảm thấy bất tiện trong cuộc sống.)" },
+    ],
+    choices: ["際", "上", "以上", "反面"],
+    answer: 1,
+    explanation: `Cấu trúc <strong>N + 上（じょう）</strong> nghĩa là \"về mặt..., xét về phương diện..., trong lĩnh vực...\". Ở đây: \"Hãy cùng xem xét một số vấn đề về mặt cuộc sống kéo theo từ điều đó\".<br><br>• <strong>際（さい）</strong>: \"lúc, nhân dịp\" — diễn tả thời điểm, không phù hợp (生活際 không tự nhiên).<br>• <strong>以上（いじょう）</strong>: \"hơn, từ trở lên; đã thế thì\" — không tạo nghĩa phù hợp với 生活.<br>• <strong>反面（はんめん）</strong>: \"mặt khác, ngược lại\" — diễn tả hai mặt đối lập, không phù hợp ngữ cảnh.<div class="tip">💡 N + 上（じょう）= về mặt..., xét về... (健康上、法律上、生活上、仕事上)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "あいつは、敵にまわすと、きわめて危険な男に _______ ぞ。",
+    vocab: [
+      { word: "敵に回す", reading: "てきにまわす", type: "Cụm động từ nhóm 1", meaning: "Biến thành kẻ thù, để trở thành đối thủ", example: "あの人を敵に回すのは危険だ。\n(Biến người đó thành kẻ thù rất nguy hiểm.)" },
+      { word: "きわめて", reading: "きわめて", type: "Phó từ", meaning: "Cực kỳ, vô cùng, hết sức", example: "きわめて重要な問題。\n(Vấn đề cực kỳ quan trọng.)" },
+      { word: "かねない", reading: "かねない", type: "Cụm trợ động từ", meaning: "Có thể sẽ..., có nguy cơ...(điều xấu)", example: "事故になりかねない。\n(Có thể dẫn đến tai nạn.)" },
+    ],
+    choices: ["なりかねてる", "なりかねる", "なりかねない", "なりかねてない"],
+    answer: 2,
+    explanation: `Cấu trúc <strong>Vます形 + かねない</strong> nghĩa là \"có thể sẽ..., không chừng sẽ...\". Diễn tả khả năng xảy ra điều xấu, đáng lo ngại. Ở đây: \"Tên đó, nếu để nó trở thành kẻ thù thì có thể trở thành một gã nguy hiểm cực kỳ đấy\".<br><br>• <strong>なりかねてる</strong>: không phải dạng từ chuẩn trong tiếng Nhật.<br>• <strong>なりかねる</strong>: nghĩa là \"không thể trở thành\" — ngược nghĩa hoàn toàn (かねる = khó/không thể làm).<br>• <strong>なりかねてない</strong>: không phải dạng từ chuẩn.<div class="tip">💡 Vます + かねない = có thể sẽ...(điều xấu) ≠ Vます + かねる = không thể... (khó/ngại làm)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "警察が博物館に踏み込んだとき、私たちはすでに移動し、博物館内を逆戻りして追っ手から逃げている _______　。",
+    vocab: [
+      { word: "踏み込む", reading: "ふみこむ", type: "Động từ nhóm 1", meaning: "Xông vào, đột nhập, ập vào", example: "警察が家に踏み込んだ。\n(Cảnh sát ập vào nhà.)" },
+      { word: "逆戻り", reading: "ぎゃくもどり", type: "Danh từ・Suru động từ", meaning: "Quay ngược lại, đi ngược chiều", example: "元の場所に逆戻りする。\n(Quay ngược lại chỗ cũ.)" },
+      { word: "追っ手", reading: "おって", type: "Danh từ", meaning: "Kẻ truy đuổi, quân đuổi theo", example: "追っ手から逃れる。\n(Thoát khỏi kẻ truy đuổi.)" },
+    ],
+    choices: ["ところでした", "ところだった", "ところであった", "ところになった"],
+    answer: 1,
+  explanation: `Cấu trúc <strong>Vている + ところだった</strong> nghĩa là \"đang... (vào lúc đó)\". Thể quá khứ ところだった diễn tả trạng thái/hành động đang diễn ra tại một thời điểm trong quá khứ. Ở đây: \"Khi cảnh sát ập vào bảo tàng, chúng tôi đã di chuyển và đang chạy ngược lại trong bảo tàng để trốn thoát những kẻ truy đuổi\".<br><br>• <strong>ところでした</strong>: lịch sự (～でした) nhưng trong lời kể thường dùng thể thông thường ところだった, hơn nữa ngữ cảnh này là trần thuật trực tiếp không lịch sự hóa.<br>• <strong>ところであった</strong>: văn viết cổ điển, quá trang trọng so với ngữ cảnh.<br>• <strong>ところになった</strong>: không phải cấu trúc ngữ pháp chuẩn, sai.<div class="tip">💡 Vている + ところだった = đang V (vào thời điểm đó trong quá khứ) — diễn tả hành động đang tiếp diễn</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "バス停に着いたとき、出発時刻の１時間前に空港に着くバスがちょうど来たので _______　が、満員で乗れず、結局、飛行機に間に合わなかった。",
+    vocab: [
+      { word: "バス停", reading: "バスてい", type: "Danh từ", meaning: "Trạm xe buýt, điểm dừng xe buýt", example: "バス停で待つ。\n(Chờ ở trạm xe buýt.)" },
+      { word: "満員", reading: "まんいん", type: "Danh từ・Tính từ -na", meaning: "Đầy người, hết chỗ, kín chỗ", example: "電車が満員だ。\n(Tàu điện đầy người.)" },
+      { word: "結局", reading: "けっきょく", type: "Phó từ", meaning: "Cuối cùng, rốt cuộc, kết cục", example: "結局、諦めてしまった。\n(Cuối cùng đành bỏ cuộc.)" },
+      { word: "間に合う", reading: "まにあう", type: "Động từ nhóm 1", meaning: "Kịp, đến kịp, đủ dùng", example: "授業に間に合った。\n(Kịp giờ học.)" },
+    ],
+    choices: ["乗っている途中だった", "乗ったところだ", "乗っているつもりだった", "乗ろうとした"],
+    answer: 3,
+    explanation: `Cấu trúc <strong>Vよう + とした</strong> nghĩa là \"đã cố/toan làm V, đang định V thì...\". Diễn tả hành động sắp xảy ra hoặc đang cố thực hiện nhưng bị ngắt/thất bại. Ở đây: \"Tôi toan lên xe buýt nhưng đầy người không lên được, kết quả là không kịp máy bay\".<br><br>• <strong>乗っている途中だった</strong>: \"đang trên đường đi (trong lúc đi)\" — hàm ý đã lên xe rồi, không hợp vì sau đó nói 乗れず (không lên được).<br>• <strong>乗ったところだ</strong>: \"vừa mới lên\" — hàm ý đã lên xe thành công, mâu thuẫn với 乗れず.<br>• <strong>乗っているつもりだった</strong>: \"đã có ý định đang đi\" — cấu trúc kỳ lạ, không tự nhiên.<div class="tip">💡 Vよう + とした = toan/định V (nhưng chưa hoặc không thực hiện được — thường hàm ý bị ngăn cản)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "いい事業計画ができたら、私も投資することにしよう。いいものができなかった _______　、私のアドバイスがタダで利用できるわけだ。",
+    vocab: [
+      { word: "事業計画", reading: "じぎょうけいかく", type: "Danh từ", meaning: "Kế hoạch kinh doanh, dự án kinh doanh", example: "事業計画を立てる。\n(Lập kế hoạch kinh doanh.)" },
+      { word: "投資", reading: "とうし", type: "Danh từ・Suru động từ", meaning: "Đầu tư", example: "株に投資する。\n(Đầu tư vào cổ phiếu.)" },
+      { word: "タダ", reading: "タダ", type: "Danh từ・Tính từ -na", meaning: "Miễn phí, không tốn tiền", example: "タダでもらった。\n(Được cho không mất tiền.)" },
+    ],
+    choices: ["としても", "というと", "としたら", "といっても"],
+    answer: 0,
+    explanation: `Cấu trúc <strong>～としても</strong> nghĩa là \"dù cho (giả sử)..., dù có là...\". Diễn tả giả định một điều kiện để nêu kết quả vẫn không thay đổi. Ở đây: \"Dù cho không tạo ra được kế hoạch tốt thì tôi vẫn được dùng miễn phí lời tư vấn của tôi\".<br><br>• <strong>というと</strong>: \"nói đến..., khi nghe đến...\" — chuyển chủ đề hoặc giải thích, không phải giả định.<br>• <strong>としたら</strong>: \"nếu giả sử...\" — cũng là giả định nhưng thường hỏi về kết quả chưa biết, không nhấn mạnh \"dù sao đi nữa\" như としても.<br>• <strong>といっても</strong>: \"tuy nói là..., dù vậy\" — nhượng bộ, đính chính nhận định, sai nghĩa.<div class="tip">💡 ～としても = dù (giả sử) có là... (kết quả vẫn vậy — nhấn mạnh tính bất biến dù điều kiện thay đổi)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "実は私が戦争 _______　政治 _______　にはさっぱり感心がない。それは男たちがあつかう問題であって、女は関わったところで理解できやしないと思う。",
+    vocab: [
+      { word: "戦争", reading: "せんそう", type: "Danh từ", meaning: "Chiến tranh", example: "戦争が終わった。\n(Chiến tranh kết thúc.)" },
+      { word: "政治", reading: "せいじ", type: "Danh từ", meaning: "Chính trị", example: "政治に関心を持つ。\n(Quan tâm đến chính trị.)" },
+      { word: "さっぱり", reading: "さっぱり", type: "Phó từ", meaning: "Hoàn toàn không (dùng với phủ định)", example: "さっぱりわからない。\n(Hoàn toàn không hiểu.)" },
+      { word: "関わる", reading: "かかわる", type: "Động từ nhóm 1", meaning: "Liên quan đến, dính líu đến", example: "仕事に関わる問題。\n(Vấn đề liên quan đến công việc.)" },
+    ],
+    choices: ["とか/とか", "なり/なり", "やら/やら", "といい/といい"],
+    answer: 2,
+    explanation: `Cấu trúc <strong>N/Vやら N/Vやら</strong> nghĩa là \"này thì..., kia thì..., đủ thứ như...\" — liệt kê các ví dụ không hoàn toàn, thường kèm sắc thái mơ hồ hoặc bực bội. Ở đây: \"Thực ra tôi chẳng có chút hứng thú gì với những thứ như chiến tranh hay chính trị cả\".<br><br>• <strong>とか/とか</strong>: \"hay là..., hoặc là...\" — liệt kê thông thường, ít tính cảm xúc hơn やら/やら.<br>• <strong>なり/なり</strong>: \"hoặc là..., hay là...\" — diễn tả lựa chọn (hãy làm A hoặc B), không phải liệt kê ví dụ.<br>• <strong>といい/といい</strong>: \"cả... lẫn..., dù là... hay...\" — liệt kê hai phía để đánh giá tổng thể, thường khen/chê đồng đều, không hợp ngữ cảnh thiếu quan tâm.<div class="tip">💡 ～やら～やら = này...kia..., đủ thứ như... (liệt kê ví dụ, thường kèm sắc thái phàn nàn hoặc ngạc nhiên)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "彼女自身、心の中にうしろめたいものを _______　いられませんでした。",
+    vocab: [
+      { word: "後ろめたい", reading: "うしろめたい", type: "Tính từ -i", meaning: "Cảm thấy có lỗi, áy náy, ám ảnh lương tâm", example: "後ろめたい気持ちがある。\n(Có cảm giác áy náy.)" },
+      { word: "ないではいられない", reading: "ないではいられない", type: "Cấu trúc ngữ pháp", meaning: "Không thể không..., không nhịn được mà không...", example: "笑わないではいられない。\n(Không thể không cười.)" },
+    ],
+    choices: ["感じないではいられませんでした", "感じなくてはいられませんでした", "感じないといられませんでした", "感じなければいられませんでした"],
+    answer: 0,
+    explanation: `Cấu trúc <strong>Vない + ではいられない</strong> nghĩa là \"không thể không V, không nhịn được mà không V\". Diễn tả cảm xúc/hành động tự nhiên, không cưỡng lại được. Ở đây: \"Chính bản thân cô ấy không thể không cảm thấy có điều gì đó áy náy trong lòng\".<br><br>• <strong>感じなくてはいられませんでした</strong>: cấu trúc なくてはいられない tuy tương tự nhưng thường mang nghĩa \"phải làm\" (bắt buộc), ít tự nhiên hơn trong ngữ cảnh cảm xúc không kiềm chế được.<br>• <strong>感じないといられませんでした</strong>: ないといられない — không phải cấu trúc chuẩn cho nghĩa này.<br>• <strong>感じなければいられませんでした</strong>: なければいられない — không phải cấu trúc chuẩn.<div class="tip">💡 Vない + ではいられない = không thể không V (cảm xúc/hành động bột phát, không kiềm chế được)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "先生「最初は、緊張して大きな声で歌えないと思います。でも、_______　だんだん大きな声で歌えるようになりますよ。」",
+    vocab: [
+      { word: "緊張", reading: "きんちょう", type: "Danh từ・Suru động từ", meaning: "Căng thẳng, hồi hộp", example: "試験で緊張する。\n(Hồi hộp trong kỳ thi.)" },
+      { word: "うちに", reading: "うちに", type: "Liên từ", meaning: "Trong khi..., trong lúc... (còn đang)", example: "若いうちに勉強する。\n(Học trong khi còn trẻ.)" },
+      { word: "だんだん", reading: "だんだん", type: "Phó từ", meaning: "Dần dần, từ từ", example: "だんだん上手くなる。\n(Dần dần trở nên giỏi hơn.)" },
+    ],
+    choices: ["練習していくうちに", "練習してでも", "練習するのに対して", "練習するのに比べて"],
+    answer: 0,
+    explanation: `Cấu trúc <strong>Vていく + うちに</strong> nghĩa là \"trong khi tiếp tục làm V thì (dần dần thay đổi)\". Diễn tả quá trình thay đổi từ từ trong khi hành động được duy trì liên tục. Ở đây: \"Nhưng trong quá trình tiếp tục luyện tập thì dần dần sẽ hát to hơn được\".<br><br>• <strong>練習してでも</strong>: \"dù phải luyện tập đi nữa\" — hàm ý bất chấp khó khăn để đạt mục tiêu, không diễn tả quá trình dần dần.<br>• <strong>練習するのに対して</strong>: \"đối lập với việc luyện tập\" — diễn tả sự tương phản, sai nghĩa.<br>• <strong>練習するのに比べて</strong>: \"so với việc luyện tập\" — diễn tả so sánh, sai nghĩa.<div class="tip">💡 Vていくうちに = trong khi tiếp tục V thì dần dần... (thay đổi diễn ra từ từ trong quá trình)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "監督「みんな、今日は本当によくやった。この調子であしたの決勝戦もがんばろう。おれたちが勝って世間を _______　じゃないか。」",
+    vocab: [
+      { word: "監督", reading: "かんとく", type: "Danh từ", meaning: "Huấn luyện viên, đạo diễn, giám sát", example: "サッカーの監督を務める。\n(Làm huấn luyện viên bóng đá.)" },
+      { word: "決勝戦", reading: "けっしょうせん", type: "Danh từ", meaning: "Trận chung kết", example: "決勝戦に進む。\n(Vào vòng chung kết.)" },
+      { word: "世間", reading: "せけん", type: "Danh từ", meaning: "Xã hội, thiên hạ, thế gian", example: "世間の目を気にする。\n(Bận tâm đến mắt thiên hạ.)" },
+      { word: "驚かせる", reading: "おどろかせる", type: "Động từ nhóm 2", meaning: "Làm ngạc nhiên, gây bất ngờ", example: "世界を驚かせた発明。\n(Phát minh làm cả thế giới ngạc nhiên.)" },
+    ],
+    choices: ["驚いてやろう", "驚いてもらおう", "驚かせてやろう", "驚かせてもらおう"],
+    answer: 2,
+    explanation: `Cấu trúc <strong>驚かせてやろう</strong> = <strong>驚かせる（làm ngạc nhiên）+ てやろう（ta sẽ làm cho）</strong>. てやろう (= てあげよう, khẩu ngữ nam tính mạnh) diễn tả ý chí làm gì đó mang lại cho người khác (hoặc xã hội). Ở đây: \"Hãy để ta chiến thắng và làm cho thiên hạ phải ngạc nhiên nào!\" — bày tỏ khí thế quyết tâm.<br><br>• <strong>驚いてやろう</strong>: \"ta sẽ ngạc nhiên\" — 驚く là tự ngạc nhiên (nội động từ), chủ thể là người nói, sai nghĩa.<br>• <strong>驚いてもらおう</strong>: \"ta sẽ nhờ (ai đó) ngạc nhiên\" — 驚く nội động từ + もらう cũng không hợp nghĩa.<br>• <strong>驚かせてもらおう</strong>: \"ta sẽ được phép làm ngạc nhiên\" — もらう hàm ý nhận ơn/xin phép từ người khác, không phù hợp với ngữ cảnh hô hào quyết tâm.<div class="tip">💡 ～てやろう = ta sẽ làm (cho ai/xã hội) — bày tỏ quyết tâm mạnh mẽ (khẩu ngữ nam, khí thế cao)</div>`,
+  },
+  ]
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 文法 Bài 8</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="文">
+  <div class="header-badge">N2 JLPT • NGỮ PHÁP ⑧</div>
+  <h1>N2 文法<span>クイズ</span>⑧</h1>
+  <p class="sub">Trắc nghiệm ngữ pháp N2 · Bài 8 · Giải thích chi tiết</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  questions: [
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "いまのところ、９月にはニューヨークに戻ってくる _______　でいます。",
+    vocab: [
+      { word: "いまのところ", reading: "いまのところ", type: "Phó từ", meaning: "Hiện tại, cho đến lúc này, tạm thời", example: "いまのところ問題はない。\n(Hiện tại không có vấn đề gì.)" },
+      { word: "戻ってくる", reading: "もどってくる", type: "Động từ nhóm 3", meaning: "Trở về, quay lại", example: "３時間後に戻ってくる。\n(Sẽ trở về sau 3 tiếng.)" },
+      { word: "つもり", reading: "つもり", type: "Danh từ hình thức", meaning: "Dự định, ý định", example: "来年、日本に行くつもりだ。\n(Tôi dự định năm sau sẽ đến Nhật.)" },
+    ],
+    choices: ["まま", "はず", "つもり", "よう"],
+    answer: 2,
+    explanation: `Cấu trúc <strong>～つもりでいる</strong> nghĩa là \"đang có dự định..., vẫn giữ ý định...\". Dạng <strong>つもりでいる</strong> (thay vì chỉ つもりだ) nhấn mạnh ý định đang tiếp diễn hoặc được duy trì. Ở đây: \"Hiện tại, tôi đang có dự định sẽ quay lại New York vào tháng 9\".<br><br>• <strong>まま</strong>: \"vẫn như vậy, giữ nguyên trạng thái\" — không phù hợp khi nói về ý định.<br>• <strong>はず</strong>: \"đáng lẽ phải..., chắc hẳn là...\" — diễn tả kỳ vọng/suy luận khách quan, không phải ý định cá nhân.<br>• <strong>よう</strong>: \"có vẻ như, dường như\" — diễn tả phán đoán từ bên ngoài, không phải ý định.<div class="tip">💡 ～つもりでいる = đang duy trì dự định... (nhấn mạnh ý định tiếp diễn, không đổi thay)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "あのときは、ナイーブであることにも力があるのだなと思いました。できないとは知らなかった _______　、私はなんとかしてしまったわけです。",
+    vocab: [
+      { word: "ナイーブ", reading: "ナイーブ", type: "Tính từ -na", meaning: "Ngây thơ, trong sáng, chân thật", example: "ナイーブな考え方。\n(Cách nghĩ ngây thơ.)" },
+      { word: "なんとかする", reading: "なんとかする", type: "Động từ nhóm 3", meaning: "Xoay xở được, giải quyết được bằng cách nào đó", example: "なんとかしてみせる。\n(Tôi sẽ xoay xở được bằng cách nào đó.)" },
+      { word: "からこそ", reading: "からこそ", type: "Liên từ", meaning: "Chính vì..., vì lý do đó mà...", example: "信頼しているからこそ、話した。\n(Chính vì tin tưởng nên mới nói.)" },
+    ],
+    choices: ["以上に", "からこそ", "だけに", "にて"],
+    answer: 1,
+    explanation: `Cấu trúc <strong>～からこそ</strong> nghĩa là \"chính vì..., vì lý do đó mà...\". Nhấn mạnh rằng lý do nêu ra là nguyên nhân trực tiếp, không thể thiếu dẫn đến kết quả. Ở đây: \"Chính vì không biết rằng mình không thể làm được nên tôi đã xoay xở được\".<br><br>• <strong>以上に</strong>: \"hơn cả, vượt hơn\" — diễn tả mức độ vượt trội, không phải lý do nhân quả.<br>• <strong>だけに</strong>: \"đúng vì, càng bởi vì\" — cũng diễn tả nguyên nhân nhưng hàm ý kết quả là điều tất nhiên/không tránh khỏi, ít phù hợp hơn ở đây.<br>• <strong>にて</strong>: \"tại, bằng\" (văn phong trang trọng/cổ điển) — diễn tả địa điểm hoặc phương tiện, sai nghĩa.<div class="tip">💡 ～からこそ = chính vì... (nhấn mạnh đây là lý do then chốt dẫn đến kết quả đặc biệt)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "この法案は、ウーバーやリフト _______ ギグワーク企業によって支持されている。",
+    vocab: [
+      { word: "法案", reading: "ほうあん", type: "Danh từ", meaning: "Dự luật, đề xuất luật", example: "法案を可決する。\n(Thông qua dự luật.)" },
+      { word: "ギグワーク", reading: "ギグワーク", type: "Danh từ", meaning: "Gig work (công việc tự do theo hợp đồng ngắn hạn)", example: "ギグワーク企業が増えている。\n(Các công ty gig work đang tăng lên.)" },
+      { word: "支持する", reading: "しじする", type: "Động từ nhóm 3", meaning: "Ủng hộ, hỗ trợ", example: "その政策を支持する。\n(Ủng hộ chính sách đó.)" },
+    ],
+    choices: ["とか", "にしろ", "という", "といった"],
+    answer: 3,
+    explanation: `Cấu trúc <strong>～といった</strong> nghĩa là \"như là..., chẳng hạn như...\". Dùng để liệt kê các ví dụ điển hình. Ở đây: \"Dự luật này được ủng hộ bởi các công ty gig work như Uber và Lyft\".<br><br>• <strong>とか</strong>: \"hay là, hoặc là\" — liệt kê không hoàn toàn, hơi thông thường/khẩu ngữ, không hợp với văn phong tin tức.<br>• <strong>にしろ</strong>: \"dù là..., dù cho là...\" — diễn tả sự nhượng bộ, sai nghĩa.<br>• <strong>という</strong>: \"được gọi là, tên là\" — giới thiệu tên gọi/định nghĩa, không dùng để liệt kê ví dụ.<div class="tip">💡 ～といった + N = như là..., chẳng hạn như... (liệt kê ví dụ, văn phong trung tính đến trang trọng)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "疲れたときは、_______　に限ります。",
+    vocab: [
+      { word: "疲れる", reading: "つかれる", type: "Động từ nhóm 2", meaning: "Mệt mỏi, mệt", example: "仕事で疲れた。\n(Mệt vì công việc.)" },
+      { word: "に限る", reading: "にかぎる", type: "Cụm động từ", meaning: "Không gì bằng..., tốt nhất là...", example: "夏は冷たいビールに限る。\n(Mùa hè thì không gì bằng bia lạnh.)" },
+    ],
+    choices: ["寝", "寝る", "寝て", "寝た"],
+    answer: 1,
+    explanation: `Cấu trúc <strong>Vる + に限る</strong> nghĩa là \"không gì bằng..., tốt nhất là...\". Động từ ở thể từ điển (辞書形) đứng trước に限る. Ở đây: \"Khi mệt thì không gì bằng ngủ\".<br><br>• <strong>寝</strong>: thể ます-stem (連用形) — không dùng trực tiếp trước に限る.<br>• <strong>寝て</strong>: thể て-form — không phù hợp với cấu trúc ～に限る.<br>• <strong>寝た</strong>: thể quá khứ — không phù hợp, cần thể từ điển.<div class="tip">💡 Vる + に限る = không gì bằng V, tốt nhất là V (nêu điều tốt nhất trong tình huống nhất định)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "石田はハイスクールの後半２年間で知的に大きく成長し、自分はエレクトロニクスが大好きなギークである _______　、文学やクリエーティブなことが好きな人間らしいと思うようになった。",
+    vocab: [
+      { word: "後半", reading: "こうはん", type: "Danh từ", meaning: "Nửa sau, giai đoạn sau", example: "後半戦が始まる。\n(Hiệp hai bắt đầu.)" },
+      { word: "知的", reading: "ちてき", type: "Tính từ -na", meaning: "Thuộc về trí tuệ, tri thức", example: "知的な会話を楽しむ。\n(Thưởng thức cuộc trò chuyện trí tuệ.)" },
+      { word: "成長", reading: "せいちょう", type: "Danh từ・Suru động từ", meaning: "Tăng trưởng, trưởng thành", example: "子どもの成長を見守る。\n(Dõi theo sự trưởng thành của con.)" },
+      { word: "クリエーティブ", reading: "クリエーティブ", type: "Tính từ -na", meaning: "Sáng tạo", example: "クリエーティブな仕事をしたい。\n(Muốn làm công việc sáng tạo.)" },
+    ],
+    choices: ["だけでなく", "ところに", "というふうに", "と同時に"],
+    answer: 3,
+    explanation: `Cấu trúc <strong>～と同時に</strong> nghĩa là \"đồng thời..., cùng lúc đó..., vừa... vừa...\". Diễn tả hai tính chất/hành động tồn tại cùng lúc. Ở đây: \"Ishida nhận ra mình vừa là một geek yêu thích điện tử, đồng thời cũng là người thích văn học và những điều sáng tạo\".<br><br>• <strong>だけでなく</strong>: \"không chỉ..., mà còn...\" — cũng có thể, nhưng と同時に tự nhiên hơn khi nhấn mạnh hai bản sắc song song tồn tại đồng thời.<br>• <strong>ところに</strong>: \"đúng lúc..., vào lúc...\" — diễn tả thời điểm trùng hợp, sai nghĩa.<br>• <strong>というふうに</strong>: \"theo kiểu..., theo cách...\" — diễn tả cách thức/kiểu dáng, không phù hợp.<div class="tip">💡 ～と同時に = đồng thời, vừa...vừa... (hai tính chất/trạng thái tồn tại song song)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2 • SẮP XẾP CÂU",
+    text: "どの大学に　＿＿　＿＿　★　＿＿　、東京大学に決めた。\n\n※ Chọn từ điền vào vị trí ★",
+    vocab: [
+      { word: "留学する", reading: "りゅうがくする", type: "Động từ nhóm 3", meaning: "Du học, học ở nước ngoài", example: "アメリカに留学する。\n(Du học ở Mỹ.)" },
+      { word: "悩む", reading: "なやむ", type: "Động từ nhóm 1", meaning: "Băn khoăn, lo lắng, trăn trở", example: "進路について悩む。\n(Băn khoăn về hướng đi tương lai.)" },
+      { word: "さんざん", reading: "さんざん", type: "Phó từ", meaning: "Rất nhiều, mãi mãi (thường mang nghĩa tiêu cực/vất vả)", example: "さんざん考えた末に決めた。\n(Sau khi suy nghĩ mãi mới quyết định.)" },
+      { word: "あげく", reading: "あげく", type: "Danh từ / liên từ", meaning: "Cuối cùng sau khi (trải qua nhiều thứ)", example: "散々迷ったあげく、諦めた。\n(Sau khi do dự mãi, cuối cùng đành bỏ cuộc.)" },
+    ],
+    choices: ["さんざん", "あげく", "留学しようかと", "悩んだ"],
+    answer: 3,
+    explanation: `Câu hoàn chỉnh: <strong>どの大学に留学しようかとさんざん悩んだあげく、東京大学に決めた。</strong><br>→ \"Sau khi mãi băn khoăn không biết nên du học ở trường đại học nào, cuối cùng đã quyết định vào Đại học Tokyo.\"<br><br>Thứ tự: <strong>留学しようかと(3) → さんざん(1) → 悩んだ(4)★ → あげく(2)</strong><br><br>Cấu trúc <strong>さんざん～たあげく</strong> = \"sau khi... mãi (vất vả), cuối cùng...\" — diễn tả kết quả sau quá trình dài trăn trở.<br><br>Vị trí ★ là từ thứ 3: <strong>悩んだ (4)</strong>.<div class="tip">💡 さんざん + Vた + あげく = sau khi...mãi, cuối cùng... (nhấn mạnh quá trình vất vả trước khi có kết quả)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2 • SẮP XẾP CÂU",
+    text: "親が頭がいいからといって、　＿＿　＿＿　★　＿＿　。\n\n※ Chọn từ điền vào vị trí ★",
+    vocab: [
+      { word: "からといって", reading: "からといって", type: "Liên từ", meaning: "Chỉ vì... (không có nghĩa là)", example: "好きだからといって、毎日食べるのはよくない。\n(Dù yêu thích cũng không nên ăn mỗi ngày.)" },
+      { word: "かぎらない", reading: "かぎらない", type: "Cụm động từ", meaning: "Không nhất thiết, chưa chắc đã", example: "高いものが良いとはかぎらない。\n(Không phải cứ đắt là tốt.)" },
+    ],
+    choices: ["とは", "頭がいい", "子どもも必ず", "かぎらない"],
+    answer: 0,
+    explanation: `Câu hoàn chỉnh: <strong>親が頭がいいからといって、子どもも必ず頭がいいとはかぎらない。</strong><br>→ \"Chỉ vì cha mẹ thông minh không có nghĩa là con cái nhất định cũng thông minh.\"<br><br>Thứ tự: <strong>子どもも必ず(3) → 頭がいい(2) → とは(1)★ → かぎらない(4)</strong><br><br>Cấu trúc <strong>～からといって～とはかぎらない</strong> = \"chỉ vì...không nhất thiết là...\" — phủ nhận kết luận vội vàng.<br><br>Vị trí ★ là từ thứ 3: <strong>とは (1)</strong>.<div class="tip">💡 ～とはかぎらない = không nhất thiết, chưa chắc đã (phủ nhận điều tưởng như hiển nhiên)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2 • SẮP XẾP CÂU",
+    text: "私を追ってくる無知な者たちの足音を感じる。　＿＿　＿＿　★　＿＿　、私の企図をくじこうとしている者たちだ。\n\n※ Chọn từ điền vào vị trí ★",
+    vocab: [
+      { word: "追う", reading: "おう", type: "Động từ nhóm 1", meaning: "Đuổi theo, truy đuổi", example: "犯人を追う。\n(Truy đuổi tên tội phạm.)" },
+      { word: "無知", reading: "むち", type: "Danh từ・Tính từ -na", meaning: "Vô tri, thiếu hiểu biết", example: "無知な人間。\n(Kẻ thiếu hiểu biết.)" },
+      { word: "企図", reading: "きと", type: "Danh từ・Suru động từ", meaning: "Kế hoạch, mưu đồ", example: "企図を実行する。\n(Thực hiện kế hoạch.)" },
+      { word: "くじく", reading: "くじく", type: "Động từ nhóm 1", meaning: "Phá hoại, làm tan vỡ (kế hoạch)", example: "計画をくじく。\n(Phá hoại kế hoạch.)" },
+    ],
+    choices: ["使って", "手を", "でも", "どんな"],
+    answer: 0,
+    explanation: `Câu hoàn chỉnh: <strong>どんな手を使ってでも、私の企図をくじこうとしている者たちだ。</strong><br>→ \"Đó là những kẻ dùng mọi thủ đoạn dù là gì đi nữa để phá vỡ kế hoạch của ta.\"<br><br>Thứ tự: <strong>どんな(4) → 手を(2) → 使って(1)★ → でも(3)</strong><br><br>Cấu trúc <strong>どんな～でも</strong> = \"dù là... gì đi nữa, bất kể...\" — diễn tả không có giới hạn/điều kiện nào.<br>使ってでも = \"dù phải dùng đến... cũng\" — nhấn mạnh quyết tâm bất chấp.<br><br>Vị trí ★ là từ thứ 3: <strong>使って (1)</strong>.<div class="tip">💡 どんな～でも = dù là gì đi nữa, bất kể... (không có giới hạn, dùng được với mọi phương tiện)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2 • SẮP XẾP CÂU",
+    text: "いいですか、橋本さん。頭部の外傷の場合、最初の二十四時間は注意が必要です。安静にしてください。　＿＿　＿＿　★　＿＿　。\n\n※ Chọn từ điền vào vị trí ★",
+    vocab: [
+      { word: "頭部", reading: "とうぶ", type: "Danh từ", meaning: "Đầu, vùng đầu", example: "頭部を強打する。\n(Đập mạnh vào đầu.)" },
+      { word: "外傷", reading: "がいしょう", type: "Danh từ", meaning: "Vết thương ngoài, chấn thương ngoài", example: "外傷がひどい。\n(Vết thương ngoài rất nặng.)" },
+      { word: "安静", reading: "あんせい", type: "Danh từ・Tính từ -na", meaning: "Nghỉ ngơi yên tĩnh, tĩnh dưỡng", example: "安静にする。\n(Nằm nghỉ ngơi.)" },
+      { word: "さもないと", reading: "さもないと", type: "Liên từ", meaning: "Nếu không thì, nếu không làm vậy thì", example: "急いでください。さもないと遅れます。\n(Hãy nhanh lên. Nếu không sẽ trễ đấy.)" },
+      { word: "障害", reading: "しょうがい", type: "Danh từ", meaning: "Khuyết tật, khiếm khuyết, trở ngại", example: "重い障害が残る。\n(Để lại di chứng nặng.)" },
+    ],
+    choices: ["が残る", "恐れがあります", "さもないと", "重い障害"],
+    answer: 0,
+    explanation: `Câu hoàn chỉnh: <strong>さもないと重い障害が残る恐れがあります。</strong><br>→ \"Nếu không làm vậy, có nguy cơ để lại di chứng nặng.\"<br><br>Thứ tự: <strong>さもないと(3) → 重い障害(4) → が残る(1)★ → 恐れがあります(2)</strong><br><br>Cấu trúc <strong>さもないと～恐れがある</strong> = \"nếu không thì có nguy cơ...\".<br>恐れがある = \"có lo ngại, có nguy cơ\" — diễn tả khả năng xấu có thể xảy ra.<br><br>Vị trí ★ là từ thứ 3: <strong>が残る (1)</strong>.<div class="tip">💡 ～恐れがある = có nguy cơ..., có lo ngại... (khả năng xảy ra điều xấu)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2 • SẮP XẾP CÂU",
+    text: "　＿＿　＿＿　★　＿＿　、芝のロータリーにはピストレット作の大きな彫像が鎮座している。\n\n※ Chọn từ điền vào vị trí ★",
+    vocab: [
+      { word: "主要", reading: "しゅよう", type: "Tính từ -na", meaning: "Chủ yếu, chính, quan trọng", example: "主要な問題を解決する。\n(Giải quyết các vấn đề chính.)" },
+      { word: "交わる", reading: "まじわる", type: "Động từ nhóm 1", meaning: "Giao nhau, cắt nhau (đường)", example: "二つの道が交わる。\n(Hai con đường giao nhau.)" },
+      { word: "ロータリー", reading: "ロータリー", type: "Danh từ", meaning: "Bùng binh, vòng xuyến giao thông", example: "ロータリーを回る。\n(Đi vòng quanh bùng binh.)" },
+      { word: "彫像", reading: "ちょうぞう", type: "Danh từ", meaning: "Tượng điêu khắc, tượng tạc", example: "大理石の彫像。\n(Tượng điêu khắc bằng đá cẩm thạch.)" },
+      { word: "鎮座する", reading: "ちんざする", type: "Động từ nhóm 3", meaning: "Tọa lạc, ngự tại (trang trọng)", example: "神殿が鎮座している。\n(Đền thờ tọa lạc tại đó.)" },
+    ],
+    choices: ["を中心にして", "が交わり", "六つの主要道路", "この門"],
+    answer: 2,
+    explanation: `Câu hoàn chỉnh: <strong>この門を中心にして六つの主要道路が交わり、芝のロータリーにはピストレット作の大きな彫像が鎮座している。</strong><br>→ \"Lấy cổng này làm trung tâm, sáu con đường chính giao nhau, và tại vòng xuyến Shiba có một bức tượng lớn do Pistolet tạc đang tọa lạc.\"<br><br>Thứ tự: <strong>この門(4) → を中心にして(1) → 六つの主要道路(3)★ → が交わり(2)</strong><br><br>Cấu trúc <strong>～を中心にして</strong> = \"lấy... làm trung tâm\" — diễn tả điểm trọng tâm/trục xoay.<br><br>Vị trí ★ là từ thứ 3: <strong>六つの主要道路 (3)</strong>.<div class="tip">💡 ～を中心にして = lấy...làm trung tâm, xoay quanh... (không gian hoặc tổ chức)</div>`,
+  },
+  ]
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>
