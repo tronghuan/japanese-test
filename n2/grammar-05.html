@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 文法 Bài 5</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="文">
+  <div class="header-badge">N2 JLPT • NGỮ PHÁP ⑤</div>
+  <h1>N2 文法<span>クイズ</span>⑤</h1>
+  <p class="sub">Trắc nghiệm ngữ pháp N2 · Bài 5 · Giải thích chi tiết</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  questions: [
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "真実は死者の目______のみ見える。",
+    vocab: [
+      { word: "真実", reading: "しんじつ", type: "Danh từ", meaning: "Sự thật, thực tế", example: "真実を話す。\n(Nói sự thật.)" },
+      { word: "死者", reading: "ししゃ", type: "Danh từ", meaning: "Người đã chết, nạn nhân tử vong", example: "事故の死者が出た。\n(Đã có người chết vì tai nạn.)" },
+    ],
+    choices: ["をめぐって", "をもとに", "をはじめ", "を通して"],
+    answer: 3,
+    explanation: `Cấu trúc <strong>～を通して</strong> nghĩa là \"thông qua, qua...\". Ở đây: \"Sự thật chỉ có thể thấy được thông qua đôi mắt của người đã khuất\".<br><br>• <strong>をめぐって</strong>: \"xoay quanh, liên quan đến\" — dùng cho chủ đề tranh luận (問題をめぐって).<br>• <strong>をもとに</strong>: \"dựa trên\" — dùng khi có cơ sở/nguồn gốc.<br>• <strong>をはじめ</strong>: \"bắt đầu từ..., kể cả...\" — dùng để liệt kê đại diện.<div class="tip">💡 ～を通して = thông qua (phương tiện, trung gian, hoặc khoảng thời gian toàn bộ)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "「禁帯出」とは、外に______ならない、という意味である。",
+    vocab: [
+      { word: "禁帯出", reading: "きんたいしゅつ", type: "Danh từ", meaning: "Cấm mang ra ngoài (ghi trên sách thư viện)", example: "禁帯出の本は館内でのみ読める。\n(Sách cấm mang ra chỉ đọc trong thư viện.)" },
+      { word: "持ち出す", reading: "もちだす", type: "Động từ nhóm 1", meaning: "Mang ra ngoài, đưa ra ngoài", example: "書類を外に持ち出す。\n(Mang tài liệu ra ngoài.)" },
+    ],
+    choices: ["持ち出し", "持ち出しては", "持ち出したら", "持ち出すと"],
+    answer: 1,
+    explanation: `Cấu trúc <strong>～てはならない</strong> nghĩa là \"không được..., cấm...\". Đây là cách diễn đạt lệnh cấm. 持ち出す → thể て: 持ち出して + はならない → \"không được mang ra ngoài\".<br><br>• <strong>持ち出し</strong>: dạng danh từ hóa — không nối được với ならない.<br>• <strong>持ち出したら</strong>: \"nếu mang ra\" — điều kiện giả định, không phải lệnh cấm.<br>• <strong>持ち出すと</strong>: \"khi mang ra thì...\" — kết quả tự nhiên, không phải lệnh cấm.<div class="tip">💡 ～てはならない = không được làm (lệnh cấm, mang tính quy tắc/luật lệ)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "火事が起こると、このドアは自動的に閉まる______になっています。",
+    vocab: [
+      { word: "火事", reading: "かじ", type: "Danh từ", meaning: "Đám cháy, hỏa hoạn", example: "火事が起きた。\n(Xảy ra hỏa hoạn.)" },
+      { word: "自動的", reading: "じどうてき", type: "Tính từ -na / Trạng từ", meaning: "Tự động", example: "自動的にロックされる。\n(Tự động bị khóa.)" },
+    ],
+    choices: ["べき", "ため", "よう", "そう"],
+    answer: 2,
+    explanation: `Cấu trúc <strong>～ようになっている</strong> nghĩa là \"được thiết kế để..., được sắp xếp sao cho...\". Ở đây: \"Cánh cửa này được thiết kế để tự động đóng lại khi có hỏa hoạn\".<br><br>• <strong>べき</strong>: ～べきになっている không phải mẫu chuẩn; べき dùng để diễn tả nghĩa vụ.<br>• <strong>ため</strong>: ～ためになっている không tự nhiên trong ngữ cảnh này; ため chỉ mục đích/nguyên nhân.<br>• <strong>そう</strong>: ～そうになっている có nghĩa \"có vẻ sắp...\" — không đúng, diễn tả vẻ bề ngoài.<div class="tip">💡 ～ようになっている = được thiết kế/cài đặt để... (mô tả cơ chế hoặc quy tắc đã được lập sẵn)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "あなたが何を見つけようと、それは途方もなく危険なもの______。おおぜいの人間が私たちを殺そうとしてるんだから。",
+    vocab: [
+      { word: "途方もない", reading: "とほうもない", type: "Tính từ -i", meaning: "Phi thường, quá mức, vô lý", example: "途方もない金額を要求された。\n(Bị yêu cầu một khoản tiền phi thường.)" },
+    ],
+    choices: ["に間違いない", "に越したことはない", "に相違ない", "に決まっている"],
+    answer: 3,
+    explanation: `Cấu trúc <strong>～に決まっている</strong> nghĩa là \"chắc chắn là..., nhất định là...\" (khẳng định chắc nịch, mang sắc thái cá nhân mạnh). Ở đây: \"Nhất định là thứ cực kỳ nguy hiểm — vì bao nhiêu người đang muốn giết chúng ta\".<br><br>• <strong>に間違いない</strong>: cũng nghĩa \"chắc chắn\" nhưng khách quan hơn, dựa trên bằng chứng.<br>• <strong>に越したことはない</strong>: \"không gì bằng, tốt nhất là\" — hoàn toàn sai nghĩa.<br>• <strong>に相違ない</strong>: \"chắc chắn\" (rất trang trọng, văn viết) — ít tự nhiên hơn trong hội thoại.<div class="tip">💡 ～に決まっている = nhất định là... (mang tính quyết đoán chủ quan, thường dùng trong hội thoại)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "あの人は人殺し______、そのうえ泥棒でございます。",
+    vocab: [
+      { word: "人殺し", reading: "ひとごろし", type: "Danh từ", meaning: "Kẻ giết người, tội giết người", example: "人殺しの罪を犯した。\n(Phạm tội giết người.)" },
+      { word: "泥棒", reading: "どろぼう", type: "Danh từ", meaning: "Kẻ trộm, tên cướp", example: "泥棒が入った。\n(Kẻ trộm đã vào nhà.)" },
+    ],
+    choices: ["ではなく", "どころか", "だけでなく", "ばかりか"],
+    answer: 2,
+    explanation: `Cấu trúc <strong>～だけでなく</strong> nghĩa là \"không chỉ...mà còn...\". Ở đây: \"Người đó không chỉ là kẻ giết người, mà còn là tên trộm\".<br><br>• <strong>ではなく</strong>: \"không phải...mà là...\" — thay thế hoàn toàn, trái nghĩa (người đó LÀ kẻ giết người).<br>• <strong>どころか</strong>: \"không những...mà ngược lại...\" — hàm ý phủ định vế trước rồi đưa ra điều bất ngờ hơn, không phù hợp.<br>• <strong>ばかりか</strong>: cũng có nghĩa \"không chỉ...mà còn\" nhưng thường nhấn mạnh sự bất ngờ/quá mức, ít tự nhiên hơn ở đây.<div class="tip">💡 ～だけでなく = không chỉ...mà còn... (liệt kê thêm, không phủ định vế trước)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "妻が準備したのは、親しい友達や仕事仲間______パーティーだった。",
+    vocab: [
+      { word: "親しい", reading: "したしい", type: "Tính từ -i", meaning: "Thân thiết, gần gũi", example: "親しい友達と話す。\n(Nói chuyện với bạn thân.)" },
+      { word: "仲間", reading: "なかま", type: "Danh từ", meaning: "Đồng nghiệp, bạn bè cùng nhóm, đồng bọn", example: "仕事仲間と飲みに行く。\n(Đi uống với đồng nghiệp.)" },
+    ],
+    choices: ["を中心とした", "を契機に", "を除いて", "を問わず"],
+    answer: 0,
+    explanation: `Cấu trúc <strong>～を中心とした＋名詞</strong> nghĩa là \"lấy...làm trung tâm, xoay quanh...\". Ở đây: \"Bữa tiệc mà vợ chuẩn bị là bữa tiệc xoay quanh những người bạn thân và đồng nghiệp\".<br><br>• <strong>を契機に</strong>: \"nhân dịp..., lấy...làm cơ hội\" — dùng cho sự kiện khởi đầu, không hợp.<br>• <strong>を除いて</strong>: \"ngoại trừ, loại trừ\" — trái nghĩa (loại trừ bạn bè?).<br>• <strong>を問わず</strong>: \"bất kể, không phân biệt\" — không hợp ngữ cảnh.<div class="tip">💡 ～を中心とした＋N = (danh từ) lấy...làm trung tâm (dùng để mô tả danh từ phía sau)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "幸いな______、社長はこのアイデアが気に入った。",
+    vocab: [
+      { word: "社長", reading: "しゃちょう", type: "Danh từ", meaning: "Giám đốc, chủ tịch công ty", example: "社長に報告する。\n(Báo cáo lên giám đốc.)" },
+      { word: "気に入る", reading: "きにいる", type: "Cụm động từ", meaning: "Ưng ý, thích, vừa lòng", example: "このデザインが気に入った。\n(Tôi thích thiết kế này.)" },
+      { word: "アイデア", reading: "あいであ", type: "Danh từ", meaning: "Ý tưởng", example: "いいアイデアが浮かんだ。\n(Nảy ra một ý tưởng hay.)" },
+    ],
+    choices: ["ことに", "せいで", "ものから", "ばかりに"],
+    answer: 0,
+    explanation: `Cấu trúc <strong>～ことに</strong> (sau tính từ/động từ) diễn tả cảm xúc của người nói về một sự việc. 幸いなことに = \"May mắn thay, thật may là...\". Ở đây: \"May mắn thay, giám đốc đã thích ý tưởng này\".<br><br>Các mẫu thường gặp: 残念なことに (đáng tiếc thay), 驚いたことに (ngạc nhiên thay), 嬉しいことに (vui thay).<br><br>• <strong>せいで</strong>: \"do...mà ra, tại vì\" — mang nghĩa tiêu cực, sai sắc thái.<br>• <strong>ものから</strong>: không phải mẫu ngữ pháp chuẩn trong ngữ cảnh này.<br>• <strong>ばかりに</strong>: \"chỉ vì...mà...\" — dùng khi nguyên nhân gây ra kết quả tiêu cực.<div class="tip">💡 ～ことに = ...thay (bày tỏ cảm xúc của người nói: 幸いなことに、残念なことに、驚いたことに)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "階段をのぼりきった______、警官がキーパッドにいくつか番号を打ち込むと、ブザー音とともにドアが開いた。",
+    vocab: [
+      { word: "キーパッド", reading: "きーぱっど", type: "Danh từ", meaning: "Bàn phím số, keypad", example: "キーパッドに番号を入力する。\n(Nhập số vào keypad.)" },
+      { word: "打ち込む", reading: "うちこむ", type: "Động từ nhóm 1", meaning: "Gõ vào, nhập vào", example: "パスワードを打ち込む。\n(Nhập mật khẩu vào.)" },
+      { word: "ブザー", reading: "ぶざー", type: "Danh từ", meaning: "Còi báo, chuông báo, buzzer", example: "ブザーが鳴った。\n(Còi báo đã kêu.)" },
+    ],
+    choices: ["すえ", "なかで", "うえで", "ところで"],
+    answer: 3,
+    explanation: `Cấu trúc <strong>～たところで</strong> (ở đây dùng theo nghĩa thời điểm) = \"ngay khi vừa..., đúng lúc...xong thì...\". Ở đây: \"Ngay khi vừa leo xong cầu thang, cảnh sát gõ vài số vào keypad, cánh cửa mở ra kèm tiếng còi\".<br><br>• <strong>すえ</strong>: ～たすえに = \"sau một quá trình dài...cuối cùng\" — nhấn mạnh quá trình, không phải thời điểm tức thì.<br>• <strong>なかで</strong>: \"trong lúc đang...\" — diễn tả hành động đang xảy ra, sai.<br>• <strong>うえで</strong>: ～たうえで = \"sau khi làm X (xong) rồi mới làm Y\" — nhấn mạnh thứ tự tiền đề, không phải thời điểm bất ngờ.<div class="tip">💡 ～たところで = đúng lúc vừa xong thì... (thời điểm ngay sau khi hành động hoàn thành)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "お父さんの病気はすぐによくなるから、君は何も心配する______。",
+    vocab: [
+      { word: "病気", reading: "びょうき", type: "Danh từ", meaning: "Bệnh tật, ốm đau", example: "病気が治った。\n(Bệnh đã khỏi.)" },
+    ],
+    choices: ["ことはない", "ことはある", "ことでない", "ことである"],
+    answer: 0,
+    explanation: `Cấu trúc <strong>～ことはない</strong> nghĩa là \"không cần..., không phải lo...\". Ở đây: \"Bệnh của bố sẽ khỏi ngay thôi, em không cần lo lắng gì cả\".<br><br>• <strong>ことはある</strong>: \"có lúc..., đôi khi có\" — trái nghĩa hoàn toàn.<br>• <strong>ことでない</strong>: không phải mẫu ngữ pháp chuẩn.<br>• <strong>ことである</strong>: \"là điều...\" — dùng để khẳng định/định nghĩa, sai ngữ cảnh.<div class="tip">💡 ～ことはない = không cần làm, không phải lo (khuyên nhủ ai đó không cần thiết phải làm gì)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "来る______生徒のひとりが階段の下で立ち止まり、後ろを向いた。",
+    vocab: [
+      { word: "生徒", reading: "せいと", type: "Danh từ", meaning: "Học sinh (trung học)", example: "生徒が教室に入る。\n(Học sinh vào lớp.)" },
+      { word: "立ち止まる", reading: "たちどまる", type: "Động từ nhóm 1", meaning: "Dừng lại, đứng dừng", example: "急に立ち止まった。\n(Đột nhiên dừng lại.)" },
+    ],
+    choices: ["最中に", "途中で", "うちに", "同時に"],
+    answer: 1,
+    explanation: `Cấu trúc <strong>来る途中で</strong> = \"trên đường đến, giữa chừng đang đến\". 途中（とちゅう）で nghĩa là \"trên đường, giữa chừng\". Ở đây: \"Trên đường đến, một học sinh dừng lại ở chân cầu thang và quay đầu nhìn lại\".<br><br>• <strong>最中に</strong>: \"đang giữa lúc...\" — nhấn mạnh hành động đang diễn ra sôi nổi, không phải \"trên đường\".<br>• <strong>うちに</strong>: \"trong khi..., trước khi...\" — diễn tả khoảng thời gian, không phải địa điểm/hành trình.<br>• <strong>同時に</strong>: \"đồng thời, cùng lúc\" — diễn tả hai việc xảy ra cùng lúc, sai ngữ cảnh.<div class="tip">💡 ～途中で = trên đường, giữa chừng (hành trình hoặc quá trình đang tiến hành)</div>`,
+  },
+  ]
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 文法 Bài 6</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="文">
+  <div class="header-badge">N2 JLPT • NGỮ PHÁP ⑥</div>
+  <h1>N2 文法<span>クイズ</span>⑥</h1>
+  <p class="sub">Trắc nghiệm ngữ pháp N2 · Bài 6 · Giải thích chi tiết</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  questions: [
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "あの美貌に惑わされては______。危険な敵だ。",
+    vocab: [
+      { word: "美貌", reading: "びぼう", type: "Danh từ", meaning: "Nhan sắc đẹp, dung mạo cuốn hút", example: "彼女の美貌に惹かれた。\n(Bị hấp dẫn bởi nhan sắc của cô ấy.)" },
+      { word: "惑わす", reading: "まどわす", type: "Động từ nhóm 1", meaning: "Mê hoặc, làm lầm lạc, gây bối rối", example: "甘い言葉に惑わされる。\n(Bị mê hoặc bởi những lời ngọt ngào.)" },
+      { word: "敵", reading: "てき", type: "Danh từ", meaning: "Kẻ thù, đối thủ", example: "危険な敵に気をつけろ。\n(Hãy cẩn thận với kẻ thù nguy hiểm.)" },
+    ],
+    choices: ["しょうがない", "いけない", "ならない", "いられない"],
+    answer: 2,
+    explanation: `Cấu trúc <strong>～てはならない</strong> nghĩa là \"không được..., cấm...\" (lệnh cấm mang tính cứng rắn, dứt khoát). Ở đây: \"Không được để bị mê hoặc bởi nhan sắc đó. Đó là kẻ thù nguy hiểm\".<br><br>So sánh với các đáp án khác:<br>• <strong>しょうがない</strong>: \"không thể tránh khỏi, không làm gì được\" — nghĩa chấp nhận, trái với ý câu.<br>• <strong>いけない</strong>: ～てはいけない cũng có nghĩa \"không được\" nhưng mang sắc thái khuyên bảo nhẹ hơn; ならない trang trọng và dứt khoát hơn.<br>• <strong>いられない</strong>: ～ていられない = \"không thể cứ...mãi\" — hoàn toàn sai nghĩa.<div class="tip">💡 ～てはならない = tuyệt đối không được (cứng rắn hơn いけない, thường dùng trong quy tắc, cảnh báo)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "あの人には分からないのだろう、いまの生活の安定がいかに危うい______。",
+    vocab: [
+      { word: "安定", reading: "あんてい", type: "Danh từ・Suru động từ", meaning: "Sự ổn định, cân bằng", example: "生活が安定している。\n(Cuộc sống ổn định.)" },
+      { word: "危うい", reading: "あやうい", type: "Tính từ -i", meaning: "Nguy hiểm, bấp bênh, mong manh", example: "危うい状況に追い込まれた。\n(Bị đẩy vào tình thế nguy hiểm.)" },
+    ],
+    choices: ["ものか", "ことか", "ものだ", "ことに"],
+    answer: 0,
+    explanation: `Cấu trúc <strong>いかに～ものか</strong> dùng trong câu gián tiếp để diễn tả mức độ (\"như thế nào, đến mức nào\"). もの ở đây biến câu thành danh từ hóa mang tính trừu tượng/khái quát. Ở đây: \"Chắc người đó không hiểu được sự ổn định cuộc sống hiện tại mong manh đến mức nào\".<br><br>• <strong>ことか</strong>: いかに～ことか thường dùng để thán than trực tiếp (\"biết bao...\"), không hợp với cấu trúc câu gián tiếp ở đây.<br>• <strong>ものだ</strong>: diễn tả lẽ thường, điều tự nhiên — không hợp nghĩa.<br>• <strong>ことに</strong>: trạng từ hóa cảm xúc (残念なことに) — sai cấu trúc.<div class="tip">💡 いかに～ものか = ... như thế nào, mức độ ra sao (dùng trong câu gián tiếp, nhấn mạnh độ sâu/mức độ)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "彼はいったい両親というものは、どうあるべき______すら、よく知らなかった。",
+    vocab: [
+      { word: "両親", reading: "りょうしん", type: "Danh từ", meaning: "Cha mẹ, song thân", example: "両親に感謝する。\n(Biết ơn cha mẹ.)" },
+      { word: "べき", reading: "べき", type: "Trợ động từ", meaning: "Nên, phải (nghĩa vụ/lẽ phải)", example: "守るべきルールがある。\n(Có những quy tắc phải tuân theo.)" },
+    ],
+    choices: ["ことかということ", "ものかというもの", "ものかということ", "ことかというもの"],
+    answer: 2,
+    explanation: `Cấu trúc: <strong>どうあるべきものか</strong> (câu hỏi gián tiếp: \"cha mẹ nên như thế nào\") + <strong>ということ</strong> (danh từ hóa: \"điều/sự kiện rằng...\") + すら (\"ngay cả...\").<br><br>→ 「どうあるべきものかということすら」= \"ngay cả điều (như thế nào là cha mẹ) ấy còn không biết\".<br><br>• <strong>べきこと</strong>: こと sau べき không tạo câu hỏi gián tiếp được ở đây.<br>• <strong>というもの</strong>: は + というもの là mẫu khác (\"cái gọi là...\"), sai cấu trúc.<br>• <strong>ことかというもの</strong>: kết hợp sai — ことか dùng thán than, không hợp.<div class="tip">💡 ～ものか (câu hỏi gián tiếp) + ということ + すら = ngay cả điều... còn không biết</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "私も留学していたことがありますから、あなたの苦労がわからないこと______ありません。",
+    vocab: [
+      { word: "留学", reading: "りゅうがく", type: "Danh từ・Suru động từ", meaning: "Du học", example: "アメリカに留学した。\n(Đã du học ở Mỹ.)" },
+      { word: "苦労", reading: "くろう", type: "Danh từ・Suru động từ", meaning: "Vất vả, khó khăn, gian khổ", example: "異国での苦労は大きい。\n(Gian khổ ở xứ người rất lớn.)" },
+    ],
+    choices: ["と", "まで", "さえ", "も"],
+    answer: 3,
+    explanation: `Cấu trúc <strong>～ないこともない</strong> nghĩa là \"không phải là không..., cũng không hẳn là không...\". Đây là phủ định kép, ý nghĩa: \"có thể hiểu được một phần nào đó\". Ở đây: \"Vì tôi cũng từng du học nên không phải là tôi không hiểu nỗi khổ của bạn\".<br><br>• <strong>と</strong>: わからないことと → không tạo thành mẫu ngữ pháp có nghĩa.<br>• <strong>まで</strong>: わからないことまで → \"đến mức không hiểu\" — sai nghĩa.<br>• <strong>さえ</strong>: わからないことさえ → \"ngay cả điều không hiểu\" — sai ngữ cảnh.<div class="tip">💡 ～ないこともない = không phải là không... (phủ định kép → khẳng định yếu, ý nhún nhường)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "わたしは子供のころから物事を決めるのが遅くて、ずっと悩んできた。たとえば、友だちに旅行にさそわれても、______、すぐに返事をしないで、いろいろ考えているうちに時間がたってしまう。いつのまにか友達もあきらめ、旅行はとりやめになってしまい、残念に思うことが多い。",
+    vocab: [
+      { word: "物事", reading: "ものごと", type: "Danh từ", meaning: "Sự vật, mọi thứ, vấn đề", example: "物事を冷静に判断する。\n(Phán đoán mọi việc một cách bình tĩnh.)" },
+      { word: "悩む", reading: "なやむ", type: "Động từ nhóm 1", meaning: "Lo lắng, phiền muộn, trăn trở", example: "進路に悩んでいる。\n(Đang trăn trở về con đường tương lai.)" },
+      { word: "諦める", reading: "あきらめる", type: "Động từ nhóm 2", meaning: "Từ bỏ, chịu thua", example: "夢を諦めたくない。\n(Không muốn từ bỏ ước mơ.)" },
+      { word: "取りやめ", reading: "とりやめ", type: "Danh từ", meaning: "Hủy bỏ, đình chỉ", example: "計画が取りやめになった。\n(Kế hoạch đã bị hủy.)" },
+    ],
+    choices: ["行きたくないわけではないが", "行きたくないから", "行きたいわけではないが", "行きたいというより"],
+    answer: 0,
+    explanation: `Cấu trúc <strong>～わけではないが</strong> nghĩa là \"không phải là không..., không hẳn là...\". Ở đây người viết giải thích: không phải là không muốn đi, nhưng lại không trả lời ngay, cứ suy nghĩ mãi rồi lỡ cơ hội.<br><br>Ngữ cảnh quan trọng: vì phần sau nói \"残念に思う\" (tiếc nuối), chứng tỏ người viết MUỐN đi nhưng không thể quyết định — vậy phải là \"không phải không muốn đi\".<br><br>• <strong>行きたくないから</strong>: \"vì không muốn đi\" — trái nghĩa với cảm xúc tiếc nuối ở cuối.<br>• <strong>行きたいわけではないが</strong>: \"không phải là muốn đi\" — cũng trái nghĩa.<br>• <strong>行きたいというより</strong>: \"thay vì muốn đi\" — không hợp ngữ cảnh.<div class="tip">💡 ～わけではない = không phải là... (phủ định nhẹ, làm rõ hiểu nhầm hoặc giải thích nội tâm)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "四十分後に中村とプリンスホテルで落ち合う______。",
+    vocab: [
+      { word: "落ち合う", reading: "おちあう", type: "Động từ nhóm 1", meaning: "Gặp nhau (tại điểm hẹn), hội ngộ", example: "駅の前で落ち合う。\n(Gặp nhau trước ga.)" },
+    ],
+    choices: ["ことになる", "ことになっている", "ことにする", "ことにしている"],
+    answer: 1,
+    explanation: `Cấu trúc <strong>～ことになっている</strong> nghĩa là \"đã được sắp xếp/quy định là..., lịch trình đã định là...\". Ở đây: \"Đã có lịch gặp Nakamura tại khách sạn Prince sau 40 phút nữa\" (lịch đã được sắp xếp từ trước).<br><br>• <strong>ことになる</strong>: \"sẽ trở thành, kết quả là sẽ...\" — tương lai chưa chắc chắn, không phải đã lên kế hoạch.<br>• <strong>ことにする</strong>: \"quyết định sẽ...\" (quyết định của bản thân ngay lúc nói) — không hợp vì đây là lịch đã cố định từ trước.<br>• <strong>ことにしている</strong>: \"đặt ra quy tắc cho bản thân\" (thói quen tự đặt) — sai ngữ cảnh.<div class="tip">💡 ～ことになっている = đã được quy định/sắp xếp (lịch cố định, quy tắc từ bên ngoài)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "彼女は生気のない自分の目をのぞきこみながら、いまにも自宅の読書用の椅子で目覚める______と想像した。",
+    vocab: [
+      { word: "生気", reading: "せいき", type: "Danh từ", meaning: "Sinh khí, sức sống, sức sống", example: "生気のない顔をしている。\n(Có khuôn mặt thiếu sức sống.)" },
+      { word: "覗き込む", reading: "のぞきこむ", type: "Động từ nhóm 1", meaning: "Nhìn vào, nhìn chăm chú vào", example: "鏡を覗き込む。\n(Nhìn chăm chú vào gương.)" },
+      { word: "目覚める", reading: "めざめる", type: "Động từ nhóm 2", meaning: "Tỉnh dậy, thức dậy", example: "朝早く目覚めた。\n(Thức dậy sớm buổi sáng.)" },
+      { word: "想像", reading: "そうぞう", type: "Danh từ・Suru động từ", meaning: "Tưởng tượng, hình dung", example: "最悪の事態を想像した。\n(Đã hình dung đến tình huống tệ nhất.)" },
+    ],
+    choices: ["のか", "のでしかない", "のではないか", "のどころではない"],
+    answer: 2,
+    explanation: `Cấu trúc <strong>～のではないか</strong> nghĩa là \"có lẽ..., chẳng phải là...sao\". Dùng để diễn tả phỏng đoán, nghi ngờ nhẹ. Ở đây: \"Cô ấy tưởng tượng rằng có lẽ bất cứ lúc nào mình cũng có thể tỉnh dậy trên chiếc ghế đọc sách ở nhà\".<br><br>• <strong>のか</strong>: câu hỏi trực tiếp — không hợp với \"と想像した\".<br>• <strong>のでしかない</strong>: \"chẳng qua chỉ là...\" — hàm ý hạ thấp, không hợp ngữ cảnh.<br>• <strong>のどころではない</strong>: \"không phải lúc để...\" — sai nghĩa hoàn toàn.<div class="tip">💡 ～のではないか = có lẽ..., chẳng phải là...ư (phỏng đoán nhẹ, thường đi với と思う/と想像した)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "世の中は、愛しあうこと______、ほとんどなにもない。",
+    vocab: [
+      { word: "世の中", reading: "よのなか", type: "Danh từ", meaning: "Thế giới, xã hội, cuộc đời", example: "世の中は広い。\n(Thế giới này rộng lớn.)" },
+      { word: "愛し合う", reading: "あいしあう", type: "Động từ nhóm 1", meaning: "Yêu nhau (hai chiều)", example: "ふたりは愛し合っている。\n(Hai người yêu nhau.)" },
+    ],
+    choices: ["のより", "のほかには", "よりほかには", "しかほかには"],
+    answer: 2,
+    explanation: `Cấu trúc <strong>～よりほかには～ない</strong> nghĩa là \"ngoài...ra thì không có gì, chỉ có...\". Ở đây: \"Trên đời này, ngoài việc yêu nhau ra thì hầu như chẳng có gì\".<br><br>Mẫu cố định: 名詞/Vること + よりほかには + ～ない.<br><br>• <strong>のより</strong>: sai thứ tự — より phải đứng trước ほかには.<br>• <strong>のほかには</strong>: ～のほかには～ない cũng có nghĩa \"ngoài...ra\" nhưng の ở đây thừa vì 愛しあうこと đã là danh từ.<br>• <strong>しかほかには</strong>: kết hợp sai ngữ pháp — しか và ほかには không đi cùng nhau.<div class="tip">💡 ～よりほかには～ない = ngoài...ra không có gì khác (nhấn mạnh duy nhất)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "洗面台の上の鏡で、山田は病室の窓に映ったのを______はじめて、自分の顔と対面した。",
+    vocab: [
+      { word: "洗面台", reading: "せんめんだい", type: "Danh từ", meaning: "Bồn rửa mặt, chỗ rửa mặt", example: "洗面台で顔を洗う。\n(Rửa mặt ở bồn rửa mặt.)" },
+      { word: "病室", reading: "びょうしつ", type: "Danh từ", meaning: "Phòng bệnh, phòng trong bệnh viện", example: "病室に見舞いに行く。\n(Đến thăm phòng bệnh.)" },
+      { word: "映る", reading: "うつる", type: "Động từ nhóm 1", meaning: "Phản chiếu, hiện ra (trong gương/màn hình)", example: "鏡に顔が映る。\n(Khuôn mặt hiện ra trong gương.)" },
+      { word: "対面", reading: "たいめん", type: "Danh từ・Suru động từ", meaning: "Đối mặt, gặp mặt trực tiếp", example: "はじめて対面した。\n(Gặp mặt lần đầu tiên.)" },
+    ],
+    choices: ["見以来", "見て以来", "見る以来", "見た以来"],
+    answer: 1,
+    explanation: `Cấu trúc <strong>～て以来</strong> nghĩa là \"từ khi...đến nay, kể từ khi...\". Đây là mẫu cố định: <strong>Vて形 + 以来</strong>. 見る → 見て + 以来 → \"kể từ khi nhìn thấy...\".<br><br>• <strong>見以来</strong>: thiếu て — sai ngữ pháp, không phải dạng tiếp nối đúng.<br>• <strong>見る以来</strong>: thể từ điển + 以来 — sai, 以来 không đi với thể từ điển.<br>• <strong>見た以来</strong>: thể quá khứ + 以来 — sai, 以来 đi với thể て, không phải た.<div class="tip">💡 Vて + 以来 = kể từ khi làm... (mốc thời gian bắt đầu, kéo dài đến hiện tại)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "自分のことだけではなく、相手の立場に立って考えることのできる人、それが大人という______です。",
+    vocab: [
+      { word: "相手", reading: "あいて", type: "Danh từ", meaning: "Đối phương, người kia, đối tác", example: "相手の気持ちを考える。\n(Nghĩ đến cảm xúc của người kia.)" },
+      { word: "立場に立つ", reading: "たちばにたつ", type: "Cụm động từ", meaning: "Đứng vào lập trường/vị trí của ai đó", example: "相手の立場に立って考える。\n(Suy nghĩ từ lập trường của người kia.)" },
+    ],
+    choices: ["もの", "こと", "ほう", "ところ"],
+    answer: 0,
+    explanation: `Cấu trúc <strong>～というもの</strong> nghĩa là \"cái gọi là..., điều được gọi là...\". Dùng để định nghĩa hoặc khái quát hóa một khái niệm. Ở đây: \"Đó chính là cái gọi là người trưởng thành\" — định nghĩa bản chất của \"người lớn\".<br><br>• <strong>こと</strong>: というこ と = \"điều rằng\" (nội dung cụ thể) — ít mang tính định nghĩa khái quát hơn もの.<br>• <strong>ほう</strong>: というほう = \"phía/kiểu...\" — không hợp ngữ cảnh định nghĩa.<br>• <strong>ところ</strong>: というところ = \"chỗ đó, đại loại như vậy\" — mang sắc thái ước lượng, không hợp.<div class="tip">💡 ～というもの = cái gọi là... (định nghĩa bản chất của một khái niệm trừu tượng)</div>`,
+  },
+  ]
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

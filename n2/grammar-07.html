@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 文法 Bài 7</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="文">
+  <div class="header-badge">N2 JLPT • NGỮ PHÁP ⑦</div>
+  <h1>N2 文法<span>クイズ</span>⑦</h1>
+  <p class="sub">Trắc nghiệm ngữ pháp N2 · Bài 7 · Giải thích chi tiết</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  questions: [
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "私がこれほど長い間あなたにこの秘密を明かさなかったのは、一つにはあなたの心を試すため、もう一つにはあなたを驚かせるために______。",
+    vocab: [
+      { word: "明かす", reading: "あかす", type: "Động từ nhóm 1", meaning: "Tiết lộ, bộc bạch", example: "秘密を明かす。\n(Tiết lộ bí mật.)" },
+      { word: "試す", reading: "ためす", type: "Động từ nhóm 1", meaning: "Thử, kiểm tra, thử thách", example: "実力を試す。\n(Thử sức thực lực.)" },
+      { word: "驚かす", reading: "おどろかす", type: "Động từ nhóm 1", meaning: "Làm ngạc nhiên, làm giật mình", example: "友達を驚かせた。\n(Làm bạn ngạc nhiên.)" },
+    ],
+    choices: ["しかなかった", "しょうがなかった", "ほかならなかった", "すぎなかった"],
+    answer: 2,
+    explanation: `Cấu trúc <strong>～にほかならない</strong> nghĩa là \"chính là..., không gì khác ngoài...\". Dạng quá khứ: にほかならなかった → rút gọn còn <strong>ほかならなかった</strong>. Ở đây: \"Lý do tôi không tiết lộ bí mật này suốt thời gian dài chính là để thử lòng bạn và để tạo bất ngờ cho bạn\".<br><br>• <strong>しかなかった</strong>: \"chỉ có thể làm...\" — diễn tả không có lựa chọn khác, không đúng.<br>• <strong>しょうがなかった</strong>: \"không thể tránh khỏi\" — hàm ý bất đắc dĩ, sai nghĩa.<br>• <strong>すぎなかった</strong>: \"chẳng qua chỉ là...\" — hạ thấp, không hợp ngữ cảnh.<div class="tip">💡 ～にほかならない = chính là..., không gì khác ngoài... (nhấn mạnh bản chất/lý do thực sự)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "マラソン大会に出場するからには、よく練習をして１０，０００キロを______。",
+    vocab: [
+      { word: "大会", reading: "たいかい", type: "Danh từ", meaning: "Đại hội, giải thi đấu", example: "マラソン大会に参加する。\n(Tham gia giải marathon.)" },
+      { word: "出場", reading: "しゅつじょう", type: "Danh từ・Suru động từ", meaning: "Tham gia thi đấu, xuất trận", example: "オリンピックに出場する。\n(Tham gia thi đấu Olympic.)" },
+    ],
+    choices: ["走るまい", "走りがたい", "走りかねない", "走りぬきたい"],
+    answer: 3,
+    explanation: `Cấu trúc <strong>Vます形 + ぬく</strong> nghĩa là \"làm đến cùng, hoàn thành trọn vẹn\". 走る → 走ります → 走り + ぬく → 走りぬく (chạy hết cả đoạn đường). Ở đây: \"Đã tham gia thi marathon thì muốn luyện tập kỹ và chạy hết toàn bộ 10,000m\".<br><br>• <strong>走るまい</strong>: \"quyết không chạy\" — phủ định ý chí, ngược nghĩa.<br>• <strong>走りがたい</strong>: \"khó mà chạy được\" — hàm ý không thể, không hợp からには.<br>• <strong>走りかねない</strong>: \"có thể sẽ chạy (theo nghĩa tiêu cực)\" — diễn tả nguy cơ, sai ngữ cảnh.<div class="tip">💡 ～ぬく = làm đến cùng, vượt qua trọn vẹn (走りぬく, 生きぬく, やりぬく)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "自分自身の力______働くことが貴いのです。",
+    vocab: [
+      { word: "自分自身", reading: "じぶんじしん", type: "Danh từ", meaning: "Chính bản thân mình", example: "自分自身を信じる。\n(Tin vào chính bản thân mình.)" },
+      { word: "貴い", reading: "とうとい", type: "Tính từ -i", meaning: "Cao quý, đáng trân trọng, quý giá", example: "命は貴い。\n(Mạng sống là quý giá.)" },
+    ],
+    choices: ["に応じて", "に応えて", "に向かって", "に際して"],
+    answer: 0,
+    explanation: `Cấu trúc <strong>～に応じて</strong> nghĩa là \"tùy theo..., tương ứng với..., tùy thuộc vào...\". Ở đây: \"Làm việc tương ứng với năng lực của chính bản thân mình mới là điều cao quý\".<br><br>• <strong>に応えて</strong>: \"đáp lại, hồi đáp\" — dùng khi đáp ứng kỳ vọng/yêu cầu của người khác (期待に応える), không hợp với \"lực của bản thân\".<br>• <strong>に向かって</strong>: \"hướng tới, về phía\" — diễn tả phương hướng, sai nghĩa.<br>• <strong>に際して</strong>: \"nhân dịp, vào lúc\" — diễn tả thời điểm sự kiện, sai nghĩa.<div class="tip">💡 に応じて = tùy theo, tương ứng với (biến đổi theo điều kiện: 能力に応じて、状況に応じて)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "田中は私たちの命を救った______感謝されるべきでも、過去の罪を赦されるべきでもない。",
+    vocab: [
+      { word: "過去", reading: "かこ", type: "Danh từ", meaning: "Quá khứ, dĩ vãng", example: "過去を振り返る。\n(Nhìn lại quá khứ.)" },
+      { word: "罪", reading: "つみ", type: "Danh từ", meaning: "Tội lỗi, tội phạm", example: "罪を犯す。\n(Phạm tội.)" },
+      { word: "赦す", reading: "ゆるす", type: "Động từ nhóm 1", meaning: "Tha thứ, xá tội", example: "過ちを赦す。\n(Tha thứ lỗi lầm.)" },
+    ],
+    choices: ["からして", "からといって", "から見ると", "からこそ"],
+    answer: 1,
+    explanation: `Cấu trúc <strong>～からといって</strong> nghĩa là \"chỉ vì...(không có nghĩa là)..., dù là vì lý do...cũng không thể...\". Ở đây: \"Chỉ vì Tanaka đã cứu mạng chúng ta thôi không có nghĩa là anh ta phải được cảm ơn hay được tha thứ tội lỗi quá khứ\".<br><br>• <strong>からして</strong>: \"ngay từ..., xét từ điểm...\" — dùng để nhận xét từ dấu hiệu điển hình, sai nghĩa.<br>• <strong>から見ると</strong>: \"nhìn từ góc độ...\" — dùng để đánh giá, không hợp.<br>• <strong>からこそ</strong>: \"chính vì...nên...\" — kết quả tương xứng tích cực, ngược với ý câu.<div class="tip">💡 ～からといって～ない = chỉ vì...không có nghĩa là... (phủ nhận kết luận vội vàng)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "それは僕にとっては______条件だ。",
+    vocab: [
+      { word: "条件", reading: "じょうけん", type: "Danh từ", meaning: "Điều kiện, điều khoản", example: "条件を提示する。\n(Đưa ra điều kiện.)" },
+    ],
+    choices: ["あるえた", "ありえなかった", "ありえない", "ありえる"],
+    answer: 2,
+    explanation: `<strong>ありえない</strong> (あり得ない) nghĩa là \"không thể có, không thể xảy ra, vô lý\". Đây là cách kết hợp: ある (tồn tại) + え (thể khả năng cổ điển) + ない → không thể tồn tại/xảy ra. Ở đây: \"Đó là điều kiện không thể chấp nhận được với tôi\".<br><br>• <strong>あるえた</strong>: không phải dạng từ chuẩn (sai chia).<br>• <strong>ありえなかった</strong>: \"đã không thể có\" (quá khứ) — câu đang nói về hiện tại.<br>• <strong>ありえる</strong>: \"có thể xảy ra\" — nghĩa ngược lại.<div class="tip">💡 ありえない = không thể có, không thể xảy ra (thường dùng để bác bỏ mạnh mẽ)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "いいえ、覚えているよ。だが、忘れられる______忘れたい。",
+    vocab: [
+      { word: "覚える", reading: "おぼえる", type: "Động từ nhóm 2", meaning: "Nhớ, ghi nhớ, học thuộc", example: "単語を覚える。\n(Ghi nhớ từ vựng.)" },
+    ],
+    choices: ["ものなら", "ものの", "ものであれば", "ものだったら"],
+    answer: 0,
+    explanation: `Cấu trúc <strong>～ものなら</strong> nghĩa là \"nếu có thể... thì muốn...\". Dùng khi diễn tả điều ước muốn nhưng khó hoặc không thể thực hiện. Ở đây: \"Tôi vẫn nhớ. Nhưng nếu có thể quên được thì muốn quên\".<br><br>Mẫu: Vられる + ものなら + Vたい (nếu có thể làm thì muốn làm — hàm ý khó/không thể).<br><br>• <strong>ものの</strong>: \"tuy nhiên, mặc dù\" — nối hai vế tương phản, sai cấu trúc.<br>• <strong>ものであれば</strong>: điều kiện trang trọng, thường dùng trong văn viết quy tắc, không hợp ngữ cảnh ước muốn.<br>• <strong>ものだったら</strong>: gần giống ものなら nhưng ít tự nhiên hơn; ものなら là mẫu chuẩn cho điều ước không thể.<div class="tip">💡 Vられる + ものなら = nếu có thể...thì (muốn làm nhưng khó thực hiện)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "屋敷は確かな建築プラン______建てられたものではなく、その時その時で入用になった場所に部屋を建て増しして現在の形になったのだ。",
+    vocab: [
+      { word: "屋敷", reading: "やしき", type: "Danh từ", meaning: "Dinh thự, tư gia rộng lớn", example: "古い屋敷に住んでいる。\n(Sống trong một dinh thự cổ.)" },
+      { word: "建築", reading: "けんちく", type: "Danh từ・Suru động từ", meaning: "Kiến trúc, xây dựng", example: "建築プランを立てる。\n(Lập kế hoạch kiến trúc.)" },
+      { word: "入用", reading: "にゅうよう", type: "Danh từ・Tính từ -na", meaning: "Cần thiết, cần dùng đến", example: "今すぐ入用なものを準備する。\n(Chuẩn bị những thứ cần ngay bây giờ.)" },
+      { word: "建て増し", reading: "たてまし", type: "Danh từ・Suru động từ", meaning: "Xây mở rộng thêm, cơi nới", example: "家を建て増しする。\n(Cơi nới thêm nhà.)" },
+    ],
+    choices: ["につき", "に沿って", "に伴って", "において"],
+    answer: 1,
+    explanation: `Cấu trúc <strong>～に沿って</strong> nghĩa là \"theo, tuân theo, dọc theo\". Ở đây: \"Dinh thự này không được xây theo một bản thiết kế kiến trúc cụ thể nào, mà phòng được cơi nới thêm ở những chỗ cần đến lúc đó\".<br><br>• <strong>につき</strong>: \"vì, do (lý do chính thức); mỗi...\" — dùng trong văn bản thông báo, sai ngữ cảnh.<br>• <strong>に伴って</strong>: \"cùng với, đi kèm sự thay đổi của\" — diễn tả thay đổi song song, không phải \"tuân theo kế hoạch\".<br>• <strong>において</strong>: \"tại, trong (lĩnh vực/địa điểm)\" — chỉ phạm vi, không có nghĩa \"tuân theo\".<div class="tip">💡 ～に沿って = theo, tuân theo (quy tắc, kế hoạch, hướng dẫn: 方針に沿って、ルールに沿って)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "どこから見ても、船は完全に制御された状態______進んでいる。",
+    vocab: [
+      { word: "制御", reading: "せいぎょ", type: "Danh từ・Suru động từ", meaning: "Kiểm soát, điều khiển", example: "速度を制御する。\n(Kiểm soát tốc độ.)" },
+      { word: "状態", reading: "じょうたい", type: "Danh từ", meaning: "Trạng thái, tình trạng", example: "良好な状態を保つ。\n(Duy trì trạng thái tốt.)" },
+    ],
+    choices: ["にもとづいて", "のもとで", "のあいだに", "のなかに"],
+    answer: 1,
+    explanation: `Cấu trúc <strong>～のもとで</strong> nghĩa là \"dưới (điều kiện/sự kiểm soát/giám sát)...\". Ở đây: \"Nhìn từ bất kỳ góc nào, con tàu cũng đang di chuyển dưới trạng thái kiểm soát hoàn toàn\".<br><br>• <strong>にもとづいて</strong>: \"dựa trên, căn cứ theo\" — dùng cho cơ sở/nền tảng (データに基づいて), không phải \"dưới điều kiện\".<br>• <strong>のあいだに</strong>: \"trong khoảng thời gian giữa...\" — diễn tả khoảng thời gian, sai.<br>• <strong>のなかに</strong>: \"ở bên trong\" — chỉ vị trí vật lý, không phù hợp với trạng thái.<div class="tip">💡 ～のもとで = dưới (điều kiện/giám sát): 監督のもとで、条件のもとで、管理のもとで</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "先日起きた事件______人々に恐怖感を与えた事件はないだろう。",
+    vocab: [
+      { word: "事件", reading: "じけん", type: "Danh từ", meaning: "Sự kiện, vụ án, vụ việc", example: "大きな事件が起きた。\n(Đã xảy ra một vụ việc lớn.)" },
+      { word: "恐怖感", reading: "きょうふかん", type: "Danh từ", meaning: "Cảm giác sợ hãi, kinh hoàng", example: "恐怖感を覚える。\n(Cảm thấy sợ hãi.)" },
+      { word: "与える", reading: "あたえる", type: "Động từ nhóm 2", meaning: "Gây ra, mang lại, đưa cho", example: "影響を与える。\n(Gây ảnh hưởng.)" },
+    ],
+    choices: ["だけ", "こそ", "ほど", "ばかり"],
+    answer: 2,
+    explanation: `Cấu trúc <strong>～ほど～はない</strong> nghĩa là \"không có gì... như..., ... nhất\". Đây là cách diễn đạt so sánh tuyệt đối bằng phủ định. Ở đây: \"Có lẽ không có vụ án nào gây ra nỗi sợ hãi cho người dân nhiều như vụ án xảy ra hôm trước\".<br><br>• <strong>だけ</strong>: \"chỉ...thôi\" — giới hạn, không tạo so sánh tuyệt đối.<br>• <strong>こそ</strong>: \"chính là\" — nhấn mạnh, không tạo so sánh.<br>• <strong>ばかり</strong>: \"toàn là, chỉ...\" — không dùng cho so sánh tuyệt đối.<div class="tip">💡 ～ほど～はない = không có gì...như..., ...nhất (so sánh tuyệt đối bằng phủ định)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "この文章は漢字の間違いが多い______文法の間違いも多いので、何が言いたいのかよくわからない。",
+    vocab: [
+      { word: "文章", reading: "ぶんしょう", type: "Danh từ", meaning: "Văn bản, đoạn văn, bài văn", example: "分かりやすい文章を書く。\n(Viết văn bản dễ hiểu.)" },
+      { word: "文法", reading: "ぶんぽう", type: "Danh từ", meaning: "Ngữ pháp", example: "文法の間違いを直す。\n(Sửa lỗi ngữ pháp.)" },
+    ],
+    choices: ["うえに", "うえで", "わりに", "うちに"],
+    answer: 0,
+    explanation: `Cấu trúc <strong>～うえに</strong> nghĩa là \"thêm vào đó, hơn nữa, trên cả...\". Dùng để chồng thêm một sự kiện (thường cùng chiều tốt hoặc xấu). Ở đây: \"Văn bản này sai kanji nhiều, thêm vào đó còn sai ngữ pháp nhiều nên không hiểu muốn nói gì\".<br><br>• <strong>うえで</strong>: \"sau khi...xong thì\" hoặc \"xét về mặt...\" — diễn tả điều kiện/thứ tự, không phải liệt kê thêm.<br>• <strong>わりに</strong>: \"so với..., mặc dù...nhưng\" — diễn tả sự không tương xứng, sai nghĩa.<br>• <strong>うちに</strong>: \"trong khi..., trước khi\" — diễn tả khoảng thời gian, sai nghĩa.<div class="tip">💡 ～うえに = thêm vào đó, hơn nữa (chồng thêm yếu tố cùng chiều — xấu thêm xấu, tốt thêm tốt)</div>`,
+  },
+  ]
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>
