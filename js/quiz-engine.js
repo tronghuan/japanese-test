@@ -77,7 +77,7 @@
 
     qNum.textContent = `Q${current + 1}`;
     qTag.textContent = q.tag;
-    qText.textContent = q.text;
+    qText.innerHTML = q.text.replace(/\n/g, '<br>');
 
     // Vocab chips
     vocabStrip.innerHTML = '<span class="vocab-label">🔍 TRA TỪ:</span>';

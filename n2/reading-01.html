@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 読解 Bài 1</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+<style>
+.reading-passage {
+  background: var(--surface, #f8f8f8);
+  border-left: 3px solid var(--accent, #e85d04);
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  font-size: 0.88em;
+  line-height: 1.8;
+  color: var(--text, #222);
+}
+.reading-passage .passage-label {
+  font-size: 0.78em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent, #e85d04);
+  margin-bottom: 6px;
+  display: block;
+}
+.reading-note {
+  font-size: 0.82em;
+  color: #888;
+  margin-top: 6px;
+}
+.reading-question {
+  font-weight: 600;
+  margin-top: 10px;
+  font-size: 0.95em;
+}
+</style>
+</head>
+<body>
+
+<header data-bg-char="読">
+  <div class="header-badge">N2 JLPT • ĐỌC HIỂU ①</div>
+  <h1>N2 読解<span>クイズ</span>①</h1>
+  <p class="sub">Trắc nghiệm đọc hiểu N2 · Bài 1 · 3 đoạn văn · 5 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 5</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/5</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 5,
+  questions: [
+  {
+    tag: "ĐỌC HIỂU • N2 • Đoạn 1",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 ĐOẠN VĂN 1 — Câu 1～3</span>
+現代は、<strong>(1) 時間がどんどん加速されている</strong>とも言われます。何事にも「早く、早く」とせかされ<span class="reading-note">（注1: 急がされる）</span>、時間と競争するかのように忙しさに追われていることを、大人たちはこういう言い方をしているのです。いつも同じ速さで時間が流れているはずなのに、時間の間隔が短くなったような気分で追い立てられて<span class="reading-note">（注2: 何かをしないではいられない気持ちにさせられる）</span>いるためでしょう。それをエンデ<span class="reading-note">（注3: ドイツの児童文学者）</span>は『モモ』という作品の中で「時間どろぼう」と呼びました。ゆっくり花を見たり音楽を楽しんだりする、そんなゆったりした時間が盗まれていく、という話でした。<strong>(2)</strong> いつも何かしていないと気が落ち着かない、現代人はそんなふうになっています。<br><br>
+その一つの原因は、世の中が便利になり、能率的になって、より早く仕事を仕上げることがより優れていると評価されるようになっているためと思われます。競争が激しくなって、人より早くしなければ負けてしまうという恐れを心に抱くようになったためでしょう。「時間は金なり」となってしまったのです。<br><br>
+しかし、それでは心が貧しくなってしまいそうです。何も考えずにひたすら決められたことをしていて人生が楽しいはずがありません。ゆっくり歩むからこそ、道ばたに咲く花に気づいたり、きれいな夕日を楽しむ気分になれるのです。私たちは、時間を取り返し、もっとゆったりした時間を生きる必要がありそうですね。
+</div>
+<div class="reading-question">問1：<strong>「時間がどんどん加速されている」</strong>とはどういうことか。</div>`,
+    vocab: [
+      { word: "加速", reading: "かそく", type: "Danh từ・Suru動詞", meaning: "Tăng tốc, gia tốc", example: "時間が加速されている。\n(Thời gian dường như tăng tốc.)" },
+      { word: "間隔", reading: "かんかく", type: "Danh từ", meaning: "Khoảng cách, khoảng thời gian", example: "一定の間隔をおく。\n(Giữ khoảng cách nhất định.)" },
+      { word: "追い立てられる", reading: "おいたてられる", type: "Động từ", meaning: "Bị thúc giục, bị ép phải làm gì đó", example: "仕事に追い立てられる。\n(Bị thúc giục bởi công việc.)" },
+    ],
+    choices: [
+      "しなければならないことが多くて時間が短く感じられる。",
+      "何かに夢中になっていると一日の時間が短く感じられる。",
+      "作業能率が上がって一日の仕事の時間が短くなっている。",
+      "技術の進歩によって仕事にかかる時間が短くなっている。"
+    ],
+    answer: 0,
+    explanation: `<strong>正解：①</strong> しなければならないことが多くて時間が短く感じられる。<br><br>
+文中に「いつも同じ速さで時間が流れているはずなのに、時間の間隔が短くなったような気分で追い立てられている」とあります。つまり、実際に時間が短くなったわけではなく、やるべきことが多くて<strong>時間が短く感じられる</strong>ということです。<br><br>
+• ②「夢中になっていると」：本文には夢中という話は出ていない。<br>
+• ③「作業能率が上がって」：能率の話は原因として後段に出てくるが、「加速」の意味ではない。<br>
+• ④「技術の進歩によって」：本文に該当する記述なし。<div class="tip">💡 キーワード：時間の間隔が短くなったような「気分」→ 実際ではなく感覚の話</div>`,
+  },
+  {
+    tag: "ĐỌC HIỂU • N2 • Đoạn 1",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 ĐOẠN VĂN 1 — Câu 1～3</span>
+（前略）<strong>(2) いつも何かしていないと気が落ち着かない</strong>、現代人はそんなふうになっています。<br><br>
+その一つの原因は、世の中が便利になり、能率的になって、より早く仕事を仕上げることがより優れていると評価されるようになっているためと思われます。<strong>競争が激しくなって、人より早くしなければ負けてしまうという恐れを心に抱くようになった</strong>ためでしょう。「時間は金なり」となってしまったのです。<br><br>
+しかし、それでは心が貧しくなってしまいそうです。（後略）
+</div>
+<div class="reading-question">問2：<strong>「いつも何かしていないと気が落ち着かない」</strong>原因を筆者はどう考えているか。</div>`,
+    vocab: [
+      { word: "能率的", reading: "のうりつてき", type: "Tính từ -na", meaning: "Hiệu quả, năng suất cao", example: "能率的に仕事をする。\n(Làm việc hiệu quả.)" },
+      { word: "優れる", reading: "すぐれる", type: "Động từ nhóm 2", meaning: "Xuất sắc, vượt trội", example: "能力が優れている。\n(Năng lực xuất sắc.)" },
+      { word: "恐れ", reading: "おそれ", type: "Danh từ", meaning: "Nỗi sợ, lo lắng", example: "失敗への恐れ。\n(Nỗi sợ thất bại.)" },
+    ],
+    choices: [
+      "何もしないと心が貧しくなってしまうと感じること",
+      "早く何かを仕上げないと他の人に勝てないと思うこと",
+      "失った時間を取り戻さないと競争に負けてしまうと思うこと",
+      "奪われた時間を取り戻さないと人生を楽しめないと感じること"
+    ],
+    answer: 1,
+    explanation: `<strong>正解：②</strong> 早く何かを仕上げないと他の人に勝てないと思うこと<br><br>
+本文の第２段落に「競争が激しくなって、<strong>人より早くしなければ負けてしまうという恐れを心に抱くようになった</strong>ためでしょう」と明確に書かれています。これが筆者の考える原因です。<br><br>
+• ①「心が貧しくなる」：これは結果として述べられていることで、原因ではない。<br>
+• ③「失った時間を取り戻す」：本文中に「取り返す」は登場するが、原因としての記述はない。<br>
+• ④「人生を楽しめない」：筆者の主張の一部だが、「気が落ち着かない」の原因ではない。<div class="tip">💡 「その一つの原因は～ためと思われます」「～ためでしょう」→ 筆者の見解を示す表現に注目</div>`,
+  },
+  {
+    tag: "ĐỌC HIỂU • N2 • Đoạn 1",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 ĐOẠN VĂN 1 — Câu 1～3</span>
+（前略）しかし、それでは心が貧しくなってしまいそうです。何も考えずにひたすら決められたことをしていて人生が楽しいはずがありません。<strong>ゆっくり歩むからこそ、道ばたに咲く花に気づいたり、きれいな夕日を楽しむ気分になれる</strong>のです。私たちは、<strong>時間を取り返し、もっとゆったりした時間を生きる必要がありそう</strong>ですね。
+</div>
+<div class="reading-question">問3：筆者は、<strong>時間の使い方</strong>についてどのように考えているか。</div>`,
+    vocab: [
+      { word: "ひたすら", reading: "ひたすら", type: "Phó từ", meaning: "Chuyên tâm, chỉ một mực", example: "ひたすら練習する。\n(Chuyên tâm luyện tập.)" },
+      { word: "歩む", reading: "あゆむ", type: "Động từ nhóm 1", meaning: "Bước đi, tiến bước", example: "ゆっくり歩む。\n(Bước đi chậm rãi.)" },
+      { word: "取り返す", reading: "とりかえす", type: "Động từ nhóm 1", meaning: "Lấy lại, giành lại", example: "時間を取り返す。\n(Lấy lại thời gian.)" },
+    ],
+    choices: [
+      "時間は貴重なので、休むときにも能率的に過ごしたほうがよい。",
+      "忙しい中にも、のんびり過ごす時間をできるだけ持ったほうがよい。",
+      "人生を楽しむためには、ひたすらゆっくり時間を過ごしたほうがよい。",
+      "人との競争に勝つためには、時間をもっと有効に使うようにしたほうがよい。"
+    ],
+    answer: 1,
+    explanation: `<strong>正解：②</strong> 忙しい中にも、のんびり過ごす時間をできるだけ持ったほうがよい。<br><br>
+筆者は「ゆっくり歩むからこそ、道ばたに咲く花に気づいたり、きれいな夕日を楽しむ気分になれる」「もっとゆったりした時間を生きる必要がある」と述べており、<strong>のんびり過ごす時間の大切さ</strong>を主張しています。<br><br>
+• ①「能率的に過ごす」：これは筆者が批判している姿勢。<br>
+• ③「ひたすらゆっくり」：「ひたすら」は本文では否定的文脈（ひたすら決められたことをする）で使われており、筆者の主張とは逆。<br>
+• ④「競争に勝つため」：筆者は競争中心の考え方を問題視している。<div class="tip">💡 「～からこそ」「～必要がある」→ 筆者の主張・提言が明確に示されている箇所</div>`,
+  },
+  {
+    tag: "ĐỌC HIỂU • N2 • Đoạn 2",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 ĐOẠN VĂN 2 — Câu 4</span>
+"練習のための練習"が行われているというチームがたくさんあります。練習は本番（ほんばん）の試合のために存在すべきものです。本番で最高の実力を発揮（はっき）させるためにすることを、練習と呼びます。すなわち、<strong>休養することが試合にとって、今、最もするべきことだとすれば、休養こそ勝つための練習といえるときがある</strong>のです。休養はサボることではなく、時として練習なのです。
+</div>
+<div class="reading-question">問4：筆者は、<strong>試合で実力を出すために何が大事</strong>だと述べているか。</div>`,
+    vocab: [
+      { word: "本番", reading: "ほんばん", type: "Danh từ", meaning: "Trình diễn thật, lúc quan trọng", example: "本番に強い選手。\n(Vận động viên mạnh trong các trận đấu thật.)" },
+      { word: "発揮", reading: "はっき", type: "Danh từ・Suru動詞", meaning: "Phát huy, thể hiện", example: "実力を発揮する。\n(Phát huy thực lực.)" },
+      { word: "休養", reading: "きゅうよう", type: "Danh từ・Suru動詞", meaning: "Nghỉ ngơi, phục hồi sức khỏe", example: "十分な休養をとる。\n(Nghỉ ngơi đầy đủ.)" },
+    ],
+    choices: [
+      "「練習のための練習」をすること",
+      "練習でも最高の力を出すこと",
+      "必要であれば休養を取ること",
+      "試合の前に休養を取ること"
+    ],
+    answer: 2,
+    explanation: `<strong>正解：③</strong> 必要であれば休養を取ること<br><br>
+本文に「休養することが試合にとって、今、最もするべきことだとすれば、<strong>休養こそ勝つための練習といえるときがある</strong>」とあります。つまり、<strong>必要な時には休養も立派な練習</strong>だという主張です。<br><br>
+• ①「練習のための練習」：これは筆者が問題視しているもの（批判対象）。<br>
+• ②「練習でも最高の力を出す」：本文に該当する記述なし。<br>
+• ④「試合の前に休養を取る」：「試合の前に」と限定する記述はない。本文は「今、最もするべきことだとすれば」という条件付き。<div class="tip">💡 「すなわち」「時として」→ 筆者が言い換えや条件を示す表現に注目。「試合の前」という限定は本文にない。</div>`,
+  },
+  {
+    tag: "ĐỌC HIỂU • N2 • Đoạn 3",
+    text: `<div class="reading-passage">
+<span class="passage-label">📄 ĐOẠN VĂN 3 — Câu 5</span>
+会社勤めの生活は楽だった。<br><br>
+楽しくはないが、楽だった。<br><br>
+ずっと一人で生きてきた後で、集団に入ってみると、その居心地（いごこち）の良さ、安楽さに驚くのである。一人の時は、朝目覚めて寝るまで「何をすべきか」という判断、決定を自分でしなければならない。つまり、それを「自由」というのだが、<strong>実力のない者には自由は重すぎる。一日中、選択と決断をし、その結果を自分一人でひき受けねばならない。</strong>
+</div>
+<div class="reading-question">問5：筆者によると、<strong>なぜ会社勤めが楽だった</strong>のか。</div>`,
+    vocab: [
+      { word: "居心地", reading: "いごこち", type: "Danh từ", meaning: "Cảm giác thoải mái (ở đâu đó)", example: "居心地が良い。\n(Cảm thấy thoải mái.)" },
+      { word: "判断", reading: "はんだん", type: "Danh từ・Suru動詞", meaning: "Phán đoán, quyết định", example: "自分で判断する。\n(Tự mình phán đoán.)" },
+      { word: "引き受ける", reading: "ひきうける", type: "Động từ nhóm 2", meaning: "Chịu trách nhiệm, gánh chịu", example: "責任を引き受ける。\n(Chịu trách nhiệm.)" },
+    ],
+    choices: [
+      "実力があれば、自由にできる部分もあるから",
+      "周囲の協力が得られれば、時間を自由に使えるから",
+      "自分の能力に適した仕事が与えられ無理がないから",
+      "自分一人で決めることも責任を取ることもしなくてすむから"
+    ],
+    answer: 3,
+    explanation: `<strong>正解：④</strong> 自分一人で決めることも責任を取ることもしなくてすむから<br><br>
+筆者は「一人の時は、朝目覚めて寝るまで『何をすべきか』という判断、決定を自分でしなければならない」「一日中、選択と決断をし、その結果を自分一人でひき受けねばならない」と述べています。<br>これらの<strong>判断・選択・責任を自分一人で負わなくてよい</strong>のが会社勤めの「楽」さだということです。<br><br>
+• ①「実力があれば自由に」：本文では「実力のない者には自由は重すぎる」と述べており、逆の方向性。<br>
+• ②「周囲の協力で時間を自由に」：本文に該当する記述なし。<br>
+• ③「適した仕事が与えられ」：本文に該当する記述なし。<div class="tip">💡 「楽しくはないが、楽だった」→ 楽の理由 = 自分で判断・決定・責任を負わなくてよいこと。筆者の逆説的な表現に注意。</div>`,
+  },
+  ]
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>
