@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • Danh Sách Bài Test</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;500&family=Shippori+Mincho:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --paper: #faf6ef;
+    --paper2: #f3ede2;
+    --red: #c0392b;
+    --gold: #c9960c;
+    --green: #1a6b3c;
+    --border: #d4c5a9;
+    --shadow: rgba(26,18,8,0.12);
+    --muted: #7a6a52;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 20% 0%, rgba(201,150,12,0.07) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 100%, rgba(192,57,43,0.05) 0%, transparent 50%);
+  }
+
+  header {
+    text-align: center;
+    padding: 2.5rem 1rem 1.5rem;
+    border-bottom: 2px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '練';
+    position: absolute;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 18rem;
+    color: rgba(192,57,43,0.04);
+    top: -4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    line-height: 1;
+  }
+  .header-badge {
+    display: inline-block;
+    background: var(--red);
+    color: white;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    padding: 0.25rem 0.8rem;
+    border-radius: 2px;
+    margin-bottom: 0.8rem;
+  }
+  header h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  header h1 span { color: var(--red); }
+  header p.sub {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .section-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    padding-left: 0.2rem;
+  }
+
+  .quiz-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .quiz-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    box-shadow: 0 2px 16px var(--shadow);
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.25s cubic-bezier(.4,0,.2,1);
+    display: flex;
+    align-items: stretch;
+  }
+  .quiz-card:hover {
+    border-color: var(--ink);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px var(--shadow);
+  }
+
+  .card-level {
+    flex-shrink: 0;
+    width: 4.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    border-right: 1px solid var(--border);
+    padding: 1rem 0;
+  }
+  .card-level .kanji {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .card-level .level-tag {
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 0.1rem 0.4rem;
+    border-radius: 2px;
+  }
+  .level-n4 .kanji { color: var(--green); }
+  .level-n4 .level-tag { background: rgba(26,107,60,0.1); color: var(--green); }
+  .level-n2 .kanji { color: var(--red); }
+  .level-n2 .level-tag { background: rgba(192,57,43,0.1); color: var(--red); }
+
+  .card-body {
+    flex: 1;
+    padding: 1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .card-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    line-height: 1.4;
+  }
+  .card-desc {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .card-meta {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+  }
+  .meta-chip {
+    font-size: 0.68rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: 99px;
+    background: var(--paper2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .card-arrow {
+    flex-shrink: 0;
+    width: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--border);
+    transition: color 0.2s;
+  }
+  .quiz-card:hover .card-arrow { color: var(--red); }
+  .card-arrow svg { width: 18px; height: 18px; }
+
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-badge">JLPT • LUYỆN TẬP</div>
+  <h1>日本語<span>練習</span></h1>
+  <p class="sub">Tổng hợp bài trắc nghiệm tiếng Nhật · Chọn bài để bắt đầu</p>
+</header>
+
+<main>
+
+  <!-- N4 -->
+  <div class="section-title">📘 JLPT N4</div>
+  <div class="quiz-list">
+
+    <a class="quiz-card" href="japanese-quiz.html">
+      <div class="card-level level-n4">
+        <span class="kanji">N4</span>
+        <span class="level-tag">LUYỆN TẬP</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">N4 総合クイズ — Trắc Nghiệm Tổng Hợp</div>
+        <div class="card-desc">Từ vựng, ngữ pháp, đọc hiểu, kính ngữ cơ bản</div>
+        <div class="card-meta">
+          <span class="meta-chip">6 câu</span>
+          <span class="meta-chip">Từ vựng + Ngữ pháp</span>
+        </div>
+      </div>
+      <div class="card-arrow">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3l5 5-5 5"/></svg>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- N2 -->
+  <div class="section-title">📕 JLPT N2 — NGỮ PHÁP</div>
+  <div class="quiz-list">
+
+    <a class="quiz-card" href="n2-grammar-quiz.html">
+      <div class="card-level level-n2">
+        <span class="kanji">N2</span>
+        <span class="level-tag">文法①</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">N2 文法クイズ① — Ngữ Pháp Bài 1</div>
+        <div class="card-desc">～しか～ない、～に基づいて、～かける、～でありながら、～た以上…</div>
+        <div class="card-meta">
+          <span class="meta-chip">10 câu</span>
+          <span class="meta-chip">Ngữ pháp</span>
+        </div>
+      </div>
+      <div class="card-arrow">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3l5 5-5 5"/></svg>
+      </div>
+    </a>
+
+    <a class="quiz-card" href="n2-grammar-quiz-2.html">
+      <div class="card-level level-n2">
+        <span class="kanji">N2</span>
+        <span class="level-tag">文法②</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">N2 文法クイズ② — Ngữ Pháp Bài 2</div>
+        <div class="card-desc">～てまいる、～うちに、～しかない、～によって、～ば～ほど…</div>
+        <div class="card-meta">
+          <span class="meta-chip">10 câu</span>
+          <span class="meta-chip">Ngữ pháp</span>
+        </div>
+      </div>
+      <div class="card-arrow">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3l5 5-5 5"/></svg>
+      </div>
+    </a>
+
+  </div>
+
+</main>
+
+<footer>
+  日本語練習 · JLPT Quiz Collection
+</footer>
+
+</body>
+</html>
