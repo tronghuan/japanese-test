@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 漢字 Bài 2</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="漢">
+  <div class="header-badge">N2 JLPT • KANJI ②</div>
+  <h1>N2 漢字<span>クイズ</span>②</h1>
+  <p class="sub">Trắc nghiệm Kanji N2 · Bài 2 · Đọc và viết Hán tự</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 12</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/12</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 12,
+  questions: [
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "人間性とは何なのかを<u><strong>あらためて</strong></u>問い直し、未来の世代に対してどんな価値を残していきたいのかを真剣に考え始める必要があると思う。\n\n「あらためて」の漢字は？",
+    vocab: [
+      { word: "人間性", reading: "にんげんせい", type: "Danh từ", meaning: "Bản chất con người, tính người", example: "人間性を問う。\n(Đặt câu hỏi về bản chất con người.)" },
+      { word: "価値", reading: "かち", type: "Danh từ", meaning: "Giá trị", example: "価値を見出す。\n(Tìm ra giá trị.)" },
+      { word: "真剣", reading: "しんけん", type: "Tính từ -na", meaning: "Nghiêm túc, thành tâm", example: "真剣に考える。\n(Suy nghĩ nghiêm túc.)" },
+    ],
+    choices: ["紀めて", "記めて", "改めて", "妃めて"],
+    answer: 2,
+    explanation: `<strong>改めて（あらためて）</strong> — một lần nữa, lại từ đầu, đặc biệt (làm lại hoặc làm chính thức).<br><br>• 改（あらた）める: thay đổi, sửa lại, xem xét lại → âm on: かい, âm kun: あらた(める)<br>• 改 gồm bộ 攴（動作）+ 己（bản thân）→ tự sửa mình<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>紀</strong>（き）: kỷ niên, lịch sử — không đọc là あらた.<br>• <strong>記</strong>（き/しる）: ghi chép — không đọc là あらた.<br>• <strong>妃</strong>（ひ/きさき）: phi tần, vương phi — không liên quan.<div class="tip">💡 改めて（あらためて）= một lần nữa, lại — 改める（あらためる）= sửa đổi, thay đổi</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "投資家の中には、短い期間で<u><strong>売買</strong></u>を繰り返し、小さな利益を積み上げて、トータルで大きな利益をねらう人もいる。\n\n「売買」の読み方は？",
+    vocab: [
+      { word: "投資家", reading: "とうしか", type: "Danh từ", meaning: "Nhà đầu tư", example: "個人投資家が増えた。\n(Nhà đầu tư cá nhân tăng lên.)" },
+      { word: "繰り返す", reading: "くりかえす", type: "Động từ nhóm 1", meaning: "Lặp đi lặp lại", example: "同じ失敗を繰り返す。\n(Lặp lại cùng sai lầm.)" },
+      { word: "積み上げる", reading: "つみあげる", type: "Động từ nhóm 2", meaning: "Tích lũy, chồng lên", example: "経験を積み上げる。\n(Tích lũy kinh nghiệm.)" },
+    ],
+    choices: ["うか", "うばい", "ばいか", "ばいばい"],
+    answer: 3,
+    explanation: `<strong>売買（ばいばい）</strong> — mua bán, giao dịch.<br><br>• 売（ばい）: bán → âm on: ばい, âm kun: う(る)<br>• 買（ばい）: mua → âm on: ばい, âm kun: か(う)<br><br>Chú ý: cả hai chữ 売 và 買 đều có âm on là <strong>ばい</strong> — khi ghép lại thành từ Hán đọc là ばいばい.<br><br>• <strong>うか</strong>: không phải từ thông dụng.<br>• <strong>うばい</strong>: 売 âm kun là う(る), nhưng ghép với 買 thì phải dùng âm on ばい+ばい.<br>• <strong>ばいか</strong>: 買 âm kun là か(う) — không ghép âm on với âm kun như vậy.<div class="tip">💡 売買（ばいばい）= mua bán — 売り買い（うりかい）cũng được dùng nhưng ばいばい trang trọng hơn</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "ちょうどこの瞬間が、より軽い荷物を<u><strong>せおった</strong></u>機敏な人たちが追いつき、横に並び、そしておそらく追い越していく時なのだ。\n\n「せおった」の漢字は？",
+    vocab: [
+      { word: "瞬間", reading: "しゅんかん", type: "Danh từ", meaning: "Khoảnh khắc, giây lát", example: "その瞬間に気づいた。\n(Nhận ra vào khoảnh khắc đó.)" },
+      { word: "機敏", reading: "きびん", type: "Tính từ -na", meaning: "Nhanh nhẹn, lanh lợi", example: "機敏に対応する。\n(Phản ứng nhanh nhẹn.)" },
+      { word: "追い越す", reading: "おいこす", type: "Động từ nhóm 1", meaning: "Vượt qua, bỏ lại phía sau", example: "先輩を追い越す。\n(Vượt qua đàn anh.)" },
+    ],
+    choices: ["背追った", "背織った", "背負った", "背折った"],
+    answer: 2,
+    explanation: `<strong>背負った（せおった）</strong> — đã gánh, đã mang trên lưng.<br><br>• 背負う（せおう）: cõng, mang trên lưng, gánh chịu → gồm 背（せ・うしろ = lưng）+ 負う（おう = mang, gánh）<br>• 背負う là từ đặc biệt: 背 đọc là せ, 負 đọc là お → せおう<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>背追った</strong>: 追（お）う = đuổi theo — 背追う không phải từ tồn tại.<br>• <strong>背織った</strong>: 織（お）る = dệt — sai hoàn toàn.<br>• <strong>背折った</strong>: 折（お）る = gấp, bẻ gãy — sai hoàn toàn.<div class="tip">💡 背負う（せおう）= cõng, gánh — 責任を背負う（gánh trách nhiệm）</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "１０年後には、<u><strong>売上</strong></u>を今の倍くらいにはしたいと思いますし、従業員の数も５割アップを目指しています。\n\n「売上」の読み方は？",
+    vocab: [
+      { word: "従業員", reading: "じゅうぎょういん", type: "Danh từ", meaning: "Nhân viên, người lao động", example: "従業員を増やす。\n(Tăng số nhân viên.)" },
+      { word: "目指す", reading: "めざす", type: "Động từ nhóm 1", meaning: "Nhắm đến, hướng tới", example: "優勝を目指す。\n(Nhắm đến chức vô địch.)" },
+    ],
+    choices: ["うりうえ", "うりじょう", "うりうわ", "うりあげ"],
+    answer: 3,
+    explanation: `<strong>売上（うりあげ）</strong> — doanh thu, doanh số bán hàng.<br><br>• 売り（うり）: việc bán → âm kun của 売<br>• 上（あげ）: lên, tổng thu → âm kun của 上（あ(げる)）<br><br>売上 là từ ghép âm kun: うり + あげ → <strong>うりあげ</strong>. Đây là từ thương mại quan trọng.<br><br>• <strong>うりうえ</strong>: 上 âm kun chính là うえ khi dùng độc lập, nhưng trong 売上 nó đọc là あげ.<br>• <strong>うりじょう</strong>: じょう là âm on của 上 (上映/じょうえい), không dùng cho 売上.<br>• <strong>うりうわ</strong>: không phải cách đọc nào của 上.<div class="tip">💡 売上（うりあげ）= doanh thu — 売上高（うりあげだか）= tổng doanh thu</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "港封鎖はさらに<u><strong>げんじゅう</strong></u>になり、紅茶、コーヒー、ファッション誌、書籍などのぜいたく品はどれも品薄となり、法外な高価がついた。\n\n「げんじゅう」の漢字は？",
+    vocab: [
+      { word: "封鎖", reading: "ふうさ", type: "Danh từ・Suru động từ", meaning: "Phong tỏa, phong tỏa cảng", example: "港を封鎖する。\n(Phong tỏa cảng.)" },
+      { word: "品薄", reading: "しなうす", type: "Danh từ・Tính từ -na", meaning: "Khan hiếm hàng, thiếu hàng", example: "品薄状態が続く。\n(Tình trạng khan hiếm hàng tiếp tục.)" },
+      { word: "法外", reading: "ほうがい", type: "Tính từ -na", meaning: "Thái quá, vô lý, ngoài pháp luật", example: "法外な値段をつける。\n(Đặt giá trời ơi.)" },
+    ],
+    choices: ["厳重", "敢重", "厳動", "敢動"],
+    answer: 0,
+    explanation: `<strong>厳重（げんじゅう）</strong> — nghiêm ngặt, chặt chẽ, khắt khe.<br><br>• 厳（げん）: nghiêm khắc → âm on: げん/ごん, âm kun: きび(しい) — âm Hán-Việt: nghiêm<br>• 重（じゅう）: nặng, trọng → âm Hán-Việt: trọng/trùng<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>敢重</strong>: 敢（かん）= dám, cả gan — 敢重 không phải từ tồn tại.<br>• <strong>厳動 / 敢動</strong>: 動（どう）= chuyển động — げんじゅう không liên quan đến 動.<br><br>Từ liên quan: 厳しい（きびしい）= nghiêm khắc; 厳重注意（げんじゅうちゅうい）= cảnh cáo nghiêm khắc.<div class="tip">💡 厳重（げんじゅう）= nghiêm ngặt, chặt chẽ — 厳重に管理する（quản lý chặt chẽ）</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "デザインとは、表面的にどう見えるかだけの問題ではない。製品の本質を<u><strong>反映</strong></u>していなければならない。\n\n「反映」の読み方は？",
+    vocab: [
+      { word: "表面的", reading: "ひょうめんてき", type: "Tính từ -na", meaning: "Bề nổi, bề mặt, hình thức", example: "表面的な理解にとどまる。\n(Chỉ hiểu ở mức bề mặt.)" },
+      { word: "本質", reading: "ほんしつ", type: "Danh từ", meaning: "Bản chất, thực chất", example: "問題の本質を見抜く。\n(Nhìn thấu bản chất vấn đề.)" },
+    ],
+    choices: ["はんえ", "はんうつ", "はんえい", "たんえい"],
+    answer: 2,
+    explanation: `<strong>反映（はんえい）</strong> — phản ánh, phản chiếu.<br><br>• 反（はん）: phản, ngược lại → âm Hán-Việt: phản<br>• 映（えい）: chiếu, ánh lên → âm on: えい, âm kun: うつ(る/す) — âm Hán-Việt: ánh/ảnh<br><br>Chú ý: 映 âm on là <strong>えい</strong> (反映、上映、映画), âm kun là うつる/うつす.<br><br>• <strong>はんえ</strong>: thiếu âm い cuối — sai.<br>• <strong>はんうつ</strong>: 映 âm kun là うつ(る), nhưng trong từ ghép Hán phải dùng âm on えい.<br>• <strong>たんえい</strong>: 反 đọc là はん (phản), không phải たん.<div class="tip">💡 反映（はんえい）= phản ánh — 意見を反映する（phản ánh ý kiến）, 映画（えいが）</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "いまのまま織田をCEOとした場合、倒産を避けられる<u><strong>かくりつ</strong></u>は１０パーセントしかないと思う。\n\n「かくりつ」の漢字は？",
+    vocab: [
+      { word: "倒産", reading: "とうさん", type: "Danh từ・Suru động từ", meaning: "Phá sản, vỡ nợ", example: "会社が倒産した。\n(Công ty phá sản.)" },
+      { word: "避ける", reading: "さける", type: "Động từ nhóm 2", meaning: "Tránh khỏi, né tránh", example: "危険を避ける。\n(Tránh nguy hiểm.)" },
+    ],
+    choices: ["確交", "確傘", "確率", "確卒"],
+    answer: 2,
+    explanation: `<strong>確率（かくりつ）</strong> — xác suất, tỉ lệ xác suất.<br><br>• 確（かく）: chắc chắn, xác nhận → âm Hán-Việt: xác<br>• 率（りつ）: tỉ lệ, dẫn đầu → âm on: りつ/そつ — âm Hán-Việt: suất/lãnh<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>確交</strong>: 交（こう）= giao thoa, giao lưu — không đọc là りつ.<br>• <strong>確傘</strong>: 傘（さん/かさ）= ô dù — hoàn toàn sai.<br>• <strong>確卒</strong>: 卒（そつ）= tốt nghiệp — 率 và 卒 đều có âm on そつ/りつ nhưng 確率 phải dùng 率 (tỉ lệ).<div class="tip">💡 確率（かくりつ）= xác suất — 生存率（せいぞんりつ）, 成功率（せいこうりつ）</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "ここでは、本題に入る前に次の四つのポイントを確実に<u><strong>抑えて</strong></u>おきましょう。\n\n「抑えて」の読み方は？",
+    vocab: [
+      { word: "本題", reading: "ほんだい", type: "Danh từ", meaning: "Chủ đề chính, vấn đề chính", example: "本題に入る。\n(Vào chủ đề chính.)" },
+      { word: "確実", reading: "かくじつ", type: "Tính từ -na", meaning: "Chắc chắn, đáng tin cậy", example: "確実に覚える。\n(Ghi nhớ chắc chắn.)" },
+    ],
+    choices: ["ささえて", "おさえて", "ひかえて", "ととなえて"],
+    answer: 1,
+    explanation: `<strong>抑えて（おさえて）</strong> — nắm vững, kìm lại, chế ngự.<br><br>• 抑（おさ）える: nắm chặt, kìm giữ, kiềm chế → âm on: よく, âm kun: おさ(える)<br>• Ở đây nghĩa là \"nắm vững, ghi nhớ kỹ\" (các điểm quan trọng)<br><br>Phân biệt với các cách đọc sai:<br>• <strong>ささえて（支えて）</strong>: chống đỡ, hỗ trợ — chữ khác (支).<br>• <strong>ひかえて（控えて）</strong>: kiêng, kềm chế, chờ — chữ khác (控), gần nghĩa nhưng chữ khác.<br>• <strong>ととなえて</strong>: không phải cách đọc chuẩn của bất kỳ chữ nào phổ biến.<div class="tip">💡 抑える（おさえる）= kìm, nắm vững — ポイントを抑える（nắm vững các điểm quan trọng）</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "北極では現在、地球温暖化の影響で北極海の海氷面積が大幅に<u><strong>しゅくしょう</strong></u>している。\n\n「しゅくしょう」の漢字は？",
+    vocab: [
+      { word: "地球温暖化", reading: "ちきゅうおんだんか", type: "Danh từ", meaning: "Biến đổi khí hậu, hiệu ứng nhà kính", example: "地球温暖化が進む。\n(Hiệu ứng nhà kính ngày càng trầm trọng.)" },
+      { word: "大幅", reading: "おおはば", type: "Tính từ -na・Danh từ", meaning: "Đáng kể, quy mô lớn", example: "大幅に削減する。\n(Giảm đáng kể.)" },
+    ],
+    choices: ["縮少", "宿小", "宿少", "縮小"],
+    answer: 3,
+    explanation: `<strong>縮小（しゅくしょう）</strong> — thu hẹp, giảm bớt, thu nhỏ.<br><br>• 縮（しゅく）: co rút, thu lại → âm Hán-Việt: súc<br>• 小（しょう）: nhỏ → âm on: しょう, âm kun: ちい(さい)/こ<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>縮少</strong>: 少 đọc là しょう/すく(ない) — 少 và 小 đều đọc là しょう nhưng nghĩa khác: 少 = ít, 小 = nhỏ. 縮小 phải dùng 小 (thu nhỏ lại).<br>• <strong>宿小 / 宿少</strong>: 宿（しゅく）= nghỉ trọ, nơi ở — âm giống nhưng chữ sai, 縮 mới là \"co rút\".<div class="tip">💡 縮小（しゅくしょう）= thu hẹp ↔ 拡大（かくだい）= mở rộng</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "Google検索の最大の特徴は、<u><strong>膨大</strong></u>なインターネット全体から超高速かつ高い品質で目的のウェブページを探してくれること。\n\n「膨大」の読み方は？",
+    vocab: [
+      { word: "特徴", reading: "とくちょう", type: "Danh từ", meaning: "Đặc điểm, đặc trưng", example: "この製品の特徴は何ですか。\n(Đặc điểm của sản phẩm này là gì?)" },
+      { word: "品質", reading: "ひんしつ", type: "Danh từ", meaning: "Chất lượng", example: "品質を向上させる。\n(Nâng cao chất lượng.)" },
+    ],
+    choices: ["かくだい", "こうだい", "ぼうだい", "そくだい"],
+    answer: 2,
+    explanation: `<strong>膨大（ぼうだい）</strong> — khổng lồ, đồ sộ, rất lớn.<br><br>• 膨（ぼう）: phình to, phồng lên → âm on: ぼう, âm kun: ふく(らむ/れる)<br>• 大（だい）: to lớn → âm on: だい/たい<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>かくだい（拡大）</strong>: mở rộng — chữ hoàn toàn khác (拡).<br>• <strong>こうだい（広大）</strong>: rộng lớn, bao la — chữ khác (広), nghĩa gần nhưng 膨大 nhấn mạnh số lượng đồ sộ.<br>• <strong>そくだい</strong>: không phải từ thông dụng với nghĩa này.<div class="tip">💡 膨大（ぼうだい）= đồ sộ, khổng lồ (số lượng/khối lượng) — 膨大なデータ（dữ liệu khổng lồ）</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "図書室は巨大な<u><strong>せいほうけい</strong></u>の部屋で、色の濃い板張りの壁が上から下までめぐらされている。\n\n「せいほうけい」の漢字は？",
+    vocab: [
+      { word: "巨大", reading: "きょだい", type: "Tính từ -na", meaning: "Khổng lồ, vĩ đại", example: "巨大な建物。\n(Tòa nhà khổng lồ.)" },
+      { word: "板張り", reading: "いたばり", type: "Danh từ", meaning: "Ốp gỗ, lát ván", example: "板張りの床。\n(Sàn gỗ.)" },
+    ],
+    choices: ["生方形", "正方形", "生方型", "正方型"],
+    answer: 1,
+    explanation: `<strong>正方形（せいほうけい）</strong> — hình vuông.<br><br>• 正（せい）: chính, đúng, vuông vắn → âm Hán-Việt: chính<br>• 方（ほう）: hướng, phương, vuông → âm Hán-Việt: phương<br>• 形（けい）: hình dạng → âm on: けい/ぎょう — âm Hán-Việt: hình<br><br>Phân biệt:<br>• <strong>生方形</strong>: 生（せい/なま）= sống, sinh — không phải "chính/vuông".<br>• <strong>正方型</strong>: 型（かた/がた）= khuôn mẫu — 形 và 型 đều đọc được là けい nhưng 正方形 dùng 形 (hình dạng).<br>• <strong>生方型</strong>: sai cả hai chữ.<div class="tip">💡 正方形（せいほうけい）= hình vuông — 長方形（ちょうほうけい）= hình chữ nhật, 三角形（さんかっけい）= tam giác</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "政府の調査によれば、台風による<u><strong>農産物</strong></u>の被害は数億円にのぼると言う。\n\n「農産物」の読み方は？",
+    vocab: [
+      { word: "台風", reading: "たいふう", type: "Danh từ", meaning: "Bão, cơn bão", example: "台風が上陸する。\n(Bão đổ bộ.)" },
+      { word: "被害", reading: "ひがい", type: "Danh từ", meaning: "Thiệt hại, tổn thất", example: "被害を受ける。\n(Chịu thiệt hại.)" },
+      { word: "数億円", reading: "すうおくえん", type: "Danh từ", meaning: "Hàng trăm triệu yên", example: "数億円の損失が出た。\n(Gây thiệt hại hàng trăm triệu yên.)" },
+    ],
+    choices: ["のさんもの", "のうさんぶつ", "のうさんもの", "のさんぶつ"],
+    answer: 1,
+    explanation: `<strong>農産物（のうさんぶつ）</strong> — nông sản, sản phẩm nông nghiệp.<br><br>• 農（のう）: nông nghiệp → âm on: のう — âm Hán-Việt: nông<br>• 産（さん）: sản xuất, sinh ra → âm on: さん<br>• 物（ぶつ/もの）: vật, thứ → âm on: ぶつ, âm kun: もの<br><br>Trong từ ghép Hán (音読み), 物 đọc là <strong>ぶつ</strong> — do đó 農産物 = のう+さん+<strong>ぶつ</strong>.<br><br>• <strong>のさんもの / のさんぶつ</strong>: 農 phải đọc là のう (có う), không phải の ngắn.<br>• <strong>のうさんもの</strong>: 物 âm kun là もの nhưng trong từ ghép Hán này phải dùng âm on ぶつ.<div class="tip">💡 農産物（のうさんぶつ）= nông sản — 工業製品（こうぎょうせいひん）= sản phẩm công nghiệp</div>`,
+  },
+  ]
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

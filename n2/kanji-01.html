@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 漢字 Bài 1</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="漢">
+  <div class="header-badge">N2 JLPT • KANJI ①</div>
+  <h1>N2 漢字<span>クイズ</span>①</h1>
+  <p class="sub">Trắc nghiệm Kanji N2 · Bài 1 · Đọc và viết Hán tự</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 12</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/12</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 12,
+  questions: [
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "語義だけでなく、内容についてさまざまな<u><strong>角度</strong></u>から調べ、理解することが必要です。\n\n「角度」の読み方は？",
+    vocab: [
+      { word: "語義", reading: "ごぎ", type: "Danh từ", meaning: "Nghĩa của từ", example: "語義を調べる。\n(Tra nghĩa của từ.)" },
+      { word: "理解", reading: "りかい", type: "Danh từ・Suru động từ", meaning: "Hiểu, thấu hiểu", example: "内容を理解する。\n(Hiểu nội dung.)" },
+    ],
+    choices: ["かくど", "かくたび", "すみど", "すみたび"],
+    answer: 0,
+    explanation: `<strong>角度（かくど）</strong> — góc độ, góc nhìn.<br><br>• 角（かく）: góc → âm Hán-Việt: giác (góc cạnh)<br>• 度（ど）: mức độ, lần → âm Hán-Việt: độ<br><br>Chú ý: 角 có thể đọc là かく (âm on) hoặc すみ (âm kun = góc tường). Ở đây kết hợp với 度 nên đọc là <strong>かくど</strong>.<br><br>• すみ là cách đọc kun của 角 khi dùng độc lập (角 = góc phòng), không ghép với 度.<div class="tip">💡 角度（かくど）= góc độ, góc nhìn — 様々な角度から考える（suy nghĩ từ nhiều góc độ）</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "大原さんは、検診で「問題なし」とされた半年後に体調を壊し、病院でがんと<u><strong>しんだん</strong></u>され１年で亡くなりました。\n\n「しんだん」の漢字は？",
+    vocab: [
+      { word: "検診", reading: "けんしん", type: "Danh từ・Suru động từ", meaning: "Khám sức khỏe định kỳ", example: "健康診断を受ける。\n(Đi khám sức khỏe.)" },
+      { word: "体調", reading: "たいちょう", type: "Danh từ", meaning: "Tình trạng sức khỏe, thể trạng", example: "体調を崩す。\n(Sức khỏe sa sút.)" },
+    ],
+    choices: ["診断", "珍断", "修断", "惨断"],
+    answer: 0,
+    explanation: `<strong>診断（しんだん）</strong> — chẩn đoán (y tế).<br><br>• 診（しん）: khám bệnh, xem xét → bộ 言 + 㐱 — âm Hán-Việt: chẩn<br>• 断（だん）: phán quyết, cắt đứt → âm Hán-Việt: đoán<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>珍断</strong>: 珍（ちん）= hiếm lạ — không có nghĩa liên quan đến y tế.<br>• <strong>修断</strong>: 修（しゅう）= tu sửa — không phải chẩn đoán.<br>• <strong>惨断</strong>: 惨（さん）= thảm khốc — hoàn toàn sai nghĩa.<div class="tip">💡 診断（しんだん）= chẩn đoán — 診察（しんさつ）= khám bệnh, 診療（しんりょう）= điều trị</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "そんな場合は、期間を<u><strong>指定</strong></u>して検索してみよう。\n\n「指定」の読み方は？",
+    vocab: [
+      { word: "期間", reading: "きかん", type: "Danh từ", meaning: "Thời hạn, khoảng thời gian", example: "契約期間は１年だ。\n(Thời hạn hợp đồng là 1 năm.)" },
+      { word: "検索", reading: "けんさく", type: "Danh từ・Suru động từ", meaning: "Tra cứu, tìm kiếm", example: "インターネットで検索する。\n(Tìm kiếm trên internet.)" },
+    ],
+    choices: ["じてい", "じってい", "してい", "しってい"],
+    answer: 2,
+    explanation: `<strong>指定（してい）</strong> — chỉ định, quy định, xác định.<br><br>• 指（し）: ngón tay, chỉ vào → âm on: し, âm kun: ゆび<br>• 定（てい）: xác định, quyết định → âm Hán-Việt: định<br><br>Chú ý phát âm: 指 đọc là <strong>し</strong> (không phải じ), 定 đọc là <strong>てい</strong> (không phải っていや じってい).<br><br>Từ liên quan: 指定席（していせき）= ghế đặt trước, 指定日（していび）= ngày quy định.<div class="tip">💡 指定（してい）= chỉ định, quy định — 指示（しじ）= chỉ thị, 指摘（してき）= chỉ ra (vấn đề)</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "経過観察も含めた治療を開始して<u><strong>とうけい</strong></u>をとれば、１０年生存率も飛躍的に上がります。\n\n「とうけい」の漢字は？",
+    vocab: [
+      { word: "経過", reading: "けいか", type: "Danh từ・Suru động từ", meaning: "Quá trình, diễn tiến", example: "治療の経過を見る。\n(Theo dõi quá trình điều trị.)" },
+      { word: "飛躍的", reading: "ひやくてき", type: "Tính từ -na", meaning: "Nhảy vọt, phi thường", example: "飛躍的に成長する。\n(Tăng trưởng nhảy vọt.)" },
+    ],
+    choices: ["結計", "絡計", "絞計", "統計"],
+    answer: 3,
+    explanation: `<strong>統計（とうけい）</strong> — thống kê.<br><br>• 統（とう）: thống nhất, quản lý → âm Hán-Việt: thống<br>• 計（けい）: đo đếm, kế hoạch → âm Hán-Việt: kế<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>結計</strong>: 結（けつ）= kết — không có từ này.<br>• <strong>絡計</strong>: 絡（らく）= liên lạc — không có từ này.<br>• <strong>絞計</strong>: 絞（こう）= siết chặt — không có từ này.<br><br>Từ liên quan: 統一（とういつ）= thống nhất, 統括（とうかつ）= quản lý tổng thể.<div class="tip">💡 統計（とうけい）= thống kê — 統計学（とうけいがく）= thống kê học</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "天気予報によれば、来週の日本<u><strong>列島</strong></u>は、全国的に晴天が続くそうです。\n\n「列島」の読み方は？",
+    vocab: [
+      { word: "天気予報", reading: "てんきよほう", type: "Danh từ", meaning: "Dự báo thời tiết", example: "天気予報を確認する。\n(Xem dự báo thời tiết.)" },
+      { word: "全国的", reading: "ぜんこくてき", type: "Tính từ -na", meaning: "Trên toàn quốc, phạm vi cả nước", example: "全国的に雨が降る。\n(Mưa trên toàn quốc.)" },
+    ],
+    choices: ["れいしま", "れっとう", "れいとう", "れっしま"],
+    answer: 1,
+    explanation: `<strong>列島（れっとう）</strong> — quần đảo, chuỗi đảo.<br><br>• 列（れつ→れっ）: hàng, dãy → âm on: れつ, biến âm khi ghép: れっ<br>• 島（とう）: đảo → âm on: とう, âm kun: しま<br><br>Chú ý: 列 đọc là れっ (có っ bởi hiện tượng đồng hóa phụ âm cuối khi ghép với 島/とう bắt đầu bằng t).<br><br>• れいとう（冷凍）= đông lạnh — hoàn toàn khác!<br>• しま là âm kun của 島, không dùng trong từ ghép Hán-Nhật này.<div class="tip">💡 列島（れっとう）= quần đảo — 日本列島（にほんれっとう）= quần đảo Nhật Bản</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "来週の日本列島は、全国的に<u><strong>晴天</strong></u>が続くそうです。\n\n「晴天」の読み方は？",
+    vocab: [
+      { word: "続く", reading: "つづく", type: "Động từ nhóm 1", meaning: "Tiếp tục, kéo dài", example: "雨が三日間続く。\n(Mưa kéo dài ba ngày.)" },
+    ],
+    choices: ["せいてん", "せいでん", "すいてん", "すいでん"],
+    answer: 0,
+    explanation: `<strong>晴天（せいてん）</strong> — trời đẹp, bầu trời quang đãng.<br><br>• 晴（せい）: trời nắng → âm on: せい, âm kun: は(れる) — âm Hán-Việt: tình (trời tạnh)<br>• 天（てん）: trời, bầu trời → âm Hán-Việt: thiên<br><br>Phân biệt:<br>• <strong>せいでん（静電）</strong>: điện tĩnh — hoàn toàn khác.<br>• <strong>すいてん（水天）</strong>: trời nước (văn thơ) — không phải từ thông dụng.<br>• <strong>すいでん（水田）</strong>: ruộng lúa nước — hoàn toàn khác!<div class="tip">💡 晴天（せいてん）= trời quang đãng — 晴れ（はれ）= (trời) nắng/đẹp</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "北朝鮮は１９５３の休戦協定には<u><strong>縛られない</strong></u>と宣言した。\n\n「縛られない」の読み方は？",
+    vocab: [
+      { word: "休戦協定", reading: "きゅうせんきょうてい", type: "Danh từ", meaning: "Hiệp định đình chiến", example: "休戦協定を結ぶ。\n(Ký kết hiệp định đình chiến.)" },
+      { word: "宣言", reading: "せんげん", type: "Danh từ・Suru động từ", meaning: "Tuyên bố, tuyên ngôn", example: "独立を宣言する。\n(Tuyên bố độc lập.)" },
+    ],
+    choices: ["しぼられない", "しばられない", "せぼられない", "せばられない"],
+    answer: 1,
+    explanation: `<strong>縛られない（しばられない）</strong> — không bị ràng buộc, không bị trói.<br><br>• 縛（しば）る: trói, ràng buộc → âm kun: しば(る) — âm Hán-Việt: phọc/phược<br>• られない: thể thụ động + phủ định → không bị...<br><br>Phân biệt:<br>• <strong>しぼる（絞る）</strong>: vắt, siết — âm khác, chữ khác.<br>• せぼ / せば: không phải cách đọc của 縛.<br><br>Từ liên quan: 縛り（しばり）= ràng buộc, hạn chế; 自縄自縛（じじょうじばく）= tự trói mình.<div class="tip">💡 縛る（しばる）= trói, ràng buộc — ルールに縛られる（bị ràng buộc bởi quy tắc）</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "数ヶ月前、仕上げた<u><strong>げんこう</strong></u>を渡したときに編集者の顔に浮かんだ表情も、いまのあなたと同じだ。\n\n「げんこう」の漢字は？",
+    vocab: [
+      { word: "仕上げる", reading: "しあげる", type: "Động từ nhóm 2", meaning: "Hoàn thiện, hoàn chỉnh, làm xong", example: "作品を仕上げる。\n(Hoàn thiện tác phẩm.)" },
+      { word: "編集者", reading: "へんしゅうしゃ", type: "Danh từ", meaning: "Biên tập viên, biên tập", example: "編集者に原稿を渡す。\n(Giao bản thảo cho biên tập viên.)" },
+    ],
+    choices: ["原稿", "願稿", "原橋", "願橋"],
+    answer: 0,
+    explanation: `<strong>原稿（げんこう）</strong> — bản thảo, nguyên cảo.<br><br>• 原（げん）: nguyên gốc, nguồn gốc → âm Hán-Việt: nguyên<br>• 稿（こう）: bản thảo, thảo → âm Hán-Việt: cảo<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>願稿</strong>: 願（がん/ねが）= nguyện, cầu mong — không phải bản thảo.<br>• <strong>原橋 / 願橋</strong>: 橋（きょう/はし）= cầu — hoàn toàn sai.<br><br>Từ liên quan: 原稿用紙（げんこうようし）= giấy viết bản thảo (400 ô vuông).<div class="tip">💡 原稿（げんこう）= bản thảo — 原稿料（げんこうりょう）= nhuận bút, thù lao viết bài</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CÁCH ĐỌC",
+    text: "アユミは部屋のむこうにある鏡の前まで行くと、なめらかな髪の毛をうっとりと<u><strong>撫でた</strong></u>。\n\n「撫でた」の読み方は？",
+    vocab: [
+      { word: "なめらか", reading: "なめらか", type: "Tính từ -na", meaning: "Mượt mà, trơn láng, suôn sẻ", example: "なめらかな肌。\n(Làn da mịn màng.)" },
+      { word: "うっとり", reading: "うっとり", type: "Phó từ", meaning: "Mê mẩn, ngây ngất, đắm chìm", example: "うっとりと見つめる。\n(Ngây ngất nhìn.)" },
+    ],
+    choices: ["はでた", "なでた", "いでた", "ゆでた"],
+    answer: 1,
+    explanation: `<strong>撫でた（なでた）</strong> — đã vuốt ve, đã xoa nhẹ.<br><br>• 撫（な）でる: vuốt nhẹ, xoa, vỗ về → âm kun: な(でる) — âm Hán-Việt: vũ<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>はでた</strong>: không phải từ trong tiếng Nhật.<br>• <strong>いでた</strong>: không phải cách đọc của 撫.<br>• <strong>ゆでた（茹でた）</strong>: đã luộc — chữ khác, nghĩa khác hoàn toàn!<br><br>Từ liên quan: 撫で回す（なでまわす）= xoa khắp, 頭を撫でる（あたまをなでる）= xoa đầu.<div class="tip">💡 撫でる（なでる）= vuốt nhẹ, xoa — 猫を撫でる（vuốt mèo）</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "にもつの<u><strong>じゅうりょう</strong></u>が２０キロをちょうかした場合は、ついか料金をせいきゅうされます。\n\n「じゅうりょう」の漢字は？",
+    vocab: [
+      { word: "荷物", reading: "にもつ", type: "Danh từ", meaning: "Hành lý, đồ đạc", example: "荷物を預ける。\n(Gửi hành lý.)" },
+      { word: "料金", reading: "りょうきん", type: "Danh từ", meaning: "Phí, giá, lệ phí", example: "追加料金を払う。\n(Trả phí bổ sung.)" },
+    ],
+    choices: ["重料", "集両", "重量", "銃量"],
+    answer: 2,
+    explanation: `<strong>重量（じゅうりょう）</strong> — trọng lượng, cân nặng.<br><br>• 重（じゅう）: nặng, trọng → âm on: じゅう/ちょう, âm kun: おも/かさ<br>• 量（りょう）: lượng, số lượng → âm Hán-Việt: lượng<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>重料</strong>: 料（りょう）= phí, vật liệu — 重料 không phải từ thông dụng.<br>• <strong>集両</strong>: 集（しゅう）= tập hợp, 両（りょう）= hai, toa tàu — sai hoàn toàn.<br>• <strong>銃量</strong>: 銃（じゅう）= súng — 銃 và 重 cùng âm じゅう nhưng chữ khác!<div class="tip">💡 重量（じゅうりょう）= trọng lượng — 重さ（おもさ）= cân nặng (thông thường)</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "にもつのじゅうりょうが２０キロを<u><strong>ちょうか</strong></u>した場合は、ついか料金をせいきゅうされます。\n\n「ちょうか」の漢字は？",
+    vocab: [
+      { word: "場合", reading: "ばあい", type: "Danh từ", meaning: "Trường hợp, tình huống", example: "緊急の場合は電話してください。\n(Trong trường hợp khẩn cấp hãy gọi điện.)" },
+      { word: "請求", reading: "せいきゅう", type: "Danh từ・Suru động từ", meaning: "Yêu cầu thanh toán, lập hóa đơn", example: "料金を請求する。\n(Yêu cầu thanh toán phí.)" },
+    ],
+    choices: ["越過", "超課", "越課", "超過"],
+    answer: 3,
+    explanation: `<strong>超過（ちょうか）</strong> — vượt quá, siêu quá.<br><br>• 超（ちょう）: vượt qua → âm Hán-Việt: siêu<br>• 過（か）: quá, vượt, qua đi → âm Hán-Việt: quá<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>越過（えっか）</strong>: 越 = vượt qua (biên giới, địa hình) — tuy gần nghĩa nhưng ちょうか không đọc là えっか; hơn nữa 越過 ít dùng trong ngữ cảnh hành lý.<br>• <strong>超課</strong>: 課（か）= bài học, khoa, thuế — siêu bài học? sai nghĩa.<br>• <strong>越課</strong>: kết hợp không tự nhiên, không phải từ thông dụng.<div class="tip">💡 超過（ちょうか）= vượt quá — 時間超過（じかんちょうか）= vượt quá giờ, 超過料金（ちょうかりょうきん）= phí vượt mức</div>`,
+  },
+  {
+    tag: "KANJI • N2 • CHỮ VIẾT",
+    text: "にもつのじゅうりょうが２０キロをちょうかした場合は、<u><strong>ついか</strong></u>料金をせいきゅうされます。\n\n「ついか」の漢字は？",
+    vocab: [
+      { word: "追加料金", reading: "ついかりょうきん", type: "Danh từ", meaning: "Phụ phí, phí bổ sung", example: "追加料金が発生する。\n(Phát sinh phụ phí.)" },
+    ],
+    choices: ["追加", "堆加", "追価", "堆価"],
+    answer: 0,
+    explanation: `<strong>追加（ついか）</strong> — bổ sung, thêm vào.<br><br>• 追（つい/お）: đuổi theo, thêm vào → âm on: つい, âm kun: お(う)<br>• 加（か）: thêm, cộng thêm → âm Hán-Việt: gia<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>堆加</strong>: 堆（たい）= đống, đụn — 堆 không đọc là つい trong từ này.<br>• <strong>追価</strong>: 価（か）= giá trị, giá cả — 追価 không phải từ thông dụng.<br>• <strong>堆価</strong>: kết hợp không tồn tại trong từ điển tiếng Nhật.<br><br>Từ liên quan: 追加注文（ついかちゅうもん）= gọi thêm món, 追加する（ついかする）= thêm vào.<div class="tip">💡 追加（ついか）= bổ sung, thêm vào — 追加料金（ついかりょうきん）= phụ phí</div>`,
+  },
+  ]
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>
