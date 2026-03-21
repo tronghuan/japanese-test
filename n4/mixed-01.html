@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N4 総合 Bài 1</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N4 JLPT • TỔNG HỢP ①</div>
+  <h1>N4 総合<span>クイズ</span>①</h1>
+  <p class="sub">Trắc nghiệm tổng hợp N4 · Từ vựng · Ngữ pháp · Đọc hiểu · Kính ngữ</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 6</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/6</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  questions: [
+  {
+    tag: "TỪ VỰNG • N4",
+    text: "毎朝、私は６時に___。",
+    vocab: [
+      { word: "毎朝", reading: "まいあさ", type: "Danh từ", meaning: "Mỗi buổi sáng", example: "毎朝６時に起きます。\n(Mỗi sáng tôi dậy lúc 6 giờ.)" },
+      { word: "起きます", reading: "おきます", type: "Động từ nhóm 2", meaning: "Thức dậy, ngủ dậy", example: "何時に起きますか？\n(Bạn dậy lúc mấy giờ?)" },
+    ],
+    choices: ["寝ます", "起きます", "食べます", "飲みます"],
+    answer: 1,
+    explanation: `Câu hỏi về thói quen buổi sáng. Động từ <strong>起きます（おきます）</strong> nghĩa là "thức dậy". Các đáp án khác: 寝ます (ngủ), 食べます (ăn), 飲みます (uống) đều không hợp nghĩa với ngữ cảnh "buổi sáng lúc 6 giờ".<div class="tip">💡 Mẫu câu: 毎朝〜時に〜ます → mỗi sáng lúc ... giờ làm gì</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N4",
+    text: "日本語が話せる___、友達をたくさん作りたい。",
+    vocab: [
+      { word: "話せる", reading: "はなせる", type: "Động từ thể khả năng", meaning: "Có thể nói", example: "日本語が話せますか？\n(Bạn có thể nói tiếng Nhật không?)" },
+      { word: "作る", reading: "つくる", type: "Động từ nhóm 1", meaning: "Tạo ra, kết bạn", example: "友達を作る。\n(Kết bạn.)" },
+    ],
+    choices: ["ので", "のに", "でも", "から"],
+    answer: 0,
+    explanation: `<strong>ので</strong> (vì/do) dùng để nêu nguyên nhân một cách tự nhiên, lịch sự. Ở đây: "Vì có thể nói tiếng Nhật, tôi muốn kết bạn nhiều". <br><br>• <strong>から</strong> cũng nghĩa "vì" nhưng mang tính chủ quan hơn.<br>• <strong>のに</strong> thể hiện sự tương phản (dù... nhưng...) — không phù hợp.<br>• <strong>でも</strong> nghĩa "nhưng/tuy nhiên" — sai ngữ nghĩa.<div class="tip">💡 〜ので → nguyên nhân khách quan, lịch sự | 〜から → nguyên nhân chủ quan</div>`,
+  },
+  {
+    tag: "ĐỌC HIỂU • N4",
+    text: "この映画は___おもしろくないです。あまり好きじゃない。",
+    vocab: [
+      { word: "映画", reading: "えいが", type: "Danh từ", meaning: "Phim, bộ phim", example: "映画を見ます。\n(Xem phim.)" },
+      { word: "あまり", reading: "あまり", type: "Trạng từ", meaning: "Không... lắm (dùng với phủ định)", example: "あまり好きじゃない。\n(Không thích lắm.)" },
+    ],
+    choices: ["とても", "ちょっと", "もっと", "ぜんぜん"],
+    answer: 1,
+    explanation: `Câu dùng thể phủ định nhẹ. <strong>ちょっと</strong> (hơi/một chút) kết hợp với phủ định tạo ra cách nói lịch sự, giảm nhẹ: "Phim này hơi không hay".<br><br>• <strong>とても</strong> (rất) → cần câu khẳng định.<br>• <strong>もっと</strong> (nhiều hơn) → không hợp ngữ cảnh.<br>• <strong>ぜんぜん</strong> (hoàn toàn không) → mức phủ định mạnh, nhưng câu tiếp theo "あまり" đã là phủ định nhẹ.<div class="tip">💡 ちょっと + phủ định = hơi không... (cách nói lịch sự, tế nhị)</div>`,
+  },
+  {
+    tag: "HÌNH THỨC LỊCH SỰ • N4",
+    text: "先生に___いただきました。",
+    vocab: [
+      { word: "先生", reading: "せんせい", type: "Danh từ", meaning: "Giáo viên, thầy/cô", example: "先生に習います。\n(Học từ thầy/cô.)" },
+      { word: "いただく", reading: "いただく", type: "Kính ngữ (謙譲語)", meaning: "Nhận được (khiêm tốn)", example: "プレゼントをいただきました。\n(Tôi đã nhận được quà.)" },
+    ],
+    choices: ["教えてあげて", "教えてもらって", "教えてくれて", "教えてやって"],
+    answer: 1,
+    explanation: `Cấu trúc <strong>〜ていただく</strong> là dạng kính ngữ khiêm tốn (謙譲語) của <strong>〜てもらう</strong>. Vì chủ thể là 先生 (người trên), ta phải dùng hình thức tôn kính.<br><br>• <strong>〜てもらう</strong>: nhận được sự giúp đỡ (bình thường)<br>• <strong>〜ていただく</strong>: nhận được sự giúp đỡ từ người trên (kính ngữ)<br>• <strong>〜てくれる</strong>: ai đó làm cho mình (không dùng với 先生)<div class="tip">💡 先生・上司 → ていただく | 友達・後輩 → てもらう・てくれる</div>`,
+  },
+  {
+    tag: "TỪ VỰNG • N4",
+    text: "財布を___しまいました。",
+    vocab: [
+      { word: "財布", reading: "さいふ", type: "Danh từ", meaning: "Ví tiền, bóp tiền", example: "財布を忘れた。\n(Quên ví rồi.)" },
+      { word: "しまう", reading: "しまう", type: "Động từ bổ trợ", meaning: "Lỡ làm gì (ngoài ý muốn)", example: "食べてしまいました。\n(Đã ăn mất rồi.)" },
+    ],
+    choices: ["忘れて", "なくして", "おいて", "もって"],
+    answer: 1,
+    explanation: `<strong>なくして</strong> từ động từ <strong>なくす</strong> nghĩa là "làm mất". Kết hợp với <strong>〜てしまいました</strong> → "đã lỡ đánh mất ví".<br><br>• <strong>忘れる</strong>: quên (để lại đâu đó) — khác với mất hẳn<br>• <strong>おく</strong>: để, cất (chuẩn bị trước) — sai nghĩa<br>• <strong>もつ</strong>: cầm/giữ — không phù hợp<div class="tip">💡 なくす = làm mất hẳn | 忘れる = quên (biết chỗ nhưng không mang theo)</div>`,
+  },
+  {
+    tag: "MẪU CÂU • N4",
+    text: "もっと早く___ば、電車に乗れたのに。",
+    vocab: [
+      { word: "早く", reading: "はやく", type: "Trạng từ", meaning: "Sớm hơn, nhanh hơn", example: "早く起きてください。\n(Xin hãy dậy sớm.)" },
+      { word: "乗れる", reading: "のれる", type: "Thể khả năng", meaning: "Có thể lên (tàu/xe)", example: "電車に乗れますか？\n(Bạn có thể lên tàu không?)" },
+    ],
+    choices: ["来れ", "来た", "来る", "来たら"],
+    answer: 0,
+    explanation: `Đây là cấu trúc điều kiện <strong>〜ば〜のに</strong> diễn tả sự tiếc nuối về điều không xảy ra. Động từ 来る (đến) chia thể ば là <strong>来れば（くれば）</strong>.<br><br>Cách chia thể ば: bỏ う → thêm えば<br>• 来る → 来れば ✓<br>• 書く → 書けば<br>• 食べる → 食べれば<div class="tip">💡 〜ば〜のに = "Giá mà...thì đã..." (tiếc nuối điều đã không xảy ra)</div>`,
+  },
+  ]
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

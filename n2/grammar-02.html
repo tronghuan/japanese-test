@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 文法 Bài 2</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="文">
+  <div class="header-badge">N2 JLPT • NGỮ PHÁP ②</div>
+  <h1>N2 文法<span>クイズ</span>②</h1>
+  <p class="sub">Trắc nghiệm ngữ pháp N2 · Bài 2 · Giải thích chi tiết</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  questions: [
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "暖かくなって______が、いかがお過ごしでしょうか。",
+    vocab: [
+      { word: "暖かく", reading: "あたたかく", type: "Tính từ -i (trạng từ)", meaning: "Ấm áp", example: "暖かくなってきた。\n(Trời đã trở nên ấm áp.)" },
+      { word: "いかが", reading: "いかが", type: "Trạng từ (kính ngữ)", meaning: "Thế nào (lịch sự)", example: "いかがですか？\n(Thế nào ạ?)" },
+      { word: "まいる", reading: "まいる", type: "Khiêm nhường ngữ (謙譲語)", meaning: "Đi, đến (khiêm tốn)", example: "参りました。\n(Tôi đã đến.)" },
+    ],
+    choices: ["まいりました", "いただきました", "くださいました", "いらっしゃいました"],
+    answer: 0,
+    explanation: `<strong>～てまいりました</strong> là dạng khiêm nhường của ～てきました, nghĩa là "đã trở nên..., đã dần dần...". Trong thư từ lịch sự: "Trời đã trở nên ấm áp, bạn có khỏe không?".<br><br>• <strong>いただきました</strong>: "đã nhận được" (khiêm nhường) — không hợp ngữ cảnh.<br>• <strong>くださいました</strong>: "đã cho/giúp" (tôn kính) — sai nghĩa.<br>• <strong>いらっしゃいました</strong>: "đã đến/ở" (tôn kính) — sai cấu trúc.<div class="tip">💡 ～てまいりました = ～てきました (dạng lịch sự). Thường dùng trong thư từ, email trang trọng.</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "携帯電話をポケットに入れて歩く______音楽が再生されたり電話をかけてしまったりするのはよくない。",
+    vocab: [
+      { word: "携帯電話", reading: "けいたいでんわ", type: "Danh từ", meaning: "Điện thoại di động", example: "携帯電話をポケットに入れる。\n(Bỏ điện thoại vào túi.)" },
+      { word: "再生", reading: "さいせい", type: "Danh từ・Suru động từ", meaning: "Phát lại, tái sinh", example: "音楽が再生される。\n(Nhạc được phát.)" },
+    ],
+    choices: ["ところに", "うちに", "なかに", "最中に"],
+    answer: 1,
+    explanation: `<strong>～うちに</strong> nghĩa là "trong lúc..., trong khi...". Ở đây: "Trong lúc đi bộ với điện thoại trong túi, nhạc tự phát hoặc tự gọi điện — điều đó không tốt".<br><br>• <strong>ところに</strong>: "đúng lúc..." — nhấn mạnh thời điểm bất ngờ, không hợp.<br>• <strong>なかに</strong>: "ở trong" — chỉ vị trí vật lý, không dùng cho thời gian.<br>• <strong>最中に</strong>: "đang giữa chừng" — 歩く最中に không tự nhiên bằng 歩くうちに.<div class="tip">💡 Vる + うちに = trong lúc đang... (sự việc xảy ra ngoài ý muốn trong khoảng thời gian đó)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "行きたくない______はないんですが、今日は、時間がないんです。",
+    vocab: [
+      { word: "行きたくない", reading: "いきたくない", type: "Động từ (thể phủ định ý muốn)", meaning: "Không muốn đi", example: "行きたくないわけではない。\n(Không phải là không muốn đi.)" },
+    ],
+    choices: ["ほう", "もの", "よう", "こと"],
+    answer: 3,
+    explanation: `<strong>～ことはない</strong> nghĩa là "không phải là..., không hẳn là...". Ở đây: "Không phải là không muốn đi, nhưng hôm nay không có thời gian". Đây là cách nói phủ định kép để giảm nhẹ.<br><br>• <strong>ほう</strong>: dùng so sánh (～ほうがいい) — sai cấu trúc.<br>• <strong>もの</strong>: ～ものではない nghĩa "không nên" — sai sắc thái.<br>• <strong>よう</strong>: ～ようはない không phải mẫu ngữ pháp phổ biến.<div class="tip">💡 ～ことはない = không phải là... (phủ định nhẹ nhàng, tế nhị)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "ひとりが使える清浄な水を増やしたければ、地球上の人間を減らす______。",
+    vocab: [
+      { word: "清浄", reading: "せいじょう", type: "Tính từ -na", meaning: "Trong sạch, tinh khiết", example: "清浄な水が必要だ。\n(Cần nước sạch.)" },
+      { word: "地球上", reading: "ちきゅうじょう", type: "Danh từ", meaning: "Trên trái đất", example: "地球上の生物。\n(Sinh vật trên trái đất.)" },
+    ],
+    choices: ["しかない", "ことがない", "わけがない", "はずがない"],
+    answer: 0,
+    explanation: `<strong>～するしかない</strong> nghĩa là "chỉ còn cách..., không còn cách nào khác ngoài...". Ở đây: "Muốn tăng nước sạch cho mỗi người thì chỉ còn cách giảm dân số trên trái đất".<br><br>• <strong>ことがない</strong>: "chưa từng..." — sai nghĩa hoàn toàn.<br>• <strong>わけがない</strong>: "không có lý nào..." — phủ định khả năng.<br>• <strong>はずがない</strong>: "chắc chắn không..." — phủ định dự đoán.<div class="tip">💡 ～するしかない = chỉ còn cách... (không có lựa chọn nào khác)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "十四世紀、イタリア文学は、ある基準______ふたつの種類に分けられていました。",
+    vocab: [
+      { word: "基準", reading: "きじゅん", type: "Danh từ", meaning: "Tiêu chuẩn, cơ sở", example: "基準を設ける。\n(Đặt ra tiêu chuẩn.)" },
+      { word: "種類", reading: "しゅるい", type: "Danh từ", meaning: "Loại, thể loại", example: "いろいろな種類がある。\n(Có nhiều loại khác nhau.)" },
+      { word: "分ける", reading: "わける", type: "Động từ nhóm 2", meaning: "Chia, phân loại", example: "ふたつに分ける。\n(Chia thành hai.)" },
+    ],
+    choices: ["にかけて", "にわたって", "によって", "につけて"],
+    answer: 2,
+    explanation: `<strong>～によって</strong> nghĩa là "bằng, dựa vào, theo". Ở đây: "Thế kỷ 14, văn học Ý được phân thành hai loại <strong>theo</strong> một tiêu chuẩn nhất định".<br><br>• <strong>にかけて</strong>: "từ...đến..." (khoảng thời gian/không gian) — sai nghĩa.<br>• <strong>にわたって</strong>: "kéo dài suốt, trải dài" — sai ngữ cảnh.<br>• <strong>につけて</strong>: "mỗi khi..." — sai cấu trúc.<div class="tip">💡 ～によって = theo, dựa vào (phương tiện, cơ sở). Cũng có nghĩa "tùy theo" hoặc "bị... (bị động)".</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "日本語は、勉強すれば______ほど難しくなるような気がする。",
+    vocab: [
+      { word: "勉強", reading: "べんきょう", type: "Danh từ・Suru động từ", meaning: "Học tập", example: "日本語を勉強する。\n(Học tiếng Nhật.)" },
+      { word: "難しい", reading: "むずかしい", type: "Tính từ -i", meaning: "Khó", example: "日本語は難しい。\n(Tiếng Nhật khó.)" },
+    ],
+    choices: ["した", "する", "して", "すれ"],
+    answer: 1,
+    explanation: `Cấu trúc <strong>～ば～ほど</strong> nghĩa là "càng...càng...". Mẫu cố định: Vば + Vる（辞書形）+ ほど. Ở đây: "Tiếng Nhật, càng học càng thấy khó".<br><br>Cách chia: 勉強すれば + <strong>する</strong>ほど ✓<br>• <strong>した</strong>: quá khứ — sai mẫu.<br>• <strong>して</strong>: thể て — sai mẫu.<br>• <strong>すれ</strong>: thể điều kiện (thiếu ば) — sai.<div class="tip">💡 ～ば～ほど = càng...càng... | 食べれば食べるほど = càng ăn càng... | 安ければ安いほど = càng rẻ càng...</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "息子はコーチが用意した練習メニュー______一生懸命練習を続けている。",
+    vocab: [
+      { word: "コーチ", reading: "コーチ", type: "Danh từ", meaning: "Huấn luyện viên", example: "コーチの指示に従う。\n(Theo chỉ dẫn của huấn luyện viên.)" },
+      { word: "用意", reading: "ようい", type: "Danh từ・Suru động từ", meaning: "Chuẩn bị", example: "食事を用意する。\n(Chuẩn bị bữa ăn.)" },
+      { word: "練習", reading: "れんしゅう", type: "Danh từ・Suru động từ", meaning: "Luyện tập", example: "毎日練習する。\n(Luyện tập mỗi ngày.)" },
+    ],
+    choices: ["にとって", "に対して", "に関して", "に従って"],
+    answer: 3,
+    explanation: `<strong>～に従って（にしたがって）</strong> nghĩa là "theo, tuân theo". Ở đây: "Con trai tôi đang chăm chỉ luyện tập <strong>theo</strong> menu tập luyện mà huấn luyện viên đã chuẩn bị".<br><br>• <strong>にとって</strong>: "đối với (ai đó)" — sai nghĩa.<br>• <strong>に対して</strong>: "đối với, hướng tới" — không mang nghĩa "tuân theo".<br>• <strong>に関して</strong>: "liên quan đến, về" — sai ngữ cảnh.<div class="tip">💡 ～に従って = tuân theo, làm theo (chỉ dẫn, quy tắc, kế hoạch)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "そういった落ちつかない日々が何週間かつづいたあとで、私はまた神経を仕事に集中するようになった。いつまでもこんなことをしている______と思ったのだ。",
+    vocab: [
+      { word: "日々", reading: "ひび", type: "Danh từ", meaning: "Ngày ngày, hàng ngày", example: "日々の生活。\n(Cuộc sống hàng ngày.)" },
+      { word: "神経", reading: "しんけい", type: "Danh từ", meaning: "Thần kinh, sự chú ý", example: "神経を集中する。\n(Tập trung thần kinh.)" },
+    ],
+    choices: ["わけでもない", "わけのわからない", "わけにはいかない", "わけではない"],
+    answer: 2,
+    explanation: `<strong>～わけにはいかない</strong> nghĩa là "không thể nào... được" (vì lý do đạo đức, xã hội, trách nhiệm). Ở đây: "Tôi nghĩ rằng không thể cứ mãi như thế này được".<br><br>• <strong>わけでもない</strong>: "không hẳn là..." — phủ định nhẹ, sai sắc thái.<br>• <strong>わけのわからない</strong>: "khó hiểu, vô lý" — tính từ, sai cấu trúc.<br>• <strong>わけではない</strong>: "không phải là..." — phủ định giải thích, không mang nghĩa "không được phép".<div class="tip">💡 ～わけにはいかない = không thể... được (do trách nhiệm, đạo đức, hoàn cảnh bắt buộc)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "遠くからもよく見える______、字を大きく書いてください。",
+    vocab: [
+      { word: "遠く", reading: "とおく", type: "Danh từ / Trạng từ", meaning: "Xa, nơi xa", example: "遠くから来た。\n(Đến từ nơi xa.)" },
+    ],
+    choices: ["ように", "ために", "だけに", "ばかりに"],
+    answer: 0,
+    explanation: `<strong>～ように</strong> dùng để diễn tả mục đích (với động từ không ý chí / khả năng). 見える (nhìn thấy được) là động từ khả năng → dùng ように. "Để nhìn rõ từ xa, hãy viết chữ to lên".<br><br>• <strong>ために</strong>: dùng cho mục đích với động từ ý chí (意志動詞) — 見える không phải ý chí.<br>• <strong>だけに</strong>: "chính vì... nên..." — sai sắc thái.<br>• <strong>ばかりに</strong>: "chỉ vì... mà..." (hậu quả xấu) — sai hoàn toàn.<div class="tip">💡 ～ように (mục đích) = để có thể... | Dùng với Vない, V可能形. ≠ ～ために (dùng với Vる ý chí)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "その靴はじつのところ、夕べ渋谷で______、まだ一度もはいてないのです。",
+    vocab: [
+      { word: "実のところ", reading: "じつのところ", type: "Phó từ", meaning: "Thực ra, nói thật thì", example: "実のところ、知らなかった。\n(Thực ra, tôi không biết.)" },
+      { word: "夕べ", reading: "ゆうべ", type: "Danh từ", meaning: "Tối qua", example: "夕べは早く寝た。\n(Tối qua ngủ sớm.)" },
+    ],
+    choices: ["買ったすえ", "買ったきり", "買ったあと", "買ったところで"],
+    answer: 1,
+    explanation: `<strong>～たきり</strong> nghĩa là "kể từ khi...rồi không... nữa". Ở đây: "Đôi giày đó thực ra, kể từ khi mua ở Shibuya tối qua, chưa mang lần nào cả".<br><br>• <strong>買ったすえ</strong>: ～たすえ（に）nghĩa "sau khi (trải qua)..." — hàm ý kết quả, sai ngữ cảnh.<br>• <strong>買ったあと</strong>: "sau khi mua" — đúng nghĩa nhưng không nhấn mạnh "rồi không làm gì nữa".<br>• <strong>買ったところで</strong>: "cho dù có mua" — sai nghĩa hoàn toàn.<div class="tip">💡 ～たきり＋ない = kể từ khi...rồi không... nữa (nhấn mạnh trạng thái không thay đổi)</div>`,
+  },
+  ]
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

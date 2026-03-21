@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>日本語クイズ • Danh Sách Bài Test</title>
+<title>日本語クイズ • Tổng Hợp Bài Test Tiếng Nhật</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;500&family=Shippori+Mincho:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -30,6 +30,7 @@
       radial-gradient(ellipse at 80% 100%, rgba(192,57,43,0.05) 0%, transparent 50%);
   }
 
+  /* ── HEADER ── */
   header {
     text-align: center;
     padding: 2.5rem 1rem 1.5rem;
@@ -70,41 +71,133 @@
   }
   header h1 span { color: var(--red); }
   header p.sub {
-    font-family: 'Noto Sans JP', sans-serif;
     font-size: 0.85rem;
     color: var(--muted);
     margin-top: 0.5rem;
     letter-spacing: 0.05em;
   }
 
-  main {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem 4rem;
+  /* ── NAV TABS ── */
+  .level-nav {
+    max-width: 800px;
+    margin: 1.5rem auto 0;
+    padding: 0 1.5rem;
+    display: flex;
+    gap: 0.4rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .level-tab {
+    flex-shrink: 0;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 4px 4px 0 0;
+    padding: 0.5rem 1.2rem;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-bottom: none;
+    position: relative;
+    top: 2px;
+  }
+  .level-tab:hover { color: var(--ink); background: var(--paper2); }
+  .level-tab.active {
+    color: var(--red);
+    background: var(--paper);
+    border-bottom: 2px solid var(--paper);
+    z-index: 1;
+  }
+  .level-tab .tab-kanji {
+    display: block;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.4rem;
+    line-height: 1;
+    margin-bottom: 0.1rem;
+  }
+  .level-tab .tab-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
   }
 
-  .section-title {
+  /* ── MAIN ── */
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1.5rem 4rem;
+    border-top: 2px solid var(--border);
+  }
+
+  /* ── LEVEL SECTION ── */
+  .level-section {
+    display: none;
+    padding-top: 2rem;
+  }
+  .level-section.active { display: block; }
+
+  .level-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .level-icon {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .level-info h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  .level-info p {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+
+  /* Color per level */
+  .level-n5 { color: #2980b9; }
+  .level-n4 { color: var(--green); }
+  .level-n3 { color: var(--gold); }
+  .level-n2 { color: var(--red); }
+  .level-n1 { color: #8e44ad; }
+
+  /* ── CATEGORY ── */
+  .category-title {
     font-family: 'Noto Serif JP', serif;
     font-size: 0.72rem;
     letter-spacing: 0.15em;
     color: var(--muted);
     text-transform: uppercase;
-    margin-bottom: 0.8rem;
+    margin: 1.8rem 0 0.7rem;
     padding-left: 0.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .category-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
   }
 
+  /* ── QUIZ LIST ── */
   .quiz-list {
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
-    margin-bottom: 2.5rem;
+    gap: 0.6rem;
   }
-
   .quiz-card {
     background: white;
     border: 1px solid var(--border);
     border-radius: 4px;
-    box-shadow: 0 2px 16px var(--shadow);
+    box-shadow: 0 2px 12px var(--shadow);
     overflow: hidden;
     text-decoration: none;
     color: var(--ink);
@@ -117,72 +210,47 @@
     transform: translateY(-2px);
     box-shadow: 0 8px 32px var(--shadow);
   }
-
-  .card-level {
+  .card-icon {
     flex-shrink: 0;
-    width: 4.5rem;
+    width: 3.5rem;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.2rem;
     border-right: 1px solid var(--border);
-    padding: 1rem 0;
+    font-size: 1.3rem;
   }
-  .card-level .kanji {
-    font-family: 'Shippori Mincho', serif;
-    font-size: 1.8rem;
-    font-weight: 800;
-    line-height: 1;
-  }
-  .card-level .level-tag {
-    font-size: 0.6rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    padding: 0.1rem 0.4rem;
-    border-radius: 2px;
-  }
-  .level-n4 .kanji { color: var(--green); }
-  .level-n4 .level-tag { background: rgba(26,107,60,0.1); color: var(--green); }
-  .level-n2 .kanji { color: var(--red); }
-  .level-n2 .level-tag { background: rgba(192,57,43,0.1); color: var(--red); }
-
   .card-body {
     flex: 1;
-    padding: 1rem 1.2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    padding: 0.8rem 1rem;
   }
   .card-title {
     font-family: 'Noto Serif JP', serif;
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     font-weight: 600;
-    margin-bottom: 0.3rem;
     line-height: 1.4;
   }
   .card-desc {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: var(--muted);
-    line-height: 1.5;
+    line-height: 1.4;
+    margin-top: 0.2rem;
   }
   .card-meta {
     display: flex;
-    gap: 0.6rem;
-    margin-top: 0.5rem;
+    gap: 0.4rem;
+    margin-top: 0.4rem;
   }
   .meta-chip {
-    font-size: 0.68rem;
-    padding: 0.1rem 0.5rem;
+    font-size: 0.65rem;
+    padding: 0.08rem 0.45rem;
     border-radius: 99px;
     background: var(--paper2);
     border: 1px solid var(--border);
     color: var(--muted);
   }
-
   .card-arrow {
     flex-shrink: 0;
-    width: 3rem;
+    width: 2.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -190,8 +258,25 @@
     transition: color 0.2s;
   }
   .quiz-card:hover .card-arrow { color: var(--red); }
-  .card-arrow svg { width: 18px; height: 18px; }
+  .card-arrow svg { width: 16px; height: 16px; }
 
+  /* ── EMPTY STATE ── */
+  .empty-state {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border: 1px dashed var(--border);
+    border-radius: 4px;
+    background: white;
+  }
+  .empty-state .empty-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.5;
+  }
+
+  /* ── FOOTER ── */
   footer {
     text-align: center;
     padding: 1.5rem;
@@ -205,84 +290,289 @@
 <body>
 
 <header>
-  <div class="header-badge">JLPT • LUYỆN TẬP</div>
+  <div class="header-badge">JLPT N5 → N1 • LUYỆN TẬP</div>
   <h1>日本語<span>練習</span></h1>
-  <p class="sub">Tổng hợp bài trắc nghiệm tiếng Nhật · Chọn bài để bắt đầu</p>
+  <p class="sub">Tổng hợp bài trắc nghiệm tiếng Nhật · Từ N5 đến N1</p>
 </header>
+
+<!-- Level tabs -->
+<nav class="level-nav" id="levelNav">
+  <button class="level-tab active" data-level="n5">
+    <span class="tab-kanji level-n5">N5</span>
+    <span class="tab-label">初級前半</span>
+  </button>
+  <button class="level-tab" data-level="n4">
+    <span class="tab-kanji level-n4">N4</span>
+    <span class="tab-label">初級後半</span>
+  </button>
+  <button class="level-tab" data-level="n3">
+    <span class="tab-kanji level-n3">N3</span>
+    <span class="tab-label">中級</span>
+  </button>
+  <button class="level-tab" data-level="n2">
+    <span class="tab-kanji level-n2">N2</span>
+    <span class="tab-label">中上級</span>
+  </button>
+  <button class="level-tab" data-level="n1">
+    <span class="tab-kanji level-n1">N1</span>
+    <span class="tab-label">上級</span>
+  </button>
+</nav>
 
 <main>
 
-  <!-- N4 -->
-  <div class="section-title">📘 JLPT N4</div>
-  <div class="quiz-list">
-
-    <a class="quiz-card" href="japanese-quiz.html">
-      <div class="card-level level-n4">
-        <span class="kanji">N4</span>
-        <span class="level-tag">LUYỆN TẬP</span>
+  <!-- ============ N5 ============ -->
+  <section class="level-section active" id="section-n5">
+    <div class="level-header">
+      <span class="level-icon level-n5">N5</span>
+      <div class="level-info">
+        <h2>JLPT N5 — Sơ cấp đầu</h2>
+        <p>Hiragana, Katakana, ~800 từ vựng, ~100 Kanji, ngữ pháp cơ bản</p>
       </div>
-      <div class="card-body">
-        <div class="card-title">N4 総合クイズ — Trắc Nghiệm Tổng Hợp</div>
-        <div class="card-desc">Từ vựng, ngữ pháp, đọc hiểu, kính ngữ cơ bản</div>
-        <div class="card-meta">
-          <span class="meta-chip">6 câu</span>
-          <span class="meta-chip">Từ vựng + Ngữ pháp</span>
+    </div>
+
+    <div class="category-title">📝 NGỮ PHÁP · 文法</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">📝</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+
+    <div class="category-title">📚 TỪ VỰNG · 語彙</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">📚</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+
+    <div class="category-title">📖 ĐỌC HIỂU · 読解</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">📖</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+
+    <div class="category-title">🎧 NGHE · 聴解</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">🎧</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+
+    <div class="category-title">🈁 KANJI · 漢字</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">🈁</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+  </section>
+
+  <!-- ============ N4 ============ -->
+  <section class="level-section" id="section-n4">
+    <div class="level-header">
+      <span class="level-icon level-n4">N4</span>
+      <div class="level-info">
+        <h2>JLPT N4 — Sơ cấp cuối</h2>
+        <p>~1500 từ vựng, ~300 Kanji, ngữ pháp sơ trung cấp</p>
+      </div>
+    </div>
+
+    <div class="category-title">📝 NGỮ PHÁP · 文法</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">📝</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+
+    <div class="category-title">📚 TỪ VỰNG · 語彙</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">📚</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+
+    <div class="category-title">📝 TỔNG HỢP · 総合</div>
+    <div class="quiz-list">
+      <a class="quiz-card" href="n4/mixed-01.html">
+        <div class="card-icon">📝</div>
+        <div class="card-body">
+          <div class="card-title">N4 総合① — Tổng Hợp Bài 1</div>
+          <div class="card-desc">Từ vựng, ngữ pháp, đọc hiểu, kính ngữ cơ bản</div>
+          <div class="card-meta">
+            <span class="meta-chip">6 câu</span>
+            <span class="meta-chip">Tổng hợp</span>
+          </div>
         </div>
-      </div>
-      <div class="card-arrow">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3l5 5-5 5"/></svg>
-      </div>
-    </a>
+        <div class="card-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3l5 5-5 5"/></svg></div>
+      </a>
+    </div>
 
-  </div>
+    <div class="category-title">📖 ĐỌC HIỂU · 読解</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">📖</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
 
-  <!-- N2 -->
-  <div class="section-title">📕 JLPT N2 — NGỮ PHÁP</div>
-  <div class="quiz-list">
+    <div class="category-title">🎧 NGHE · 聴解</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">🎧</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
 
-    <a class="quiz-card" href="n2-grammar-quiz.html">
-      <div class="card-level level-n2">
-        <span class="kanji">N2</span>
-        <span class="level-tag">文法①</span>
+    <div class="category-title">🈁 KANJI · 漢字</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">🈁</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+  </section>
+
+  <!-- ============ N3 ============ -->
+  <section class="level-section" id="section-n3">
+    <div class="level-header">
+      <span class="level-icon level-n3">N3</span>
+      <div class="level-info">
+        <h2>JLPT N3 — Trung cấp</h2>
+        <p>~3750 từ vựng, ~650 Kanji, ngữ pháp trung cấp</p>
       </div>
-      <div class="card-body">
-        <div class="card-title">N2 文法クイズ① — Ngữ Pháp Bài 1</div>
-        <div class="card-desc">～しか～ない、～に基づいて、～かける、～でありながら、～た以上…</div>
-        <div class="card-meta">
-          <span class="meta-chip">10 câu</span>
-          <span class="meta-chip">Ngữ pháp</span>
+    </div>
+
+    <div class="category-title">📝 NGỮ PHÁP · 文法</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">📝</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+
+    <div class="category-title">📚 TỪ VỰNG · 語彙</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">📚</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+
+    <div class="category-title">📖 ĐỌC HIỂU · 読解</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">📖</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+
+    <div class="category-title">🎧 NGHE · 聴解</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">🎧</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+
+    <div class="category-title">🈁 KANJI · 漢字</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">🈁</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+  </section>
+
+  <!-- ============ N2 ============ -->
+  <section class="level-section" id="section-n2">
+    <div class="level-header">
+      <span class="level-icon level-n2">N2</span>
+      <div class="level-info">
+        <h2>JLPT N2 — Trung thượng cấp</h2>
+        <p>~6000 từ vựng, ~1000 Kanji, ngữ pháp nâng cao</p>
+      </div>
+    </div>
+
+    <div class="category-title">📝 NGỮ PHÁP · 文法</div>
+    <div class="quiz-list">
+      <a class="quiz-card" href="n2/grammar-01.html">
+        <div class="card-icon">📝</div>
+        <div class="card-body">
+          <div class="card-title">N2 文法① — Ngữ Pháp Bài 1</div>
+          <div class="card-desc">～しか～ない、～に基づいて、～かける、～でありながら、～た以上…</div>
+          <div class="card-meta">
+            <span class="meta-chip">10 câu</span>
+            <span class="meta-chip">Ngữ pháp</span>
+          </div>
         </div>
-      </div>
-      <div class="card-arrow">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3l5 5-5 5"/></svg>
-      </div>
-    </a>
+        <div class="card-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3l5 5-5 5"/></svg></div>
+      </a>
 
-    <a class="quiz-card" href="n2-grammar-quiz-2.html">
-      <div class="card-level level-n2">
-        <span class="kanji">N2</span>
-        <span class="level-tag">文法②</span>
-      </div>
-      <div class="card-body">
-        <div class="card-title">N2 文法クイズ② — Ngữ Pháp Bài 2</div>
-        <div class="card-desc">～てまいる、～うちに、～しかない、～によって、～ば～ほど…</div>
-        <div class="card-meta">
-          <span class="meta-chip">10 câu</span>
-          <span class="meta-chip">Ngữ pháp</span>
+      <a class="quiz-card" href="n2/grammar-02.html">
+        <div class="card-icon">📝</div>
+        <div class="card-body">
+          <div class="card-title">N2 文法② — Ngữ Pháp Bài 2</div>
+          <div class="card-desc">～てまいる、～うちに、～しかない、～によって、～ば～ほど…</div>
+          <div class="card-meta">
+            <span class="meta-chip">10 câu</span>
+            <span class="meta-chip">Ngữ pháp</span>
+          </div>
         </div>
-      </div>
-      <div class="card-arrow">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3l5 5-5 5"/></svg>
-      </div>
-    </a>
+        <div class="card-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3l5 5-5 5"/></svg></div>
+      </a>
 
-  </div>
+      <a class="quiz-card" href="n2/grammar-03.html">
+        <div class="card-icon">📝</div>
+        <div class="card-body">
+          <div class="card-title">N2 文法③ — Ngữ Pháp Bài 3</div>
+          <div class="card-desc">～させていただく、～おかげで、～とともに、～のことだから、～ざるをえない…</div>
+          <div class="card-meta">
+            <span class="meta-chip">10 câu</span>
+            <span class="meta-chip">Ngữ pháp</span>
+          </div>
+        </div>
+        <div class="card-arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3l5 5-5 5"/></svg></div>
+      </a>
+    </div>
+
+    <div class="category-title">📚 TỪ VỰNG · 語彙</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">📚</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+
+    <div class="category-title">📖 ĐỌC HIỂU · 読解</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">📖</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+
+    <div class="category-title">🎧 NGHE · 聴解</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">🎧</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+
+    <div class="category-title">🈁 KANJI · 漢字</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">🈁</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+  </section>
+
+  <!-- ============ N1 ============ -->
+  <section class="level-section" id="section-n1">
+    <div class="level-header">
+      <span class="level-icon level-n1">N1</span>
+      <div class="level-info">
+        <h2>JLPT N1 — Thượng cấp</h2>
+        <p>~10000 từ vựng, ~2000 Kanji, ngữ pháp học thuật & nâng cao</p>
+      </div>
+    </div>
+
+    <div class="category-title">📝 NGỮ PHÁP · 文法</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">📝</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+
+    <div class="category-title">📚 TỪ VỰNG · 語彙</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">📚</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+
+    <div class="category-title">📖 ĐỌC HIỂU · 読解</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">📖</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+
+    <div class="category-title">🎧 NGHE · 聴解</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">🎧</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+
+    <div class="category-title">🈁 KANJI · 漢字</div>
+    <div class="quiz-list">
+      <div class="empty-state"><div class="empty-icon">🈁</div>Chưa có bài test · Sắp cập nhật</div>
+    </div>
+  </section>
 
 </main>
 
 <footer>
-  日本語練習 · JLPT Quiz Collection
+  日本語練習 · JLPT Quiz Collection · N5 → N1
 </footer>
 
+<script>
+// Tab switching
+document.querySelectorAll('.level-tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    var level = this.dataset.level;
+    // Update tabs
+    document.querySelectorAll('.level-tab').forEach(function(t) { t.classList.remove('active'); });
+    this.classList.add('active');
+    // Update sections
+    document.querySelectorAll('.level-section').forEach(function(s) { s.classList.remove('active'); });
+    document.getElementById('section-' + level).classList.add('active');
+  });
+});
+</script>
 </body>
 </html>
