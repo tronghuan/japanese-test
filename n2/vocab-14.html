@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 14</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ⑭</div>
+  <h1>N2 語彙<span>クイズ</span>⑭</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 14 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `人間はしょせん欲の<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>で、自己中心的なものである。`,
+    vocab: [
+      { word: "集まり", reading: "あつまり", type: "Danh từ", meaning: "Buổi tụ họp; sự tập hợp",
+        example: "友達の集まりに参加する。\n(Tham gia buổi tụ tập bạn bè.)" },
+      { word: "雷", reading: "かみなり", type: "Danh từ", meaning: "Sấm, sét; người nổi giận dữ",
+        example: "雷が鳴っている。\n(Có tiếng sấm.)" },
+      { word: "塊", reading: "かたまり", type: "Danh từ", meaning: "Khối, cục; tổng thể đặc, dày đặc",
+        example: "欲の塊。\n(Cục lòng tham.)" },
+      { word: "繋がり", reading: "つながり", type: "Danh từ", meaning: "Mối liên hệ, kết nối, quan hệ",
+        example: "人との繋がりを大切にする。\n(Trân trọng mối quan hệ với mọi người.)" }
+    ],
+    choices: ["あつまり", "かみなり", "かたまり", "つながり"],
+    answer: 2,
+    explanation: `<strong>正解：③ かたまり → 欲の塊（よくのかたまり）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>〜の塊（かたまり）</strong> = cục/khối ~, toàn là ~ → 欲の塊 = "cục lòng tham" = hoàn toàn bị lòng tham chi phối<br>
+・Thành ngữ phổ biến: 欲の塊、プライドの塊、筋肉の塊<br>
+・<strong>集まり</strong> = buổi tụ họp (sự kiện) → không dùng theo nghĩa bóng như 欲の集まり<br>
+・<strong>繋がり</strong> = kết nối, quan hệ (không mang nghĩa "tổng thể tập trung")<br>
+・<strong>雷</strong> = sấm sét (không liên quan)<br>
+→ Câu hoàん chỉnh: 人間はしょせん欲の<strong>かたまり</strong>で、自己中心的なものである。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `「すぐ失礼しますので、<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>。」`,
+    vocab: [
+      { word: "おかまいなく", reading: "おかまいなく", type: "Cụm từ lịch sự", meaning: "Xin đừng bận tâm, đừng lo lắng quá (khi từ chối sự tiếp đãi)",
+        example: "「どうぞ召し上がって」「おかまいなく。」\n('Mời dùng đi.' 'Xin đừng bận tâm.')"}  ,
+      { word: "ご遠慮なく", reading: "ごえんりょなく", type: "Cụm từ lịch sự", meaning: "Xin cứ tự nhiên, đừng ngại ngùng",
+        example: "ご遠慮なくどうぞ。\n(Xin cứ tự nhiên.)" },
+      { word: "ごめんください", reading: "ごめんください", type: "Cụm từ lịch sự", meaning: "Xin phép vào (khi gõ cửa); xin lỗi đã làm phiền",
+        example: "ごめんください、田中と申しますが。\n(Xin chào, tôi là Tanaka.)" },
+      { word: "お大事に", reading: "おだいじに", type: "Cụm từ lịch sự", meaning: "Mong chóng bình phục, giữ gìn sức khỏe",
+        example: "お大事にしてください。\n(Xin hãy giữ gìn sức khỏe.)" }
+    ],
+    choices: ["おかまいなく", "ご遠慮なく", "ごめんください", "お大事に"],
+    answer: 0,
+    explanation: `<strong>正解：① おかまいなく</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>おかまいなく</strong> = xin đừng bận tâm → dùng khi từ chối sự tiếp đãi/tiếp khách, nhất là khi mình sắp đi ngay ✓<br>
+・Ngữ cảnh: "Tôi sẽ ra về sớm, nên xin đừng bận tâm (không cần mời trà, tiếp đãi)"<br>
+・<strong>ご遠慮なく</strong> = xin cứ tự nhiên → nói với người khác để mời họ không cần ngại (ngược nghĩa)<br>
+・<strong>ごめんください</strong> = dùng khi đến thăm nhà ai / gõ cửa (không phù hợp ngữ cảnh này)<br>
+・<strong>お大事に</strong> = chúc sức khỏe (dùng khi người bị bệnh)<br>
+→ Câu hoàん chỉnh: 「すぐ失礼しますので、<strong>おかまいなく</strong>。」`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `今回の大臣の訪問は<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>公式に行われた。`,
+    vocab: [
+      { word: "不〜", reading: "ふ", type: "Tiền tố phủ định", meaning: "Không ~ (phủ định chung, thường cho tính từ/trạng thái)",
+        example: "不満、不安、不便、不正" },
+      { word: "未〜", reading: "み", type: "Tiền tố phủ định", meaning: "Chưa ~ (chưa hoàn thành/chưa đạt đến)",
+        example: "未来、未定、未成年、未解決" },
+      { word: "無〜", reading: "む", type: "Tiền tố phủ định", meaning: "Không có ~ (thiếu vắng hoàn toàn)",
+        example: "無関心、無責任、無理、無駄" },
+      { word: "非〜", reading: "ひ", type: "Tiền tố phủ định", meaning: "Phi ~, không phải ~ (phủ nhận phân loại/tính chất)",
+        example: "非公式、非公開、非常、非合理" }
+    ],
+    choices: ["不", "未", "無", "非"],
+    answer: 3,
+    explanation: `<strong>正解：④ 非（ひ）→ 非公式（ひこうしき）</strong><br><br>
+<strong>🔑 Phân biệt 4 tiền tố phủ định:</strong><br>
+・<strong>非〜</strong> = phi ~, không thuộc loại ~ → 非公式 = không chính thức, phi chính thức ✓<br>
+・<strong>不〜</strong> = không ~ (trạng thái tiêu cực): 不満・不安・不便 (thường kết hợp với tính từ -na)<br>
+・<strong>未〜</strong> = chưa ~ (chưa hoàn thành): 未定・未成年・未解決<br>
+・<strong>無〜</strong> = không có ~ (hoàn toàn thiếu vắng): 無関心・無責任・無駄<br>
+・非公式 là cụm từ cố định: 非公式訪問 = chuyến thăm không chính thức<br>
+→ Câu hoàん chỉnh: 今回の訪問は<strong>非</strong>公式に行われた。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `西洋占星術で今年の運勢を<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>みた。`,
+    vocab: [
+      { word: "うらやむ（羨む）", reading: "うらやむ", type: "Động từ nhóm I", meaning: "Ghen tị, thèm muốn (điều người khác có)",
+        example: "友達の成功をうらやむ。\n(Ghen tị với thành công của bạn bè.)" },
+      { word: "裏切る", reading: "うらぎる", type: "Động từ nhóm I", meaning: "Phản bội, bội tín",
+        example: "信頼を裏切る。\n(Phản bội niềm tin.)" },
+      { word: "占う", reading: "うらなう", type: "Động từ nhóm I", meaning: "Bói toán, xem bói, đoán vận mệnh",
+        example: "星占いで運命を占う。\n(Xem bói vận mệnh bằng chiêm tinh.)" },
+      { word: "裏返す", reading: "うらがえす", type: "Động từ nhóm I", meaning: "Lật ngược lại, lộn trái",
+        example: "服を裏返して洗う。\n(Lộn áo ra để giặt.)" }
+    ],
+    choices: ["うらやんで", "うらぎって", "うらなって", "うらがえして"],
+    answer: 2,
+    explanation: `<strong>正解：③ うらなって → 占って（うらなって）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>占う（うらなう）</strong> = xem bói, đoán vận mệnh → 運勢を占う = xem vận mệnh trong năm ✓<br>
+・Ngữ cảnh: 西洋占星術（chiêm tinh học phương Tây）で運勢を占う = xem bói bằng chiêm tinh học<br>
+・<strong>うらやむ</strong> = ghen tị → 運勢をうらやむ không tự nhiên<br>
+・<strong>裏切る</strong> = phản bội → không liên quan đến xem bói<br>
+・<strong>裏返す</strong> = lật ngược → không liên quan<br>
+→ Câu hoàん chỉnh: 運勢を<strong>うらなって</strong>みた。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `ストレスを<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>するために、何かしていますか。`,
+    vocab: [
+      { word: "解消", reading: "かいしょう", type: "Danh từ / Động từ", meaning: "Giải tỏa, giải quyết, loại bỏ (stress, hợp đồng)",
+        example: "ストレスを解消する。\n(Giải tỏa căng thẳng.)" },
+      { word: "削除", reading: "さくじょ", type: "Danh từ / Động từ", meaning: "Xóa bỏ, loại bỏ (dữ liệu, nội dung)",
+        example: "不要なファイルを削除する。\n(Xóa các tệp không cần thiết.)" },
+      { word: "減量", reading: "げんりょう", type: "Danh từ / Động từ", meaning: "Giảm cân, giảm trọng lượng",
+        example: "試合前に減量する。\n(Giảm cân trước trận đấu.)" },
+      { word: "停止", reading: "ていし", type: "Danh từ / Động từ", meaning: "Dừng lại, đình chỉ (hoạt động/hệ thống)",
+        example: "システムが停止した。\n(Hệ thống đã dừng.)" }
+    ],
+    choices: ["解消", "削除", "減量", "停止"],
+    answer: 0,
+    explanation: `<strong>正解：① 解消（かいしょう）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>解消する</strong> = giải tỏa, loại bỏ hoàn toàn → ストレスを解消する là cụm cố định ✓<br>
+・<strong>削除する</strong> = xóa (dữ liệu, văn bản) → không dùng cho cảm xúc/trạng thái tâm lý<br>
+・<strong>減量する</strong> = giảm cân (thể trọng) → không dùng cho stress<br>
+・<strong>停止する</strong> = dừng lại (máy móc, hoạt động) → không dùng cho stress<br>
+→ Câu hoàん chỉnh: ストレスを<strong>解消</strong>するために、何かしていますか。`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `引っ越しの荷物は「<u>大半</u>」片付いた。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「大半」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "大半", reading: "たいはん", type: "Danh từ", meaning: "Phần lớn, hầu hết, đa số",
+        example: "仕事の大半が終わった。\n(Hầu hết công việc đã xong.)" },
+      { word: "大抵", reading: "たいてい", type: "Phó từ / Tính từ -na", meaning: "Hầu như, thường thường, đại khái",
+        example: "大抵の問題は解決できる。\n(Hầu hết vấn đề đều có thể giải quyết.)" },
+      { word: "全面", reading: "ぜんめん", type: "Danh từ", meaning: "Toàn bộ bề mặt, toàn diện",
+        example: "全面的に賛成する。\n(Hoàn toàn đồng ý.)" },
+      { word: "何分", reading: "なにぶん", type: "Phó từ", meaning: "Dù sao đi nữa, vì lý do nào đó (diễn đạt lý do/hoàn cảnh)",
+        example: "何分初めてのことで、失礼がありましたらお許しください。\n(Vì đây là lần đầu, xin thứ lỗi nếu có điều gì thất lễ.)" }
+    ],
+    choices: ["全面", "大通り", "大抵", "何分"],
+    answer: 2,
+    explanation: `<strong>正解：③ 大抵（たいてい）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>大半</strong> = phần lớn, hơn một nửa → 荷物の大半が片付いた = hầu hết đồ đạc đã dọn xong<br>
+・<strong>大抵</strong> = hầu như, phần lớn → nghĩa gần nhất ✓<br>
+・<strong>全面</strong> = toàn bộ (100%, không phải "phần lớn")<br>
+・<strong>大通り</strong> = đường lớn (danh từ chỉ địa điểm, không liên quan)<br>
+・<strong>何分</strong> = dù sao/vì lẽ nào (phó từ diễn đạt hoàn cảnh, không phải số lượng)<br>
+→ 大半 ≒ <strong>大抵</strong>（多くの部分、ほとんど）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `この作業は「<u>慎重に</u>」やってください。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「慎重に」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "慎重", reading: "しんちょう", type: "Tính từ -na", meaning: "Cẩn thận, thận trọng, không hấp tấp",
+        example: "慎重に判断する。\n(Phán đoán thận trọng.)" }
+    ],
+    choices: ["急いで", "絶対忘れずに", "静かに", "十分注意して"],
+    answer: 3,
+    explanation: `<strong>正解：④ 十分注意して（じゅうぶんちゅういして）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>慎重に</strong> = thận trọng, cẩn thận → nhấn mạnh việc chú ý kỹ, không vội vàng<br>
+・<strong>十分注意して</strong> = hãy chú ý đầy đủ → nghĩa gần nhất ✓<br>
+・<strong>急いで</strong> = gấp gáp → trái nghĩa với慎重<br>
+・<strong>絶対忘れずに</strong> = nhất định đừng quên → nhấn mạnh việc nhớ, không phải thận trọng<br>
+・<strong>静かに</strong> = yên tĩnh → liên quan đến âm thanh, không phải mức độ cẩn thận<br>
+→ 慎重に ≒ <strong>十分注意して</strong>`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `人が前に立つと、ドアが「<u>ひとりでに</u>」開く。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「ひとりでに」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "ひとりでに", reading: "ひとりでに", type: "Phó từ", meaning: "Tự nhiên, tự động (không có tác động từ bên ngoài)",
+        example: "傷がひとりでに治った。\n(Vết thương tự lành.)" },
+      { word: "偶然", reading: "ぐうぜん", type: "Danh từ / Phó từ", meaning: "Ngẫu nhiên, tình cờ",
+        example: "偶然道で会った。\n(Tình cờ gặp ngoài đường.)" },
+      { word: "必然", reading: "ひつぜん", type: "Danh từ / Tính từ -na", meaning: "Tất yếu, chắc chắn phải xảy ra",
+        example: "それは必然的な結果だ。\n(Đó là kết quả tất yếu.)" }
+    ],
+    choices: ["自然に", "突然", "偶然", "必然に"],
+    answer: 0,
+    explanation: `<strong>正解：① 自然に（しぜんに）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>ひとりでに</strong> = tự động, tự mình (không ai tác động) → cửa tự mở khi người đứng trước<br>
+・<strong>自然に</strong> = một cách tự nhiên, tự động → nghĩa gần nhất ✓<br>
+・<strong>突然</strong> = đột ngột (nhấn mạnh yếu tố bất ngờ, không phải tự động)<br>
+・<strong>偶然</strong> = tình cờ (ngẫu nhiên, không có quy luật)<br>
+・<strong>必然に</strong> = tất yếu (phải xảy ra, nhưng không nhấn mạnh "tự động")<br>
+→ ひとりでに ≒ <strong>自然に</strong>（誰かが動かさなくても、それ自体が動く）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `公演の「<u>スケジュール</u>」はもう決まった。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「スケジュール」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "スケジュール", reading: "スケジュール", type: "Danh từ (ngoại lai)", meaning: "Lịch trình, thời gian biểu (schedule)",
+        example: "スケジュールを確認する。\n(Kiểm tra lịch trình.)" },
+      { word: "日程", reading: "にってい", type: "Danh từ", meaning: "Lịch trình, chương trình theo ngày",
+        example: "出張の日程を組む。\n(Lên lịch trình chuyến công tác.)" },
+      { word: "予約", reading: "よやく", type: "Danh từ / Động từ", meaning: "Đặt chỗ, đặt trước, đặt hẹn",
+        example: "レストランを予約する。\n(Đặt bàn nhà hàng.)" },
+      { word: "企画", reading: "きかく", type: "Danh từ / Động từ", meaning: "Kế hoạch, dự án (sáng tạo/sự kiện)",
+        example: "イベントを企画する。\n(Lên kế hoạch tổ chức sự kiện.)" }
+    ],
+    choices: ["予約", "日程", "計算", "企画"],
+    answer: 1,
+    explanation: `<strong>正解：② 日程（にってい）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>スケジュール</strong> = lịch trình (thứ tự thời gian các hoạt động) → 公演のスケジュール = lịch biểu buổi biểu diễn<br>
+・<strong>日程</strong> = lịch trình theo ngày → nghĩa gần nhất ✓<br>
+・<strong>予約</strong> = đặt chỗ (hành động đặt trước, không phải lịch trình)<br>
+・<strong>計算</strong> = tính toán (số học/kế hoạch tính toán, không phải lịch biểu)<br>
+・<strong>企画</strong> = lên kế hoạch/dự án (quá trình sáng tạo, không phải thời gian biểu)<br>
+→ スケジュール ≒ <strong>日程</strong>`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `人気商品で、「<u>たちまち</u>」売切れてしまう。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「たちまち」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "たちまち", reading: "たちまち（忽ち）", type: "Phó từ", meaning: "Ngay lập tức, chớp mắt, trong nháy mắt",
+        example: "うわさはたちまち広まった。\n(Tin đồn lan ra trong nháy mắt.)" },
+      { word: "売り切れる", reading: "うりきれる", type: "Động từ nhóm II", meaning: "Bán hết, hết hàng",
+        example: "チケットが売り切れた。\n(Vé đã bán hết.)" }
+    ],
+    choices: ["しばしば", "ゆっくり", "すぐに", "さらに"],
+    answer: 2,
+    explanation: `<strong>正解：③ すぐに</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>たちまち</strong> = ngay lập tức, chỉ trong nháy mắt → hàng phổ biến → bán hết chớp nhoáng<br>
+・<strong>すぐに</strong> = ngay, liền → nghĩa gần nhất ✓<br>
+・<strong>しばしば</strong> = thường xuyên (tần suất, không phải tốc độ)<br>
+・<strong>ゆっくり</strong> = từ từ → trái nghĩa với たちまち<br>
+・<strong>さらに</strong> = hơn nữa, thêm vào (không phải thời gian)<br>
+→ たちまち ≒ <strong>すぐに</strong>（あっという間に・瞬く間に）`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-13.html", label: "← Từ vựng · Bài 13" },
+  next: { url: "vocab-15.html", label: "Từ vựng · Bài 15 →" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

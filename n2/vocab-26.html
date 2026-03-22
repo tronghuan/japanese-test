@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 26</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ㉖</div>
+  <h1>N2 語彙<span>クイズ</span>㉖</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 26 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `電車の中で、夫婦げんかしないでください。「<u>みっともない</u>」から。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「みっともない」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "みっともない", reading: "みっともない", type: "Tính từ -i", meaning: "Xấu hổ, khó coi, mất thể diện (trước mặt người khác)",
+        example: "みっともない格好をするな。\n(Đừng ăn mặc khó coi như vậy.)" },
+      { word: "恥ずかしい", reading: "はずかしい", type: "Tính từ -i", meaning: "Xấu hổ, ngượng ngùng",
+        example: "人前で失敗して恥ずかしかった。\n(Xấu hổ vì thất bại trước mặt mọi người.)" }
+    ],
+    choices: ["なまいきだ", "あわれだ", "かなしい", "はずかしい"],
+    answer: 3,
+    explanation: `<strong>正解：④ はずかしい（恥ずかしい）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>みっともない</strong> = xấu hổ, khó coi, mất thể diện khi người ngoài nhìn vào<br>
+・<strong>恥ずかしい（はずかしい）</strong> = xấu hổ, ngượng ngùng → nghĩa gần nhất ✓<br>
+・<strong>なまいきだ（生意気だ）</strong> = láo xược, hỗn láo → nói về thái độ kiêu ngạo<br>
+・<strong>あわれだ（哀れだ）</strong> = đáng thương, tội nghiệp → cảm xúc thương hại<br>
+・<strong>かなしい（悲しい）</strong> = buồn → cảm xúc cá nhân về mất mát<br>
+→ みっともない ≒ <strong>恥ずかしい</strong>（他人に見られて恥ずかしい・見苦しい）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `どんな車を買うかは「<u>すきずき</u>」ですから、わたしは口は出せません。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「すきずき」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "好き好き（すきずき）", reading: "すきずき", type: "Danh từ / Tính từ -na", meaning: "Tùy sở thích, mỗi người mỗi ý (khác nhau tùy người)",
+        example: "食べ物の好みは好き好きだ。\n(Sở thích ăn uống thì tùy mỗi người.)" },
+      { word: "それぞれ", reading: "それぞれ", type: "Danh từ / Phó từ", meaning: "Mỗi người, mỗi cái, tùy từng người/trường hợp",
+        example: "それぞれの意見を聞く。\n(Nghe ý kiến của từng người.)" }
+    ],
+    choices: ["それぞれ", "良し悪し", "左右", "大小"],
+    answer: 0,
+    explanation: `<strong>正解：① それぞれ</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>好き好き（すきずき）</strong> = tùy sở thích mỗi người, mỗi người có ý thích riêng<br>
+・<strong>それぞれ</strong> = tùy từng người, mỗi người một kiểu → nghĩa gần nhất ✓<br>
+・<strong>良し悪し（よしあし）</strong> = ưu điểm và nhược điểm, hay và dở → không phải về sở thích cá nhân<br>
+・<strong>左右（さゆう）</strong> = trái phải → hoàn toàn không liên quan<br>
+・<strong>大小（だいしょう）</strong> = to nhỏ → nói về kích thước, không phải sở thích<br>
+→ 好き好き ≒ <strong>それぞれ</strong>（人によって好みが異なる）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `「<u>せっかく</u>」ですが、いただけません。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「せっかく」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "せっかく", reading: "せっかく", type: "Phó từ", meaning: "Khó khăn lắm mới..., tốt bụng..., cố ý... (nhưng không thể nhận/làm được — hàm ý tiếc nuối)",
+        example: "せっかく来てくれたのに、会えなかった。\n(Dù bạn cất công đến, nhưng lại không gặp được.)" },
+      { word: "ありがたい", reading: "ありがたい", type: "Tính từ -i", meaning: "Biết ơn, trân trọng tấm lòng",
+        example: "ご親切はありがたいのですが…\n(Tôi rất biết ơn sự tốt bụng của bạn, nhưng...)" }
+    ],
+    choices: ["もったいない", "ありがたい", "うらやましい", "もうしわけない"],
+    answer: 1,
+    explanation: `<strong>正解：② ありがたい</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>せっかく〜が、いただけません</strong> = tuy trân trọng tấm lòng nhưng không thể nhận → hàm ý từ chối lịch sự<br>
+・<strong>ありがたい</strong> = biết ơn, trân trọng → nghĩa gần nhất ✓ (せっかくのご好意はありがたいが…)<br>
+・<strong>もったいない</strong> = lãng phí, tiếc rẻ → hàm ý tiếc vì bỏ đi thứ gì đó có giá trị<br>
+・<strong>うらやましい</strong> = ghen tị, thèm muốn → cảm xúc muốn có thứ người khác có<br>
+・<strong>もうしわけない</strong> = xin lỗi, thấy có lỗi → mang sắc thái xin lỗi, không phải biết ơn<br>
+→ せっかくですが ≒ <strong>ありがたいですが</strong>（ご好意は感謝するが、受け取れない）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `「<u>発育</u>」に必要な栄養をとらなかったので、大きくならなかったようだ。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「発育」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "発育", reading: "はついく", type: "Danh từ / Động từ", meaning: "Sự phát triển (thể chất) của sinh vật",
+        example: "子供の発育を観察する。\n(Quan sát sự phát triển của trẻ.)" },
+      { word: "成長", reading: "せいちょう", type: "Danh từ / Động từ", meaning: "Sự lớn lên, phát triển (cơ thể/tâm hồn/kinh tế)",
+        example: "子供が成長する。\n(Trẻ lớn lên.)" }
+    ],
+    choices: ["発展", "育児", "成長", "発生"],
+    answer: 2,
+    explanation: `<strong>正解：③ 成長（せいちょう）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>発育（はついく）</strong> = sự phát triển thể chất (của người/động vật/thực vật) → 発育に必要な栄養<br>
+・<strong>成長（せいちょう）</strong> = lớn lên, phát triển → nghĩa gần nhất ✓<br>
+・<strong>発展（はってん）</strong> = phát triển (sự nghiệp/kinh tế/quan hệ) → không dùng cho thể chất sinh vật<br>
+・<strong>育児（いくじ）</strong> = nuôi dưỡng trẻ, chăm sóc trẻ nhỏ → hành động của người chăm, không phải quá trình lớn lên<br>
+・<strong>発生（はっせい）</strong> = phát sinh, nảy sinh (sự cố/hiện tượng) → không phải lớn lên<br>
+→ 発育 ≒ <strong>成長</strong>（体が大きくなること・身体的な発達）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `今日もコンビニへ行って「<u>余計</u>」なものを買ってしまった。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「余計」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "余計", reading: "よけい", type: "Tính từ -na / Phó từ", meaning: "Thừa, không cần thiết; hơn mức cần",
+        example: "余計なことを言うな。\n(Đừng nói những chuyện thừa.)" },
+      { word: "無駄", reading: "むだ", type: "Danh từ / Tính từ -na", meaning: "Lãng phí, vô ích, không cần thiết",
+        example: "無駄なお金を使った。\n(Đã tiêu tiền vô ích.)" }
+    ],
+    choices: ["邪魔", "経済的", "無駄", "不正"],
+    answer: 2,
+    explanation: `<strong>正解：③ 無駄（むだ）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>余計（よけい）</strong> = thừa, không cần thiết → 余計なものを買う = mua đồ không cần<br>
+・<strong>無駄（むだ）</strong> = lãng phí, vô ích → nghĩa gần nhất ✓<br>
+・<strong>邪魔（じゃま）</strong> = cản trở, gây phiền → hàm ý chặn đường/làm khó người khác<br>
+・<strong>経済的（けいざいてき）</strong> = tiết kiệm, hiệu quả kinh tế → nghĩa tích cực, trái nghĩa<br>
+・<strong>不正（ふせい）</strong> = bất chính, gian lận → hàm ý vi phạm quy tắc, không phải về sự lãng phí<br>
+→ 余計 ≒ <strong>無駄</strong>（必要でない・役に立たない）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `今日遅刻した「<u>理由</u>」を話しなさい。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「理由」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "理由", reading: "りゆう", type: "Danh từ", meaning: "Lý do, nguyên nhân",
+        example: "遅刻した理由を説明する。\n(Giải thích lý do đi trễ.)" },
+      { word: "わけ（訳）", reading: "わけ", type: "Danh từ", meaning: "Lý do, nguyên nhân (văn nói, thường diễn giải tình huống)",
+        example: "こうなったわけを話す。\n(Kể lý do tại sao lại ra thế này.)" }
+    ],
+    choices: ["わき", "わか", "わけ", "わざ"],
+    answer: 2,
+    explanation: `<strong>正解：③ わけ（訳）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>理由（りゆう）</strong> = lý do (văn viết, trịnh trọng hơn)<br>
+・<strong>わけ（訳）</strong> = lý do, nguyên nhân (văn nói, thân mật) → nghĩa gần nhất ✓<br>
+・<strong>わき（脇）</strong> = bên cạnh, nách → không liên quan đến lý do<br>
+・<strong>わか（若）</strong> = trẻ → không liên quan<br>
+・<strong>わざ（技）</strong> = kỹ thuật, nghề → không liên quan đến lý do<br>
+→ 理由 ≒ <strong>わけ</strong>（なぜそうなったかの説明・原因）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `そんな機会はきわめて「<u>まれ</u>」だった。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「まれ」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "まれ（稀）", reading: "まれ", type: "Tính từ -na", meaning: "Hiếm, ít gặp, không thường xảy ra",
+        example: "稀な才能の持ち主だ。\n(Là người có tài năng hiếm có.)" },
+      { word: "珍しい", reading: "めずらしい", type: "Tính từ -i", meaning: "Hiếm, lạ, không thường gặp",
+        example: "珍しい鳥を見た。\n(Đã nhìn thấy loài chim hiếm.)" }
+    ],
+    choices: ["めずらしい", "おかしい", "おおい", "あやしい"],
+    answer: 0,
+    explanation: `<strong>正解：① めずらしい（珍しい）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>まれ（稀）</strong> = hiếm, ít xảy ra → きわめてまれ = cực kỳ hiếm<br>
+・<strong>珍しい（めずらしい）</strong> = hiếm, không thường gặp → nghĩa gần nhất ✓<br>
+・<strong>おかしい</strong> = kỳ lạ, buồn cười → hàm ý bất thường hoặc hài hước<br>
+・<strong>おおい（多い）</strong> = nhiều → trái nghĩa với まれ<br>
+・<strong>あやしい（怪しい）</strong> = đáng ngờ, khả nghi → hàm ý không tin tưởng được<br>
+→ まれ ≒ <strong>珍しい</strong>（めったにない・滅多に起こらない）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `この１０年で、この鳥の自然環境は「<u>わずかに</u>」変化した。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「わずかに」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "わずかに（僅かに）", reading: "わずかに", type: "Phó từ", meaning: "Chỉ một chút, rất ít, hơi",
+        example: "わずかに改善された。\n(Đã được cải thiện một chút.)" },
+      { word: "少し", reading: "すこし", type: "Phó từ / Danh từ", meaning: "Một chút, một ít",
+        example: "少し休む。\n(Nghỉ một chút.)" }
+    ],
+    choices: ["急に", "ゆっくり", "大きく", "少し"],
+    answer: 3,
+    explanation: `<strong>正解：④ 少し（すこし）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>わずかに（僅かに）</strong> = chỉ một chút, rất ít → nhấn mạnh lượng/mức độ rất nhỏ<br>
+・<strong>少し（すこし）</strong> = một chút, một ít → nghĩa gần nhất ✓<br>
+・<strong>急に（きゅうに）</strong> = đột ngột → nói về tốc độ/cách thức, không phải lượng<br>
+・<strong>ゆっくり</strong> = từ từ, chậm chạp → nói về tốc độ, không phải lượng<br>
+・<strong>大きく（おおきく）</strong> = to lớn, nhiều → trái nghĩa với わずかに<br>
+→ わずかに ≒ <strong>少し</strong>（ほんの少し・わずかな量/程度）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `息子は今アメリカのロック音楽に「<u>熱中</u>」している。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「熱中」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "熱中", reading: "ねっちゅう", type: "Danh từ / Động từ", meaning: "Đắm chìm, mê mải, say mê (một thứ gì đó)",
+        example: "ゲームに熱中する。\n(Đắm chìm vào trò chơi điện tử.)" },
+      { word: "夢中", reading: "むちゅう", type: "Danh từ / Tính từ -na", meaning: "Mê mải, say mê đến quên xung quanh",
+        example: "読書に夢中になる。\n(Mê mải đọc sách.)" }
+    ],
+    choices: ["想像中だ", "夢中だ", "流行中だ", "真ん中だ"],
+    answer: 1,
+    explanation: `<strong>正解：② 夢中だ（むちゅうだ）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>熱中する（ねっちゅうする）</strong> = say mê, đắm chìm vào (một hoạt động/sở thích)<br>
+・<strong>夢中だ（むちゅうだ）</strong> = mê mải, say đắm → nghĩa gần nhất ✓<br>
+・<strong>想像中だ（そうぞうちゅうだ）</strong> = đang tưởng tượng → không liên quan đến sở thích âm nhạc<br>
+・<strong>流行中だ（りゅうこうちゅうだ）</strong> = đang thịnh hành → nói về xu hướng xã hội, không phải cảm xúc cá nhân<br>
+・<strong>真ん中だ（まんなかだ）</strong> = ở chính giữa → nghĩa không liên quan<br>
+→ 熱中する ≒ <strong>夢中になる</strong>（一つのことに集中して夢中になる）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `あの人は美人で、しかも「<u>かしこい</u>」。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「かしこい」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "かしこい（賢い）", reading: "かしこい", type: "Tính từ -i", meaning: "Thông minh, khôn ngoan",
+        example: "賢い子供に育った。\n(Lớn lên thành đứa trẻ thông minh.)" },
+      { word: "頭がいい", reading: "あたまがいい", type: "Cụm tính từ", meaning: "Thông minh, đầu óc sắc bén",
+        example: "彼女は頭がいい。\n(Cô ấy thông minh.)" }
+    ],
+    choices: ["頭がいい", "まぶしい", "まずしい", "するどい"],
+    answer: 0,
+    explanation: `<strong>正解：① 頭がいい（あたまがいい）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>かしこい（賢い）</strong> = thông minh, khôn ngoan<br>
+・<strong>頭がいい</strong> = thông minh, đầu óc tốt → nghĩa gần nhất ✓<br>
+・<strong>まぶしい（眩しい）</strong> = chói sáng, lóa mắt → về ánh sáng, không phải trí tuệ<br>
+・<strong>まずしい（貧しい）</strong> = nghèo khó → về tài chính, không phải trí tuệ<br>
+・<strong>するどい（鋭い）</strong> = sắc bén, nhạy bén → có thể dùng cho trí tuệ nhưng hàm ý sắc sảo hơn là thông minh tổng thể<br>
+→ かしこい ≒ <strong>頭がいい</strong>（知性が高い・物事をよく理解できる）`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-25.html", label: "← Từ vựng · Bài 25" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

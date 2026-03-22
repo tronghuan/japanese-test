@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 15</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ⑮</div>
+  <h1>N2 語彙<span>クイズ</span>⑮</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 15 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `外国語を習得するためには、まずたくさんの単語を<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>する必要がある。`,
+    vocab: [
+      { word: "マスター", reading: "マスター", type: "Động từ (ngoại lai)", meaning: "Thành thạo, nắm vững (master)",
+        example: "英語をマスターする。\n(Thành thạo tiếng Anh.)" },
+      { word: "マスク", reading: "マスク", type: "Danh từ (ngoại lai)", meaning: "Khẩu trang; mặt nạ (mask)",
+        example: "風邪予防にマスクをする。\n(Đeo khẩu trang để phòng cảm.)" },
+      { word: "マフラー", reading: "マフラー", type: "Danh từ (ngoại lai)", meaning: "Khăn quàng cổ; ống giảm thanh (muffler)",
+        example: "冬にマフラーを巻く。\n(Quấn khăn cổ vào mùa đông.)" },
+      { word: "マウス", reading: "マウス", type: "Danh từ (ngoại lai)", meaning: "Chuột máy tính (mouse)",
+        example: "マウスを動かす。\n(Di chuyển chuột máy tính.)" }
+    ],
+    choices: ["マスター", "マスク", "マフラー", "マウス"],
+    answer: 0,
+    explanation: `<strong>正解：① マスター</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>マスターする</strong> = nắm vững, thành thạo → 単語をマスターする = nắm vững từ vựng ✓<br>
+・Mẫu: 〜をマスターする (thành thạo/nắm vững điều gì đó)<br>
+・<strong>マスク</strong> = khẩu trang (không dùng được với する theo nghĩa này trong ngữ cảnh học tập)<br>
+・<strong>マフラー</strong> = khăn cổ (vật dụng, không liên quan đến học tập)<br>
+・<strong>マウス</strong> = chuột máy tính (thiết bị, không phù hợp)<br>
+→ Câu hoàん chỉnh: 単語を<strong>マスター</strong>する必要がある。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `誰か今日のそうじ<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>を変わってくれないかな。`,
+    vocab: [
+      { word: "担任", reading: "たんにん", type: "Danh từ / Động từ", meaning: "Giáo viên chủ nhiệm; phụ trách lớp",
+        example: "担任の先生に相談する。\n(Tham khảo ý kiến giáo viên chủ nhiệm.)" },
+      { word: "責任", reading: "せきにん", type: "Danh từ", meaning: "Trách nhiệm, bổn phận",
+        example: "責任を果たす。\n(Hoàn thành trách nhiệm.)" },
+      { word: "世話", reading: "せわ", type: "Danh từ / Động từ", meaning: "Chăm sóc, giúp đỡ; lo liệu",
+        example: "植物の世話をする。\n(Chăm sóc cây cối.)" },
+      { word: "当番", reading: "とうばん", type: "Danh từ", meaning: "Người trực, người làm nhiệm vụ theo lịch/phiên",
+        example: "今日は掃除当番だ。\n(Hôm nay đến phiên tôi trực vệ sinh.)" }
+    ],
+    choices: ["担任", "責任", "世話", "当番"],
+    answer: 3,
+    explanation: `<strong>正解：④ 当番（とうばん）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>当番</strong> = người trực/làm việc theo phiên → そうじ当番 = phiên trực vệ sinh ✓<br>
+・Mẫu cố định: 掃除当番・給食当番・当番を変わる (đổi phiên)<br>
+・<strong>担任</strong> = giáo viên chủ nhiệm (người, không phải lịch trực)<br>
+・<strong>責任</strong> = trách nhiệm (nghĩa rộng, không phải "phiên trực")<br>
+・<strong>世話</strong> = chăm sóc (hành động, không phải lịch phân công)<br>
+→ Câu hoàん chỉnh: 今日のそうじ<strong>当番</strong>を変わってくれないかな。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>段階では詳細は決まっていないらしい。`,
+    vocab: [
+      { word: "現〜", reading: "げん", type: "Tiền tố", meaning: "Hiện tại, hiện nay (thời điểm này)",
+        example: "現段階・現状・現在・現場" },
+      { word: "直〜", reading: "ちょく / じき", type: "Tiền tố", meaning: "Thẳng, trực tiếp; ngay (thời gian)",
+        example: "直接・直前・直後" },
+      { word: "近〜", reading: "きん", type: "Tiền tố", meaning: "Gần, cận (không gian/thời gian)",
+        example: "近代・近所・近年" },
+      { word: "当〜", reading: "とう", type: "Tiền tố", meaning: "Đương, liên quan/thuộc về sự việc đang nói đến",
+        example: "当日・当社・当時" }
+    ],
+    choices: ["現", "直", "近", "当"],
+    answer: 0,
+    explanation: `<strong>正解：① 現（げん）→ 現段階（げんだんかい）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>現段階</strong> = giai đoạn hiện tại → "ở giai đoạn hiện tại thì chưa quyết định chi tiết" ✓<br>
+・Cụm từ cố định: 現段階では〜 = "ở thời điểm này thì ~"<br>
+・<strong>直段階</strong> → không tồn tại<br>
+・<strong>近段階</strong> → không tồn tại<br>
+・<strong>当段階</strong> → không tự nhiên; 当 thường dùng cho 当日・当社・当時 (sự kiện/tổ chức cụ thể)<br>
+→ Câu hoàん chỉnh: <strong>現</strong>段階では詳細は決まっていない。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `あまり<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>せずに、自分のペースで頑張ろうと思う。`,
+    vocab: [
+      { word: "無限", reading: "むげん", type: "Danh từ / Tính từ -na", meaning: "Vô hạn, không có giới hạn",
+        example: "可能性は無限だ。\n(Khả năng là vô hạn.)" },
+      { word: "無駄", reading: "むだ", type: "Danh từ / Tính từ -na", meaning: "Lãng phí, vô ích, vô dụng",
+        example: "時間を無駄にする。\n(Lãng phí thời gian.)" },
+      { word: "無理", reading: "むり", type: "Danh từ / Tính từ -na / Động từ", meaning: "Cố quá sức, ép buộc, bất hợp lý",
+        example: "無理しないでください。\n(Xin đừng cố quá sức.)" },
+      { word: "無数", reading: "むすう", type: "Danh từ / Tính từ -na", meaning: "Vô số, không đếm được",
+        example: "無数の星が輝いている。\n(Vô số ngôi sao đang tỏa sáng.)" }
+    ],
+    choices: ["無限", "無駄", "無理", "無数"],
+    answer: 2,
+    explanation: `<strong>正解：③ 無理（むり）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>無理する</strong> = cố quá sức, ép bản thân → あまり無理せずに = đừng cố quá sức ✓<br>
+・Mẫu cố định: 無理しないで / あまり無理せず → rất phổ biến trong tiếng Nhật<br>
+・<strong>無駄する</strong> → không tự nhiên; 無駄にする mới đúng<br>
+・<strong>無限する・無数する</strong> → không tồn tại (không dùng được với する)<br>
+→ Câu hoàん chỉnh: あまり<strong>無理</strong>せずに、自分のペースで頑張ろう。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `大切なものを守る<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>ができたとき、人は強くなれるものだ。`,
+    vocab: [
+      { word: "感情", reading: "かんじょう", type: "Danh từ", meaning: "Cảm xúc, tình cảm",
+        example: "感情を抑える。\n(Kìm nén cảm xúc.)" },
+      { word: "覚悟", reading: "かくご", type: "Danh từ / Động từ", meaning: "Sự quyết tâm, chuẩn bị tinh thần, chấp nhận hậu quả",
+        example: "覚悟を決める。\n(Quyết tâm, sẵn sàng chấp nhận.)" },
+      { word: "準備", reading: "じゅんび", type: "Danh từ / Động từ", meaning: "Sự chuẩn bị (thực tế, vật chất)",
+        example: "試合の準備をする。\n(Chuẩn bị cho trận đấu.)" },
+      { word: "思想", reading: "しそう", type: "Danh từ", meaning: "Tư tưởng, ý thức hệ",
+        example: "政治的な思想を持つ。\n(Có tư tưởng chính trị.)" }
+    ],
+    choices: ["感情", "覚悟", "準備", "思想"],
+    answer: 1,
+    explanation: `<strong>正解：② 覚悟（かくご）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>覚悟ができる</strong> = sẵn sàng tinh thần, quyết tâm → 守る覚悟ができた = đã quyết tâm bảo vệ ✓<br>
+・Cụm cố định: 覚悟ができる/決める/する → sẵn sàng đối mặt, không lùi bước<br>
+・<strong>感情</strong> = cảm xúc (守る感情ができた → không tự nhiên)<br>
+・<strong>準備</strong> = chuẩn bị (vật chất, hành động cụ thể) → 準備ができた = đã chuẩn bị xong (khác nghĩa với quyết tâm tinh thần)<br>
+・<strong>思想</strong> = tư tưởng (ý thức hệ, không phải quyết tâm cá nhân)<br>
+→ Câu hoàん chỉnh: 守る<strong>覚悟</strong>ができたとき、人は強くなれる。`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>往復</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① 新しい言葉は往復して覚える必要がある。<br>
+② 事前に往復のチケットを買ったほうが安くつく。<br>
+③ バランスのとれた食事で血液の往復をよくする。<br>
+④ 新聞紙などの資源ごみを往復利用する。
+</small>`,
+    vocab: [
+      { word: "往復", reading: "おうふく", type: "Danh từ / Động từ", meaning: "Đi và về, khứ hồi (round trip)",
+        example: "往復切符を買う。\n(Mua vé khứ hồi.)" },
+      { word: "事前", reading: "じぜん", type: "Danh từ / Phó từ", meaning: "Trước, sự kiện trước",
+        example: "事前に確認する。\n(Xác nhận trước.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 1,
+    explanation: `<strong>正解：② 事前に往復のチケットを買ったほうが安くつく。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>往復</strong> = đi và về, khứ hồi → 往復チケット = vé khứ hồi ✓<br>
+・② 往復のチケット = vé khứ hồi → cách dùng đúng và phổ biến nhất<br>
+・① 往復して覚える → sai: "ôn lại" phải dùng 繰り返して (lặp đi lặp lại)<br>
+・③ 血液の往復 → sai: "lưu thông máu" phải dùng 血液の循環（じゅんかん）<br>
+・④ 往復利用する → sai: "tái sử dụng" phải dùng リサイクル / 再利用（さいりよう）<br>
+→ 往復 = <strong>đi và về</strong> (khứ hồi: 往復切符・往復運賃・往復する)`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>範囲</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① この町は川によって二つの範囲に分かれている。<br>
+② この会社は新しい範囲に進出した。<br>
+③ 明日は広い範囲で強い雨が降るでしょう。<br>
+④ 家から駅までの範囲は２キロぐらいだ。
+</small>`,
+    vocab: [
+      { word: "範囲", reading: "はんい", type: "Danh từ", meaning: "Phạm vi, khu vực, tầm (scope/range)",
+        example: "試験の範囲を確認する。\n(Xác nhận phạm vi thi.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 2,
+    explanation: `<strong>正解：③ 明日は広い範囲で強い雨が降るでしょう。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>範囲</strong> = phạm vi, diện tích/tầm bao phủ → 広い範囲で雨が降る = mưa trên phạm vi rộng ✓<br>
+・③ 広い範囲 = trên phạm vi rộng → cách dùng rất phổ biến trong dự báo thời tiết<br>
+・① 二つの範囲に分かれる → sai: "chia thành hai phần" phải dùng 地区（ちく）/ 区域（くいき）<br>
+・② 新しい範囲に進出する → sai: "lĩnh vực mới" phải dùng 分野（ぶんや）/ 市場（しじょう）<br>
+・④ 家から駅までの範囲は２キロ → sai: "khoảng cách" phải dùng 距離（きょり）<br>
+→ 範囲 = <strong>phạm vi/tầm bao phủ</strong> (không phải khoảng cách cụ thể hay lĩnh vực)`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>見事</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① この湖の水の見事でそのままで飲んでもかまわない。<br>
+② うちのチームは見事に優勝した。<br>
+③ 彼女は見事な顔している美人だ。<br>
+④ 彼はいつも見事なアドバイスをしてくれる友人だ。
+</small>`,
+    vocab: [
+      { word: "見事", reading: "みごと", type: "Tính từ -na / Phó từ", meaning: "Xuất sắc, tuyệt vời, hoàn hảo (kết quả ấn tượng)",
+        example: "見事に成功した。\n(Thành công xuất sắc.)" },
+      { word: "優勝", reading: "ゆうしょう", type: "Danh từ / Động từ", meaning: "Giành chức vô địch, chiến thắng tổng thể",
+        example: "大会で優勝する。\n(Giành chức vô địch giải đấu.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 1,
+    explanation: `<strong>正解：② うちのチームは見事に優勝した。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>見事に</strong> = một cách xuất sắc, hoàn toàn thành công → 見事に優勝した = giành chức vô địch xuất sắc ✓<br>
+・見事 nhấn mạnh kết quả ấn tượng, đáng khâm phục<br>
+・① 水の見事 → sai: "độ tinh khiết của nước" phải dùng 清らか (trong sạch) / きれい<br>
+・③ 見事な顔 → sai: "khuôn mặt đẹp" không dùng 見事 cho vẻ ngoài người → dùng 美しい顔<br>
+・④ 見事なアドバイス → gượng gạo: lời khuyên dùng 的確な・適切な・すばらしい thì tự nhiên hơn<br>
+→ 見事に + 動詞 = <strong>làm xuất sắc, hoàn toàn thành công</strong>`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>世間</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① この映画は動物の世間を描いた作品だ。<br>
+② あの政党は、よりよい世間の実現を目指している。<br>
+③ 田中さんは数学の世間では有名だ。<br>
+④ その事件は世間の注目を集めた。
+</small>`,
+    vocab: [
+      { word: "世間", reading: "せけん", type: "Danh từ", meaning: "Xã hội, thế gian, dư luận, mọi người xung quanh",
+        example: "世間の目を気にする。\n(Quan tâm đến ánh mắt của xã hội.)" },
+      { word: "注目を集める", reading: "ちゅうもくをあつめる", type: "Cụm động từ", meaning: "Thu hút sự chú ý",
+        example: "新製品が世間の注目を集めた。\n(Sản phẩm mới thu hút sự chú ý của xã hội.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 3,
+    explanation: `<strong>正解：④ その事件は世間の注目を集めた。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>世間</strong> = xã hội, dư luận, mọi người nói chung → 世間の注目 = sự chú ý của xã hội/dư luận ✓<br>
+・④ 世間の注目を集める = thu hút dư luận → cách dùng rất tự nhiên<br>
+・① 動物の世間 → sai: "thế giới động vật" phải dùng 世界（せかい）<br>
+・② よりよい世間の実現 → sai: "xã hội tốt đẹp hơn" phải dùng 社会（しゃかい）; 世間 mang tính dư luận, không phải hệ thống xã hội<br>
+・③ 数学の世間 → sai: "giới/lĩnh vực toán học" phải dùng 世界 (世界 = lĩnh vực/giới)<br>
+→ 世間 = <strong>dư luận xã hội, mọi người xung quanh</strong> (世間体・世間知らず・世間の目)`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>快い</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① 要らないパソコンでしたら、快くもらっていきます。<br>
+② 遠慮しないでいつでも快く遊びに来てください。<br>
+③ 急な仕事だったが、彼が快く引き受けてくれて助かった。<br>
+④ 親友の森さんには、どんな悩みも快く打ち明けられる。
+</small>`,
+    vocab: [
+      { word: "快い", reading: "こころよい", type: "Tính từ -i", meaning: "Vui lòng, sẵn lòng, dễ chịu (làm một việc gì với thái độ tích cực)",
+        example: "快く承諾する。\n(Vui lòng chấp nhận.)" },
+      { word: "引き受ける", reading: "ひきうける", type: "Động từ nhóm II", meaning: "Nhận lãnh, đảm nhận (trách nhiệm/công việc)",
+        example: "難しい仕事を引き受ける。\n(Nhận công việc khó.)" },
+      { word: "打ち明ける", reading: "うちあける", type: "Động từ nhóm II", meaning: "Thổ lộ, tâm sự, tiết lộ",
+        example: "秘密を打ち明ける。\n(Tiết lộ bí mật.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 2,
+    explanation: `<strong>正解：③ 急な仕事だったが、彼が快く引き受けてくれて助かった。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>快く（こころよく）</strong> = một cách sẵn lòng, không ngần ngại → nhận lời với thái độ thoải mái, vui vẻ<br>
+・③ 快く引き受ける = sẵn lòng nhận lời → đây là cách dùng đúng ✓<br>
+・① 快くもらっていきます → sai: 快く không dùng để nói về bản thân đang lấy đồ (nghe tự mãn)<br>
+・② 快く遊びに来てください → sai: 快く không dùng theo nghĩa "thoải mái" → dùng 気軽に<br>
+・④ 快く打ち明けられる → sai: "có thể tâm sự" nhấn mạnh sự tin tưởng → dùng 気軽に・安心して<br>
+→ 快く = <strong>sẵn lòng, vui lòng</strong> làm việc gì (快く承諾する・快く引き受ける)`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-14.html", label: "← Từ vựng · Bài 14" },
+  next: { url: "vocab-16.html", label: "Từ vựng · Bài 16 →" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

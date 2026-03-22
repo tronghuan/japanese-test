@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 12</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ⑫</div>
+  <h1>N2 語彙<span>クイズ</span>⑫</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 12 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `新しい電球に取り<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>たら、明るくなった。`,
+    vocab: [
+      { word: "取り出し", reading: "とりだし", type: "Danh từ", meaning: "Lấy ra, rút ra",
+        example: "引き出しから書類を取り出す。\n(Lấy tài liệu ra từ ngăn kéo.)" },
+      { word: "取り替え", reading: "とりかえ", type: "Danh từ / Động từ", meaning: "Đổi lại, thay thế (vật cũ bằng vật mới)",
+        example: "古い電球を新しいものに取り替える。\n(Thay bóng đèn cũ bằng bóng mới.)" },
+      { word: "取り入れ", reading: "とりいれ", type: "Danh từ / Động từ", meaning: "Đưa vào, tiếp nhận, thu hoạch",
+        example: "新しいアイデアを取り入れる。\n(Tiếp nhận ý tưởng mới.)" },
+      { word: "取り戻し", reading: "とりもどし", type: "Danh từ", meaning: "Lấy lại, giành lại",
+        example: "失った信頼を取り戻す。\n(Lấy lại niềm tin đã mất.)" }
+    ],
+    choices: ["だし", "かえ", "いれ", "もどし"],
+    answer: 1,
+    explanation: `<strong>正解：② かえ → 取り替え（とりかえ）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>取り替える</strong> = thay thế (vật cũ bằng vật mới) → thay bóng đèn cũ → đèn sáng hơn<br>
+・<strong>取り出す</strong> = lấy ra (từ nơi cất giữ), không mang nghĩa thay thế<br>
+・<strong>取り入れる</strong> = đưa vào trong / tiếp nhận (không phải thay thế)<br>
+・<strong>取り戻す</strong> = lấy lại thứ đã mất (không phải thay mới)<br>
+→ Câu hoàn chỉnh: 新しい電球に取り<strong>かえ</strong>たら、明るくなった。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `この携帯電話には、いろいろな<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>がついている。`,
+    vocab: [
+      { word: "効用", reading: "こうよう", type: "Danh từ", meaning: "Tác dụng, lợi ích, công dụng",
+        example: "薬の効用を説明する。\n(Giải thích tác dụng của thuốc.)" },
+      { word: "才能", reading: "さいのう", type: "Danh từ", meaning: "Tài năng, năng khiếu",
+        example: "音楽の才能がある。\n(Có năng khiếu âm nhạc.)" },
+      { word: "機能", reading: "きのう", type: "Danh từ / Động từ", meaning: "Chức năng, tính năng (của thiết bị/hệ thống)",
+        example: "この機械には自動停止機能がある。\n(Máy này có chức năng tự động dừng.)" },
+      { word: "効力", reading: "こうりょく", type: "Danh từ", meaning: "Hiệu lực, tác dụng (pháp lý/y tế)",
+        example: "この契約はまだ効力がある。\n(Hợp đồng này vẫn còn hiệu lực.)" }
+    ],
+    choices: ["効用", "才能", "機能", "効力"],
+    answer: 2,
+    explanation: `<strong>正解：③ 機能（きのう）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>機能</strong> = tính năng/chức năng → dùng cho thiết bị, phần mềm, cơ thể → 携帯電話にいろいろな機能 ✓<br>
+・<strong>効用</strong> = tác dụng (thường cho thuốc, biện pháp — mang tính lợi ích)<br>
+・<strong>才能</strong> = tài năng (dùng cho người, không dùng cho thiết bị)<br>
+・<strong>効力</strong> = hiệu lực (pháp lý, y tế — không dùng cho chức năng điện thoại)<br>
+→ Câu hoàn chỉnh: いろいろな<strong>機能</strong>がついている。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `卒業したら、出版<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>の仕事につきたいと思っている。`,
+    vocab: [
+      { word: "相関", reading: "そうかん", type: "Danh từ / Động từ", meaning: "Tương quan, mối liên hệ lẫn nhau",
+        example: "収入と生活水準は相関している。\n(Thu nhập và mức sống có tương quan nhau.)" },
+      { word: "関係", reading: "かんけい", type: "Danh từ / Động từ", meaning: "Liên quan, quan hệ; thuộc lĩnh vực ~",
+        example: "彼は出版関係の仕事をしている。\n(Anh ấy làm việc trong lĩnh vực xuất bản.)" },
+      { word: "連携", reading: "れんけい", type: "Danh từ / Động từ", meaning: "Phối hợp, hợp tác (giữa các bên)",
+        example: "チームが連携して問題を解決した。\n(Nhóm phối hợp giải quyết vấn đề.)" },
+      { word: "連結", reading: "れんけつ", type: "Danh từ / Động từ", meaning: "Kết nối, nối liền (vật lý)",
+        example: "二つの車両を連結する。\n(Nối hai toa tàu lại.)" }
+    ],
+    choices: ["相関", "関係", "連携", "連結"],
+    answer: 1,
+    explanation: `<strong>正解：② 関係（かんけい）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>〜関係の仕事</strong> = công việc thuộc lĩnh vực ~ → cụm cố định: 出版関係・医療関係・IT関係の仕事<br>
+・<strong>相関</strong> = tương quan hai chiều (dùng trong thống kê/khoa học, không phải lĩnh vực nghề nghiệp)<br>
+・<strong>連携</strong> = phối hợp (giữa người/tổ chức, không nói 出版連携の仕事)<br>
+・<strong>連結</strong> = nối liền vật lý (tàu hỏa, dây chuyền — không dùng cho lĩnh vực nghề)<br>
+→ Câu hoàん chỉnh: 出版<strong>関係</strong>の仕事につきたいと思っている。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `日当たりが悪いので、この部屋は昼でも<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>暗い。`,
+    vocab: [
+      { word: "薄暗い", reading: "うすぐらい", type: "Tính từ -i", meaning: "Mờ tối, lờ mờ, hơi tối",
+        example: "日が沈んで外が薄暗くなってきた。\n(Mặt trời lặn, bên ngoài bắt đầu mờ tối.)" },
+      { word: "日当たり", reading: "ひあたり", type: "Danh từ", meaning: "Độ chiếu sáng mặt trời, hướng nắng",
+        example: "この部屋は日当たりがいい。\n(Phòng này có nắng tốt.)" }
+    ],
+    choices: ["浅", "軽", "薄", "弱"],
+    answer: 2,
+    explanation: `<strong>正解：③ 薄（うす）→ 薄暗い（うすぐらい）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>薄暗い</strong> = mờ tối, lờ mờ → "ngay ban ngày mà cũng mờ tối" → do ít ánh nắng<br>
+・<strong>薄〜</strong> là tiền tố chỉ "nhẹ, mờ, không đậm": 薄暗い・薄曇り・薄化粧<br>
+・<strong>浅暗い・軽暗い・弱暗い</strong> → đều không tồn tại trong tiếng Nhật<br>
+・Chỉ có <strong>薄暗い</strong> là từ cố định và đúng nghĩa "hơi tối"<br>
+→ Câu hoàん chỉnh: 昼でも<strong>薄</strong>暗い。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `学生ごろの甘い考えは厳しい社会で<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>しないものが多い。`,
+    vocab: [
+      { word: "共通", reading: "きょうつう", type: "Danh từ / Tính từ -na / Động từ", meaning: "Chung, phổ biến cho tất cả",
+        example: "この問題は多くの国に共通している。\n(Vấn đề này phổ biến ở nhiều quốc gia.)" },
+      { word: "通用", reading: "つうよう", type: "Danh từ / Động từ", meaning: "Được chấp nhận, có giá trị thực tế; lưu hành",
+        example: "学生時代の甘えは社会では通用しない。\n(Sự nuông chiều thời sinh viên không có giá trị trong xã hội.)" },
+      { word: "共用", reading: "きょうよう", type: "Danh từ / Động từ", meaning: "Dùng chung, sử dụng chung",
+        example: "このトイレは共用です。\n(Nhà vệ sinh này dùng chung.)" },
+      { word: "同様", reading: "どうよう", type: "Danh từ / Tính từ -na", meaning: "Giống nhau, tương tự",
+        example: "前回と同様の結果になった。\n(Kết quả tương tự lần trước.)" }
+    ],
+    choices: ["共通", "通用", "共用", "同様"],
+    answer: 1,
+    explanation: `<strong>正解：② 通用（つうよう）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>通用しない</strong> = không được chấp nhận, không có tác dụng trong thực tế → cụm cố định<br>
+・Mẫu: 〜では通用しない = "không có giá trị/không được chấp nhận trong ~"<br>
+・<strong>共通</strong> = chung cho nhiều người/vật (không dùng theo mẫu "共通しない")<br>
+・<strong>共用</strong> = dùng chung (không có mẫu "共用しない" với nghĩa này)<br>
+・<strong>同様</strong> = tương tự (tính từ mô tả, không dùng theo mẫu 社会で同様しない)<br>
+→ Câu hoàん chỉnh: 厳しい社会で<strong>通用</strong>しないものが多い。`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>いちいち</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① 難しいところをいちいち説明してもらう。<br>
+② 受験生いちいちが質問を受ける。<br>
+③ みんなの意見がいちいちでまとまらない。<br>
+④ 子どもたちはいちいち部屋を持っている。
+</small>`,
+    vocab: [
+      { word: "いちいち", reading: "いちいち（一々）", type: "Phó từ", meaning: "Từng cái một, mỗi cái; (đôi khi mang nghĩa phiền phức)",
+        example: "いちいち確認する。\n(Kiểm tra từng cái một.)" },
+      { word: "受験生", reading: "じゅけんせい", type: "Danh từ", meaning: "Thí sinh, học sinh đang ôn thi",
+        example: "受験生は毎日勉強している。\n(Thí sinh học mỗi ngày.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 0,
+    explanation: `<strong>正解：① 難しいところをいちいち説明してもらう。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>いちいち</strong> = từng cái một, lần lượt từng điểm → dùng làm phó từ bổ nghĩa cho động từ<br>
+・① いちいち説明してもらう = được giải thích từng điểm một ✓<br>
+・② 受験生いちいちが → sai: いちいち không dùng sau danh từ như 各 (mỗi)<br>
+・③ いちいちでまとまらない → sai: いちいち không phải danh từ, không dùng được với で<br>
+・④ いちいち部屋を持っている → sai: nghĩa là "mỗi em" → phải dùng それぞれ hoặc 一人ひとり<br>
+→ いちいち là <strong>phó từ</strong>, đứng trước động từ, nghĩa "từng cái một / lần lượt"`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>深刻</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① 自分のやったことを深刻に反省している。<br>
+② 不景気がますます深刻になってきた。<br>
+③ 事件についての深刻な考えに感心した。<br>
+④ あの二人は深刻に仲良く２０年も付き合ってきた。
+</small>`,
+    vocab: [
+      { word: "深刻", reading: "しんこく", type: "Tính từ -na", meaning: "Nghiêm trọng, trầm trọng (vấn đề, tình huống)",
+        example: "深刻な問題が起きた。\n(Một vấn đề nghiêm trọng đã xảy ra.)" },
+      { word: "不景気", reading: "ふけいき", type: "Danh từ / Tính từ -na", meaning: "Suy thoái kinh tế, thời buổi khó khăn",
+        example: "不景気で仕事が減った。\n(Kinh tế suy thoái khiến việc làm giảm.)" },
+      { word: "反省", reading: "はんせい", type: "Danh từ / Động từ", meaning: "Tự phản tỉnh, nhìn lại bản thân",
+        example: "失敗を反省する。\n(Tự nhìn lại sự thất bại.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 1,
+    explanation: `<strong>正解：② 不景気がますます深刻になってきた。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>深刻</strong> = nghiêm trọng → dùng cho tình huống xã hội/vấn đề đang trở nên tệ hơn<br>
+・② 不景気が深刻になる = suy thoái kinh tế ngày càng nghiêm trọng ✓<br>
+・① 深刻に反省する → sai: 深刻 không dùng với hành động cá nhân như 反省 → dùng 真剣に反省<br>
+・③ 深刻な考え → sai: "suy nghĩ nghiêm trọng/đáng ngạc nhiên" — không tự nhiên; dùng 深い・鋭い考え<br>
+・④ 深刻に仲良く → sai: 深刻 mang nghĩa tiêu cực/căng thẳng, trái với 仲良く (hòa thuận)<br>
+→ 深刻 diễn tả tình trạng <strong>ngày càng tệ hơn</strong> (vấn đề xã hội, khủng hoảng)`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>はきはき</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① 犯人が誰なのかまだはきはき分からない。<br>
+② この子はどんな質問でも、はきはきと答えられる。<br>
+③ 年を取っても、頭がはきはきしている。<br>
+④ 久しぶりに帰った故郷ははきはきと変わっていた。
+</small>`,
+    vocab: [
+      { word: "はきはき", reading: "はきはき", type: "Phó từ / Trạng từ mô phỏng", meaning: "Dứt khoát, rõ ràng, nhanh nhẹn (trong lời nói/trả lời)",
+        example: "はきはきと話す。\n(Nói chuyện dứt khoát, rõ ràng.)" },
+      { word: "犯人", reading: "はんにん", type: "Danh từ", meaning: "Tội phạm, thủ phạm",
+        example: "犯人が捕まった。\n(Tội phạm đã bị bắt.)" },
+      { word: "故郷", reading: "ふるさと", type: "Danh từ", meaning: "Quê hương, quê nhà",
+        example: "久しぶりに故郷に帰った。\n(Lâu rồi mới về quê.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 1,
+    explanation: `<strong>正解：② この子はどんな質問でも、はきはきと答えられる。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>はきはき</strong> = nhanh nhẹn, rõ ràng, dứt khoát → <strong>chỉ dùng cho lời nói/trả lời của người</strong><br>
+・② はきはきと答える = trả lời dứt khoát, rõ ràng ✓<br>
+・① はきはき分からない → sai: "chưa rõ" phải dùng はっきり (không phải はきはき)<br>
+・③ 頭がはきはきしている → sai: "đầu óc minh mẫn" phải dùng はっきり・しっかりしている<br>
+・④ はきはきと変わっていた → sai: "thay đổi nhiều" phải dùng すっかり・すっかり変わっていた<br>
+→ はきはき ≠ はっきり: はきはき dùng cho <strong>phong cách nói chuyện</strong> (nhanh, rõ ràng, tự tin)`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>通う</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① 毎日、地下鉄で会社に通っている。<br>
+② 改修工事で、この道を通うことができない。<br>
+③ 彼とは電子メールを通って、連絡する。<br>
+④ 一度沖縄へ通ったことがある。
+</small>`,
+    vocab: [
+      { word: "通う", reading: "かよう", type: "Động từ nhóm I", meaning: "Đi lại (thường xuyên đến một nơi); thông nhau",
+        example: "学校に通う。\n(Thường xuyên đến trường.)" },
+      { word: "改修工事", reading: "かいしゅうこうじ", type: "Danh từ", meaning: "Công trình sửa chữa, cải tạo",
+        example: "橋の改修工事が始まった。\n(Công trình sửa cầu bắt đầu.)" },
+      { word: "電子メール", reading: "でんしメール", type: "Danh từ", meaning: "Thư điện tử, email",
+        example: "電子メールで連絡する。\n(Liên lạc qua email.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 0,
+    explanation: `<strong>正解：① 毎日、地下鉄で会社に通っている。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>通う（かよう）</strong> = đi lại đều đặn đến một nơi (trường, công ty, bệnh viện)<br>
+・① 会社に通う = đi làm đều đặn mỗi ngày ✓<br>
+・② この道を通う → sai: "đi qua con đường này" phải dùng 通る（とおる）, không phải 通う<br>
+・③ メールを通って → sai: "qua email" phải dùng メールを通じて / メールで<br>
+・④ 沖縄へ通った → sai: "đã từng đến Okinawa" phải dùng 行ったことがある (一度だけなら 通う不自然)<br>
+→ 通う = đi lại <strong>thường xuyên, định kỳ</strong> đến một nơi cố định`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>気配</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① 今回の成績の気配から見れば、大学合格は危ないだろう。<br>
+② あの人の服装はいつも外国人の気配がする。<br>
+③ 空の気配がおかしいので、傘を持っていってください。<br>
+④ これは人の気配を察知することができる装置だ。
+</small>`,
+    vocab: [
+      { word: "気配", reading: "けはい", type: "Danh từ", meaning: "Dấu hiệu, sự hiện diện (của người/vật); cảm giác mơ hồ về ai đó",
+        example: "誰かの気配を感じた。\n(Cảm nhận được sự hiện diện của ai đó.)" },
+      { word: "察知", reading: "さっち", type: "Danh từ / Động từ", meaning: "Nhận biết, phát hiện (qua cảm nhận/phán đoán)",
+        example: "危険を察知する。\n(Nhận biết nguy hiểm.)" },
+      { word: "装置", reading: "そうち", type: "Danh từ", meaning: "Thiết bị, máy móc, hệ thống",
+        example: "安全装置が作動した。\n(Thiết bị an toàn đã kích hoạt.)" },
+      { word: "成績", reading: "せいせき", type: "Danh từ", meaning: "Kết quả, thành tích, điểm số",
+        example: "成績が上がった。\n(Điểm số tăng lên.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 3,
+    explanation: `<strong>正解：④ これは人の気配を察知することができる装置だ。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>気配（けはい）</strong> = dấu hiệu sự hiện diện (của người/vật) → cảm nhận/phát hiện sự có mặt<br>
+・④ 人の気配を察知する = phát hiện sự hiện diện của người → đây là cách dùng đúng của 気配 ✓<br>
+・① 成績の気配から → sai: 成績 (kết quả cụ thể) + 気配 không phù hợp → dùng 成績から見れば<br>
+・② 外国人の気配がする → sai: 気配 là cảm giác về sự hiện diện, không phải về ngoại hình/quốc tịch → dùng 雰囲気<br>
+・③ 空の気配がおかしい → sai: "dấu hiệu thời tiết" phải dùng 空模様（そらもよう）<br>
+→ 気配 = cảm nhận về <strong>sự có mặt</strong> của người/sinh vật`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-11.html", label: "← Từ vựng · Bài 11" },
+  next: { url: "vocab-13.html", label: "Từ vựng · Bài 13 →" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

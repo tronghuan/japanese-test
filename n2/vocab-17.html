@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 17</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ⑰</div>
+  <h1>N2 語彙<span>クイズ</span>⑰</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 17 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `もう全員「<u>そろいました</u>」か。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「そろいました」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "揃う", reading: "そろう", type: "Động từ nhóm I", meaning: "Tập hợp đầy đủ, có mặt đông đủ; đồng bộ",
+        example: "全員揃いましたか？\n(Mọi người đã có mặt đầy đủ chưa?)" },
+      { word: "訪ねる", reading: "たずねる", type: "Động từ nhóm II", meaning: "Đến thăm, ghé thăm",
+        example: "友人の家を訪ねる。\n(Đến thăm nhà bạn.)" },
+      { word: "案内する", reading: "あんないする", type: "Động từ", meaning: "Hướng dẫn, chỉ đường, dẫn đường",
+        example: "お客様を案内する。\n(Hướng dẫn khách.)" }
+    ],
+    choices: ["集まりました", "訪ねました", "出発しました", "案内しました"],
+    answer: 0,
+    explanation: `<strong>正解：① 集まりました（あつまりました）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>揃う（そろう）</strong> = có mặt đầy đủ, tập hợp đông đủ → nghĩa gần 集まる ✓<br>
+・Khác biệt tinh tế: 揃う nhấn mạnh "đầy đủ, không thiếu ai"; 集まる nhấn mạnh "tụ tập lại"<br>
+・<strong>訪ねる</strong> = đến thăm (một mình, không phải nhóm tụ họp)<br>
+・<strong>出発する</strong> = khởi hành (đi, không phải tụ tập)<br>
+・<strong>案内する</strong> = hướng dẫn (không liên quan đến tụ họp)<br>
+→ そろう ≒ <strong>集まる</strong>（全員が来て、その場に揃う）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `「<u>差し支え</u>」がなければ電話番号を教えてください。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「差し支え」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "差し支え", reading: "さしつかえ", type: "Danh từ", meaning: "Trở ngại, bất tiện; điều làm phiền/gây vấn đề",
+        example: "差し支えなければ教えてください。\n(Nếu không có vấn đề gì, xin hãy cho biết.)" },
+      { word: "不平", reading: "ふへい", type: "Danh từ", meaning: "Sự không hài lòng, phàn nàn",
+        example: "不平を言う。\n(Phàn nàn.)" },
+      { word: "不便", reading: "ふべん", type: "Danh từ / Tính từ -na", meaning: "Bất tiện, không thuận lợi",
+        example: "交通が不便な地域。\n(Khu vực giao thông bất tiện.)" }
+    ],
+    choices: ["仕方", "不便", "問題", "不平"],
+    answer: 2,
+    explanation: `<strong>正解：③ 問題（もんだい）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>差し支え</strong> = trở ngại, điều gây phiền/bất tiện → 差し支えがない = không có vấn đề gì ✓<br>
+・<strong>問題がない</strong> = không có vấn đề → nghĩa gần nhất trong ngữ cảnh này<br>
+・Cụm lịch sự: 差し支えなければ = "nếu không có vấn đề gì / nếu bạn không phiền"<br>
+・<strong>仕方</strong> = cách thức, phương pháp (không phải trở ngại)<br>
+・<strong>不便</strong> = bất tiện (gần nghĩa nhưng 差し支え mang tính lịch sự hơn)<br>
+・<strong>不平</strong> = phàn nàn (cảm xúc tiêu cực, không phải trở ngại trung tính)<br>
+→ 差し支え ≒ <strong>問題</strong>（差し支えがない ≒ 問題がない）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `熱いなら「<u>クーラー</u>」をつけましょう。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「クーラー」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "クーラー", reading: "クーラー", type: "Danh từ (ngoại lai)", meaning: "Máy điều hòa nhiệt độ (làm lạnh), máy lạnh (cooler/air conditioner)",
+        example: "クーラーをつける。\n(Bật máy lạnh.)" },
+      { word: "冷房", reading: "れいぼう", type: "Danh từ", meaning: "Hệ thống làm lạnh, điều hòa làm mát",
+        example: "冷房が効いている。\n(Điều hòa đang hoạt động.)" },
+      { word: "暖房", reading: "だんぼう", type: "Danh từ", meaning: "Hệ thống sưởi ấm, lò sưởi",
+        example: "冬は暖房が欠かせない。\n(Mùa đông không thể thiếu máy sưởi.)" }
+    ],
+    choices: ["冷房", "暖房", "窓", "テレビ"],
+    answer: 0,
+    explanation: `<strong>正解：① 冷房（れいぼう）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>クーラー</strong> = máy lạnh, điều hòa không khí (làm mát) → 冷房 ✓<br>
+・<strong>冷房</strong> = hệ thống làm lạnh → từ Hán-Nhật tương đương với クーラー<br>
+・<strong>暖房</strong> = sưởi ấm → trái nghĩa (câu nói về trời nóng, cần làm mát)<br>
+・<strong>窓</strong> = cửa sổ (không liên quan đến thiết bị làm mát)<br>
+・<strong>テレビ</strong> = tivi (không liên quan)<br>
+→ クーラー ≒ <strong>冷房</strong>`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `宿題のレポートは「<u>ほぼ</u>」終わった。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「ほぼ」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "ほぼ", reading: "ほぼ（略）", type: "Phó từ", meaning: "Gần như, hầu như, khoảng (không hoàn toàn 100%)",
+        example: "ほぼ完成した。\n(Gần như hoàn thành.)" }
+    ],
+    choices: ["すべて", "すぐに", "だいたい", "やっと"],
+    answer: 2,
+    explanation: `<strong>正解：③ だいたい</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>ほぼ</strong> = gần như, hầu như (không đến 100% nhưng rất gần) → レポートがほぼ終わった = gần xong<br>
+・<strong>だいたい</strong> = đại khái, phần lớn, gần như → nghĩa gần nhất ✓<br>
+・<strong>すべて</strong> = tất cả, hoàn toàn (100% → quá nhiều hơn ほぼ)<br>
+・<strong>すぐに</strong> = ngay lập tức (thời gian, không phải mức độ)<br>
+・<strong>やっと</strong> = cuối cùng cũng, vất vả mới (nhấn mạnh sự khó khăn để đạt được)<br>
+→ ほぼ ≒ <strong>だいたい</strong>（およそ・大部分・ほとんど）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `検査の結果は「<u>みょうごにち</u>」に分かりますので、また来てください。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「みょうごにち」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "明後日", reading: "みょうごにち / あさって", type: "Danh từ", meaning: "Ngày kia (hai ngày sau hôm nay)",
+        example: "明後日また来てください。\n(Ngày kia xin hãy đến lại.)" },
+      { word: "明日", reading: "あす / あした", type: "Danh từ", meaning: "Ngày mai",
+        example: "明日また連絡します。\n(Ngày mai tôi sẽ liên lạc lại.)" }
+    ],
+    choices: ["あす", "そのうち", "らいしゅう", "あさって"],
+    answer: 3,
+    explanation: `<strong>正解：④ あさって</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>みょうごにち（明後日）</strong> = ngày kia → đọc theo âm Hán-Nhật (音読み)<br>
+・<strong>あさって（明後日）</strong> = ngày kia → cách đọc thông thường (訓読み) → nghĩa giống hệt ✓<br>
+・<strong>あす</strong> = ngày mai (明日) → chỉ một ngày sau, không phải hai ngày<br>
+・<strong>そのうち</strong> = lúc nào đó, một ngày nào đó (mơ hồ, không cụ thể)<br>
+・<strong>らいしゅう</strong> = tuần sau (7 ngày sau, không phải 2 ngày)<br>
+→ みょうごにち ≒ <strong>あさって</strong>（明後日の和語読み）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `できるだけ早く仕事を「<u>済ます</u>」ようにします。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「済ます」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "済ます", reading: "すます", type: "Động từ nhóm I", meaning: "Hoàn thành, xong việc (giải quyết xong)",
+        example: "宿題を済ます。\n(Hoàn thành bài tập.)" },
+      { word: "終える", reading: "おえる", type: "Động từ nhóm II", meaning: "Kết thúc, hoàn thành (một việc gì đó)",
+        example: "仕事を終える。\n(Hoàn thành công việc.)" }
+    ],
+    choices: ["覚える", "終える", "始める", "教える"],
+    answer: 1,
+    explanation: `<strong>正解：② 終える（おえる）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>済ます</strong> = hoàn thành, giải quyết xong → 仕事を済ます = giải quyết xong công việc<br>
+・<strong>終える</strong> = kết thúc, hoàn thành → nghĩa gần nhất ✓<br>
+・<strong>覚える</strong> = ghi nhớ, học thuộc (không phải hoàn thành)<br>
+・<strong>始める</strong> = bắt đầu (trái nghĩa với hoàn thành)<br>
+・<strong>教える</strong> = dạy, chỉ dẫn (không liên quan)<br>
+→ 済ます ≒ <strong>終える</strong>（やり遂げる・完了する）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `玄関でくつを脱いだら、「<u>向き</u>」をそろえましょう。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「向き」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "向き", reading: "むき", type: "Danh từ", meaning: "Hướng, chiều (của vật)",
+        example: "靴の向きをそろえる。\n(Xếp giày cho thẳng hướng.)" },
+      { word: "方向", reading: "ほうこう", type: "Danh từ", meaning: "Phương hướng, chiều hướng",
+        example: "方向を確認する。\n(Xác nhận phương hướng.)" }
+    ],
+    choices: ["方向", "長さ", "左右", "順番"],
+    answer: 0,
+    explanation: `<strong>正解：① 方向（ほうこう）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>向き（むき）</strong> = hướng, chiều (của vật cụ thể) → 靴の向きをそろえる = xếp giày thẳng hướng<br>
+・<strong>方向</strong> = phương hướng → nghĩa gần nhất ✓<br>
+・<strong>長さ</strong> = độ dài (không phải hướng)<br>
+・<strong>左右</strong> = trái phải (một trục cụ thể, không phải hướng tổng quát)<br>
+・<strong>順番</strong> = thứ tự (không phải hướng của vật)<br>
+→ 向き ≒ <strong>方向</strong>（物が向いている方向・面している方向）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `景気が「<u>次第に</u>」回復に向かっている。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「次第に」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "次第に", reading: "しだいに", type: "Phó từ", meaning: "Dần dần, từ từ (thay đổi theo thời gian)",
+        example: "次第に暖かくなってきた。\n(Dần dần trở nên ấm hơn.)" }
+    ],
+    choices: ["やっと", "以外に", "すっかり", "だんだん"],
+    answer: 3,
+    explanation: `<strong>正解：④ だんだん</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>次第に</strong> = dần dần (biến đổi từng bước theo thời gian) → kinh tế dần dần hồi phục<br>
+・<strong>だんだん</strong> = dần dần → nghĩa gần nhất ✓ (だんだん = 次第に = 徐々に)<br>
+・<strong>やっと</strong> = cuối cùng cũng (vất vả mới đạt được, nhấn mạnh sự khó khăn)<br>
+・<strong>以外に</strong> = ngoài ra, ngoài ~ (không phải trạng từ chỉ tiến độ)<br>
+・<strong>すっかり</strong> = hoàn toàn (đã xong hẳn, 100%) → không có nghĩa "từng bước"<br>
+→ 次第に ≒ <strong>だんだん</strong>（徐々に・少しずつ）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `当店では注文を受けてから全ての「<u>料理</u>」をお作りしております。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「料理」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "料理", reading: "りょうり", type: "Danh từ / Động từ", meaning: "Món ăn, đồ ăn; việc nấu ăn",
+        example: "料理を注文する。\n(Gọi món ăn.)" },
+      { word: "献立", reading: "こんだて", type: "Danh từ", meaning: "Thực đơn, menu (danh sách món ăn)",
+        example: "今日の献立を考える。\n(Lên thực đơn cho hôm nay.)" },
+      { word: "食事", reading: "しょくじ", type: "Danh từ / Động từ", meaning: "Bữa ăn, việc ăn uống",
+        example: "食事の準備をする。\n(Chuẩn bị bữa ăn.)" },
+      { word: "材料", reading: "ざいりょう", type: "Danh từ", meaning: "Nguyên liệu, vật liệu",
+        example: "料理の材料を買う。\n(Mua nguyên liệu nấu ăn.)" }
+    ],
+    choices: ["献立", "食事", "味", "材料"],
+    answer: 1,
+    explanation: `<strong>正解：② 食事（しょくじ）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>料理</strong> trong ngữ cảnh này = món ăn được phục vụ → 全ての料理をお作りする = làm tất cả các món ăn<br>
+・<strong>食事</strong> = bữa ăn/đồ ăn → trong ngữ cảnh nhà hàng, nghĩa gần nhất ✓<br>
+・<strong>献立</strong> = thực đơn (danh sách các món, không phải bản thân món ăn)<br>
+・<strong>味</strong> = vị, hương vị (thuộc tính của món ăn, không phải món ăn)<br>
+・<strong>材料</strong> = nguyên liệu (chưa chế biến, không phải thành phẩm)<br>
+→ 料理 ≒ <strong>食事</strong>（注文してから作る「食べ物」という意味で）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `同じ分野の専門家でも、立場によって「<u>見解</u>」が異なる。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「見解」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "見解", reading: "けんかい", type: "Danh từ", meaning: "Quan điểm, nhận định, cách nhìn nhận vấn đề",
+        example: "専門家の見解を求める。\n(Xin ý kiến của chuyên gia.)" },
+      { word: "専門家", reading: "せんもんか", type: "Danh từ", meaning: "Chuyên gia",
+        example: "医療の専門家に相談する。\n(Tham khảo ý kiến chuyên gia y tế.)" },
+      { word: "立場", reading: "たちば", type: "Danh từ", meaning: "Lập trường, vị thế, quan điểm từ vai trò của mình",
+        example: "立場によって意見が違う。\n(Tùy theo lập trường mà ý kiến khác nhau.)" }
+    ],
+    choices: ["教え方", "調べ方", "考え方", "決め方"],
+    answer: 2,
+    explanation: `<strong>正解：③ 考え方（かんがえかた）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>見解（けんかい）</strong> = quan điểm, nhận định (cách nhìn nhận vấn đề một cách có lý luận)<br>
+・<strong>考え方</strong> = cách suy nghĩ, quan điểm → nghĩa gần nhất ✓<br>
+・<strong>教え方</strong> = cách dạy (phương pháp dạy, không phải quan điểm)<br>
+・<strong>調べ方</strong> = cách nghiên cứu/tìm hiểu (phương pháp, không phải kết quả nhận định)<br>
+・<strong>決め方</strong> = cách quyết định (quá trình ra quyết định, không phải quan điểm)<br>
+→ 見解 ≒ <strong>考え方</strong>（ある問題に対する意見・判断・解釈）`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-16.html", label: "← Từ vựng · Bài 16" },
+  next: { url: "vocab-18.html", label: "Từ vựng · Bài 18 →" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

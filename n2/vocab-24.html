@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 24</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ㉔</div>
+  <h1>N2 語彙<span>クイズ</span>㉔</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 24 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `あの人は「<u>たびたび</u>」夜遅くに電話をかけてくる。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「たびたび」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "たびたび（度々）", reading: "たびたび", type: "Phó từ", meaning: "Nhiều lần, thường xuyên, liên tục",
+        example: "たびたびお世話になっております。\n(Nhiều lần được bạn giúp đỡ, cảm ơn.)" },
+      { word: "何度も", reading: "なんども", type: "Phó từ", meaning: "Nhiều lần, không ít lần",
+        example: "何度も練習した。\n(Đã luyện tập nhiều lần.)" }
+    ],
+    choices: ["たまに", "何度も", "たいてい", "突然"],
+    answer: 1,
+    explanation: `<strong>正解：② 何度も（なんども）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>たびたび（度々）</strong> = nhiều lần, thường xuyên lặp lại → nhấn mạnh tần suất cao<br>
+・<strong>何度も</strong> = nhiều lần → nghĩa gần nhất ✓<br>
+・<strong>たまに</strong> = thỉnh thoảng → tần suất thấp, trái nghĩa với たびたび<br>
+・<strong>たいてい</strong> = thường là, phần lớn → mang tính thói quen hơn là số lần<br>
+・<strong>突然（とつぜん）</strong> = đột nhiên, bất thình lình → nói về cách thức, không phải tần suất<br>
+→ たびたび ≒ <strong>何度も</strong>（繰り返し・頻繁に）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `数日前から、家の前に「<u>怪しい</u>」人が立っていたので、警察に通報した。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「怪しい」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "怪しい", reading: "あやしい", type: "Tính từ -i", meaning: "Đáng ngờ, khả nghi, kỳ lạ đáng ngờ",
+        example: "怪しい人物に気をつける。\n(Cẩn thận với người đáng ngờ.)" },
+      { word: "変な", reading: "へんな", type: "Tính từ -na", meaning: "Kỳ lạ, lạ thường, không bình thường",
+        example: "変な音がした。\n(Có tiếng kỳ lạ.)" }
+    ],
+    choices: ["はでな", "かってな", "へんな", "みじめな"],
+    answer: 2,
+    explanation: `<strong>正解：③ へんな（変な）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>怪しい（あやしい）</strong> = đáng ngờ, khả nghi, có hành vi bất thường gây lo ngại<br>
+・<strong>変な（へんな）</strong> = kỳ lạ, không bình thường → nghĩa gần nhất ✓<br>
+・<strong>はでな（派手な）</strong> = lòe loẹt, sặc sỡ (trang phục/màu sắc) → không liên quan đến sự khả nghi<br>
+・<strong>かってな（勝手な）</strong> = tự ý, ích kỷ → nói về hành vi tự do/ích kỷ, không phải khả nghi<br>
+・<strong>みじめな（惨めな）</strong> = khốn khổ, đáng thương → cảm xúc tiêu cực, không phải đáng ngờ<br>
+→ 怪しい ≒ <strong>変な</strong>（普通でない・疑わしい）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `この辺りは夜になるとかなり「<u>物騒</u>」ですから、一人では歩かないように。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「物騒」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "物騒", reading: "ぶっそう", type: "Tính từ -na", meaning: "Nguy hiểm, không an toàn (khu vực/tình hình)",
+        example: "最近この辺は物騒だ。\n(Dạo này khu này nguy hiểm.)" },
+      { word: "危険", reading: "きけん", type: "Danh từ / Tính từ -na", meaning: "Nguy hiểm, mạo hiểm",
+        example: "危険な場所に近づかない。\n(Không đến gần nơi nguy hiểm.)" }
+    ],
+    choices: ["危険", "混雑", "無用心", "酒場"],
+    answer: 0,
+    explanation: `<strong>正解：① 危険（きけん）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>物騒（ぶっそう）</strong> = nguy hiểm, không an toàn (thường về trị an khu vực) → 物騒な場所・物騒な世の中<br>
+・<strong>危険（きけん）</strong> = nguy hiểm → nghĩa gần nhất ✓<br>
+・<strong>混雑（こんざつ）</strong> = đông đúc, chen chúc → nói về mật độ người, không phải nguy hiểm<br>
+・<strong>無用心（ぶようじん）</strong> = bất cẩn, thiếu đề phòng → nói về thái độ của người, không phải tình trạng khu vực<br>
+・<strong>酒場（さかば）</strong> = quán rượu → không liên quan<br>
+→ 物騒 ≒ <strong>危険</strong>（治安が悪く、身の危険がある）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `先週、車を「<u>レンタルした</u>」。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「レンタルした」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "レンタルする", reading: "レンタルする", type: "Động từ (loanword)", meaning: "Thuê (xe, đồ vật); cho thuê",
+        example: "レンタカーを借りた。\n(Đã thuê xe hơi.)" },
+      { word: "借りる", reading: "かりる", type: "Động từ nhóm II", meaning: "Mượn, thuê",
+        example: "図書館で本を借りる。\n(Mượn sách ở thư viện.)" }
+    ],
+    choices: ["修理した", "借りた", "検査した", "買った"],
+    answer: 1,
+    explanation: `<strong>正解：② 借りた（かりた）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>レンタルする（rental）</strong> = thuê (tạm thời, trả tiền) → 車をレンタルする = thuê xe<br>
+・<strong>借りる（かりる）</strong> = mượn/thuê → nghĩa gần nhất ✓<br>
+・<strong>修理する（しゅうりする）</strong> = sửa chữa → không liên quan đến thuê<br>
+・<strong>検査する（けんさする）</strong> = kiểm tra/xét nghiệm → không liên quan<br>
+・<strong>買う（かう）</strong> = mua → sở hữu vĩnh viễn, khác với thuê tạm<br>
+→ レンタルする ≒ <strong>借りる</strong>（有料で一時的に使う）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `自分のミスで迷惑をかけたことを「<u>詫びた</u>」。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「詫びた」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "詫びる", reading: "わびる", type: "Động từ nhóm II", meaning: "Xin lỗi (trang trọng hơn 謝る)",
+        example: "失礼を詫びた。\n(Đã xin lỗi vì thất lễ.)" },
+      { word: "謝る", reading: "あやまる", type: "Động từ nhóm I", meaning: "Xin lỗi, tạ lỗi",
+        example: "ミスを謝った。\n(Đã xin lỗi vì sai lầm.)" }
+    ],
+    choices: ["説いた", "謝った", "語った", "解いた"],
+    answer: 1,
+    explanation: `<strong>正解：② 謝った（あやまった）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>詫びる（わびる）</strong> = xin lỗi (mang sắc thái trang trọng, thành khẩn) → お詫びします<br>
+・<strong>謝る（あやまる）</strong> = xin lỗi → nghĩa gần nhất ✓<br>
+・<strong>説く（とく）</strong> = thuyết phục, giải thích lý lẽ → không phải xin lỗi<br>
+・<strong>語る（かたる）</strong> = kể, nói chuyện → diễn đạt bằng lời, không phải xin lỗi<br>
+・<strong>解く（とく）</strong> = giải (bài toán/câu đố); tháo gỡ → không phải xin lỗi<br>
+→ 詫びる ≒ <strong>謝る</strong>（ミスや失礼を認めて許しを求める）`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>注目</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① きれいな眺めに注目して、時間がたつのを忘れた。<br>
+② 寝不足で注目が足りないと、仕事でミスが多くなる。<br>
+③ 来月の選挙の結果が注目されている。<br>
+④ この問題を別の注目から見てみよう。
+</small>`,
+    vocab: [
+      { word: "注目", reading: "ちゅうもく", type: "Danh từ / Động từ", meaning: "Chú ý, thu hút sự chú ý (đặc biệt về sự kiện/hiện tượng quan trọng)",
+        example: "世界中が注目している試合。\n(Trận đấu được cả thế giới chú ý.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 2,
+    explanation: `<strong>正解：③ 来月の選挙の結果が注目されている。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>注目（ちゅうもく）</strong> = thu hút sự chú ý rộng rãi (nhiều người cùng quan tâm đến điều quan trọng) ✓<br>
+・③ 選挙の結果が注目される = kết quả bầu cử được nhiều người chú ý → cách dùng chuẩn<br>
+・① きれいな眺めに注目 → sai: "chú ý đến cảnh đẹp" phải dùng 見とれる（みとれる）/ 見入る<br>
+・② 注目が足りない → sai: "thiếu tập trung" phải dùng 注意力（ちゅういりょく）/ 集中力<br>
+・④ 別の注目から見る → sai: "nhìn từ góc độ khác" phải dùng 視点（してん）/ 角度（かくど）<br>
+→ 注目 = <strong>sự chú ý rộng rãi</strong> (注目を集める・注目されている・注目の的)`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>臨時</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① 欠席することは許されませんが、臨時として次のような場合は認められます。<br>
+② 毎年、夏休み期間中は臨時電車が運転される。<br>
+③ 地震に備えて年に一度は非難の臨時について家族で話し合ったほうがいい。<br>
+④ ここではろうかの電気を２４時間臨時でつけてあります。
+</small>`,
+    vocab: [
+      { word: "臨時", reading: "りんじ", type: "Danh từ / Tính từ -na", meaning: "Tạm thời, bất thường, đặc biệt (ngoài lịch thường lệ)",
+        example: "臨時列車が運行される。\n(Tàu bổ sung đặc biệt được vận hành.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 1,
+    explanation: `<strong>正解：② 毎年、夏休み期間中は臨時電車が運転される。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>臨時（りんじ）</strong> = tạm thời/bổ sung (ngoài lịch thường lệ, đáp ứng nhu cầu đặc biệt) ✓<br>
+・② 臨時電車 = tàu bổ sung đặc biệt (thêm vào dịp hè) → cách dùng chuẩn<br>
+・① 臨時として → sai: "ngoại lệ" phải dùng 例外（れいがい）/ 特例（とくれい）<br>
+・③ 非難の臨時 → sai: "kế hoạch sơ tán" phải dùng 避難計画（ひなんけいかく）<br>
+・④ ２４時間臨時でつける → sai: "thường xuyên/liên tục" phải dùng 常時（じょうじ）/ 常に<br>
+→ 臨時 = <strong>tạm thời/bổ sung ngoài thường lệ</strong> (臨時列車・臨時休業・臨時職員)`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>工夫</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① 使いやすいようにいろいろと工夫している。<br>
+② 牛肉をおいしく作るには、けっこう工夫がかかる。<br>
+③ 卒業まで、あまり工夫がないのだ。<br>
+④ 彼には工夫の才能がある。
+</small>`,
+    vocab: [
+      { word: "工夫", reading: "くふう", type: "Danh từ / Động từ", meaning: "Sự sáng tạo, cải tiến; nghĩ ra cách hay để giải quyết",
+        example: "料理に工夫を凝らす。\n(Dày công sáng tạo trong nấu ăn.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 0,
+    explanation: `<strong>正解：① 使いやすいようにいろいろと工夫している。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>工夫する（くふうする）</strong> = nghĩ ra cách hay, cải tiến cho tốt hơn ✓<br>
+・① いろいろと工夫する = nghĩ ra nhiều cách để dễ dùng hơn → cách dùng chuẩn<br>
+・② 工夫がかかる → sai: "tốn" phải dùng 手間がかかる（てまがかかる）/ 時間がかかる<br>
+・③ 工夫がない → sai: "không còn nhiều thời gian" phải dùng 時間がない / 余裕がない<br>
+・④ 工夫の才能 → sai: "tài năng" phải dùng 才能（さいのう）kết hợp với động từ hành động cụ thể; 工夫 không phải dạng tài năng bẩm sinh<br>
+→ 工夫 = <strong>sáng tạo/cải tiến cách làm</strong> (工夫する・工夫を凝らす・工夫次第)`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>伝言</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① あの人はまだ生きているという伝言が流れている。<br>
+② あの連中はいつも人の伝言を言っている。<br>
+③ ご家族によろしくと伝言を頼まれた。<br>
+④ 彼は食事の伝言をしょっちゅう言っている。
+</small>`,
+    vocab: [
+      { word: "伝言", reading: "でんごん", type: "Danh từ / Động từ", meaning: "Lời nhắn, nhắn tin qua người khác",
+        example: "伝言を頼む。\n(Nhờ nhắn lời lại.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 2,
+    explanation: `<strong>正解：③ ご家族によろしくと伝言を頼まれた。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>伝言（でんごん）</strong> = lời nhắn gửi qua người khác → 伝言を頼む・伝言を伝える ✓<br>
+・③ ご家族によろしくと伝言を頼まれた = được nhờ nhắn lời chào đến gia đình → cách dùng chuẩn<br>
+・① 伝言が流れる → sai: "tin đồn lan truyền" phải dùng 噂（うわさ）/ 情報<br>
+・② 人の伝言を言う → sai: "nói xấu người khác" phải dùng 悪口（わるぐち）/ 陰口（かげぐち）<br>
+・④ 食事の伝言 → sai: "lời phàn nàn về bữa ăn" phải dùng 文句（もんく）/ 不満（ふまん）<br>
+→ 伝言 = <strong>lời nhắn qua người trung gian</strong> (伝言を頼む・伝言板・伝言ゲーム)`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>無地</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① パーティーに行くのにその服は無地過ぎると思う。<br>
+② 朝寝坊して時間がなかったので、無地の顔で会社へ行った。<br>
+③ 川の水は無地で、気持ちよさそうに泳ぐ魚などもよく見えました。<br>
+④ 無地の生地に１本の鮮やかな赤いライオンが印象的です。
+</small>`,
+    vocab: [
+      { word: "無地", reading: "むじ", type: "Danh từ / Tính từ -na", meaning: "Trơn, không có hoa văn/họa tiết (vải/quần áo)",
+        example: "無地のシャツを着る。\n(Mặc áo màu trơn không họa tiết.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 3,
+    explanation: `<strong>正解：④ 無地の生地に１本の鮮やかな赤いライオンが印象的です。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>無地（むじ）</strong> = vải/vật liệu không có hoa văn, màu trơn → dùng cho vải/quần áo/giấy ✓<br>
+・④ 無地の生地（きじ）= vải trơn → hình ảnh sư tử đỏ nổi bật trên nền trơn → cách dùng chuẩn<br>
+・① 無地過ぎる → sai: "quá đơn giản/nhàm chán" phải dùng 地味過ぎる（じみすぎる）<br>
+・② 無地の顔 → sai: "mặt không trang điểm" phải dùng すっぴん / 化粧なしの顔<br>
+・③ 川の水は無地 → sai: "nước trong suốt" phải dùng 透明（とうめい）/ 澄んでいる<br>
+→ 無地 = <strong>không có hoa văn/họa tiết</strong> (無地のシャツ・無地の布・無地の壁紙)`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-23.html", label: "← Từ vựng · Bài 23" },
+  next: { url: "vocab-25.html", label: "Từ vựng · Bài 25 →" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

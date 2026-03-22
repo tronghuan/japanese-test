@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 20</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ⑳</div>
+  <h1>N2 語彙<span>クイズ</span>⑳</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 20 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `転校する日はクラスのみんなと別れるのが<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>、涙が止まらなかった。`,
+    vocab: [
+      { word: "つらい（辛い）", reading: "つらい", type: "Tính từ -i", meaning: "Đau lòng, khổ tâm, khó chịu đựng (cảm xúc)",
+        example: "別れがつらい。\n(Sự chia ly thật đau lòng.)" },
+      { word: "にくい（憎い）", reading: "にくい", type: "Tính từ -i", meaning: "Đáng ghét; khó (làm gì đó) — thường dùng là 〜にくい",
+        example: "読みにくい字。\n(Chữ khó đọc.)" },
+      { word: "痛ましい", reading: "いたましい", type: "Tính từ -i", meaning: "Đáng thương, thảm thương (nhìn từ bên ngoài)",
+        example: "痛ましい事故の現場。\n(Hiện trường vụ tai nạn thảm thương.)" },
+      { word: "重苦しい", reading: "おもくるしい", type: "Tính từ -i", meaning: "Nặng nề, ngột ngạt, u ám (bầu không khí)",
+        example: "重苦しい雰囲気が漂う。\n(Bầu không khí nặng nề bao phủ.)" }
+    ],
+    choices: ["にくくて", "つらくて", "痛ましくて", "重苦しくて"],
+    answer: 1,
+    explanation: `<strong>正解：② つらくて（辛くて）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>つらい</strong> = đau lòng, khổ tâm (cảm giác của chính mình khi phải chịu đựng điều khó khăn) ✓<br>
+・別れるのがつらい = chia tay thật đau lòng → cảm xúc nội tâm<br>
+・<strong>にくい</strong> = đáng ghét / khó ~ (〜にくい = khó làm; 別れるのがにくい nghĩa khác hẳn)<br>
+・<strong>痛ましい</strong> = đáng thương (nhìn từ bên ngoài, không phải cảm xúc của chính người đó)<br>
+・<strong>重苦しい</strong> = nặng nề (bầu không khí/cảm giác chung, không diễn đạt nỗi lòng khi chia tay)<br>
+→ Câu hoàん chỉnh: 別れるのが<strong>つらくて</strong>、涙が止まらなかった。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `緊急配達の場合は、バイク<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>を利用したほうがいい。`,
+    vocab: [
+      { word: "バイク便", reading: "バイクびん", type: "Danh từ", meaning: "Dịch vụ giao hàng bằng xe máy (courier)",
+        example: "バイク便で急ぎの荷物を送る。\n(Gửi hàng khẩn cấp bằng dịch vụ xe máy.)" },
+      { word: "〜便", reading: "びん", type: "Tiếp tố", meaning: "Chuyến, chuyến bay/tàu/giao hàng; dịch vụ vận chuyển",
+        example: "急便・宅配便・エア便" },
+      { word: "〜郵", reading: "ゆう", type: "Tiền tố", meaning: "Bưu chính (thường là 郵便)",
+        example: "郵便局・郵送" }
+    ],
+    choices: ["便", "送", "件", "郵"],
+    answer: 0,
+    explanation: `<strong>正解：① 便（びん）→ バイク便（バイクびん）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>バイク便</strong> = dịch vụ giao hàng khẩn cấp bằng xe máy → dùng cho 緊急配達 ✓<br>
+・〜便 = dịch vụ vận chuyển: 宅配便（たくはいびん）・急便（きゅうびん）・バイク便<br>
+・<strong>バイク送</strong> → không tồn tại<br>
+・<strong>バイク件</strong> → không tồn tại; 件 = vụ, trường hợp (事件・案件)<br>
+・<strong>バイク郵</strong> → không tồn tại; 郵 dùng trong 郵便（ゆうびん）<br>
+→ Câu hoàん chỉnh: バイク<strong>便</strong>を利用したほうがいい。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `当社は学歴よりも、仕事への情熱とやる気を<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>視しています。`,
+    vocab: [
+      { word: "重要視", reading: "じゅうようし", type: "Danh từ / Động từ", meaning: "Coi trọng, xem là quan trọng",
+        example: "個性を重要視する。\n(Coi trọng cá tính.)" },
+      { word: "疑問視", reading: "ぎもんし", type: "Danh từ / Động từ", meaning: "Đặt câu hỏi về, nghi ngờ tính đúng đắn",
+        example: "その決定を疑問視する。\n(Đặt câu hỏi về quyết định đó.)" },
+      { word: "問題視", reading: "もんだいし", type: "Danh từ / Động từ", meaning: "Coi là vấn đề, xem như có vấn đề",
+        example: "その発言を問題視した。\n(Coi phát ngôn đó là vấn đề.)" },
+      { word: "差別視", reading: "さべつし", type: "Danh từ / Động từ", meaning: "Nhìn nhận phân biệt, đối xử phân biệt",
+        example: "外見で差別視する。\n(Phân biệt đối xử dựa trên ngoại hình.)" }
+    ],
+    choices: ["重要", "疑問", "問題", "差別"],
+    answer: 0,
+    explanation: `<strong>正解：① 重要（じゅうよう）→ 重要視（じゅうようし）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>重要視する</strong> = coi trọng, xem là quan trọng → 情熱とやる気を重要視する ✓<br>
+・Ngữ cảnh: coi trọng đam mê và động lực hơn bằng cấp → ý nghĩa tích cực<br>
+・<strong>疑問視する</strong> = nghi ngờ, đặt dấu hỏi (tiêu cực)<br>
+・<strong>問題視する</strong> = coi là vấn đề (tiêu cực)<br>
+・<strong>差別視する</strong> = nhìn phân biệt (rất tiêu cực)<br>
+→ Câu hoàん chỉnh: 情熱とやる気を<strong>重要</strong>視しています。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `街を<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>していたら、山本さんに会った。`,
+    vocab: [
+      { word: "ぶらぶら", reading: "ぶらぶら", type: "Phó từ / Trạng từ mô phỏng", meaning: "Lang thang, dạo chơi không có mục đích",
+        example: "公園をぶらぶら歩く。\n(Dạo bộ lang thang trong công viên.)" },
+      { word: "ぐらぐら", reading: "ぐらぐら", type: "Phó từ / Trạng từ mô phỏng", meaning: "Lung lay, chao đảo, không ổn định",
+        example: "歯がぐらぐらする。\n(Răng lung lay.)" },
+      { word: "がらがら", reading: "がらがら", type: "Phó từ / Trạng từ mô phỏng", meaning: "Vắng tanh, trống rỗng; âm thanh lục cục",
+        example: "電車ががらがらだ。\n(Tàu điện vắng tanh.)" },
+      { word: "ばらばら", reading: "ばらばら", type: "Phó từ / Trạng từ mô phỏng", meaning: "Rời rạc, phân tán, tan tác",
+        example: "意見がばらばらだ。\n(Ý kiến phân tán.)" }
+    ],
+    choices: ["ぐらぐら", "がらがら", "ばらばら", "ぶらぶら"],
+    answer: 3,
+    explanation: `<strong>正解：④ ぶらぶら</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>ぶらぶら（する）</strong> = lang thang, dạo chơi không mục đích → 街をぶらぶらする ✓<br>
+・Cụm phổ biến: 街をぶらぶらする / ぶらぶら歩く<br>
+・<strong>ぐらぐら</strong> = lung lay (vật lý: răng, tòa nhà → không dùng cho người đi dạo)<br>
+・<strong>がらがら</strong> = vắng/trống (mô tả không gian, không phải hoạt động)<br>
+・<strong>ばらばら</strong> = rời rạc, phân tán (không phải đi dạo)<br>
+→ Câu hoàん chỉnh: 街を<strong>ぶらぶら</strong>していたら、山本さんに会った。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `この文章にはなんとなく<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>感を覚える。`,
+    vocab: [
+      { word: "違和感", reading: "いわかん", type: "Danh từ", meaning: "Cảm giác bất ổn, cảm giác có gì đó không ổn/không khớp",
+        example: "その言葉には違和感がある。\n(Từ đó gây cảm giác bất ổn.)" },
+      { word: "不和", reading: "ふわ", type: "Danh từ", meaning: "Bất hòa, mâu thuẫn (giữa người)",
+        example: "夫婦間の不和。\n(Mâu thuẫn giữa vợ chồng.)" }
+    ],
+    choices: ["不和", "無和", "違和", "非和"],
+    answer: 2,
+    explanation: `<strong>正解：③ 違和（い）→ 違和感（いわかん）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>違和感（いわかん）</strong> = cảm giác có gì đó bất ổn/không tự nhiên → cụm từ cố định ✓<br>
+・違和感を覚える / 違和感がある = cảm thấy gì đó không đúng/không tự nhiên<br>
+・<strong>不和感</strong> → không tồn tại; 不和 = bất hòa giữa người (không dùng với 感)<br>
+・<strong>無和感・非和感</strong> → đều không tồn tại trong tiếng Nhật<br>
+→ Câu hoàん chỉnh: なんとなく<strong>違和</strong>感を覚える。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `一つだけあなたの<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>をかなえてあげましょう。`,
+    vocab: [
+      { word: "望み（のぞみ）", reading: "のぞみ", type: "Danh từ", meaning: "Ước muốn, mong muốn, nguyện vọng",
+        example: "望みをかなえる。\n(Thực hiện ước muốn.)" },
+      { word: "仲直り", reading: "なかなおり", type: "Danh từ / Động từ", meaning: "Hòa giải, làm lành",
+        example: "けんかの後、仲直りした。\n(Sau khi cãi nhau, đã làm lành.)" },
+      { word: "一休み", reading: "ひとやすみ", type: "Danh từ / Động từ", meaning: "Nghỉ ngơi một chút",
+        example: "一休みしてから続けよう。\n(Nghỉ một chút rồi tiếp tục.)" },
+      { word: "誇り", reading: "ほこり", type: "Danh từ", meaning: "Niềm tự hào, sự kiêu hãnh",
+        example: "誇りを持って仕事をする。\n(Làm việc với niềm tự hào.)" }
+    ],
+    choices: ["なかなおり", "のぞみ", "ひとやすみ", "ほこり"],
+    answer: 1,
+    explanation: `<strong>正解：② のぞみ → 望み（のぞみ）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>望みをかなえる</strong> = thực hiện ước muốn → cụm cố định ✓<br>
+・Mẫu: 〜の望みをかなえる = thực hiện mong muốn của ~ (ý nghĩa cổ tích/thần kỳ)<br>
+・<strong>なかなおりをかなえる</strong> → không tự nhiên; 仲直りする mới đúng<br>
+・<strong>ひとやすみをかなえる</strong> → không tồn tại theo nghĩa này<br>
+・<strong>ほこりをかなえる</strong> → không tồn tại; 誇りを持つ mới đúng<br>
+→ Câu hoàん chỉnh: あなたの<strong>望み</strong>をかなえてあげましょう。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `あまり知識のないまま自己<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>のダイエットをするのは危険だ。`,
+    vocab: [
+      { word: "自己流", reading: "じこりゅう", type: "Danh từ", meaning: "Tự phát, theo cách của riêng mình (không học bài bản)",
+        example: "自己流で練習する。\n(Tập luyện theo cách của riêng mình.)" },
+      { word: "〜式", reading: "しき", type: "Tiếp tố", meaning: "Kiểu ~, phong cách ~ (chính thức/hệ thống)",
+        example: "日本式・洋式・新しい式" },
+      { word: "〜風", reading: "ふう", type: "Tiếp tố", meaning: "Theo phong cách ~, kiểu ~",
+        example: "イタリア風・和風" },
+      { word: "〜派", reading: "は", type: "Tiếp tố", meaning: "Trường phái ~, phe ~",
+        example: "保守派・急進派・自由派" }
+    ],
+    choices: ["式", "流", "風", "派"],
+    answer: 1,
+    explanation: `<strong>正解：② 流（りゅう）→ 自己流（じこりゅう）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>自己流</strong> = tự phát theo cách của riêng mình, không có bài bản → nguy hiểm khi thiếu kiến thức ✓<br>
+・Cụm cố định: 自己流でやる = làm theo cách tự nghĩ ra (không học đúng phương pháp)<br>
+・<strong>自己式</strong> → không tồn tại<br>
+・<strong>自己風</strong> → không tồn tại (〜風 dùng cho phong cách bên ngoài: 和風・洋風)<br>
+・<strong>自己派</strong> → không tồn tại (〜派 dùng cho trường phái/phe phái)<br>
+→ Câu hoàん chỉnh: 自己<strong>流</strong>のダイエットをするのは危険だ。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `長年、風雨にさらされている部屋の外壁は<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>が剥れている。`,
+    vocab: [
+      { word: "ペンキ", reading: "ペンキ", type: "Danh từ (ngoại lai: Hà Lan pek)", meaning: "Sơn (paint/dầu)",
+        example: "壁にペンキを塗る。\n(Sơn tường.)" },
+      { word: "ランチ", reading: "ランチ", type: "Danh từ (ngoại lai)", meaning: "Bữa trưa (lunch)",
+        example: "ランチを食べる。\n(Ăn trưa.)" },
+      { word: "ベンチ", reading: "ベンチ", type: "Danh từ (ngoại lai)", meaning: "Băng ghế ngoài trời (bench)",
+        example: "公園のベンチに座る。\n(Ngồi trên băng ghế công viên.)" },
+      { word: "ラケット", reading: "ラケット", type: "Danh từ (ngoại lai)", meaning: "Vợt (racket)",
+        example: "テニスのラケット。\n(Vợt tennis.)" }
+    ],
+    choices: ["ランチ", "ベンチ", "ペンキ", "ラケット"],
+    answer: 2,
+    explanation: `<strong>正解：③ ペンキ</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>ペンキが剥れる（はがれる）</strong> = sơn bong tróc → tường ngoài bị mưa gió nhiều năm làm sơn bong ✓<br>
+・Cụm tự nhiên: ペンキが剥れる / ペンキを塗る（ぬる）<br>
+・<strong>ランチ</strong> = bữa trưa (thức ăn, không liên quan đến tường)<br>
+・<strong>ベンチ</strong> = băng ghế (đồ nội thất, không phải lớp phủ tường)<br>
+・<strong>ラケット</strong> = vợt thể thao (hoàn toàn không liên quan)<br>
+→ Câu hoàん chỉnh: 外壁は<strong>ペンキ</strong>が剥れている。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `家族で泊まった旅館は<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>で一つの部屋を二つに分けることができた。`,
+    vocab: [
+      { word: "障子", reading: "しょうじ", type: "Danh từ", meaning: "Cửa giấy shoji (vách ngăn trượt phủ giấy trắng trong nhà Nhật)",
+        example: "障子を開けて風を入れる。\n(Mở cửa giấy để đón gió.)" },
+      { word: "じゅうたん（絨毯）", reading: "じゅうたん", type: "Danh từ", meaning: "Thảm trải sàn",
+        example: "じゅうたんを敷く。\n(Trải thảm.)" },
+      { word: "てんじょう（天井）", reading: "てんじょう", type: "Danh từ", meaning: "Trần nhà",
+        example: "天井が高い部屋。\n(Phòng có trần cao.)" },
+      { word: "たたみ（畳）", reading: "たたみ", type: "Danh từ", meaning: "Sàn tatami (sàn cói Nhật Bản)",
+        example: "畳の上に座る。\n(Ngồi trên sàn tatami.)" }
+    ],
+    choices: ["しょうじ", "じゅうたん", "てんじょう", "たたみ"],
+    answer: 0,
+    explanation: `<strong>正解：① しょうじ → 障子（しょうじ）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>障子（しょうじ）</strong> = cửa giấy trượt → có thể dùng để chia đôi phòng trong nhà truyền thống Nhật ✓<br>
+・Rokan (旅館) Nhật Bản thường dùng 障子 và ふすま (vách ngăn trượt) để chia phòng linh hoạt<br>
+・<strong>じゅうたん</strong> = thảm (trải sàn, không chia phòng được)<br>
+・<strong>てんじょう</strong> = trần nhà (ở trên đầu, không chia phòng được)<br>
+・<strong>たたみ</strong> = sàn chiếu cói (dưới chân, không chia phòng được)<br>
+→ Câu hoàん chỉnh: 旅館は<strong>障子</strong>で一つの部屋を二つに分けることができた。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>シーズンは、あの選手の活躍が楽しみだ。`,
+    vocab: [
+      { word: "来〜", reading: "らい", type: "Tiền tố", meaning: "〜tới, ~ sau (thời gian sắp tới)",
+        example: "来年・来月・来週・来シーズン" },
+      { word: "明〜", reading: "めい / みょう", type: "Tiền tố", meaning: "Tiếp theo, sắp tới (thường cho ngày/năm cụ thể)",
+        example: "明日・明年（みょうねん）" },
+      { word: "越〜", reading: "こし", type: "Tiền tố", meaning: "Vượt qua ~ (không dùng cho thời gian)",
+        example: "越冬（えっとう）・越境（えっきょう）" }
+    ],
+    choices: ["明", "迎", "来", "越"],
+    answer: 2,
+    explanation: `<strong>正解：③ 来（らい）→ 来シーズン（らいシーズン）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>来〜（らい）</strong> = ~ tới, ~ sau → 来シーズン = mùa giải tới ✓<br>
+・Mẫu: 来年・来月・来週・来シーズン → đều dùng 来<br>
+・<strong>明〜</strong> = thường cho 明日（あした/あす）・明年（みょうねん）; 明シーズン → không phổ biến<br>
+・<strong>迎〜</strong> = đón (迎える) → không dùng làm tiền tố thời gian như này<br>
+・<strong>越〜</strong> = vượt qua (地理/động tác: 越境・越冬) → không dùng cho "mùa tiếp theo"<br>
+→ Câu hoàん chỉnh: <strong>来</strong>シーズンは、あの選手の活躍が楽しみだ。`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-19.html", label: "← Từ vựng · Bài 19" },
+  next: { url: "vocab-21.html", label: "Từ vựng · Bài 21 →" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

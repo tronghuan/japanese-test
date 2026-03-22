@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 25</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ㉕</div>
+  <h1>N2 語彙<span>クイズ</span>㉕</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 25 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `男女の学生の数を比べると男子の　<span class="blank">___</span>　が高い。`,
+    vocab: [
+      { word: "割合", reading: "わりあい", type: "Danh từ / Phó từ", meaning: "Tỉ lệ, tỉ phần; tương đối",
+        example: "女性の割合が増えている。\n(Tỉ lệ phụ nữ đang tăng lên.)" },
+      { word: "割り算", reading: "わりざん", type: "Danh từ", meaning: "Phép chia (toán học)",
+        example: "割り算の練習をする。\n(Luyện tập phép chia.)" },
+      { word: "割り当て", reading: "わりあて", type: "Danh từ", meaning: "Sự phân bổ, phân công, hạn ngạch",
+        example: "仕事の割り当てを決める。\n(Quyết định phân công công việc.)" },
+      { word: "割引き", reading: "わりびき", type: "Danh từ / Động từ", meaning: "Giảm giá, chiết khấu",
+        example: "学生割引きが使える。\n(Có thể dùng giảm giá cho học sinh.)" }
+    ],
+    choices: ["割り算", "割り当て", "割合", "割引き"],
+    answer: 2,
+    explanation: `<strong>正解：③ 割合（わりあい）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>割合（わりあい）</strong> = tỉ lệ, tỉ phần so với tổng thể → 男子の割合が高い ✓<br>
+・「数を比べると〜の割合が高い」= so sánh số lượng → tỉ lệ nam cao hơn<br>
+・<strong>割り算</strong> = phép chia (toán học) → không dùng khi nói về tỉ lệ người<br>
+・<strong>割り当て</strong> = phân bổ/phân công → chỉ việc giao nhiệm vụ, không phải tỉ lệ<br>
+・<strong>割引き</strong> = giảm giá → liên quan đến tiền, không phải tỉ lệ<br>
+→ 割合 = <strong>tỉ lệ</strong> (男子の割合・割合が高い/低い)`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `コピー機に紙が　<span class="blank">___</span>　、出てこない。`,
+    vocab: [
+      { word: "詰まる", reading: "つまる", type: "Động từ nhóm I", meaning: "Bị kẹt, tắc nghẽn (giấy, cống...)",
+        example: "紙が詰まって印刷できない。\n(Giấy bị kẹt không in được.)" },
+      { word: "埋まる", reading: "うまる", type: "Động từ nhóm I", meaning: "Bị chôn vùi, lấp đầy",
+        example: "雪で道が埋まった。\n(Đường bị lấp bởi tuyết.)" }
+    ],
+    choices: ["もぐって", "つまって", "しずんで", "うまって"],
+    answer: 1,
+    explanation: `<strong>正解：② つまって（詰まって）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>詰まる（つまる）</strong> = bị kẹt, bị tắc trong máy/ống → 紙が詰まる ✓<br>
+・コピー機の紙詰まり（かみづまり）= kẹt giấy → cụm từ phổ biến<br>
+・<strong>もぐる（潜る）</strong> = lặn xuống, chui vào → không phù hợp với giấy trong máy<br>
+・<strong>しずむ（沈む）</strong> = chìm xuống → dùng trong nước, không phải trong máy<br>
+・<strong>うまる（埋まる）</strong> = bị chôn vùi/lấp đầy → hàm ý bị phủ bởi thứ gì đó từ bên ngoài<br>
+→ 紙が詰まる = giấy bị kẹt (trong máy photocopy/máy in)`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `水道工事のため、本日は臨時　<span class="blank">___</span>　とさせていただきます。`,
+    vocab: [
+      { word: "休業", reading: "きゅうぎょう", type: "Danh từ / Động từ", meaning: "Tạm đóng cửa, ngừng hoạt động kinh doanh",
+        example: "工事のため本日休業します。\n(Vì công trình, hôm nay tạm đóng cửa.)" },
+      { word: "休暇", reading: "きゅうか", type: "Danh từ", meaning: "Kỳ nghỉ, ngày phép (của cá nhân)",
+        example: "夏季休暇を取る。\n(Nghỉ phép mùa hè.)" },
+      { word: "休養", reading: "きゅうよう", type: "Danh từ / Động từ", meaning: "Nghỉ ngơi dưỡng sức",
+        example: "体のために休養が必要だ。\n(Cần nghỉ ngơi để bảo vệ sức khỏe.)" },
+      { word: "休憩", reading: "きゅうけい", type: "Danh từ / Động từ", meaning: "Nghỉ giải lao, nghỉ giữa giờ",
+        example: "10分間休憩しましょう。\n(Hãy nghỉ giải lao 10 phút.)" }
+    ],
+    choices: ["休暇", "休養", "休憩", "休業"],
+    answer: 3,
+    explanation: `<strong>正解：④ 休業（きゅうぎょう）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>休業（きゅうぎょう）</strong> = đóng cửa tạm thời (cửa hàng/công ty ngừng hoạt động) ✓<br>
+・「臨時休業」= đóng cửa bất thường (không theo lịch thường lệ) → thông báo phổ biến<br>
+・<strong>休暇（きゅうか）</strong> = kỳ nghỉ phép cá nhân → dùng cho người, không phải cửa hàng<br>
+・<strong>休養（きゅうよう）</strong> = nghỉ dưỡng sức → dùng cho cơ thể/sức khỏe cá nhân<br>
+・<strong>休憩（きゅうけい）</strong> = nghỉ giải lao ngắn (trong buổi làm/học) → không dùng cho đóng cửa cả ngày<br>
+→ 臨時休業 = <strong>đóng cửa bất thường</strong> (工事・修繕・天候などの理由による)`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `屋根のないところにずっと自転車を置いておいたら　<span class="blank">___</span>　だらけになった。`,
+    vocab: [
+      { word: "さび（錆）", reading: "さび", type: "Danh từ", meaning: "Gỉ sét (trên kim loại)",
+        example: "自転車が錆びてしまった。\n(Xe đạp bị gỉ sét mất rồi.)" },
+      { word: "〜だらけ", reading: "〜だらけ", type: "Tiếp tố", meaning: "Đầy, toàn là〜 (thường mang nghĩa tiêu cực)",
+        example: "傷だらけの車。\n(Chiếc xe đầy vết xước.)" },
+      { word: "しわ（皺）", reading: "しわ", type: "Danh từ", meaning: "Nếp nhăn (quần áo/da)",
+        example: "シャツにしわがある。\n(Áo sơ mi bị nhăn.)" }
+    ],
+    choices: ["さび", "しわ", "すじ", "しっけ"],
+    answer: 0,
+    explanation: `<strong>正解：① さび（錆）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>さび（錆）</strong> = gỉ sét → xe đạp để ngoài trời không có mái che → bị ướt mưa → gỉ sét ✓<br>
+・錆だらけ = đầy gỉ sét → cách dùng tự nhiên<br>
+・<strong>しわ（皺）</strong> = nếp nhăn → chỉ cho vải/da, không phải kim loại<br>
+・<strong>すじ（筋）</strong> = đường gân, vân, vệt → không phải do để ngoài trời<br>
+・<strong>しっけ（湿気）</strong> = độ ẩm → là nguyên nhân gây gỉ, nhưng bản thân không phải kết quả "đầy〜"<br>
+→ 錆だらけ = đầy gỉ sét (kim loại để ngoài mưa/ẩm ướt)`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `建物に入る前に入り口でかばんや荷物の　<span class="blank">___</span>　をチェックされた。`,
+    vocab: [
+      { word: "中身", reading: "なかみ", type: "Danh từ", meaning: "Nội dung bên trong, đồ bên trong (túi/hộp)",
+        example: "かばんの中身を見せてください。\n(Cho xem đồ bên trong túi đi.)" },
+      { word: "内容", reading: "ないよう", type: "Danh từ", meaning: "Nội dung (bài viết/hợp đồng/bài nói)",
+        example: "メールの内容を確認する。\n(Xác nhận nội dung email.)" },
+      { word: "仲間", reading: "なかま", type: "Danh từ", meaning: "Bạn bè cùng nhóm, đồng nghiệp",
+        example: "仲間と一緒に働く。\n(Làm việc cùng với đồng nghiệp.)" }
+    ],
+    choices: ["分数", "内容", "中身", "仲間"],
+    answer: 2,
+    explanation: `<strong>正解：③ 中身（なかみ）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>中身（なかみ）</strong> = đồ vật bên trong (túi/hộp/vật chứa) → kiểm tra an ninh ✓<br>
+・「かばんの中身をチェックする」= kiểm tra đồ vật bên trong túi → cách dùng chuẩn<br>
+・<strong>内容（ないよう）</strong> = nội dung → dùng cho văn bản/bài nói/kế hoạch, không phải vật lý trong túi<br>
+・<strong>分数（ぶんすう）</strong> = phân số (toán học) → không liên quan<br>
+・<strong>仲間（なかま）</strong> = bạn bè/đồng nghiệp → không liên quan đến kiểm tra hành lý<br>
+→ 中身をチェックする = kiểm tra vật phẩm bên trong (túi/hành lý)`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `子供が風邪　<span class="blank">___</span>　なので、今日は学校を休ませることにした。`,
+    vocab: [
+      { word: "〜気味", reading: "〜ぎみ", type: "Tiếp tố", meaning: "Có xu hướng〜, hơi bị〜 (nhẹ, chưa hẳn)",
+        example: "最近疲れ気味だ。\n(Dạo này hơi bị mệt mỏi.)" },
+      { word: "風邪気味", reading: "かぜぎみ", type: "Danh từ", meaning: "Hơi bị cảm, có vẻ sắp bị cảm",
+        example: "風邪気味なので早く寝る。\n(Hơi bị cảm nên ngủ sớm.)" }
+    ],
+    choices: ["気味", "具合", "寄り", "向き"],
+    answer: 0,
+    explanation: `<strong>正解：① 気味（ぎみ）→ 風邪気味（かぜぎみ）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>〜気味（〜ぎみ）</strong> = hơi bị〜, có xu hướng〜 (mức độ nhẹ) → 風邪気味 = hơi bị cảm ✓<br>
+・「風邪気味なので学校を休む」= hơi bị cảm nên cho nghỉ học → logic tự nhiên<br>
+・<strong>具合（ぐあい）</strong> = tình trạng sức khỏe/tình hình → 具合が悪い (không khỏe), không dùng sau 風邪<br>
+・<strong>〜寄り</strong> = thiên về〜, nghiêng về〜 → 風邪寄り không phải cụm từ tồn tại<br>
+・<strong>〜向き</strong> = phù hợp với〜, hướng về〜 → 風邪向き không có nghĩa<br>
+→ 風邪気味 = hơi bị cảm (chưa bị hẳn nhưng có triệu chứng nhẹ)`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `日本から送ってもらった荷物が税関で引っ　<span class="blank">___</span>　しまいました。`,
+    vocab: [
+      { word: "引っかかる", reading: "ひっかかる", type: "Động từ nhóm I", meaning: "Bị giữ lại, bị vướng, bị mắc kẹt (tại kiểm tra)",
+        example: "税関で荷物が引っかかった。\n(Hành lý bị giữ lại ở hải quan.)" },
+      { word: "税関", reading: "ぜいかん", type: "Danh từ", meaning: "Hải quan",
+        example: "税関を通過する。\n(Qua kiểm tra hải quan.)" }
+    ],
+    choices: ["こんで", "かかって", "ぱって", "こして"],
+    answer: 1,
+    explanation: `<strong>正解：② かかって → 引っかかって（ひっかかって）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>引っかかる（ひっかかる）</strong> = bị vướng, bị giữ lại (tại kiểm tra/trở ngại) → 税関で引っかかる ✓<br>
+・税関で引っかかる = bị hải quan giữ lại để kiểm tra<br>
+・<strong>引っこむ（引っ込む）</strong> = thụt vào trong, rút vào → không phù hợp với hành lý ở hải quan<br>
+・<strong>引っぱる（引っ張る）</strong> = kéo mạnh → không có 引っぱって trong lựa chọn (ぱって ≠ ぱる)<br>
+・<strong>引っこす（引っ越す）</strong> = chuyển nhà → không liên quan đến hải quan<br>
+→ 引っかかる = bị giữ lại/vướng phải (税関・罠・疑問など)`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `結婚式の招待　<span class="blank">___</span>　が届いたら、なるべく早く返信を出す。`,
+    vocab: [
+      { word: "招待状", reading: "しょうたいじょう", type: "Danh từ", meaning: "Thiệp mời, thư mời",
+        example: "結婚式の招待状が届いた。\n(Thiệp mời đám cưới đã đến.)" },
+      { word: "〜状", reading: "〜じょう", type: "Tiếp tố", meaning: "Thư〜, giấy〜 (văn bản chính thức)",
+        example: "案内状・感謝状・招待状\n(Thư thông báo / thư cảm ơn / thiệp mời)" }
+    ],
+    choices: ["書", "券", "状", "信"],
+    answer: 2,
+    explanation: `<strong>正解：③ 状（じょう）→ 招待状（しょうたいじょう）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>招待状（しょうたいじょう）</strong> = thiệp mời → 返信を出す = gửi thư phúc đáp ✓<br>
+・〜状（じょう）= văn bản/thư chính thức: 案内状・感謝状・招待状<br>
+・<strong>招待書（しょうたいしょ）</strong> = không phải từ chuẩn (書 dùng cho: 診断書・申請書・証明書)<br>
+・<strong>招待券（しょうたいけん）</strong> = vé mời (vào cửa miễn phí) → không kèm theo yêu cầu phúc đáp<br>
+・<strong>招待信（しょうたいしん）</strong> = không phải từ tồn tại (信 = 信じる/信用, không ghép với 招待)<br>
+→ 招待状 = <strong>thiệp/thư mời</strong> (返信が必要な正式な招待の文書)`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `夏の雨不足のせいで畑の　<span class="blank">___</span>　に影響が出そうだ。`,
+    vocab: [
+      { word: "作物", reading: "さくもつ", type: "Danh từ", meaning: "Cây trồng, nông sản (trồng trên đồng)",
+        example: "今年は作物の出来が悪い。\n(Năm nay nông sản thu hoạch kém.)" },
+      { word: "食物", reading: "しょくもつ", type: "Danh từ", meaning: "Thức ăn, đồ ăn (nói chung)",
+        example: "食物アレルギーがある。\n(Bị dị ứng thức ăn.)" },
+      { word: "作法", reading: "さほう", type: "Danh từ", meaning: "Phép tắc, lễ nghi, cách cư xử đúng mực",
+        example: "食事の作法を学ぶ。\n(Học phép lịch sự khi ăn uống.)" },
+      { word: "食料", reading: "しょくりょう", type: "Danh từ", meaning: "Lương thực, thực phẩm (để tích trữ)",
+        example: "非常用の食料を準備する。\n(Chuẩn bị lương thực dự phòng.)" }
+    ],
+    choices: ["食物", "作法", "食料", "作物"],
+    answer: 3,
+    explanation: `<strong>正解：④ 作物（さくもつ）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>作物（さくもつ）</strong> = cây trồng, nông sản trên đồng → 畑の作物 ✓<br>
+・「雨不足 → 畑の作物に影響」= thiếu mưa → ảnh hưởng đến cây trồng → logic hoàn toàn tự nhiên<br>
+・<strong>食物（しょくもつ）</strong> = thức ăn nói chung → không đặc trưng cho cây trồng trên đồng<br>
+・<strong>作法（さほう）</strong> = phép tắc, lễ nghi → không liên quan đến nông nghiệp<br>
+・<strong>食料（しょくりょう）</strong> = lương thực dự trữ → không dùng khi nói về cây đang trồng trên đồng<br>
+→ 畑の作物 = cây trồng trên ruộng đồng (米・野菜・果物など)`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `１９７０　<span class="blank">___</span>　に流行したファッションが再び注目を集めています。`,
+    vocab: [
+      { word: "年代", reading: "ねんだい", type: "Danh từ", meaning: "Thập niên, thời đại (theo khoảng 10 năm)",
+        example: "1980年代のファッション。\n(Thời trang thập niên 1980.)" },
+      { word: "年間", reading: "ねんかん", type: "Danh từ", meaning: "Trong vòng một năm, cả năm",
+        example: "年間100万人が訪れる。\n(Hàng năm có 1 triệu người đến thăm.)" },
+      { word: "年月", reading: "としつき／ねんげつ", type: "Danh từ", meaning: "Tháng năm, thời gian dài trôi qua",
+        example: "長い年月が経った。\n(Đã trôi qua nhiều năm tháng.)" },
+      { word: "年度", reading: "ねんど", type: "Danh từ", meaning: "Niên độ, năm tài chính/học (theo chu kỳ hành chính)",
+        example: "今年度の予算を決める。\n(Quyết định ngân sách năm nay.)" }
+    ],
+    choices: ["年間", "年月", "年代", "年度"],
+    answer: 2,
+    explanation: `<strong>正解：③ 年代（ねんだい）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>年代（ねんだい）</strong> = thập niên (khoảng thời gian 10 năm) → 1970年代 = thập niên 70 ✓<br>
+・1970年代に流行したファッション = thời trang thịnh hành ở thập niên 70<br>
+・<strong>年間（ねんかん）</strong> = trong vòng một năm → 1970年間 không có nghĩa<br>
+・<strong>年月（としつき）</strong> = tháng năm trôi qua → không dùng với số năm cụ thể như 1970<br>
+・<strong>年度（ねんど）</strong> = niên độ hành chính (bắt đầu tháng 4 ở Nhật) → 1970年度 = niên độ 1970, không chỉ cả thập niên<br>
+→ 〜年代 = <strong>thập niên〜</strong> (1970年代・1980年代・2000年代)`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-24.html", label: "← Từ vựng · Bài 24" },
+  next: { url: "vocab-26.html", label: "Từ vựng · Bài 26 →" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

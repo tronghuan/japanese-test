@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 16</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ⑯</div>
+  <h1>N2 語彙<span>クイズ</span>⑯</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 16 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `申し込みの締め切りは明日に<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>いる。`,
+    vocab: [
+      { word: "迫る", reading: "せまる", type: "Động từ nhóm I", meaning: "Áp sát, đến gần, cấp bách (thời hạn/nguy hiểm)",
+        example: "締め切りが迫っている。\n(Hạn chót đang đến gần.)" },
+      { word: "限る", reading: "かぎる", type: "Động từ nhóm I", meaning: "Giới hạn, hạn chế",
+        example: "参加者を10人に限る。\n(Giới hạn người tham gia là 10 người.)" },
+      { word: "寄る", reading: "よる", type: "Động từ nhóm I", meaning: "Ghé vào, tiến lại gần",
+        example: "帰りにコンビニに寄った。\n(Ghé vào cửa hàng tiện lợi trên đường về.)" },
+      { word: "至る", reading: "いたる", type: "Động từ nhóm I", meaning: "Đi đến, dẫn đến (kết quả/nơi chốn)",
+        example: "今日に至るまで変わらない。\n(Cho đến tận hôm nay vẫn không thay đổi.)" }
+    ],
+    choices: ["迫って", "限って", "寄って", "至って"],
+    answer: 0,
+    explanation: `<strong>正解：① 迫って → 迫っている（せまっている）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>締め切りが迫る</strong> = hạn chót đang đến gần → cụm cố định, rất phổ biến ✓<br>
+・Mẫu: 〜が迫っている = ~ đang áp đến, cấp bách (締め切り・試験・期限が迫る)<br>
+・<strong>限って</strong> = giới hạn → 明日に限って = "chỉ riêng ngày mai" (ý nghĩa hoàn toàn khác)<br>
+・<strong>寄って</strong> = ghé vào (địa điểm, không dùng với thời hạn)<br>
+・<strong>至って</strong> = đến mức (thường dùng trong 至って普通 = rất bình thường)<br>
+→ Câu hoàん chỉnh: 締め切りは明日に<strong>迫って</strong>いる。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `東京にある病院へ祖父の<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>に行った。`,
+    vocab: [
+      { word: "文句", reading: "もんく", type: "Danh từ", meaning: "Lời phàn nàn, oán thán; lời lẽ (trong bài hát/câu)",
+        example: "文句を言う。\n(Phàn nàn, ca thán.)" },
+      { word: "見舞い", reading: "みまい", type: "Danh từ", meaning: "Thăm hỏi người ốm/gặp nạn; quà thăm hỏi",
+        example: "入院した友達の見舞いに行く。\n(Đến thăm người bạn nằm viện.)" },
+      { word: "土産", reading: "みやげ", type: "Danh từ", meaning: "Quà (mua khi đi chơi xa)",
+        example: "旅行のお土産を買う。\n(Mua quà lưu niệm khi đi du lịch.)" },
+      { word: "勇気", reading: "ゆうき", type: "Danh từ", meaning: "Dũng cảm, can đảm",
+        example: "勇気を出して話しかけた。\n(Lấy can đảm lên tiếng.)" }
+    ],
+    choices: ["文句", "見舞い", "土産", "勇気"],
+    answer: 1,
+    explanation: `<strong>正解：② 見舞い（みまい）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>見舞いに行く</strong> = đi thăm người bệnh → 病院へ〜の見舞いに行く ✓<br>
+・Mẫu cố định: お見舞いに行く (đi thăm bệnh), お見舞いの品 (quà thăm hỏi)<br>
+・<strong>文句</strong> = phàn nàn (không đến bệnh viện để phàn nàn)<br>
+・<strong>土産</strong> = quà đi chơi (không phải quà thăm bệnh, dù có thể mang theo)<br>
+・<strong>勇気</strong> = can đảm (không phải lý do đến bệnh viện)<br>
+→ Câu hoàん chỉnh: 病院へ祖父の<strong>見舞い</strong>に行った。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `多くの人が旅行する<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>は、飛行機のチケットが高い。`,
+    vocab: [
+      { word: "シリーズ", reading: "シリーズ", type: "Danh từ (ngoại lai)", meaning: "Loạt, chuỗi, series",
+        example: "人気シリーズの最新作。\n(Tác phẩm mới nhất của series nổi tiếng.)" },
+      { word: "タイム", reading: "タイム", type: "Danh từ (ngoại lai)", meaning: "Thời gian, thời điểm (time); thứ thyme (gia vị)",
+        example: "ハーフタイムに休憩する。\n(Nghỉ giữa hiệp.)" },
+      { word: "シーズン", reading: "シーズン", type: "Danh từ (ngoại lai)", meaning: "Mùa, thời vụ (season)",
+        example: "旅行シーズンは混む。\n(Mùa du lịch rất đông đúc.)" },
+      { word: "チャンス", reading: "チャンス", type: "Danh từ (ngoại lai)", meaning: "Cơ hội (chance)",
+        example: "チャンスを逃さないようにする。\n(Đừng bỏ lỡ cơ hội.)" }
+    ],
+    choices: ["シリーズ", "タイム", "シーズン", "チャンス"],
+    answer: 2,
+    explanation: `<strong>正解：③ シーズン</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>シーズン</strong> = mùa, thời vụ → 旅行するシーズン = mùa du lịch → vé máy bay đắt ✓<br>
+・Mẫu: 〜シーズン = mùa ~ (旅行シーズン・観光シーズン・繁忙シーズン)<br>
+・<strong>シリーズ</strong> = chuỗi/series (không dùng cho thời gian theo mùa)<br>
+・<strong>タイム</strong> = thời gian cụ thể/thời điểm (không phải "mùa")<br>
+・<strong>チャンス</strong> = cơ hội (không phải khoảng thời gian theo mùa)<br>
+→ Câu hoàん chỉnh: 旅行する<strong>シーズン</strong>は、飛行機のチケットが高い。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `心配事が解消されて、胸が<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>した。`,
+    vocab: [
+      { word: "さっと", reading: "さっと", type: "Phó từ", meaning: "Nhanh chóng, thoáng qua, vội vàng",
+        example: "さっと掃除する。\n(Dọn dẹp nhanh.)" },
+      { word: "すっと", reading: "すっと", type: "Phó từ", meaning: "Nhẹ nhõm, thư thái (cảm giác thông suốt, dễ chịu bên trong)",
+        example: "胸がすっとした。\n(Lòng cảm thấy nhẹ nhõm.)" },
+      { word: "すらっと", reading: "すらっと", type: "Phó từ", meaning: "Dong dỏng, mảnh mai (dáng người); trơn tru",
+        example: "すらっとした体型。\n(Dáng người mảnh mai.)" },
+      { word: "きらっと", reading: "きらっと", type: "Phó từ", meaning: "Lấp lánh, sáng lên một cái",
+        example: "星がきらっと光った。\n(Ngôi sao lấp lánh sáng.)" }
+    ],
+    choices: ["さっと", "すっと", "すらっと", "きらっと"],
+    answer: 1,
+    explanation: `<strong>正解：② すっと</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>胸がすっとする</strong> = lòng cảm thấy nhẹ nhõm, thư thái → sau khi mối lo được giải tỏa ✓<br>
+・Cụm cố định: 胸がすっとする = cảm giác thông suốt, nhẹ bẫng trong lòng<br>
+・<strong>さっと</strong> = nhanh chóng (hành động, không phải cảm xúc nội tâm)<br>
+・<strong>すらっと</strong> = dong dỏng (dáng người) hoặc trơn tru (không phải cảm xúc)<br>
+・<strong>きらっと</strong> = lấp lánh (ánh sáng, không phải tâm trạng)<br>
+→ Câu hoàん chỉnh: 心配事が解消されて、胸が<strong>すっと</strong>した。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `なんと美しい<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>のある名前の花なんでしょう。`,
+    vocab: [
+      { word: "晴れ", reading: "はれ", type: "Danh từ", meaning: "Trời nắng; dịp trọng đại",
+        example: "晴れの舞台に立つ。\n(Đứng trên sân khấu quan trọng.)" },
+      { word: "におい（匂い）", reading: "におい", type: "Danh từ", meaning: "Mùi hương (thường dễ chịu), mùi (nói chung)",
+        example: "花のいい匂いがする。\n(Có mùi hoa thơm.)" },
+      { word: "風俗", reading: "ふうぞく", type: "Danh từ", meaning: "Phong tục tập quán; ngành dịch vụ (nghĩa bóng)",
+        example: "地域の風俗を調べる。\n(Tìm hiểu phong tục địa phương.)" },
+      { word: "響き", reading: "ひびき", type: "Danh từ", meaning: "Âm thanh vang lên, tiếng vang; cảm giác nghe",
+        example: "美しい響きの名前。\n(Tên có âm vang đẹp.)" }
+    ],
+    choices: ["晴れ", "におい", "風俗", "響き"],
+    answer: 3,
+    explanation: `<strong>正解：④ 響き（ひびき）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>響きのある名前</strong> = cái tên có âm vang đẹp → cách khen tên nghe hay, du dương ✓<br>
+・響き = âm thanh vang lên → 名前の響き = âm thanh/âm vang của tên<br>
+・<strong>晴れのある名前</strong> → không tự nhiên (晴れ = nắng/dịp trọng đại)<br>
+・<strong>においのある名前</strong> → không tự nhiên (におい = mùi hương, không dùng cho tên)<br>
+・<strong>風俗のある名前</strong> → hoàn toàn không phù hợp<br>
+→ Câu hoàん chỉnh: なんと美しい<strong>響き</strong>のある名前の花なんでしょう。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `外国では泣いている赤ちゃんをしばらく<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>おくのが一般的だそうだ。`,
+    vocab: [
+      { word: "投げる", reading: "なげる", type: "Động từ nhóm II", meaning: "Ném, quăng",
+        example: "ボールを投げる。\n(Ném bóng.)" },
+      { word: "寝させる", reading: "ねさせる", type: "Động từ", meaning: "Cho ngủ, bắt ngủ",
+        example: "子供を早く寝させる。\n(Cho con ngủ sớm.)" },
+      { word: "ほうる（放る）", reading: "ほうる", type: "Động từ nhóm I", meaning: "Bỏ mặc, mặc kệ; ném (thông tục)",
+        example: "子どもをほうっておく。\n(Bỏ mặc đứa trẻ.)" },
+      { word: "抱く", reading: "いだく / だく", type: "Động từ nhóm I", meaning: "Ôm ấp, bế bồng",
+        example: "赤ちゃんを抱く。\n(Bế em bé.)" }
+    ],
+    choices: ["なげて", "ねさせて", "ほうって", "いだいて"],
+    answer: 2,
+    explanation: `<strong>正解：③ ほうって → ほうっておく</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>ほうっておく</strong> = bỏ mặc, mặc kệ → để em bé khóc mà không bế ngay ✓<br>
+・Cụm cố định: ほうっておく / 放っておく = để mặc, không can thiệp<br>
+・Ngữ cảnh: ở nước ngoài có quan niệm để trẻ tự nín thay vì bế ngay → ほうっておく phù hợp<br>
+・<strong>なげておく</strong> = để ném (không có nghĩa bỏ mặc trẻ em)<br>
+・<strong>ねさせておく</strong> = cho ngủ (không phải bỏ mặc khi khóc)<br>
+・<strong>いだいておく</strong> = bế ôm (trái ngược với nội dung câu)<br>
+→ Câu hoàん chỉnh: 泣いている赤ちゃんをしばらく<strong>ほうって</strong>おくのが一般的。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `明日のハイキングは午前１０時集合、午後４時<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>の予定です。`,
+    vocab: [
+      { word: "解散", reading: "かいさん", type: "Danh từ / Động từ", meaning: "Giải tán, chia tay (nhóm/buổi họp kết thúc)",
+        example: "集会は午後５時に解散した。\n(Cuộc họp giải tán lúc 5 giờ chiều.)" },
+      { word: "解放", reading: "かいほう", type: "Danh từ / Động từ", meaning: "Giải phóng, thả tự do",
+        example: "人質が解放された。\n(Con tin được giải phóng.)" },
+      { word: "退出", reading: "たいしゅつ", type: "Danh từ / Động từ", meaning: "Rời khỏi (phòng/địa điểm chính thức)",
+        example: "式典が終わり退出した。\n(Buổi lễ kết thúc và rời đi.)" },
+      { word: "退場", reading: "たいじょう", type: "Danh từ / Động từ", meaning: "Rời sân/sân khấu; bị đuổi ra ngoài",
+        example: "退場を命じられた。\n(Bị lệnh rời khỏi sân.)" }
+    ],
+    choices: ["解散", "解放", "退出", "退場"],
+    answer: 0,
+    explanation: `<strong>正解：① 解散（かいさん）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>解散</strong> = giải tán (nhóm/đoàn/buổi tụ họp kết thúc, mọi người tự do ra về) → 集合〜解散 là cặp đôi cố định ✓<br>
+・Mẫu: ○時集合、○時解散 = tập hợp lúc ~ giờ, giải tán lúc ~ giờ<br>
+・<strong>解放</strong> = giải phóng (khỏi giam cầm/ràng buộc)<br>
+・<strong>退出</strong> = rời khỏi nơi chính thức (trang trọng hơn, thường cho cá nhân)<br>
+・<strong>退場</strong> = rời sân/sân khấu (thể thao, sự kiện, thường có hàm ý bị đuổi)<br>
+→ Câu hoàん chỉnh: 午後４時<strong>解散</strong>の予定です。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `経済だけでなく、法律にも詳しいのが彼の<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>だ。`,
+    vocab: [
+      { word: "深み", reading: "ふかみ", type: "Danh từ", meaning: "Chiều sâu; độ sâu sắc",
+        example: "人生の深みを知る。\n(Hiểu được chiều sâu của cuộc đời.)" },
+      { word: "強み", reading: "つよみ", type: "Danh từ", meaning: "Điểm mạnh, thế mạnh",
+        example: "英語が話せるのが私の強みだ。\n(Nói được tiếng Anh là thế mạnh của tôi.)" },
+      { word: "高み", reading: "たかみ", type: "Danh từ", meaning: "Độ cao, tầm cao; vị trí cao",
+        example: "高みを目指す。\n(Hướng đến tầm cao hơn.)" },
+      { word: "重み", reading: "おもみ", type: "Danh từ", meaning: "Trọng lượng; sức nặng (cảm xúc/ý nghĩa)",
+        example: "言葉の重みを感じる。\n(Cảm nhận sức nặng của lời nói.)" }
+    ],
+    choices: ["深み", "強み", "高み", "重み"],
+    answer: 1,
+    explanation: `<strong>正解：② 強み（つよみ）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>強み</strong> = điểm mạnh, thế mạnh (đặc điểm nổi trội của ai đó) → 〜が彼の強みだ ✓<br>
+・Mẫu: 〜が強みだ / 強みを活かす = phát huy thế mạnh<br>
+・<strong>深み</strong> = chiều sâu (kiến thức sâu sắc, không phải "điểm mạnh tổng thể")<br>
+・<strong>高み</strong> = độ cao/tầm cao (vị trí, không phải thế mạnh)<br>
+・<strong>重み</strong> = sức nặng/ý nghĩa sâu xa (không phải thế mạnh)<br>
+→ Câu hoàん chỉnh: 法律にも詳しいのが彼の<strong>強み</strong>だ。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `ゴールデンウイークなどの大型連休になると、生活の<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>が崩れやすい。`,
+    vocab: [
+      { word: "リズム", reading: "リズム", type: "Danh từ (ngoại lai)", meaning: "Nhịp điệu, chu kỳ đều đặn (rhythm)",
+        example: "生活リズムを整える。\n(Điều chỉnh nhịp sinh hoạt.)" },
+      { word: "ガム", reading: "ガム", type: "Danh từ (ngoại lai)", meaning: "Kẹo cao su (gum)",
+        example: "ガムを噛む。\n(Nhai kẹo cao su.)" },
+      { word: "ジャム", reading: "ジャム", type: "Danh từ (ngoại lai)", meaning: "Mứt (jam)",
+        example: "パンにジャムを塗る。\n(Phết mứt lên bánh mì.)" },
+      { word: "ダム", reading: "ダム", type: "Danh từ (ngoại lai)", meaning: "Đập nước (dam)",
+        example: "ダムを建設する。\n(Xây đập nước.)" }
+    ],
+    choices: ["リズム", "ガム", "ジャム", "ダム"],
+    answer: 0,
+    explanation: `<strong>正解：① リズム</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>生活のリズム</strong> = nhịp sinh hoạt hàng ngày → cụm cố định ✓<br>
+・生活リズムが崩れる = nhịp sinh hoạt bị xáo trộn → xảy ra khi nghỉ dài ngày (ngủ muộn, ăn bất thường)<br>
+・<strong>ガム・ジャム・ダム</strong> → đều là thực phẩm hoặc công trình, hoàn toàn không liên quan đến sinh hoạt theo nghĩa bóng<br>
+→ Câu hoàん chỉnh: 生活の<strong>リズム</strong>が崩れやすい。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `新幹線の指定<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>の予約はネットでも可能になった。`,
+    vocab: [
+      { word: "〜座", reading: "ざ", type: "Tiếp tố", meaning: "Chỗ ngồi (sân khấu/buổi biểu diễn); chòm sao",
+        example: "オリオン座・客席（きゃくざ）" },
+      { word: "〜位", reading: "い / くらい", type: "Tiếp tố", meaning: "Vị trí (thứ hạng); hạng, cấp bậc",
+        example: "一位・地位・王位" },
+      { word: "指定席", reading: "していせき", type: "Danh từ", meaning: "Ghế chỉ định, chỗ ngồi có đặt trước",
+        example: "指定席を予約する。\n(Đặt ghế chỉ định.)" },
+      { word: "〜先", reading: "さき", type: "Tiếp tố", meaning: "Điểm đến, nơi sẽ đến; trước",
+        example: "連絡先・行き先" }
+    ],
+    choices: ["座", "位", "席", "先"],
+    answer: 2,
+    explanation: `<strong>正解：③ 席（せき）→ 指定席（していせき）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>指定席</strong> = ghế đặt trước/chỉ định (tàu, máy bay, sân khấu) → 指定席の予約 ✓<br>
+・Đây là từ cố định: 指定席・自由席（じゆうせき）・禁煙席（きんえんせき）<br>
+・<strong>指定座</strong> → không tồn tại; 座 dùng cho sân khấu/chòm sao (座席 thì được nhưng 指定座 thì không)<br>
+・<strong>指定位</strong> → không tồn tại; 位 dùng cho thứ hạng/cấp bậc<br>
+・<strong>指定先</strong> → không tồn tại; 先 dùng cho điểm đến/nơi chốn<br>
+→ Câu hoàん chỉnh: 新幹線の指定<strong>席</strong>の予約はネットでも可能。`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-15.html", label: "← Từ vựng · Bài 15" },
+  next: { url: "vocab-17.html", label: "Từ vựng · Bài 17 →" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

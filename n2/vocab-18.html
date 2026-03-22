@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 18</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ⑱</div>
+  <h1>N2 語彙<span>クイズ</span>⑱</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 18 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `日曜だから込んでいるかと思ったけど、<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>すいているね。`,
+    vocab: [
+      { word: "たいして", reading: "たいして（大して）", type: "Phó từ (dùng với phủ định)", meaning: "Không ~ lắm, chẳng mấy ~ (dùng với câu phủ định)",
+        example: "たいして難しくない。\n(Không khó lắm.)" },
+      { word: "どうりで", reading: "どうりで（道理で）", type: "Phó từ", meaning: "Thảo nào, hèn chi (lý giải điều đã xảy ra)",
+        example: "どうりで疲れるはずだ。\n(Thảo nào mệt.)" },
+      { word: "わりと", reading: "わりと（割と）", type: "Phó từ", meaning: "Khá, tương đối (hơn mức dự kiến)",
+        example: "わりと簡単だった。\n(Khá là dễ.)" },
+      { word: "よけい", reading: "よけい（余計）", type: "Phó từ / Tính từ -na", meaning: "Thêm vào, càng thêm; dư thừa",
+        example: "よけいなことを言う。\n(Nói chuyện thừa.)" }
+    ],
+    choices: ["たいして", "どうりで", "わりと", "よけい"],
+    answer: 2,
+    explanation: `<strong>正解：③ わりと（割と）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>わりと</strong> = khá, tương đối (so với dự kiến) → tưởng đông mà lại khá vắng ✓<br>
+・Ngữ cảnh: 込んでいるかと思ったけど = tưởng đông → nhưng わりとすいている = thực ra khá vắng<br>
+・<strong>たいして</strong> = không ~ lắm → dùng với câu phủ định (たいしてすいていない), không dùng với câu khẳng định<br>
+・<strong>どうりで</strong> = thảo nào (lý giải nguyên nhân) → không phù hợp khi đang so sánh với dự kiến<br>
+・<strong>よけい</strong> = càng thêm / dư thừa (よけい混んでいる = càng thêm đông → trái nghĩa)<br>
+→ Câu hoàん chỉnh: 込んでいるかと思ったけど、<strong>わりと</strong>すいているね。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `司会をしてくれる人がいると、話し合いが<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>進む。`,
+    vocab: [
+      { word: "スムーズに", reading: "スムーズに", type: "Phó từ (ngoại lai)", meaning: "Trơn tru, suôn sẻ, không có trở ngại (smooth)",
+        example: "手続きがスムーズに終わった。\n(Thủ tục diễn ra trơn tru.)" },
+      { word: "ソフトに", reading: "ソフトに", type: "Phó từ (ngoại lai)", meaning: "Nhẹ nhàng, mềm mại (soft)",
+        example: "ソフトに着地する。\n(Hạ xuống nhẹ nhàng.)" },
+      { word: "クリアに", reading: "クリアに", type: "Phó từ (ngoại lai)", meaning: "Rõ ràng, sắc nét (clear)",
+        example: "クリアに説明する。\n(Giải thích rõ ràng.)" }
+    ],
+    choices: ["シンプルに", "スムーズに", "ソフトに", "クリアに"],
+    answer: 1,
+    explanation: `<strong>正解：② スムーズに</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>スムーズに進む</strong> = tiến triển trơn tru, suôn sẻ → có người dẫn chương trình thì thảo luận diễn ra suôn sẻ ✓<br>
+・Cụm phổ biến: スムーズに進む・スムーズに行く・スムーズに進行する<br>
+・<strong>シンプルに</strong> = đơn giản (không mô tả quá trình diễn ra)<br>
+・<strong>ソフトに</strong> = nhẹ nhàng (không phải "trơn tru")<br>
+・<strong>クリアに</strong> = rõ ràng (mô tả nội dung, không phải sự tiến triển)<br>
+→ Câu hoàん chỉnh: 話し合いが<strong>スムーズに</strong>進む。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `彼は昼は会社で働き、<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>は大学で勉強している。`,
+    vocab: [
+      { word: "夜行", reading: "やこう", type: "Danh từ", meaning: "Đi đêm, di chuyển vào ban đêm (tàu/xe đêm)",
+        example: "夜行バスで移動する。\n(Di chuyển bằng xe khách đêm.)" },
+      { word: "役目", reading: "やくめ", type: "Danh từ", meaning: "Nhiệm vụ, vai trò, bổn phận",
+        example: "役目を果たす。\n(Hoàn thành nhiệm vụ.)" },
+      { word: "屋根", reading: "やね", type: "Danh từ", meaning: "Mái nhà",
+        example: "屋根を修理する。\n(Sửa mái nhà.)" },
+      { word: "夜間", reading: "やかん", type: "Danh từ", meaning: "Ban đêm, giờ tối, buổi tối (khoảng thời gian ban đêm)",
+        example: "夜間に勉強する。\n(Học vào buổi tối.)" }
+    ],
+    choices: ["やこう", "やくめ", "やね", "やかん"],
+    answer: 3,
+    explanation: `<strong>正解：④ やかん → 夜間（やかん）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>夜間（やかん）</strong> = ban đêm, buổi tối → 昼は会社、夜間は大学 = ban ngày làm công ty, tối học đại học ✓<br>
+・夜間大学 / 夜間学校 = trường học buổi tối → dành cho người đi làm ban ngày<br>
+・Cặp từ đối lập: 昼（ひる）↔ 夜間（やかん）<br>
+・<strong>夜行（やこう）</strong> = đi đêm (tàu xe, không phải thời gian sinh hoạt)<br>
+・<strong>役目（やくめ）</strong> = nhiệm vụ (không phải thời gian)<br>
+・<strong>屋根（やね）</strong> = mái nhà (không liên quan)<br>
+→ Câu hoàん chỉnh: 昼は会社で働き、<strong>夜間</strong>は大学で勉強している。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `池田さんはまじめすぎて、冗談が<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>。`,
+    vocab: [
+      { word: "通じる", reading: "つうじる", type: "Động từ nhóm II", meaning: "Thông, thấu; được hiểu; có tác dụng",
+        example: "冗談が通じない。\n(Không hiểu đùa.)" },
+      { word: "当たる", reading: "あたる", type: "Động từ nhóm I", meaning: "Trúng, chạm vào; đúng",
+        example: "くじが当たった。\n(Trúng xổ số.)" },
+      { word: "渡る", reading: "わたる", type: "Động từ nhóm I", meaning: "Vượt qua, băng qua; lan rộng",
+        example: "橋を渡る。\n(Băng qua cầu.)" },
+      { word: "構う", reading: "かまう", type: "Động từ nhóm I", meaning: "Bận tâm, lo; chăm sóc",
+        example: "どうぞお構いなく。\n(Xin đừng bận tâm.)" }
+    ],
+    choices: ["当たらない", "渡らない", "構わない", "通じない"],
+    answer: 3,
+    explanation: `<strong>正解：④ 通じない（つうじない）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>冗談が通じない</strong> = không hiểu chuyện đùa, không nhận ra đó là đùa → cụm cố định ✓<br>
+・Ngữ cảnh: まじめすぎる (quá nghiêm túc) → không hiểu/không tiếp thu được chuyện đùa<br>
+・<strong>冗談が当たらない</strong> → không tồn tại theo nghĩa này<br>
+・<strong>冗談が渡らない</strong> → không tự nhiên<br>
+・<strong>冗談が構わない</strong> → sai ngữ pháp hoàn toàn<br>
+→ Câu hoàん chỉnh: まじめすぎて、冗談が<strong>通じない</strong>。`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `誤解しないで、沙織さんとは「<u>単なる</u>」友人なんだから。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「単なる」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "単なる", reading: "たんなる", type: "Liên thể từ", meaning: "Chỉ là, đơn thuần là, không hơn không kém",
+        example: "単なる友人だ。\n(Chỉ là bạn bè thôi.)" },
+      { word: "唯一", reading: "ゆいいつ", type: "Danh từ / Tính từ -na", meaning: "Duy nhất, chỉ có một",
+        example: "唯一の方法。\n(Phương pháp duy nhất.)" },
+      { word: "珍しい", reading: "めずらしい", type: "Tính từ -i", meaning: "Hiếm, ít gặp, lạ",
+        example: "珍しい花を見た。\n(Thấy một loài hoa lạ.)" }
+    ],
+    choices: ["唯一の", "ただの", "大切な", "珍しい"],
+    answer: 1,
+    explanation: `<strong>正解：② ただの</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>単なる（たんなる）</strong> = chỉ là, đơn thuần là → nhấn mạnh "không có gì đặc biệt hơn"<br>
+・<strong>ただの</strong> = chỉ là, chỉ đơn giản là → nghĩa gần nhất ✓ (ただの友人 = chỉ là bạn thôi)<br>
+・<strong>唯一の</strong> = duy nhất (rất quan trọng → trái nghĩa với "đơn thuần")<br>
+・<strong>大切な</strong> = quan trọng, trân trọng (cũng trái nghĩa với "chỉ là")<br>
+・<strong>珍しい</strong> = hiếm, ít gặp (không liên quan đến mức độ quan hệ)<br>
+→ 単なる ≒ <strong>ただの</strong>（単純に・それ以上ではない）`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `田中さんは長い間<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>窓の外を見ていた。`,
+    vocab: [
+      { word: "ぼんやり", reading: "ぼんやり", type: "Phó từ / Trạng từ mô phỏng", meaning: "Mơ màng, đờ đẫn, thẫn thờ; mờ nhạt",
+        example: "ぼんやりと外を眺める。\n(Mơ màng nhìn ra ngoài.)" },
+      { word: "ふんわり", reading: "ふんわり", type: "Phó từ / Trạng từ mô phỏng", meaning: "Mềm mại, nhẹ bồng (như bông)",
+        example: "ふんわりしたクッション。\n(Chiếc đệm mềm mại.)" },
+      { word: "うっすら", reading: "うっすら", type: "Phó từ / Trạng từ mô phỏng", meaning: "Lờ mờ, mờ ảo, nhàn nhạt",
+        example: "うっすらと霧がかかっている。\n(Sương mù mờ ảo.)" },
+      { word: "しっとり", reading: "しっとり", type: "Phó từ / Trạng từ mô phỏng", meaning: "Ẩm ướt nhẹ; điềm tĩnh, nữ tính",
+        example: "雨でしっとり濡れた。\n(Ướt đẫm vì mưa.)" }
+    ],
+    choices: ["ぼんやり", "ふんわり", "うっすら", "しっとり"],
+    answer: 0,
+    explanation: `<strong>正解：① ぼんやり</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>ぼんやり</strong> = mơ màng, thẫn thờ, đờ đẫn → nhìn ra ngoài cửa sổ một mình một cách vô hồn ✓<br>
+・Cụm cố định: ぼんやりと〜を見る = nhìn ~ một cách mơ màng (không tập trung)<br>
+・<strong>ふんわり</strong> = mềm mại như bông (cảm giác xúc giác/vật chất, không phải trạng thái tâm trí)<br>
+・<strong>うっすら</strong> = mờ ảo (mô tả thị giác/màu sắc, không phải trạng thái người nhìn)<br>
+・<strong>しっとり</strong> = ẩm, điềm tĩnh (không mô tả việc nhìn thẫn thờ)<br>
+→ Câu hoàん chỉnh: 長い間<strong>ぼんやり</strong>窓の外を見ていた。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `決勝戦で負けて、<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>優勝に終わった。`,
+    vocab: [
+      { word: "準優勝", reading: "じゅんゆうしょう", type: "Danh từ", meaning: "Á quân, hạng nhì (runner-up)",
+        example: "大会で準優勝した。\n(Giành á quân trong giải đấu.)" },
+      { word: "副〜", reading: "ふく", type: "Tiền tố", meaning: "Phó ~, thứ hai (phụ/bổ sung cho chính)",
+        example: "副社長・副作用・副業" },
+      { word: "後〜", reading: "こう / ご", type: "Tiền tố", meaning: "Sau ~",
+        example: "後半・後輩・後者" }
+    ],
+    choices: ["後", "準", "次", "副"],
+    answer: 1,
+    explanation: `<strong>正解：② 準（じゅん）→ 準優勝（じゅんゆうしょう）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>準優勝</strong> = á quân, hạng nhì → thua ở chung kết = không vô địch, chỉ đứng thứ hai ✓<br>
+・Mẫu: 決勝戦で負ける → 準優勝に終わる (kết thúc với danh hiệu á quân)<br>
+・<strong>準〜</strong> tiền tố: chuẩn bị/gần đạt đến → 準優勝・準決勝・準会員<br>
+・<strong>後優勝・次優勝・副優勝</strong> → đều không tồn tại trong tiếng Nhật<br>
+→ Câu hoàん chỉnh: 決勝戦で負けて、<strong>準</strong>優勝に終わった。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>の価格が上がったので、家賃も高くなってきた。`,
+    vocab: [
+      { word: "敷地", reading: "しきち", type: "Danh từ", meaning: "Khuôn viên đất (của một tòa nhà/cơ sở cụ thể)",
+        example: "学校の敷地内に入る。\n(Vào trong khuôn viên trường.)" },
+      { word: "地理", reading: "ちり", type: "Danh từ", meaning: "Địa lý (môn học/đặc điểm địa hình)",
+        example: "地理の授業を受ける。\n(Học tiết địa lý.)" },
+      { word: "土地", reading: "とち", type: "Danh từ", meaning: "Đất đai, bất động sản; vùng đất",
+        example: "土地の価格が上がる。\n(Giá đất tăng lên.)" },
+      { word: "田んぼ", reading: "たんぼ", type: "Danh từ", meaning: "Ruộng lúa, đồng lúa",
+        example: "田んぼに水を引く。\n(Dẫn nước vào ruộng lúa.)" }
+    ],
+    choices: ["敷地", "地理", "土地", "田んぼ"],
+    answer: 2,
+    explanation: `<strong>正解：③ 土地（とち）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>土地の価格</strong> = giá đất → đất tăng giá → tiền thuê nhà cũng tăng theo ✓<br>
+・Cụm cố định: 土地の価格・土地代（とちだい）= giá trị/giá đất bất động sản<br>
+・<strong>敷地</strong> = khuôn viên của một cơ sở cụ thể (không nói 敷地の価格 theo nghĩa thị trường bất động sản)<br>
+・<strong>地理</strong> = địa lý (môn học, không phải đất đai)<br>
+・<strong>田んぼ</strong> = ruộng lúa (quá cụ thể, không phải thị trường bất động sản chung)<br>
+→ Câu hoàん chỉnh: <strong>土地</strong>の価格が上がったので、家賃も高くなってきた。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `組織のトップに立つ人間は、広い<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>を持つことが必要だ。`,
+    vocab: [
+      { word: "視界", reading: "しかい", type: "Danh từ", meaning: "Tầm nhìn (vật lý, phạm vi có thể nhìn thấy)",
+        example: "霧で視界が悪い。\n(Sương mù làm tầm nhìn kém.)" },
+      { word: "視野", reading: "しや", type: "Danh từ", meaning: "Tầm nhìn (rộng hay hẹp); quan điểm, góc nhìn (trừu tượng)",
+        example: "広い視野を持つ。\n(Có tầm nhìn rộng.)" },
+      { word: "視線", reading: "しせん", type: "Danh từ", meaning: "Ánh nhìn, tia mắt, hướng nhìn",
+        example: "視線を感じる。\n(Cảm nhận ánh nhìn.)" },
+      { word: "視察", reading: "しさつ", type: "Danh từ / Động từ", meaning: "Thị sát, kiểm tra thực địa",
+        example: "工場を視察する。\n(Thị sát nhà máy.)" }
+    ],
+    choices: ["視界", "視野", "視線", "視察"],
+    answer: 1,
+    explanation: `<strong>正解：② 視野（しや）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>視野</strong> = tầm nhìn (theo nghĩa trừu tượng: quan điểm, sự rộng mở trong suy nghĩ) → 広い視野を持つ ✓<br>
+・Cụm cố định: 広い視野を持つ = có tầm nhìn rộng → yêu cầu với người lãnh đạo<br>
+・<strong>視界</strong> = tầm nhìn vật lý (mắt có thể thấy bao xa) → không dùng cho nghĩa bóng lãnh đạo<br>
+・<strong>視線</strong> = ánh mắt, hướng nhìn cụ thể → 視線を合わせる, không nói 広い視線<br>
+・<strong>視察</strong> = hoạt động thị sát (hành động, không phải phẩm chất)<br>
+→ Câu hoàん chỉnh: 広い<strong>視野</strong>を持つことが必要だ。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `食器<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>は、この箱に詰めてください。`,
+    vocab: [
+      { word: "〜類", reading: "るい", type: "Tiếp tố", meaning: "Loại ~, những thứ thuộc nhóm ~ (chỉ tập hợp đồ vật cùng loại)",
+        example: "食器類・書類・衣類" },
+      { word: "〜型", reading: "がた / けい", type: "Tiếp tố", meaning: "Kiểu ~, loại hình ~",
+        example: "大型・新型・旧型" },
+      { word: "〜種", reading: "しゅ", type: "Tiếp tố / Danh từ", meaning: "Loài, chủng loại (phân loại học)",
+        example: "各種・別種・新種" },
+      { word: "〜属", reading: "ぞく", type: "Tiếp tố", meaning: "Thuộc ~, thuộc họ ~ (phân loại sinh vật)",
+        example: "金属・所属・猫科ネコ属" }
+    ],
+    choices: ["型", "種", "属", "類"],
+    answer: 3,
+    explanation: `<strong>正解：④ 類（るい）→ 食器類（しょっきるい）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>〜類</strong> = những thứ thuộc nhóm ~ → 食器類 = các loại đồ dùng ăn uống (bát, đĩa, chén...) ✓<br>
+・Mẫu cố định: 食器類・書類（しょるい）・衣類（いるい）・野菜類<br>
+・<strong>〜型</strong> = kiểu mẫu/hình dạng (食器型 → không tự nhiên)<br>
+・<strong>〜種</strong> = chủng loại trong phân loại học (食器種 → không tự nhiên)<br>
+・<strong>〜属</strong> = họ/thuộc về (phân loại sinh vật, tổ chức → 食器属 không tồn tại)<br>
+→ Câu hoàん chỉnh: 食器<strong>類</strong>は、この箱に詰めてください。`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-17.html", label: "← Từ vựng · Bài 17" },
+  next: { url: "vocab-19.html", label: "Từ vựng · Bài 19 →" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

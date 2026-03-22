@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 13</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ⑬</div>
+  <h1>N2 語彙<span>クイズ</span>⑬</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 13 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `業界、企業によって、給料の<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>も異なる。`,
+    vocab: [
+      { word: "基準", reading: "きじゅん", type: "Danh từ", meaning: "Tiêu chuẩn, căn cứ, mức chuẩn để so sánh/đánh giá",
+        example: "採用基準を設ける。\n(Đặt ra tiêu chuẩn tuyển dụng.)" },
+      { word: "標準", reading: "ひょうじゅん", type: "Danh từ / Tính từ -na", meaning: "Mức chuẩn, tiêu chuẩn thông thường, bình thường",
+        example: "標準的な生活水準。\n(Mức sống tiêu chuẩn.)" },
+      { word: "定価", reading: "ていか", type: "Danh từ", meaning: "Giá niêm yết, giá cố định (của hàng hóa)",
+        example: "定価で売る。\n(Bán theo giá niêm yết.)" },
+      { word: "平均", reading: "へいきん", type: "Danh từ / Động từ", meaning: "Trung bình, bình quân",
+        example: "平均点を計算する。\n(Tính điểm trung bình.)" }
+    ],
+    choices: ["基準", "標準", "定価", "平均"],
+    answer: 0,
+    explanation: `<strong>正解：① 基準（きじゅん）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>基準</strong> = tiêu chuẩn để đánh giá/xét xem đạt yêu cầu chưa → 給料の基準 = mức lương chuẩn ✓<br>
+・<strong>標準</strong> = mức bình thường/phổ biến (đại trà) → 標準語 (tiếng chuẩn), 標準体重<br>
+・<strong>定価</strong> = giá niêm yết hàng hóa (không dùng cho tiền lương)<br>
+・<strong>平均</strong> = con số trung bình → 給料の平均 cũng tự nhiên nhưng 基準 nhấn mạnh "tiêu chí/mức chuẩn" hơn<br>
+→ Câu hoàん chỉnh: 給料の<strong>基準</strong>も異なる。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `父は一日に<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>ジョギングをしている。`,
+    vocab: [
+      { word: "〜おき", reading: "おき", type: "Tiếp tố (接尾語)", meaning: "Cách ~, mỗi ~ (khoảng cách hoặc chu kỳ thời gian)",
+        example: "一日おきに薬を飲む。\n(Uống thuốc cách mỗi ngày một lần.)" },
+      { word: "〜かけ", reading: "かけ", type: "Tiếp tố", meaning: "Đang làm dở, chưa hoàn thành",
+        example: "食べかけのパン。\n(Chiếc bánh mì ăn dở.)" },
+      { word: "〜あき", reading: "あき", type: "Tiếp tố", meaning: "Trống, rỗng, còn chỗ",
+        example: "空き缶を捨てる。\n(Vứt lon rỗng.)" },
+      { word: "〜ぬけ", reading: "ぬけ", type: "Tiếp tố", meaning: "Thiếu, sót, lọt qua",
+        example: "抜け道を使う。\n(Đi đường tắt.)" }
+    ],
+    choices: ["かけ", "あき", "ぬけ", "おき"],
+    answer: 3,
+    explanation: `<strong>正解：④ おき → 一日おき（いちにちおき）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>〜おき</strong> = cách ~, chu kỳ ~ → 一日おき = cách một ngày (ngày chẵn, ngày lẻ)<br>
+・Ví dụ: 二時間おき = cứ 2 tiếng một lần; 一週間おき = mỗi tuần<br>
+・<strong>〜かけ</strong> = đang làm dở (食べかけ, 書きかけ) → không liên quan đến thời gian định kỳ<br>
+・<strong>〜あき</strong> = trống/rỗng (空き地, 空き缶) → không dùng với thời gian<br>
+・<strong>〜ぬけ</strong> = thiếu/lọt (抜け道) → không liên quan<br>
+→ Câu hoàん chỉnh: 父は一日に<strong>おき</strong>ジョギングをしている。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `試験が近くなってきたので、アルバイトはやめて、勉強に<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>することにした。`,
+    vocab: [
+      { word: "特定", reading: "とくてい", type: "Danh từ / Động từ / Tính từ -na", meaning: "Xác định cụ thể, chỉ định (một đối tượng cụ thể)",
+        example: "特定の人物を疑う。\n(Nghi ngờ một người cụ thể.)" },
+      { word: "統一", reading: "とういつ", type: "Danh từ / Động từ", meaning: "Thống nhất, hợp nhất",
+        example: "デザインを統一する。\n(Thống nhất thiết kế.)" },
+      { word: "専念", reading: "せんねん", type: "Danh từ / Động từ", meaning: "Tập trung toàn tâm toàn ý, dồn hết tâm trí vào ~",
+        example: "研究に専念する。\n(Toàn tâm toàn ý vào nghiên cứu.)" },
+      { word: "注目", reading: "ちゅうもく", type: "Danh từ / Động từ", meaning: "Chú ý, để ý, chú mục vào",
+        example: "新しい技術に注目する。\n(Chú ý đến công nghệ mới.)" }
+    ],
+    choices: ["特定", "統一", "専念", "注目"],
+    answer: 2,
+    explanation: `<strong>正解：③ 専念（せんねん）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>専念する</strong> = dồn toàn bộ tâm trí vào ~ → 〜に専念する: bỏ việc làm thêm để tập trung học ✓<br>
+・Mẫu cố định: 〜に専念する (toàn tâm cho ~), 〜に専念することにした (quyết định tập trung vào ~)<br>
+・<strong>特定する</strong> = xác định cụ thể (ai/cái gì) → không dùng theo mẫu 勉強に特定する<br>
+・<strong>統一する</strong> = thống nhất (nhiều thứ thành một) → không dùng theo mẫu 〜に統一する theo nghĩa này<br>
+・<strong>注目する</strong> = chú ý đến ~ (quan sát/theo dõi) → 勉強に注目する nghĩa không tự nhiên<br>
+→ Câu hoàん chỉnh: 勉強に<strong>専念</strong>することにした。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `この小説は今の時代を<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>した作品だ。`,
+    vocab: [
+      { word: "反映", reading: "はんえい", type: "Danh từ / Động từ", meaning: "Phản ánh (thực tế/tình hình vào tác phẩm/sự vật)",
+        example: "社会問題を反映した映画。\n(Bộ phim phản ánh vấn đề xã hội.)" },
+      { word: "放映", reading: "ほうえい", type: "Danh từ / Động từ", meaning: "Phát sóng (trên truyền hình)",
+        example: "ドラマが放映された。\n(Bộ phim truyền hình đã được phát sóng.)" },
+      { word: "引用", reading: "いんよう", type: "Danh từ / Động từ", meaning: "Trích dẫn (lời nói, văn bản của người khác)",
+        example: "論文で名言を引用する。\n(Trích dẫn danh ngôn trong luận văn.)" },
+      { word: "採用", reading: "さいよう", type: "Danh từ / Động từ", meaning: "Áp dụng, lựa chọn sử dụng; tuyển dụng",
+        example: "新しい方法を採用する。\n(Áp dụng phương pháp mới.)" }
+    ],
+    choices: ["反映", "放映", "引用", "採用"],
+    answer: 0,
+    explanation: `<strong>正解：① 反映（はんえい）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>反映する</strong> = phản ánh (thực tế → tác phẩm) → 時代を反映した作品 = tác phẩm phản ánh thời đại ✓<br>
+・<strong>放映する</strong> = phát sóng truyền hình (chỉ nói về việc chiếu lên TV, không liên quan đến nội dung)<br>
+・<strong>引用する</strong> = trích dẫn (dùng lại lời người khác) → không nói 時代を引用した<br>
+・<strong>採用する</strong> = chọn áp dụng / tuyển dụng → không nói 時代を採用した<br>
+→ Câu hoàん chỉnh: 今の時代を<strong>反映</strong>した作品だ。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `気持ちが違えば、見<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>風景も新鮮に感じるときがある。`,
+    vocab: [
+      { word: "見慣れる", reading: "みなれる", type: "Động từ nhóm II", meaning: "Quen mắt, đã nhìn quen, không còn thấy lạ",
+        example: "見慣れた景色が急に美しく見えた。\n(Khung cảnh quen thuộc bỗng trở nên đẹp.)" },
+      { word: "見こなす", reading: "みこなす", type: "Động từ", meaning: "Mặc (thời trang) đẹp/khéo",
+        example: "ファッションを見こなす。\n(Mặc thời trang đẹp.)" },
+      { word: "見かえす", reading: "みかえす", type: "Động từ", meaning: "Nhìn lại; cho thấy lại, trả đũa",
+        example: "バカにした人を見かえしてやる。\n(Sẽ chứng minh lại cho người khinh thường thấy.)" },
+      { word: "見すぎる", reading: "みすぎる", type: "Động từ", meaning: "Nhìn quá nhiều",
+        example: "テレビを見すぎた。\n(Xem TV quá nhiều.)" }
+    ],
+    choices: ["こなした", "なれた", "かえた", "すぎた"],
+    answer: 1,
+    explanation: `<strong>正解：② なれた → 見慣れた（みなれた）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>見慣れた</strong> = đã nhìn quen, cảnh quen thuộc → "dù là cảnh quen mắt mà cũng cảm thấy mới mẻ khi tâm trạng khác"<br>
+・Đây là mẫu đối lập đẹp: 見慣れた風景 ↔ 新鮮に感じる → khi tâm trạng thay đổi, cái quen trở nên mới<br>
+・<strong>見こなした</strong> = mặc đẹp (liên quan đến thời trang, không phải phong cảnh)<br>
+・<strong>見かえた</strong> → 見かえす (nhìn lại/trả đũa) → không tự nhiên trong ngữ cảnh này<br>
+・<strong>見すぎた</strong> = nhìn quá nhiều (nghĩa đơn giản, không phù hợp với ý tứ câu)<br>
+→ Câu hoàん chỉnh: 見<strong>なれた</strong>風景も新鮮に感じるときがある。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `先生、大変ご<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>しております。去年の卒業生、田中です。`,
+    vocab: [
+      { word: "ご無沙汰", reading: "ごぶさた", type: "Danh từ / Động từ (kính ngữ)", meaning: "Lâu không liên lạc/thăm hỏi — lời xin lỗi vì đã lâu không liên hệ",
+        example: "大変ご無沙汰しております。\n(Xin lỗi vì đã lâu không liên hệ.)" },
+      { word: "ご無事", reading: "ごぶじ", type: "Danh từ (kính ngữ)", meaning: "Bình an, không có chuyện gì",
+        example: "ご無事でよかったです。\n(May mà bình an vô sự.)" },
+      { word: "不正", reading: "ふせい", type: "Danh từ / Tính từ -na", meaning: "Bất chính, gian lận, không hợp lệ",
+        example: "不正アクセスを防ぐ。\n(Ngăn chặn truy cập bất hợp lệ.)" },
+      { word: "不良", reading: "ふりょう", type: "Danh từ / Tính từ -na", meaning: "Kém chất lượng; hư hỏng; thanh niên hư",
+        example: "不良品を返品する。\n(Trả lại hàng kém chất lượng.)" }
+    ],
+    choices: ["無沙汰", "無事", "不正", "不良"],
+    answer: 0,
+    explanation: `<strong>正解：① 無沙汰（ぶさた）→ ご無沙汰しております</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>ご無沙汰しております</strong> = xin lỗi vì lâu không liên hệ → câu chào hỏi lịch sự khi gặp lại sau thời gian dài ✓<br>
+・Đây là mẫu cố định: 大変ご無沙汰しております → thường dùng khi gặp lại thầy cô, cấp trên, người quen lâu ngày<br>
+・<strong>ご無事</strong> = bình an (hỏi thăm xem có ổn không) → không dùng khi tự giới thiệu lại<br>
+・<strong>不正・不良</strong> = mang nghĩa tiêu cực/pháp lý → hoàn toàn không phù hợp<br>
+→ Câu hoàん chỉnh: 大変ご<strong>無沙汰</strong>しております。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `仕事に優先順位をつけて<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>にやっていくことが大事だ。`,
+    vocab: [
+      { word: "順調", reading: "じゅんちょう", type: "Tính từ -na / Danh từ", meaning: "Thuận lợi, tiến triển tốt, suôn sẻ",
+        example: "仕事が順調に進んでいる。\n(Công việc đang tiến triển thuận lợi.)" },
+      { word: "順番", reading: "じゅんばん", type: "Danh từ", meaning: "Thứ tự, lần lượt theo thứ tự",
+        example: "順番に発表する。\n(Trình bày lần lượt theo thứ tự.)" },
+      { word: "順序", reading: "じゅんじょ", type: "Danh từ", meaning: "Trình tự, thứ tự (các bước/quy trình)",
+        example: "手順の順序を守る。\n(Tuân theo trình tự các bước.)" },
+      { word: "順余", reading: "じゅんよ", type: "Không tồn tại", meaning: "—",
+        example: "—" }
+    ],
+    choices: ["順調", "順番", "順序", "順余"],
+    answer: 1,
+    explanation: `<strong>正解：② 順番（じゅんばん）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>順番に</strong> = lần lượt theo thứ tự → 優先順位をつけて順番に = đặt mức ưu tiên rồi làm lần lượt ✓<br>
+・<strong>順調に</strong> = thuận lợi/suôn sẻ (mô tả tiến độ tốt) → 順調にやる = làm suôn sẻ (không nhấn mạnh thứ tự)<br>
+・<strong>順序に</strong> → ít tự nhiên hơn 順番に trong ngữ cảnh "làm lần lượt từng việc"; 順序 thường nhấn mạnh trình tự quy trình<br>
+・<strong>順余</strong> → không tồn tại<br>
+→ Câu hoàん chỉnh: 優先順位をつけて<strong>順番</strong>にやっていくことが大事だ。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `過ぎたことでくよくよしないで、前向きな思考<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>に変えよう。`,
+    vocab: [
+      { word: "パターン", reading: "パターン", type: "Danh từ (ngoại lai)", meaning: "Kiểu mẫu, khuôn mẫu, mô hình (pattern)",
+        example: "思考パターンを変える。\n(Thay đổi khuôn mẫu tư duy.)" },
+      { word: "パイプ", reading: "パイプ", type: "Danh từ (ngoại lai)", meaning: "Ống dẫn; kênh liên lạc/quan hệ",
+        example: "政界にパイプを持つ。\n(Có mối quan hệ trong giới chính trị.)" },
+      { word: "プラン", reading: "プラン", type: "Danh từ (ngoại lai)", meaning: "Kế hoạch, phương án (plan)",
+        example: "旅行プランを立てる。\n(Lập kế hoạch du lịch.)" },
+      { word: "バター", reading: "バター", type: "Danh từ (ngoại lai)", meaning: "Bơ (butter)",
+        example: "パンにバターを塗る。\n(Phết bơ lên bánh mì.)" }
+    ],
+    choices: ["パイプ", "プラン", "パターン", "バター"],
+    answer: 2,
+    explanation: `<strong>正解：③ パターン</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>思考パターン</strong> = khuôn mẫu/kiểu tư duy → cụm từ cố định trong tiếng Nhật ✓<br>
+・Câu ý nghĩa: "thay đổi kiểu tư duy sang tích cực thay vì lo lắng về chuyện đã qua"<br>
+・<strong>パイプ</strong> = ống dẫn/kênh quan hệ → 思考パイプ không tồn tại<br>
+・<strong>プラン</strong> = kế hoạch → 思考プラン không tự nhiên<br>
+・<strong>バター</strong> = bơ ăn → không liên quan đến tư duy<br>
+→ Câu hoàん chỉnh: 前向きな思考<strong>パターン</strong>に変えよう。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `大阪出張のついでに、京都まで足を<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>紅葉狩に行った。`,
+    vocab: [
+      { word: "足を伸ばす", reading: "あしをのばす", type: "Cụm động từ (thành ngữ)", meaning: "Tranh thủ đi xa hơn, ghé thêm (một nơi gần đó)",
+        example: "東京に来たついでに鎌倉まで足を伸ばした。\n(Nhân dịp đến Tokyo, tranh thủ ghé thêm Kamakura.)" },
+      { word: "足を引っ張る", reading: "あしをひっぱる", type: "Cụm động từ (thành ngữ)", meaning: "Kéo chân (ai đó) = cản trở người khác",
+        example: "チームの足を引っ張らないようにしよう。\n(Đừng cản trở nhóm.)" },
+      { word: "足を運ぶ", reading: "あしをはこぶ", type: "Cụm động từ (thành ngữ)", meaning: "Đến tận nơi, đặc biệt đến thăm",
+        example: "わざわざ足を運んでくれてありがとう。\n(Cảm ơn bạn đã đặc biệt ghé đến.)" },
+      { word: "足を洗う", reading: "あしをあらう", type: "Cụm động từ (thành ngữ)", meaning: "Rửa tay gác kiếm, từ bỏ nghề/thói xấu",
+        example: "悪い仲間と足を洗った。\n(Đã từ bỏ nhóm bạn xấu.)" }
+    ],
+    choices: ["ひっぱって", "のばして", "はこんで", "あらって"],
+    answer: 1,
+    explanation: `<strong>正解：② のばして → 足を伸ばして（あしをのばして）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>足を伸ばす</strong> = tranh thủ đi thêm (một chút xa hơn) → nhân dịp đi công tác Osaka, ghé thêm Kyoto ✓<br>
+・Mẫu: 〜のついでに、〜まで足を伸ばす = ghé thêm nơi khác khi đã ở gần đó<br>
+・<strong>足を引っ張る</strong> = cản trở (thành ngữ tiêu cực, không dùng khi đi chơi)<br>
+・<strong>足を運ぶ</strong> = đặc biệt đến thăm (nhấn mạnh sự cố gắng đến, thường dùng cho người khác)<br>
+・<strong>足を洗う</strong> = từ bỏ thói xấu/nghề cũ (không liên quan đến du lịch)<br>
+→ Câu hoàん chỉnh: 京都まで足を<strong>のばして</strong>紅葉狩に行った。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `自分のやったことがきちんと評価されると、仕事への<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>も高まる。`,
+    vocab: [
+      { word: "活気", reading: "かっき", type: "Danh từ", meaning: "Sự sôi động, sinh khí, không khí náo nhiệt",
+        example: "市場は活気にあふれている。\n(Khu chợ tràn đầy sinh khí.)" },
+      { word: "根気", reading: "こんき", type: "Danh từ", meaning: "Sự kiên nhẫn, bền bỉ, nhẫn nại",
+        example: "根気よく続ける。\n(Kiên nhẫn tiếp tục.)" },
+      { word: "意図", reading: "いと", type: "Danh từ / Động từ", meaning: "Ý định, mục đích, chủ tâm",
+        example: "悪意図はなかった。\n(Không có ý định xấu.)" },
+      { word: "意欲", reading: "いよく", type: "Danh từ", meaning: "Ý chí, động lực, ham muốn làm việc",
+        example: "仕事への意欲が高まった。\n(Động lực làm việc tăng lên.)" }
+    ],
+    choices: ["活気", "根気", "意図", "意欲"],
+    answer: 3,
+    explanation: `<strong>正解：④ 意欲（いよく）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>意欲</strong> = động lực, ý chí (nội tâm của cá nhân) → 仕事への意欲が高まる = động lực làm việc tăng ✓<br>
+・Mẫu cố định: 〜への意欲が高まる / 意欲的に取り組む<br>
+・<strong>活気</strong> = sinh khí (của nơi chốn/tập thể) → 職場に活気がある (không nói 意欲が高まる theo nghĩa này)<br>
+・<strong>根気</strong> = kiên nhẫn (đức tính bền bỉ) → 根気が高まる không tự nhiên; 根気強い mới đúng<br>
+・<strong>意図</strong> = ý định cụ thể (thường trung tính/tiêu cực) → không nói 仕事への意図が高まる<br>
+→ Câu hoàん chỉnh: 仕事への<strong>意欲</strong>も高まる。`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-12.html", label: "← Từ vựng · Bài 12" },
+  next: { url: "vocab-14.html", label: "Từ vựng · Bài 14 →" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 19</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ⑲</div>
+  <h1>N2 語彙<span>クイズ</span>⑲</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 19 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>違反</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① ルールに違反して退場になった選手が３人もいる。<br>
+② 子供のころは皆、親に違反する時期があるものだ。<br>
+③ 彼の意見に違反する人はあまりいなかった。<br>
+④ 見た目がよくないが、予想に違反しておいしかった。
+</small>`,
+    vocab: [
+      { word: "違反", reading: "いはん", type: "Danh từ / Động từ", meaning: "Vi phạm (quy tắc, luật pháp)",
+        example: "交通違反をする。\n(Vi phạm luật giao thông.)" },
+      { word: "退場", reading: "たいじょう", type: "Danh từ / Động từ", meaning: "Bị đuổi ra ngoài; rời sân/sân khấu",
+        example: "反則で退場になった。\n(Bị đuổi vì phạm lỗi.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 0,
+    explanation: `<strong>正解：① ルールに違反して退場になった選手が３人もいる。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>違反する</strong> = vi phạm (quy tắc/luật) → 〜に違反する (vi phạm ~) ✓<br>
+・① ルールに違反する = vi phạm luật → dùng đúng với quy tắc/luật lệ<br>
+・② 親に違反する → sai: "phản kháng cha mẹ" phải dùng 反抗する（はんこうする）<br>
+・③ 意見に違反する → sai: "phản đối ý kiến" phải dùng 反対する（はんたいする）<br>
+・④ 予想に違反して → sai: "trái với dự đoán" phải dùng 予想に反して（はんして）<br>
+→ 違反 = <strong>vi phạm quy tắc/luật pháp</strong> (〜に違反する: giao通違反・規則違反)`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>ふさわしい</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① 中川さんの指摘は、いつもふさわしいです。<br>
+② 彼は責任感が強く、この仕事のリーダーにふさわしい。<br>
+③ 私にふさわしいサイズの帽子がやっと見つかった。<br>
+④ 私、あの人とは性格がふさわしいんです。
+</small>`,
+    vocab: [
+      { word: "ふさわしい（相応しい）", reading: "ふさわしい", type: "Tính từ -i", meaning: "Phù hợp, xứng đáng (với vai trò/địa vị/tình huống)",
+        example: "場にふさわしい服装をする。\n(Mặc trang phục phù hợp với dịp.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 1,
+    explanation: `<strong>正解：② 彼は責任感が強く、この仕事のリーダーにふさわしい。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>ふさわしい</strong> = phù hợp, xứng đáng (với vai trò/địa vị) → 〜にふさわしい ✓<br>
+・② リーダーにふさわしい = xứng đáng làm lãnh đạo → đúng ngữ cảnh về tư cách/phẩm chất<br>
+・① 指摘がふさわしい → sai: "nhận xét chính xác/đúng đắn" phải dùng 的確だ（てきかくだ）<br>
+・③ サイズがふさわしい → sai: "size vừa với tôi" phải dùng 合う（あう）/ ぴったりだ<br>
+・④ 性格がふさわしい → sai: "hợp tính cách" phải dùng 合う（あう）/ 気が合う<br>
+→ ふさわしい = <strong>xứng đáng/phù hợp với vai trò hay địa vị</strong> (người ↔ vị trí/trường hợp)`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>利益</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① 彼は最近毎日運動を続けていると言っていたが、全然利益がないようだ。<br>
+② ２０００万円借りたら利益をいくらつけて返すことになりますか。<br>
+③ 店で買うよりもインターネットを利益して買うほうが２０００円も安い。<br>
+④ それが売れれば２０００万円の利益になる。
+</small>`,
+    vocab: [
+      { word: "利益", reading: "りえき", type: "Danh từ", meaning: "Lợi nhuận, lợi ích (tài chính/kinh doanh)",
+        example: "利益を上げる。\n(Tăng lợi nhuận.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 3,
+    explanation: `<strong>正解：④ それが売れれば２０００万円の利益になる。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>利益（りえき）</strong> = lợi nhuận, tiền lời thu được → 〜の利益になる = sẽ là lợi nhuận ~ ✓<br>
+・④ 売れれば利益になる = bán được thì thu lợi nhuận → cách dùng đúng trong kinh doanh<br>
+・① 全然利益がない → sai: "không có hiệu quả" phải dùng 効果（こうか）/ 成果（せいか）<br>
+・② 利益をつけて返す → sai: "lãi suất" phải dùng 利子（りし）/ 利息（りそく）<br>
+・③ インターネットを利益して → sai: "sử dụng internet" phải dùng 利用して（りようして）<br>
+→ 利益 = <strong>lợi nhuận kinh doanh/tài chính</strong> (≠ 利子/利息/効果/利用)`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>方針</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① 台風の方針がそれたので、特に被害は出なかった。<br>
+② 私の今年の方針は漢字を６００字覚えることだ。<br>
+③ この料理を作る方針を教えてください。<br>
+④ 教育に関する政府の方針が大きく変わった。
+</small>`,
+    vocab: [
+      { word: "方針", reading: "ほうしん", type: "Danh từ", meaning: "Phương châm, chính sách, đường lối (của tổ chức/cá nhân)",
+        example: "経営方針を決める。\n(Quyết định phương châm kinh doanh.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 3,
+    explanation: `<strong>正解：④ 教育に関する政府の方針が大きく変わった。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>方針（ほうしん）</strong> = phương châm, đường lối chính sách → dùng cho tổ chức (chính phủ, công ty) hoặc cá nhân về mục tiêu lớn<br>
+・④ 政府の方針 = đường lối chính sách của chính phủ → cách dùng đúng ✓<br>
+・① 台風の方針 → sai: "đường đi của bão" phải dùng 進路（しんろ）<br>
+・② 今年の方針は〜覚えること → gượng gạo: mục tiêu cá nhân nhỏ thường dùng 目標（もくひょう）<br>
+・③ 料理を作る方針 → sai: "cách/quy trình làm món ăn" phải dùng 方法（ほうほう）/ 手順（てじゅん）<br>
+→ 方針 = <strong>phương châm/đường lối của tổ chức hay chính sách lớn</strong>`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>はずす</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① 歯医者で虫歯をはずしてもらった。<br>
+② 腕時計をはずして、机の上に置いた。<br>
+③ 家に入る前に、靴の汚れをはずした。<br>
+④ 食事の後、テーブルから皿をはずした。
+</small>`,
+    vocab: [
+      { word: "はずす（外す）", reading: "はずす", type: "Động từ nhóm I", meaning: "Tháo ra, gỡ ra (thứ đang đeo/gắn); tránh ra; bỏ lỡ",
+        example: "眼鏡をはずす。\n(Tháo kính ra.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 1,
+    explanation: `<strong>正解：② 腕時計をはずして、机の上に置いた。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>はずす</strong> = tháo ra (thứ đang đeo/gắn trên người) → 腕時計をはずす = tháo đồng hồ ✓<br>
+・Dùng cho: 眼鏡・指輪・腕時計・ネクタイをはずす<br>
+・① 虫歯をはずす → sai: "nhổ/điều trị sâu răng" phải dùng 抜く（ぬく）/ 治療する<br>
+・③ 靴の汚れをはずす → sai: "lau sạch bùn giày" phải dùng 落とす（おとす）/ 取る（とる）<br>
+・④ テーブルから皿をはずす → sai: "dọn đĩa" phải dùng 下げる（さげる）/ 片付ける<br>
+→ はずす = <strong>tháo ra thứ đang gắn/đeo</strong> (腕時計・眼鏡・ネクタイ・ボタンをはずす)`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>生き生き</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① わたしは体が生き生きしているうちに、あちこち旅行をしたいと思う。<br>
+② 子供が熱を出したが、薬を飲ませたらだんだん生き生きしてきた。<br>
+③ 彼は、好きなサッカーをしているときが一番生き生きしている。<br>
+④ 記憶が生き生きしているので、今なら間違えずに答えることができる。
+</small>`,
+    vocab: [
+      { word: "生き生き", reading: "いきいき", type: "Phó từ / Trạng từ mô phỏng", meaning: "Tươi tắn, sống động, đầy sức sống",
+        example: "生き生きと働く。\n(Làm việc với tinh thần sống động.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 2,
+    explanation: `<strong>正解：③ 彼は、好きなサッカーをしているときが一番生き生きしている。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>生き生き</strong> = tươi tắn, sống động, đầy nhiệt huyết (biểu hiện qua hành động/vẻ mặt) ✓<br>
+・③ 好きなことをしているとき生き生きする = khi làm điều mình thích thì trở nên sống động<br>
+・① 体が生き生きしているうちに → sai: "khi còn khỏe mạnh" phải dùng 元気（げんき）なうちに<br>
+・② 薬を飲ませたら生き生きしてきた → sai: "hồi phục sau khi uống thuốc" phải dùng 元気になった<br>
+・④ 記憶が生き生きしている → sai: "ký ức còn rõ" phải dùng 鮮明（せんめい）/ はっきり<br>
+→ 生き生き = <strong>vẻ sống động, tươi tắn</strong> (tâm trạng/biểu hiện khi đang làm điều yêu thích)`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>質素</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① この文章は質素で、とてもわかりやすい。<br>
+② もう少し値段の質素なツアーはありませんか。<br>
+③ 経験は質素でも、やる気がある人を採用したい。<br>
+④ 無駄なものを買わずに、質素な生活を送っている。
+</small>`,
+    vocab: [
+      { word: "質素", reading: "しっそ", type: "Tính từ -na", meaning: "Giản dị, đơn giản, tiết kiệm (lối sống không xa hoa)",
+        example: "質素な生活を送る。\n(Sống cuộc sống giản dị.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 3,
+    explanation: `<strong>正解：④ 無駄なものを買わずに、質素な生活を送っている。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>質素（しっそ）</strong> = giản dị, không xa hoa, tiết kiệm (về lối sống/sinh hoạt) ✓<br>
+・④ 質素な生活 = cuộc sống giản dị, không lãng phí → cách dùng đúng<br>
+・① 文章が質素 → sai: "văn phong đơn giản/dễ hiểu" phải dùng シンプル / わかりやすい<br>
+・② 値段が質素 → sai: "giá rẻ" phải dùng 安い（やすい）/ 手頃（てごろ）<br>
+・③ 経験が質素 → sai: "ít kinh nghiệm" phải dùng 少ない（すくない）/ 浅い（あさい）<br>
+→ 質素 = <strong>giản dị, tiết kiệm trong lối sống</strong> (質素な生活・食事・暮らし)`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>普及</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① 携帯電話は急速に普及してきている。<br>
+② 今、若者の間ではこんなうわさが普及している。<br>
+③ この病気は人から人へ普及する可能性がある。<br>
+④ あの大臣の発言は国際問題にまで普及した。
+</small>`,
+    vocab: [
+      { word: "普及", reading: "ふきゅう", type: "Danh từ / Động từ", meaning: "Phổ biến rộng rãi, lan rộng (công nghệ/văn hóa/đồ dùng)",
+        example: "スマートフォンが普及した。\n(Điện thoại thông minh đã trở nên phổ biến.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 0,
+    explanation: `<strong>正解：① 携帯電話は急速に普及してきている。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>普及する</strong> = phổ biến rộng rãi (sản phẩm/công nghệ/văn hóa lan ra toàn xã hội) ✓<br>
+・① 携帯電話が普及する = điện thoại di động trở nên phổ biến khắp nơi<br>
+・② うわさが普及する → sai: "tin đồn lan rộng" phải dùng 広まる（ひろまる）/ 流れる<br>
+・③ 病気が普及する → sai: "bệnh lây lan" phải dùng 感染する（かんせんする）/ 広がる<br>
+・④ 発言が国際問題に普及した → sai: "leo thang thành vấn đề quốc tế" phải dùng 発展する / 広がる<br>
+→ 普及 = <strong>công nghệ/sản phẩm lan rộng toàn xã hội</strong> (インターネット・電化製品・文化が普及)`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>催促</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① 外国への興味は言葉を学ぶ催促の一つになります。<br>
+② 商品がなかなか届かないので、催促の電話をかけた。<br>
+③ 山下先生がパーティーへの催促の手紙を書いた。<br>
+④ 次の会議の催促の日をもっと早くしましょう。
+</small>`,
+    vocab: [
+      { word: "催促", reading: "さいそく", type: "Danh từ /動詞", meaning: "Thúc giục, nhắc nhở (người khác làm điều gì đó chưa xong)",
+        example: "返事を催促する。\n(Thúc giục hồi âm.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 1,
+    explanation: `<strong>正解：② 商品がなかなか届かないので、催促の電話をかけた。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>催促（さいそく）</strong> = thúc giục, nhắc nhở người chưa thực hiện điều đã hứa/đã yêu cầu<br>
+・② 催促の電話 = điện thoại thúc giục → hàng chưa đến → gọi điện giục ✓<br>
+・① 言葉を学ぶ催促 → sai: "động lực học ngôn ngữ" phải dùng きっかけ / 動機（どうき）<br>
+・③ パーティーへの催促の手紙 → sai: "thư mời tham dự tiệc" phải dùng 招待状（しょうたいじょう）<br>
+・④ 会議の催促の日 → sai: "ngày họp tiếp theo" phải dùng 日程（にってい）/ 次回の日<br>
+→ 催促 = <strong>thúc giục vì chưa nhận được thứ đã yêu cầu</strong> (支払い・返事・納品の催促)`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>手入れ</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① ほぼ毎日入院中の祖母の手入れをしに病院へ行きます。<br>
+② 街の大きなスーパーなら手入れできる食材です。<br>
+③ 父がこの庭の草木の手入れをしている。<br>
+④ 人数が少なかったので手入れのままの料理がテーブルに残った。
+</small>`,
+    vocab: [
+      { word: "手入れ", reading: "ていれ", type: "Danh từ / Động từ", meaning: "Chăm sóc, bảo dưỡng (vật/cây cối/công cụ để giữ trạng thái tốt)",
+        example: "庭の手入れをする。\n(Chăm sóc khu vườn.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 2,
+    explanation: `<strong>正解：③ 父がこの庭の草木の手入れをしている。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>手入れ（ていれ）</strong> = chăm sóc, bảo dưỡng (cây cối, đồ vật, thú nuôi) để giữ trạng thái tốt ✓<br>
+・③ 庭の草木の手入れ = chăm sóc cây trong vườn → cách dùng đúng và phổ biến nhất<br>
+・① 祖母の手入れ → sai: "chăm sóc/điều dưỡng người" phải dùng 世話（せわ）/ 介護（かいご）<br>
+・② 食材が手入れできる → sai: "có thể mua được nguyên liệu" phải dùng 手に入る（てにはいる）<br>
+・④ 手入れのままの料理 → sai: 手入れ không có nghĩa "chưa đụng vào"; "thức ăn còn nguyên" phải dùng 手つかずの<br>
+→ 手入れ = <strong>chăm sóc/bảo dưỡng vật/cây cối</strong> (庭・刀・皮製品・髪の手入れ)`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-18.html", label: "← Từ vựng · Bài 18" },
+  next: { url: "vocab-20.html", label: "Từ vựng · Bài 20 →" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

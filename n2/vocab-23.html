@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 23</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ㉓</div>
+  <h1>N2 語彙<span>クイズ</span>㉓</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 23 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `駅前を歩いていたら、テレビのリポーターに突然　<span class="blank">___</span>　、インタビューを受けた。`,
+    vocab: [
+      { word: "呼び止める", reading: "よびとめる", type: "Động từ nhóm II", meaning: "Gọi giật lại, dừng ai lại bằng cách gọi",
+        example: "警察官に呼び止められた。\n(Bị cảnh sát gọi giật lại.)" },
+      { word: "聞き取る", reading: "ききとる", type: "Động từ nhóm I", meaning: "Nghe và hiểu rõ, nghe ra",
+        example: "電話の声が聞き取れなかった。\n(Không nghe rõ giọng qua điện thoại.)" },
+      { word: "問い合わせる", reading: "といあわせる", type: "Động từ nhóm II", meaning: "Hỏi thăm, liên hệ hỏi thông tin",
+        example: "詳細は電話で問い合わせてください。\n(Hãy gọi điện hỏi thêm chi tiết.)" },
+      { word: "見分ける", reading: "みわける", type: "Động từ nhóm II", meaning: "Phân biệt, nhận ra sự khác nhau",
+        example: "双子を見分けるのは難しい。\n(Khó mà phân biệt hai đứa sinh đôi.)" }
+    ],
+    choices: ["聞き取られて", "呼び止められて", "問い合わせられて", "見分けられて"],
+    answer: 1,
+    explanation: `<strong>正解：② 呼び止められて（よびとめられて）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>呼び止める（よびとめる）</strong> = gọi giật lại, dừng lại để nói chuyện → thụ động 呼び止められる ✓<br>
+・テレビリポーターが見知らぬ人を「呼び止める」のは自然な文脈<br>
+・<strong>聞き取られる</strong> = bị nghe ra → chủ đề thường là âm thanh/lời nói, không phải người<br>
+・<strong>問い合わせられる</strong> = bị hỏi thăm → mang tính chính thức hơn, thường qua điện thoại/văn phòng<br>
+・<strong>見分けられる</strong> = bị nhận ra/phân biệt → hàm ý nhận dạng danh tính, không phải dừng lại để phỏng vấn<br>
+→ 突然呼び止められてインタビューを受ける = bị phóng viên gọi giật lại bất ngờ và được phỏng vấn`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `まだ冷蔵庫がない時代、ここに食べ物を　<span class="blank">___</span>　したそうです。`,
+    vocab: [
+      { word: "金蔵", reading: "かなぐら／きんぞう", type: "Danh từ", meaning: "Kho chứa tài sản/đồ quý; hầm đá tự nhiên giữ lạnh (thời xưa dùng bảo quản thực phẩm)",
+        example: "金蔵に大切なものをしまう。\n(Cất đồ quý vào kho.)" },
+      { word: "倉庫", reading: "そうこ", type: "Danh từ", meaning: "Nhà kho, kho chứa hàng",
+        example: "荷物を倉庫に入れる。\n(Cất hàng vào kho.)" },
+      { word: "寝台", reading: "しんだい", type: "Danh từ", meaning: "Giường nằm (thường trên tàu/xe)",
+        example: "寝台列車で旅行する。\n(Đi du lịch bằng tàu có giường nằm.)" }
+    ],
+    choices: ["倉庫", "地帯", "金蔵", "寝台"],
+    answer: 2,
+    explanation: `<strong>正解：③ 金蔵（かなぐら）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>金蔵（かなぐら）</strong> = kho đá/hầm đá giữ nhiệt độ mát tự nhiên → thời xưa dùng để bảo quản thực phẩm thay tủ lạnh ✓<br>
+・文脈：「まだ冷蔵庫がない時代」→ cần nơi giữ lạnh tự nhiên<br>
+・<strong>倉庫（そうこ）</strong> = kho chứa hàng thông thường → không có chức năng giữ lạnh<br>
+・<strong>地帯（ちたい）</strong> = vùng/khu vực địa lý → không phải nơi chứa đồ<br>
+・<strong>寝台（しんだい）</strong> = giường nằm trên tàu → không liên quan đến bảo quản thực phẩm<br>
+→ 金蔵にした = cất giữ trong hầm đá (thay tủ lạnh thời xưa)`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `ゴルフの初心者から　<span class="blank">___</span>　者までレベルに合わせて上達方法を教える。`,
+    vocab: [
+      { word: "上級", reading: "じょうきゅう", type: "Danh từ / Tính từ", meaning: "Trình độ cao, cấp độ nâng cao",
+        example: "上級者向けのコース。\n(Khóa học dành cho người trình độ cao.)" },
+      { word: "上等", reading: "じょうとう", type: "Danh từ / Tính từ -na", meaning: "Hạng nhất, chất lượng cao cấp",
+        example: "上等な料理を食べた。\n(Đã ăn món ăn hạng sang.)" },
+      { word: "高級", reading: "こうきゅう", type: "Danh từ / Tính từ -na", meaning: "Cao cấp, sang trọng (đắt tiền)",
+        example: "高級レストランで食事した。\n(Ăn ở nhà hàng cao cấp.)" }
+    ],
+    choices: ["上級", "上等", "高等", "高級"],
+    answer: 0,
+    explanation: `<strong>正解：① 上級（じょうきゅう）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>上級（じょうきゅう）</strong> = trình độ/cấp độ cao trong lĩnh vực kỹ năng → 上級者 ✓<br>
+・初心者（beginner）↔ 上級者（advanced/expert） = cặp từ đối lập chuẩn<br>
+・<strong>上等（じょうとう）</strong> = chất lượng tốt/hạng nhất → nói về phẩm chất đồ vật, không dùng cho người học<br>
+・<strong>高等（こうとう）</strong> = cao đẳng, cấp cao (thường trong tên trường: 高等学校) → không dùng làm tính từ cho người<br>
+・<strong>高級（こうきゅう）</strong> = sang trọng, đắt tiền → nói về giá cả/chất lượng vật phẩm, không phải kỹ năng<br>
+→ 上級者 = người có trình độ nâng cao (trong thể thao/kỹ năng)`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `先週北京へ行ったとき、友達が案内　<span class="blank">___</span>　をつとめてくれた。`,
+    vocab: [
+      { word: "案内役", reading: "あんないやく", type: "Danh từ", meaning: "Người hướng dẫn, vai trò dẫn đường",
+        example: "彼が私たちの案内役をしてくれた。\n(Anh ấy đã làm hướng dẫn cho chúng tôi.)" },
+      { word: "役をつとめる", reading: "やくをつとめる", type: "Cụm động từ", meaning: "Đảm nhiệm vai trò/chức vụ",
+        example: "司会の役をつとめる。\n(Đảm nhiệm vai trò người dẫn chương trình.)" }
+    ],
+    choices: ["長", "務", "師", "役"],
+    answer: 3,
+    explanation: `<strong>正解：④ 役（やく）→ 案内役（あんないやく）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>案内役（あんないやく）</strong> = người đóng vai trò hướng dẫn → 役をつとめる ✓<br>
+・「〜役をつとめる」= đảm nhiệm vai trò〜 → cụm cố định<br>
+・<strong>案内長</strong> = không phải từ tồn tại<br>
+・<strong>案内務</strong> = không phải từ tồn tại<br>
+・<strong>案内師</strong> = không phải từ tồn tại (師 dùng cho nghề: 医師・講師・調理師)<br>
+→ 案内役をつとめる = đảm nhận vai trò hướng dẫn/dẫn đường`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `よく　<span class="blank">___</span>　、メモをしながら話を聞くと好感を持たれる。`,
+    vocab: [
+      { word: "うなずく", reading: "うなずく", type: "Động từ nhóm I", meaning: "Gật đầu (đồng ý/lắng nghe), tỏ ra hiểu",
+        example: "先生の話にうなずきながら聞いた。\n(Vừa nghe vừa gật đầu theo lời thầy.)" },
+      { word: "うながす", reading: "うながす", type: "Động từ nhóm I", meaning: "Thúc giục, khuyến khích làm gì",
+        example: "出発をうながす。\n(Thúc giục lên đường.)" },
+      { word: "好感を持つ", reading: "こうかんをもつ", type: "Cụm động từ", meaning: "Có cảm tình tốt, có ấn tượng tốt",
+        example: "彼女に好感を持った。\n(Có cảm tình với cô ấy.)" }
+    ],
+    choices: ["うなずいて", "うながして", "おいついて", "つながって"],
+    answer: 0,
+    explanation: `<strong>正解：① うなずいて（頷いて）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>うなずく（頷く）</strong> = gật đầu, tỏ ra đồng ý/lắng nghe → thể hiện sự chú tâm ✓<br>
+・よくうなずいてメモをとる = gật đầu nhiều và ghi chú → thái độ lắng nghe tích cực → 好感を持たれる<br>
+・<strong>うながす</strong> = thúc giục → không phù hợp (không thúc giục người đang nói chuyện)<br>
+・<strong>おいつく（追いつく）</strong> = đuổi kịp → không liên quan đến lắng nghe<br>
+・<strong>つながる（繋がる）</strong> = kết nối → không phải hành động lắng nghe<br>
+→ よくうなずく = gật đầu thường xuyên → thể hiện sự quan tâm → tạo ấn tượng tốt`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `暑い日は　<span class="blank">___</span>　室にあるアイスクリームを食べるのが楽しみだ。`,
+    vocab: [
+      { word: "冷凍", reading: "れいとう", type: "Danh từ / Động từ", meaning: "Đông lạnh; đóng băng (thực phẩm)",
+        example: "冷凍食品を買う。\n(Mua thực phẩm đông lạnh.)" },
+      { word: "冷凍室", reading: "れいとうしつ", type: "Danh từ", meaning: "Ngăn đông (trong tủ lạnh), phòng lạnh đông",
+        example: "アイスを冷凍室に入れる。\n(Bỏ kem vào ngăn đông.)" },
+      { word: "冷蔵", reading: "れいぞう", type: "Danh từ / Động từ", meaning: "Ướp lạnh (không đông), bảo quản lạnh",
+        example: "冷蔵庫に食材を入れる。\n(Bỏ thực phẩm vào tủ lạnh.)" }
+    ],
+    choices: ["冷凍", "零点", "零下", "冷蔵"],
+    answer: 0,
+    explanation: `<strong>正解：① 冷凍（れいとう）→ 冷凍室（れいとうしつ）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>冷凍室（れいとうしつ）</strong> = ngăn đông trong tủ lạnh → nơi bảo quản kem/đá ✓<br>
+・アイスクリームは冷凍室に保管する → logic tự nhiên<br>
+・<strong>冷蔵室（れいぞうしつ）</strong> = ngăn mát (không đông) → kem sẽ tan chảy nếu để đây<br>
+・<strong>零点（れいてん）</strong> = điểm 0, điểm không; 0°C → không phải tên phòng/ngăn<br>
+・<strong>零下（れいか）</strong> = dưới 0 độ, âm độ → từ chỉ nhiệt độ, không phải tên phòng<br>
+→ 冷凍室 = ngăn đông (nơi bảo quản kem và thực phẩm đông lạnh)`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `来週に大学受験を控えている姉は、神経が　<span class="blank">___</span>　ぴりぴりしている。`,
+    vocab: [
+      { word: "神経がとがる", reading: "しんけいがとがる", type: "Cụm động từ", meaning: "Thần kinh căng thẳng, dễ bị kích thích, nhạy cảm quá mức",
+        example: "試験前で神経がとがっている。\n(Căng thẳng dễ nổi nóng trước kỳ thi.)" },
+      { word: "ぴりぴり", reading: "ぴりぴり", type: "Trạng từ mô phỏng", meaning: "Bồn chồn, dễ bị kích thích, căng thẳng quá mức",
+        example: "締め切り前でみんなぴりぴりしている。\n(Trước deadline mọi người đều căng thẳng.)" }
+    ],
+    choices: ["けずって", "とがって", "めだって", "ひねって"],
+    answer: 1,
+    explanation: `<strong>正解：② とがって（尖って）→ 神経がとがって</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>神経がとがる（とがる＝尖る）</strong> = thần kinh trở nên sắc bén/nhạy cảm quá → dễ bị kích thích ✓<br>
+・神経がとがってぴりぴりしている = thần kinh căng thẳng dễ bị kích động<br>
+・<strong>けずる（削る）</strong> = mài/bào → 神経をけずる không phải cụm thành ngữ<br>
+・<strong>めだつ（目立つ）</strong> = nổi bật → 神経がめだつ không có nghĩa<br>
+・<strong>ひねる（捻る）</strong> = xoắn, vặn → 神経がひねる không phải cụm thành ngữ<br>
+→ 神経がとがる ≒ ぴりぴりする（過敏で緊張している状態）`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `さまざまなデータを　<span class="blank">___</span>　した結果、事故の原因が明らかになった。`,
+    vocab: [
+      { word: "分析", reading: "ぶんせき", type: "Danh từ / Động từ", meaning: "Phân tích, phân giải để hiểu rõ",
+        example: "データを分析する。\n(Phân tích dữ liệu.)" },
+      { word: "視察", reading: "しさつ", type: "Danh từ / Động từ", meaning: "Thị sát, đi thực địa để xem xét",
+        example: "工場を視察する。\n(Thị sát nhà máy.)" },
+      { word: "検査", reading: "けんさ", type: "Danh từ / Động từ", meaning: "Kiểm tra, xét nghiệm (sản phẩm/sức khỏe)",
+        example: "健康診断で血液検査をする。\n(Xét nghiệm máu trong khám sức khỏe.)" },
+      { word: "発明", reading: "はつめい", type: "Danh từ / Động từ", meaning: "Phát minh, sáng chế",
+        example: "新しい薬を発明する。\n(Phát minh ra loại thuốc mới.)" }
+    ],
+    choices: ["視察", "検査", "発明", "分析"],
+    answer: 3,
+    explanation: `<strong>正解：④ 分析（ぶんせき）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>分析（ぶんせき）</strong> = phân tích dữ liệu để tìm ra nguyên nhân → データを分析する ✓<br>
+・さまざまなデータを分析した結果 = sau khi phân tích nhiều dữ liệu khác nhau → logic tự nhiên<br>
+・<strong>視察（しさつ）</strong> = thị sát thực địa → dùng cho địa điểm, không phải dữ liệu<br>
+・<strong>検査（けんさ）</strong> = kiểm tra chất lượng/sức khỏe → không dùng với データ<br>
+・<strong>発明（はつめい）</strong> = phát minh → không liên quan đến phân tích nguyên nhân tai nạn<br>
+→ データを分析する = phân tích dữ liệu (tìm nguyên nhân/xu hướng)`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `今回は　<span class="blank">___</span>　条件がいくつも重なってしまって、大変だった。`,
+    vocab: [
+      { word: "悪条件", reading: "あくじょうけん", type: "Danh từ", meaning: "Điều kiện bất lợi, hoàn cảnh xấu",
+        example: "悪条件をはねのけて成功した。\n(Vượt qua điều kiện bất lợi và thành công.)" }
+    ],
+    choices: ["苦", "悪", "損", "劣"],
+    answer: 1,
+    explanation: `<strong>正解：② 悪（あく）→ 悪条件（あくじょうけん）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>悪条件（あくじょうけん）</strong> = điều kiện bất lợi → いくつも重なる = nhiều điều bất lợi chồng chất ✓<br>
+・悪〜 (あく〜) là tiền tố thông dụng: 悪天候・悪影響・悪循環<br>
+・<strong>苦条件（くじょうけん）</strong> = không tồn tại (苦 không dùng làm tiền tố với 条件)<br>
+・<strong>損条件（そんじょうけん）</strong> = không tồn tại<br>
+・<strong>劣条件（れつじょうけん）</strong> = không tồn tại (劣 dùng trong: 劣化・劣等・優劣)<br>
+→ 悪条件が重なる = nhiều điều kiện bất lợi chồng chất lên nhau`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `<span class="blank">___</span>　は窓から侵入し、その家にある高価なものを探していた。`,
+    vocab: [
+      { word: "どろぼう（泥棒）", reading: "どろぼう", type: "Danh từ", meaning: "Kẻ trộm, tên trộm cắp",
+        example: "どろぼうが入った。\n(Có trộm đột nhập.)" },
+      { word: "すり（掏摸）", reading: "すり", type: "Danh từ", meaning: "Kẻ móc túi",
+        example: "電車でスリに遭った。\n(Bị móc túi trên tàu điện.)" },
+      { word: "さぎ（詐欺）", reading: "さぎ", type: "Danh từ", meaning: "Lừa đảo, kẻ lừa đảo",
+        example: "振り込め詐欺に気をつける。\n(Cẩn thận với lừa đảo chuyển khoản.)" }
+    ],
+    choices: ["すり", "どろぼう", "しんじゅう", "さぎ"],
+    answer: 1,
+    explanation: `<strong>正解：② どろぼう（泥棒）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>どろぼう（泥棒）</strong> = kẻ trộm đột nhập vào nhà → 窓から侵入 ✓<br>
+・窓から侵入して高価なものを探す = hành động đột nhập vào nhà → đặc trưng của 泥棒<br>
+・<strong>すり（掏摸）</strong> = kẻ móc túi → hoạt động ở nơi công cộng (tàu điện/đám đông), không đột nhập nhà<br>
+・<strong>しんじゅう（心中）</strong> = tự tử cùng nhau (cặp đôi) → không liên quan<br>
+・<strong>さぎ（詐欺）</strong> = lừa đảo → không đột nhập nhà, dùng lời nói/điện thoại để lừa<br>
+→ どろぼう = kẻ trộm nhà (đột nhập qua cửa sổ, tìm kiếm đồ vật)`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-22.html", label: "← Từ vựng · Bài 22" },
+  next: { url: "vocab-24.html", label: "Từ vựng · Bài 24 →" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

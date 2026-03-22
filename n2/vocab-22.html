@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 22</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ㉒</div>
+  <h1>N2 語彙<span>クイズ</span>㉒</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 22 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `シャツが「<u>ちぢんで</u>」しまった。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「ちぢんで」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "縮む", reading: "ちぢむ", type: "Động từ nhóm I", meaning: "Co rút lại, thu nhỏ (do giặt/nhiệt độ)",
+        example: "洗濯したら服が縮んだ。\n(Giặt xong thì áo bị co lại.)" }
+    ],
+    choices: ["小さくなって", "古くなって", "汚れて", "破れて"],
+    answer: 0,
+    explanation: `<strong>正解：① 小さくなって（ちいさくなって）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>縮む（ちぢむ）</strong> = co rút lại, thu nhỏ (áo quần sau khi giặt)<br>
+・<strong>小さくなる</strong> = trở nên nhỏ hơn → nghĩa gần nhất ✓<br>
+・<strong>古くなる</strong> = trở nên cũ (không liên quan đến kích thước)<br>
+・<strong>汚れる</strong> = bị bẩn (không liên quan đến kích thước)<br>
+・<strong>破れる</strong> = bị rách (không phải co lại)<br>
+→ 縮む ≒ <strong>小さくなる</strong>（サイズが縮小する）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `頑張ったかいがあって、彼は見事に大学に「<u>合格した</u>」。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「合格した」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "合格する", reading: "ごうかくする", type: "Động từ", meaning: "Đậu, vượt qua (kỳ thi/bài kiểm tra)",
+        example: "試験に合格する。\n(Đậu kỳ thi.)" },
+      { word: "受かる", reading: "うかる", type: "Động từ nhóm I", meaning: "Đậu (thi/phỏng vấn) — thông tục hơn 合格する",
+        example: "試験に受かった。\n(Đã đậu kỳ thi.)" }
+    ],
+    choices: ["出た", "受かった", "通った", "勝った"],
+    answer: 1,
+    explanation: `<strong>正解：② 受かった（うかった）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>合格する</strong> = đậu kỳ thi, vượt qua bài thi<br>
+・<strong>受かる</strong> = đậu (thi/phỏng vấn) → nghĩa gần nhất ✓ (口語的・非公式)<br>
+・<strong>出た</strong> = đã ra (tốt nghiệp/ra trường, khác với đậu vào)<br>
+・<strong>通った</strong> = đã qua/đã đi (不合格の場合も通過する場合もある → mơ hồ)<br>
+・<strong>勝った</strong> = thắng (cuộc thi đua/trận đấu, không phải kỳ thi)<br>
+→ 合格する ≒ <strong>受かる</strong>（試験をパスする・通過する）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `この靴は「<u>ぶかぶかだ</u>」。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「ぶかぶかだ」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "ぶかぶか", reading: "ぶかぶか", type: "Trạng từ mô phỏng / Tính từ -na", meaning: "Rộng thùng thình, quá rộng/lỏng (quần áo, giày)",
+        example: "ぶかぶかの靴を履く。\n(Đi đôi giày quá rộng.)" }
+    ],
+    choices: ["とても重い", "とても小さい", "とても軽い", "とても大きい"],
+    answer: 3,
+    explanation: `<strong>正解：④ とても大きい</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>ぶかぶか</strong> = rộng thùng thình, quá rộng so với kích cỡ người mặc/đi<br>
+・<strong>とても大きい</strong> = quá to/rộng → nghĩa gần nhất ✓<br>
+・<strong>とても重い</strong> = rất nặng (không liên quan đến kích cỡ)<br>
+・<strong>とても小さい</strong> = rất nhỏ → trái nghĩa với ぶかぶか<br>
+・<strong>とても軽い</strong> = rất nhẹ (trọng lượng, không phải kích cỡ)<br>
+→ ぶかぶか ≒ <strong>とても大きい</strong>（サイズが合わなくて大きすぎる）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `一般的にねこは「<u>日中</u>」寝て過ごすことが多い。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「日中」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "日中", reading: "にっちゅう", type: "Danh từ", meaning: "Ban ngày, giờ ban ngày (từ sáng đến tối)",
+        example: "日中は家にいない。\n(Ban ngày không có nhà.)" },
+      { word: "昼間", reading: "ひるま", type: "Danh từ", meaning: "Ban ngày, buổi trưa/ngày",
+        example: "昼間は暖かい。\n(Ban ngày thì ấm áp.)" }
+    ],
+    choices: ["一日中", "普段", "昼間", "日夜"],
+    answer: 2,
+    explanation: `<strong>正解：③ 昼間（ひるま）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>日中（にっちゅう）</strong> = ban ngày (khoảng thời gian từ sáng đến tối)<br>
+・<strong>昼間（ひるま）</strong> = ban ngày → nghĩa gần nhất ✓<br>
+・<strong>一日中</strong> = cả ngày (24 giờ, nhiều hơn "ban ngày")<br>
+・<strong>普段</strong> = thường ngày (mọi ngày bình thường, không phải thời điểm trong ngày)<br>
+・<strong>日夜</strong> = ngày đêm, suốt ngày đêm (cả hai, không chỉ ban ngày)<br>
+→ 日中 ≒ <strong>昼間</strong>（夜ではなく、明るい時間帯）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `強い勢力を保った台風１５号が関東地域に「<u>接近して</u>」いる。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「接近して」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "接近する", reading: "せっきんする", type: "Động từ", meaning: "Tiếp cận, đến gần, áp sát",
+        example: "台風が接近している。\n(Bão đang đến gần.)" },
+      { word: "迫る", reading: "せまる", type: "Động từ nhóm I", meaning: "Áp sát, đến rất gần, ập đến (cấp bách)",
+        example: "台風が迫ってきた。\n(Bão đã áp sát.)" }
+    ],
+    choices: ["ひろがって", "たかまって", "せまって", "せめて"],
+    answer: 2,
+    explanation: `<strong>正解：③ せまって → 迫って（せまって）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>接近する</strong> = đến gần, áp sát → bão đang tiến gần khu vực Kanto<br>
+・<strong>迫る（せまる）</strong> = áp sát, ập đến gần → nghĩa gần nhất ✓<br>
+・<strong>ひろがる</strong> = lan rộng ra (không phải đến gần)<br>
+・<strong>たかまる</strong> = tăng lên, cao lên (cường độ, không phải vị trí địa lý)<br>
+・<strong>せめて</strong> = ít nhất, dù sao (phó từ, không phải động từ chỉ chuyển động)<br>
+→ 接近する ≒ <strong>迫る</strong>（近づく・近寄ってくる）`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>多少</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① 現金で支払えば、多少お安くいたします。<br>
+② バーゲンセールで、人々は多少売り場に押しかけた。<br>
+③ 何をするにも、多少必要なのはお金だろう。<br>
+④ ２週間前より、英語が多少上手になったのでびっくりした。
+</small>`,
+    vocab: [
+      { word: "多少", reading: "たしょう", type: "Phó từ / Danh từ", meaning: "Ít nhiều, đôi chút, một chút (so với mức bình thường)",
+        example: "多少高くても構わない。\n(Dù đắt hơn một chút cũng không sao.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 0,
+    explanation: `<strong>正解：① 現金で支払えば、多少お安くいたします。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>多少</strong> = ít nhiều, một chút → nhấn mạnh mức độ nhỏ/vừa phải ✓<br>
+・① 多少お安くする = giảm giá một chút → cách dùng đúng<br>
+・② 多少売り場に押しかけた → sai: "đổ xô" phải dùng 大勢（おおぜい）/ 一斉に<br>
+・③ 多少必要なのはお金 → sai: 多少 không dùng làm chủ ngữ/tân ngữ cho "điều cần thiết nhất"; phải dùng 何より / 最も<br>
+・④ 多少上手になってびっくりした → gượng gạo: 多少 hàm ý "chỉ một chút", không gây ngạc nhiên → mâu thuẫn với びっくりした<br>
+→ 多少 = <strong>ít nhiều, một chút</strong> (多少〜ても構わない・多少の差がある)`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>行方</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① 飛行機はゆっくりと行方を南に変えました。<br>
+② 何度も確認したので東京駅への行方は分かっている。<br>
+③ 数年前に出て行った弟の行方はまだ分からないままだ。<br>
+④ 新婚旅行の行方はヨーロッパにしました。
+</small>`,
+    vocab: [
+      { word: "行方", reading: "ゆくえ", type: "Danh từ", meaning: "Tung tích, nơi ở/đi đến (của người mất tích/biến mất)",
+        example: "行方不明になった。\n(Mất tích.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 2,
+    explanation: `<strong>正解：③ 数年前に出て行った弟の行方はまだ分からないままだ。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>行方（ゆくえ）</strong> = tung tích, nơi đang ở của người biến mất → 行方が分からない ✓<br>
+・③ 出て行った弟の行方 = tung tích của người em đã bỏ đi → cách dùng đúng<br>
+・① 行方を南に変える → sai: "thay đổi hướng bay" phải dùng 針路（しんろ）/ 進路<br>
+・② 東京駅への行方 → sai: "đường đến ga Tokyo" phải dùng 道（みち）/ 行き方<br>
+・④ 新婚旅行の行方 → sai: "điểm đến của tuần trăng mật" phải dùng 行き先（いきさき）/ 目的地<br>
+→ 行方 = <strong>tung tích của người biến mất/mất liên lạc</strong> (行方不明・行方を探す)`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>不平</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① 家の近くにスーパーがないのでとても不平だ。<br>
+② 仕事上の人間関係で、つい不平を言うことがある。<br>
+③ 地面が不平で、家具が斜めになっている。<br>
+④ 風が吹いてきて、水面が不平になった。
+</small>`,
+    vocab: [
+      { word: "不平", reading: "ふへい", type: "Danh từ", meaning: "Sự không hài lòng, lời phàn nàn, oán thán",
+        example: "不平を言う。\n(Phàn nàn, ca thán.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 1,
+    explanation: `<strong>正解：② 仕事上の人間関係で、つい不平を言うことがある。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>不平</strong> = lời phàn nàn, sự không hài lòng → 不平を言う ✓<br>
+・② 不平を言う = phàn nàn → cách dùng đúng và phổ biến<br>
+・① 不平だ → sai: "bất tiện" phải dùng 不便（ふべん）<br>
+・③ 地面が不平 → sai: "mặt đất không bằng phẳng" phải dùng 不平坦（ふへいたん）/ でこぼこ<br>
+・④ 水面が不平になった → sai: "mặt nước gợn sóng" phải dùng 波立つ / 凸凹になった<br>
+→ 不平 = <strong>lời phàn nàn, ca thán</strong> (不平を言う・不平不満・不平がたまる)`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>領収</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① １０名様のお食事代として５万円、確かに領収いたしました。<br>
+② 山田さんの荷物がわたしのロッカーにまで領収している。<br>
+③ 彼らは親の領収なしで旅行に行こうとして注意を受けた。<br>
+④ 冬の間ずっとはいてたブーツを箱に入れて領収する。
+</small>`,
+    vocab: [
+      { word: "領収", reading: "りょうしゅう", type: "Danh từ / Động từ", meaning: "Nhận tiền/thanh toán (chính thức); lãnh nhận",
+        example: "領収書を発行する。\n(Phát hành biên lai.)" },
+      { word: "領収書", reading: "りょうしゅうしょ", type: "Danh từ", meaning: "Biên lai, hóa đơn",
+        example: "領収書をください。\n(Cho tôi biên lai.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 0,
+    explanation: `<strong>正解：① １０名様のお食事代として５万円、確かに領収いたしました。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>領収する</strong> = nhận tiền thanh toán (chính thức, thường trong kinh doanh) ✓<br>
+・① 確かに領収いたしました = đã nhận được 50,000 yên → cách dùng đúng trong lĩnh vực dịch vụ<br>
+・② ロッカーにまで領収している → sai: "tràn ra đến tận tủ" phải dùng はみ出る / 入りきらない<br>
+・③ 親の領収なしで → sai: "không có sự cho phép của bố mẹ" phải dùng 許可（きょか）/ 承認<br>
+・④ 箱に入れて領収する → sai: "cất vào hộp" phải dùng 収納する（しゅうのうする）<br>
+→ 領収 = <strong>nhận tiền thanh toán chính thức</strong> (領収書・領収いたしました)`
+  },
+  {
+    tag: "CHỌN CÁCH DÙNG ĐÚNG • N2 • 語彙",
+    text: `次の文のうち、「<u>かなう</u>」の使い方として最もよいものは？<br>
+<small style="color:var(--ink-light);font-size:0.9em;line-height:1.8;">
+① 苦労がかない、彼は俳優として成功をおさめた。<br>
+② 天気予報がかない、今日は一日中快晴だった。<br>
+③ 準備を重ねてきたイベントが無事かなった。<br>
+④ 自分の店を持つという夢が、とうとうかなった。
+</small>`,
+    vocab: [
+      { word: "かなう（叶う）", reading: "かなう", type: "Động từ nhóm I", meaning: "Trở thành hiện thực, thực hiện được (ước mơ/nguyện vọng)",
+        example: "夢がかなった。\n(Ước mơ đã thành hiện thực.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 3,
+    explanation: `<strong>正解：④ 自分の店を持つという夢が、とうとうかなった。</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>叶う（かなう）</strong> = ước mơ/nguyện vọng trở thành hiện thực → chủ ngữ là 夢・願い・望み ✓<br>
+・④ 夢がかなった = ước mơ đã thành hiện thực → cách dùng chuẩn<br>
+・① 苦労がかない → sai: "công lao được đền đáp" phải dùng 苦労が実る（みのる）/ 報われる<br>
+・② 天気予報がかない → sai: "dự báo đúng" phải dùng 天気予報が当たった（あたった）<br>
+・③ イベントがかなった → sai: "sự kiện diễn ra thành công" phải dùng 無事に行われた / 成功した<br>
+→ かなう = <strong>ước mơ/nguyện vọng được thực hiện</strong> (夢が叶う・願いが叶う)`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-21.html", label: "← Từ vựng · Bài 21" },
+  next: { url: "vocab-23.html", label: "Từ vựng · Bài 23 →" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

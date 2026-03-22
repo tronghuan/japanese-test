@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 21</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ㉑</div>
+  <h1>N2 語彙<span>クイズ</span>㉑</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 21 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `最後まで投げ出さずに頑張り<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>こと自体が貴重な経験になった。`,
+    vocab: [
+      { word: "頑張り抜く", reading: "がんばりぬく", type: "Động từ nhóm I (hợp thành)", meaning: "Kiên trì đến cùng, cố sức đến tận cuối",
+        example: "最後まで頑張り抜いた。\n(Đã kiên trì đến tận cùng.)" },
+      { word: "〜込む", reading: "〜こむ", type: "Tiếp tố động từ", meaning: "Làm sâu vào, đắm chìm vào; nhét vào trong",
+        example: "考え込む・落ち込む・飛び込む" },
+      { word: "〜抜く", reading: "〜ぬく", type: "Tiếp tố động từ", meaning: "Làm đến cùng, vượt qua hết, kiên trì đến cuối",
+        example: "走り抜く・やり抜く・生き抜く" },
+      { word: "〜通す", reading: "〜とおす", type: "Tiếp tố động từ", meaning: "Làm xuyên suốt, duy trì từ đầu đến cuối",
+        example: "やり通す・信じ通す" }
+    ],
+    choices: ["こんだ", "おわった", "ぬいた", "とおした"],
+    answer: 2,
+    explanation: `<strong>正解：③ ぬいた → 頑張り抜いた（がんばりぬいた）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>〜抜く（ぬく）</strong> = làm đến tận cùng, vượt qua hết → 頑張り抜く = kiên trì đến cuối ✓<br>
+・Nhấn mạnh việc không bỏ cuộc dù khó khăn → phù hợp với 最後まで投げ出さずに<br>
+・<strong>頑張り込んだ</strong> → không tự nhiên; 込む không kết hợp với 頑張る<br>
+・<strong>頑張り終わった</strong> → chỉ "xong rồi", không nhấn mạnh sự kiên trì<br>
+・<strong>頑張り通した</strong> → gần nghĩa nhưng 通す nhấn mạnh "liên tục từ đầu đến cuối"; 抜く nhấn mạnh "vượt qua thử thách"<br>
+→ Câu hoàん chỉnh: 最後まで頑張り<strong>ぬいた</strong>こと自体が貴重な経験になった。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>な彼女は食べられないくらいの料理を皿に取ってきた。`,
+    vocab: [
+      { word: "欲張り", reading: "よくばり", type: "Danh từ / Tính từ -na", meaning: "Tham lam, tham ăn, ham muốn quá mức",
+        example: "欲張りな人。\n(Người tham lam.)" },
+      { word: "欲", reading: "よく", type: "Danh từ", meaning: "Ham muốn, lòng tham, dục vọng",
+        example: "欲が出てきた。\n(Lòng tham nổi lên.)" }
+    ],
+    choices: ["欲高", "欲張り", "欲好き", "欲過ぎ"],
+    answer: 1,
+    explanation: `<strong>正解：② 欲張り（よくばり）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>欲張り（な）</strong> = tham lam, ham muốn quá mức → 食べきれないほど取る = lấy quá nhiều ✓<br>
+・Cụm: 欲張りな人 / 欲張りな性格 → tính từ -na mô tả người tham lam<br>
+・<strong>欲高・欲好き・欲過ぎ</strong> → đều không tồn tại trong tiếng Nhật<br>
+・Chỉ có <strong>欲張り</strong> là từ thực tế và tự nhiên<br>
+→ Câu hoàん chỉnh: <strong>欲張り</strong>な彼女は食べられないくらいの料理を皿に取ってきた。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `姉は何事も深く考え<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>性格で、かなりの慎重派だ。`,
+    vocab: [
+      { word: "考え込む", reading: "かんがえこむ", type: "Động từ nhóm I (hợp thành)", meaning: "Suy nghĩ trầm tư, đắm chìm trong suy nghĩ",
+        example: "一人で考え込んでいた。\n(Một mình trầm tư suy nghĩ.)" },
+      { word: "〜出す", reading: "〜だす", type: "Tiếp tố động từ", meaning: "Bắt đầu làm ~; lấy ra",
+        example: "考え出す = bắt đầu nghĩ ra" },
+      { word: "〜直す", reading: "〜なおす", type: "Tiếp tố động từ", meaning: "Làm lại, xem xét lại",
+        example: "考え直す = xem xét lại" },
+      { word: "〜抜く", reading: "〜ぬく", type: "Tiếp tố động từ", meaning: "Làm đến cùng; rút ra",
+        example: "考え抜く = suy nghĩ đến cùng" }
+    ],
+    choices: ["だす", "なおす", "ぬく", "こむ"],
+    answer: 3,
+    explanation: `<strong>正解：④ こむ → 考え込む（かんがえこむ）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>考え込む</strong> = đắm chìm trong suy nghĩ, trầm tư → mô tả tính cách suy nghĩ sâu ✓<br>
+・〜込む nhấn mạnh "đi sâu vào bên trong" → 考え込む = chìm đắm trong suy nghĩ<br>
+・<strong>考え出す</strong> = bắt đầu nghĩ / nghĩ ra (kết quả, không phải trạng thái đắm chìm)<br>
+・<strong>考え直す</strong> = xem xét lại (hành động sửa, không phải tính cách trầm tư)<br>
+・<strong>考え抜く</strong> = suy nghĩ đến tận cùng (về một vấn đề cụ thể, không phải tính cách)<br>
+→ Câu hoàん chỉnh: 何事も深く考え<strong>こむ</strong>性格で、かなりの慎重派だ。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `このレストランは、いつも親子<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>の客で込んでいる。`,
+    vocab: [
+      { word: "親子連れ", reading: "おやこづれ", type: "Danh từ", meaning: "Gia đình có con nhỏ (cha/mẹ dẫn con đi)",
+        example: "親子連れで遊園地に行く。\n(Đi công viên giải trí cùng gia đình.)" },
+      { word: "〜連れ", reading: "〜づれ", type: "Tiếp tố", meaning: "Cùng đi với ~, dẫn theo ~ (子連れ・友人連れ)",
+        example: "子連れで旅行する。\n(Đi du lịch cùng con.)" },
+      { word: "〜添え", reading: "〜そえ", type: "Tiếp tố", meaning: "Kèm theo, đính kèm (món phụ)",
+        example: "野菜添え (kèm rau)" }
+    ],
+    choices: ["添え", "連れ", "伴い", "付き"],
+    answer: 1,
+    explanation: `<strong>正解：② 連れ（づれ）→ 親子連れ（おやこづれ）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>親子連れ</strong> = gia đình bố/mẹ dẫn con đi → cụm từ cố định chỉ khách hàng gia đình ✓<br>
+・〜連れ = cùng đi cùng với: 友人連れ・子連れ・親子連れ<br>
+・<strong>親子添え</strong> → không tồn tại (添え = món kèm trong ẩm thực)<br>
+・<strong>親子伴い</strong> → không tự nhiên; 伴う là động từ (đi kèm), không dùng làm tiếp tố như này<br>
+・<strong>親子付き</strong> → không tự nhiên; 〜付き = có kèm theo (機能付き、説明付き)<br>
+→ Câu hoàん chỉnh: いつも親子<strong>連れ</strong>の客で込んでいる。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `朝ごはんを<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>と脳のエネルギーが不足して集中力が低下する。`,
+    vocab: [
+      { word: "抜く", reading: "ぬく", type: "Động từ nhóm I", meaning: "Bỏ qua, bỏ sót, bỏ bữa",
+        example: "朝食を抜く。\n(Bỏ bữa sáng.)" },
+      { word: "はく（掃く）", reading: "はく", type: "Động từ nhóm I", meaning: "Quét (sàn nhà)",
+        example: "床を掃く。\n(Quét sàn.)" },
+      { word: "ひく（引く）", reading: "ひく", type: "Động từ nhóm I", meaning: "Kéo; trừ; tra (từ điển)",
+        example: "辞書を引く。\n(Tra từ điển.)" },
+      { word: "ふく（拭く）", reading: "ふく", type: "Động từ nhóm I", meaning: "Lau, chùi",
+        example: "テーブルを拭く。\n(Lau bàn.)" }
+    ],
+    choices: ["ぬく", "はく", "ひく", "ふく"],
+    answer: 0,
+    explanation: `<strong>正解：① ぬく → 抜く（ぬく）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>朝ごはんを抜く</strong> = bỏ bữa sáng → cụm cố định, rất phổ biến ✓<br>
+・Mẫu: 食事を抜く / 朝食を抜く = bỏ bữa ăn<br>
+・<strong>はく</strong> = quét (sàn) → không liên quan đến bữa ăn<br>
+・<strong>ひく</strong> = kéo / tra từ (không liên quan đến bữa ăn)<br>
+・<strong>ふく</strong> = lau chùi (không liên quan đến bữa ăn)<br>
+→ Câu hoàん chỉnh: 朝ごはんを<strong>ぬく</strong>と脳のエネルギーが不足して集中力が低下する。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `今は<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>制度からの移行時期だ。`,
+    vocab: [
+      { word: "旧〜", reading: "きゅう", type: "Tiền tố", meaning: "Cũ, cựu (hệ thống/quy định đã tồn tại trước)",
+        example: "旧制度・旧システム・旧来" },
+      { word: "先〜", reading: "せん / さき", type: "Tiền tố", meaning: "Trước đây; đi đầu (先進・先代・先月)",
+        example: "先月・先週・先代" },
+      { word: "昔〜", reading: "むかし", type: "Tiền tố (ít dùng)", meaning: "Ngày xưa (thường độc lập)",
+        example: "昔話（むかしばなし）" },
+      { word: "元〜", reading: "もと / げん", type: "Tiền tố", meaning: "Cựu ~ (người đã từng giữ chức vụ)",
+        example: "元社長・元カノ・元気" }
+    ],
+    choices: ["先", "旧", "昔", "元"],
+    answer: 1,
+    explanation: `<strong>正解：② 旧（きゅう）→ 旧制度（きゅうせいど）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>旧〜</strong> = cũ (hệ thống/quy định/thể chế đã có trước) → 旧制度 = chế độ cũ ✓<br>
+・Mẫu: 旧制度からの移行 = chuyển đổi từ chế độ cũ sang mới<br>
+・<strong>先〜</strong> = trước đây (thời gian), đi đầu (tiến bộ) → 先制度 không tự nhiên<br>
+・<strong>昔〜</strong> = ngày xưa (thường dùng độc lập, không phải tiền tố cho 制度)<br>
+・<strong>元〜</strong> = cựu (cho người: 元社長); 元制度 → không tự nhiên<br>
+→ Câu hoàん chỉnh: 今は<strong>旧</strong>制度からの移行時期だ。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `天気<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>によると明日も晴れて気温が上がるそうです。`,
+    vocab: [
+      { word: "天気予報", reading: "てんきよほう", type: "Danh từ", meaning: "Dự báo thời tiết",
+        example: "天気予報を確認する。\n(Kiểm tra dự báo thời tiết.)" },
+      { word: "予言", reading: "よげん", type: "Danh từ / Động từ", meaning: "Lời tiên tri, dự ngôn (thường siêu nhiên/bí ẩn)",
+        example: "予言が当たった。\n(Lời tiên tri đã đúng.)" },
+      { word: "予知", reading: "よち", type: "Danh từ / Động từ", meaning: "Dự đoán trước (thường cho thiên tai/nguy hiểm)",
+        example: "地震を予知する。\n(Dự đoán trước động đất.)" },
+      { word: "予期", reading: "よき", type: "Danh từ / Động によ", meaning: "Dự kiến, kỳ vọng trước",
+        example: "予期しない事態が起きた。\n(Tình huống không lường trước đã xảy ra.)" }
+    ],
+    choices: ["予言", "予知", "予報", "予期"],
+    answer: 2,
+    explanation: `<strong>正解：③ 予報（よほう）→ 天気予報（てんきよほう）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>天気予報</strong> = dự báo thời tiết → cụm từ cố định, không thể thay thế ✓<br>
+・<strong>予報</strong> = dự báo dựa trên dữ liệu khoa học (thời tiết, địa chấn)<br>
+・<strong>予言</strong> = tiên tri (thần bí/cá nhân, không phải khoa học)<br>
+・<strong>予知</strong> = dự đoán trước (thường cho 地震予知 = dự báo động đất, mang tính khẩn cấp)<br>
+・<strong>予期</strong> = kỳ vọng trước (thường ở dạng phủ định: 予期しない = bất ngờ)<br>
+→ Câu hoàん chỉnh: 天気<strong>予報</strong>によると明日も晴れて気温が上がる。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `彼のエリートぶっている態度に、手を<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>。`,
+    vocab: [
+      { word: "手を焼く", reading: "てをやく", type: "Cụm động từ (thành ngữ)", meaning: "Bị làm khó, không biết xử lý thế nào, đau đầu vì ai đó",
+        example: "悪ガキに手を焼く。\n(Đau đầu vì đứa trẻ nghịch ngợm.)" },
+      { word: "手を打つ", reading: "てをうつ", type: "Cụm động từ (thành ngữ)", meaning: "Ra tay xử lý; vỗ tay thỏa thuận",
+        example: "早めに手を打つ。\n(Ra tay xử lý sớm.)" },
+      { word: "手を貸す", reading: "てをかす", type: "Cụm động từ (thành ngữ)", meaning: "Giúp đỡ, hỗ trợ",
+        example: "手を貸してもらえますか？\n(Bạn có thể giúp tôi không?)" },
+      { word: "手を抜く", reading: "てをぬく", type: "Cụm động từ (thành ngữ)", meaning: "Làm lấy lệ, cẩu thả, bớt xén",
+        example: "仕事で手を抜く。\n(Làm cẩu thả trong công việc.)" }
+    ],
+    choices: ["うっている", "かしている", "ぬいている", "やいている"],
+    answer: 3,
+    explanation: `<strong>正解：④ やいている → 手を焼いている（てをやいている）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>手を焼く</strong> = bị làm khó, đau đầu không biết xử lý → thành ngữ cố định ✓<br>
+・Ngữ cảnh: thái độ kiêu ngạo của anh ta → gây khó chịu, không biết ứng xử thế nào<br>
+・<strong>手を打つ</strong> = ra tay xử lý / vỗ tay (không phải bị làm khó)<br>
+・<strong>手を貸す</strong> = giúp đỡ (nghĩa tích cực, trái với ngữ cảnh)<br>
+・<strong>手を抜く</strong> = làm cẩu thả (không liên quan đến thái độ của người khác gây khó)<br>
+→ Câu hoàん chỉnh: 彼のエリートぶっている態度に、手を<strong>焼いている</strong>。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `よく切れる<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>ですから、手まで切らないよう気をつけてね。`,
+    vocab: [
+      { word: "包丁", reading: "ほうちょう", type: "Danh từ", meaning: "Dao bếp, dao thái",
+        example: "包丁で野菜を切る。\n(Dùng dao thái rau.)" },
+      { word: "踏み切り", reading: "ふみきり", type: "Danh từ", meaning: "Đường ray có cổng chắn; điểm bật nhảy",
+        example: "踏み切りで電車を待つ。\n(Chờ tàu ở đường ray.)" },
+      { word: "はしご（梯子）", reading: "はしご", type: "Danh từ", meaning: "Cái thang leo",
+        example: "はしごを登る。\n(Leo thang.)" },
+      { word: "ほうき（箒）", reading: "ほうき", type: "Danh từ", meaning: "Cái chổi",
+        example: "ほうきで掃く。\n(Quét bằng chổi.)" }
+    ],
+    choices: ["ほうちょう", "ふみきり", "はしご", "ほうき"],
+    answer: 0,
+    explanation: `<strong>正解：① ほうちょう → 包丁（ほうちょう）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>包丁（ほうちょう）</strong> = dao bếp → よく切れる包丁 = dao sắc bén ✓<br>
+・Ngữ cảnh: "dao sắc, cẩn thận không cắt vào tay" → chỉ có thể là dao bếp<br>
+・<strong>ふみきり</strong> = đường ray (không cắt được)<br>
+・<strong>はしご</strong> = thang leo (không cắt được)<br>
+・<strong>ほうき</strong> = chổi (không cắt được)<br>
+→ Câu hoàん chỉnh: よく切れる<strong>包丁</strong>ですから、手まで切らないよう気をつけてね。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `卒業パーティーには、ちゃんとした<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>で行ったほうがいいのかな。`,
+    vocab: [
+      { word: "格好", reading: "かっこう", type: "Danh từ", meaning: "Trang phục, diện mạo; hình dáng bên ngoài (cách ăn mặc)",
+        example: "ちゃんとした格好をする。\n(Mặc trang phục chỉnh tề.)" },
+      { word: "様子", reading: "ようす", type: "Danh từ", meaning: "Tình hình, vẻ, diện mạo (trạng thái chung)",
+        example: "様子を見る。\n(Quan sát tình hình.)" },
+      { word: "容姿", reading: "ようし", type: "Danh từ", meaning: "Dung nhan, ngoại hình (bẩm sinh: mặt + dáng người)",
+        example: "容姿に恵まれている。\n(Được ban cho ngoại hình đẹp.)" },
+      { word: "外見", reading: "がいけん", type: "Danh từ", meaning: "Ngoại hình, vẻ bề ngoài (nhìn từ bên ngoài)",
+        example: "外見で判断する。\n(Đánh giá qua vẻ bề ngoài.)" }
+    ],
+    choices: ["様子", "容姿", "外見", "格好"],
+    answer: 3,
+    explanation: `<strong>正解：④ 格好（かっこう）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>格好</strong> = trang phục, cách ăn mặc → ちゃんとした格好 = mặc đẹp/chỉnh tề ✓<br>
+・Mẫu cố định: ちゃんとした格好で行く = đến với trang phục tươm tất<br>
+・<strong>様子</strong> = tình hình/trạng thái (ちゃんとした様子で → không tự nhiên)<br>
+・<strong>容姿</strong> = ngoại hình bẩm sinh (không thể tự chọn, không dùng cho trang phục)<br>
+・<strong>外見</strong> = vẻ bề ngoài chung (ít cụ thể về trang phục hơn 格好)<br>
+→ Câu hoàん chỉnh: ちゃんとした<strong>格好</strong>で行ったほうがいい。`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-20.html", label: "← Từ vựng · Bài 20" },
+  next: { url: "vocab-22.html", label: "Từ vựng · Bài 22 →" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

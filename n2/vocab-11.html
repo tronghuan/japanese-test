@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 11</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ⑪</div>
+  <h1>N2 語彙<span>クイズ</span>⑪</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 11 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `生活習慣を<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>してから、ほとんど病気をしなくなりました。`,
+    vocab: [
+      { word: "訂正", reading: "ていせい", type: "Danh từ / Động từ", meaning: "Sửa chữa (lỗi sai trong văn bản/lời nói)",
+        example: "間違いを訂正する。\n(Sửa chữa lỗi sai.)" },
+      { word: "変換", reading: "へんかん", type: "Danh từ / Động từ", meaning: "Chuyển đổi, biến đổi",
+        example: "データを変換する。\n(Chuyển đổi dữ liệu.)" },
+      { word: "整備", reading: "せいび", type: "Danh từ / Động từ", meaning: "Bảo dưỡng, thiết lập hoàn chỉnh",
+        example: "インフラを整備する。\n(Thiết lập cơ sở hạ tầng.)" },
+      { word: "改善", reading: "かいぜん", type: "Danh từ / Động từ", meaning: "Cải thiện, cải thiện để tốt hơn",
+        example: "生活習慣を改善する。\n(Cải thiện thói quen sinh hoạt.)" }
+    ],
+    choices: ["訂正", "変換", "整備", "改善"],
+    answer: 3,
+    explanation: `<strong>正解：④ 改善（かいぜん）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>生活習慣を改善する</strong> = cải thiện thói quen sinh hoạt → kết quả: ít bệnh hơn<br>
+・<strong>訂正</strong> = sửa lỗi văn bản/lời nói (không dùng cho lối sống)<br>
+・<strong>変換</strong> = chuyển đổi định dạng/dạng thức (dữ liệu, chữ viết)<br>
+・<strong>整備</strong> = bảo dưỡng, lắp đặt hệ thống (cơ sở hạ tầng, máy móc)<br>
+→ Câu hoàん chỉnh: 生活習慣を<strong>改善</strong>してから、ほとんど病気をしなくなりました。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `パソコンに関しては<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>で、まったくできなかった父が最近日記を書き始めたそうだ。`,
+    vocab: [
+      { word: "初歩", reading: "しょほ", type: "Danh từ", meaning: "Bước đầu, căn bản, nhập môn",
+        example: "初歩から学ぶ。\n(Học từ bước đầu.)" },
+      { word: "素人", reading: "しろうと", type: "Danh từ", meaning: "Người ngoại đạo, nghiệp dư, không chuyên",
+        example: "素人には難しい作業だ。\n(Đây là công việc khó với người không chuyên.)" },
+      { word: "初級", reading: "しょきゅう", type: "Danh từ", meaning: "Trình độ sơ cấp, cấp độ thấp nhất",
+        example: "初級クラスに入る。\n(Vào lớp sơ cấp.)" },
+      { word: "純情", reading: "じゅんじょう", type: "Tính từ -na / Danh từ", meaning: "Trong sáng, ngây thơ, thuần khiết",
+        example: "純情な少年。\n(Cậu bé ngây thơ trong sáng.)" }
+    ],
+    choices: ["初歩", "素人", "初級", "純情"],
+    answer: 1,
+    explanation: `<strong>正解：② 素人（しろうと）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>素人</strong> = người ngoại đạo, không chuyên → 〜に関しては素人で = hoàn toàn không biết về ~<br>
+・Cấu trúc: 〜に関しては素人だ/素人で → cụm thông dụng để nói "tôi không biết gì về ~"<br>
+・<strong>初歩</strong> = bước đầu, căn bản (danh từ chỉ giai đoạn, không phải người)<br>
+・<strong>初級</strong> = trình độ sơ cấp (mức độ, không phải trạng thái người)<br>
+・<strong>純情</strong> = ngây thơ (tính cách, không liên quan đến kỹ năng máy tính)<br>
+→ Câu hoàん chỉnh: パソコンに関しては<strong>素人</strong>で、まったくできなかった父が…`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `彼女は疑わしそうな<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>つきでわたしを見た。`,
+    vocab: [
+      { word: "目つき", reading: "めつき", type: "Danh từ", meaning: "Ánh mắt, vẻ mắt, cái nhìn",
+        example: "鋭い目つきで見る。\n(Nhìn với ánh mắt sắc bén.)" },
+      { word: "顔つき", reading: "かおつき", type: "Danh từ", meaning: "Nét mặt, vẻ mặt",
+        example: "真剣な顔つきで話す。\n(Nói chuyện với vẻ mặt nghiêm túc.)" },
+      { word: "手つき", reading: "てつき", type: "Danh từ", meaning: "Cách dùng tay, động tác tay",
+        example: "慣れた手つきで料理する。\n(Nấu ăn với đôi tay thành thạo.)" },
+      { word: "口つき", reading: "くちつき", type: "Danh từ", meaning: "Cách nói, giọng điệu; hình dáng miệng",
+        example: "親しい口つきで話す。\n(Nói chuyện với giọng điệu thân mật.)" }
+    ],
+    choices: ["顔", "手", "口", "目"],
+    answer: 3,
+    explanation: `<strong>正解：④ 目（め）→ 目つき</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>目つき</strong> = ánh mắt, vẻ mắt → "nhìn bằng ánh mắt ngờ vực" = biểu đạt qua mắt<br>
+・Ngữ cảnh: 疑わしそうな（trông có vẻ nghi ngờ）→ thể hiện qua <strong>mắt</strong> khi nhìn<br>
+・<strong>顔つき</strong> = nét mặt tổng thể (rộng hơn, không đặc tả ánh mắt)<br>
+・<strong>手つき</strong> = động tác tay (không liên quan đến nhìn)<br>
+・<strong>口つき</strong> = cách nói (không phải nhìn)<br>
+→ Câu hoàん chỉnh: 疑わしそうな<strong>目</strong>つきでわたしを見た。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `ご予約をお取り<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>の場合、事前にご連絡ください。`,
+    vocab: [
+      { word: "取り替え", reading: "とりかえ", type: "Danh từ", meaning: "Đổi lại, thay thế",
+        example: "商品の取り替えをお願いする。\n(Nhờ đổi hàng.)" },
+      { word: "取り上げ", reading: "とりあげ", type: "Danh từ", meaning: "Thu hồi; đề cập đến",
+        example: "ニュースで取り上げられた。\n(Được đề cập trên tin tức.)" },
+      { word: "取り消し", reading: "とりけし", type: "Danh từ", meaning: "Hủy bỏ, thu hồi (đặt chỗ, đơn hàng)",
+        example: "予約の取り消しをする。\n(Hủy đặt chỗ.)" },
+      { word: "取り掛け", reading: "とりかけ", type: "Danh từ", meaning: "Bắt đầu làm (chưa hoàn thành)",
+        example: "仕事に取り掛かる。\n(Bắt đầu công việc.)" }
+    ],
+    choices: ["かえ", "あげ", "けし", "かけ"],
+    answer: 2,
+    explanation: `<strong>正解：③ けし → お取り消し（おとりけし）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>お取り消し</strong> = hủy (đặt chỗ) → "Trường hợp hủy đặt chỗ, xin vui lòng liên hệ trước"<br>
+・<strong>取り消し</strong> = hủy bỏ → dùng phổ biến cho 予約・注文・申し込みの取り消し<br>
+・<strong>取り替え</strong> = đổi lại (hàng hóa), <strong>取り上げ</strong> = thu hồi/đề cập, <strong>取り掛け</strong> = bắt đầu → không phù hợp với 予約<br>
+→ Câu hoàん chỉnh: ご予約をお取り<strong>けし</strong>の場合、事前にご連絡ください。`
+  },
+  {
+    tag: "ĐIỀN CHỖ TRỐNG • N2 • 語彙",
+    text: `イベント開始の３時間前に、みんなで最終<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>合わせを行った。`,
+    vocab: [
+      { word: "言い合わせ", reading: "いいあわせ", type: "Danh từ", meaning: "Thỏa thuận trước, nói chuyện trước",
+        example: "言い合わせて同じ答えを出した。\n(Đã thỏa thuận trước rồi đưa ra cùng câu trả lời.)" },
+      { word: "打ち合わせ", reading: "うちあわせ", type: "Danh từ / Động từ", meaning: "Cuộc họp chuẩn bị, họp bàn trước",
+        example: "会議の前に打ち合わせをする。\n(Họp bàn trước khi khai mạc.)" },
+      { word: "持ち合わせ", reading: "もちあわせ", type: "Danh từ", meaning: "Có sẵn trong tay, mang theo",
+        example: "持ち合わせがない。\n(Không có tiền mặt trong tay.)" },
+      { word: "会い合わせ", reading: "あいあわせ", type: "Không tồn tại", meaning: "—",
+        example: "—" }
+    ],
+    choices: ["言い", "打ち", "持ち", "会い"],
+    answer: 1,
+    explanation: `<strong>正解：② 打ち → 打ち合わせ（うちあわせ）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>打ち合わせ</strong> = cuộc họp chuẩn bị, briefing → "họp chuẩn bị lần cuối trước khi sự kiện bắt đầu"<br>
+・<strong>最終打ち合わせ</strong> = cuộc họp chuẩn bị lần cuối → cụm từ rất phổ biến trong môi trường công sở/sự kiện<br>
+・<strong>言い合わせ</strong> = nói trước/thỏa thuận (thường mang hàm ý tiêu cực)<br>
+・<strong>持ち合わせ</strong> = có sẵn trong tay (tiền, đồ vật)<br>
+・<strong>会い合わせ</strong> → không tồn tại<br>
+→ Câu hoàん chỉnh: 最終<strong>打ち</strong>合わせを行った。`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `お電話での「<u>お問い合わせ</u>」はご遠慮ください。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「お問い合わせ」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "お問い合わせ", reading: "おといあわせ", type: "Danh từ (kính ngữ)", meaning: "Câu hỏi, thắc mắc, liên hệ hỏi thông tin",
+        example: "お問い合わせはメールでお願いします。\n(Xin hỏi thông tin qua email.)" },
+      { word: "対応", reading: "たいおう", type: "Danh từ / Động từ", meaning: "Ứng phó, giải quyết, tương ứng",
+        example: "問題に対応する。\n(Ứng phó với vấn đề.)" },
+      { word: "批判", reading: "ひはん", type: "Danh từ / Động từ", meaning: "Phê bình, chỉ trích",
+        example: "政策を批判する。\n(Chỉ trích chính sách.)" },
+      { word: "注文", reading: "ちゅうもん", type: "Danh từ / Động từ", meaning: "Đặt hàng, đặt món; yêu cầu",
+        example: "料理を注文する。\n(Đặt món ăn.)" }
+    ],
+    choices: ["対応", "質問", "批判", "注文"],
+    answer: 1,
+    explanation: `<strong>正解：② 質問（しつもん）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>お問い合わせ</strong> = hỏi thông tin, thắc mắc (kính ngữ của 質問)<br>
+・<strong>質問</strong> = câu hỏi → nghĩa gần nhất<br>
+・<strong>対応</strong> = ứng phó (hành động trả lời, không phải hỏi)<br>
+・<strong>批判</strong> = chỉ trích (tiêu cực, không phải hỏi)<br>
+・<strong>注文</strong> = đặt hàng (thương mại, không phải hỏi thông tin)<br>
+→ お問い合わせ ≒ <strong>質問</strong>（質問するの丁寧な言い方）`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `５年の「<u>付き合い</u>」を経て彼らはついに結婚するそうです。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「付き合い」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "付き合い", reading: "つきあい", type: "Danh từ", meaning: "Quan hệ giao lưu; đang hẹn hò",
+        example: "5年の付き合いを経て結婚した。\n(Sau 5 năm hẹn hò thì kết hôn.)" },
+      { word: "交際", reading: "こうさい", type: "Danh từ / Động từ", meaning: "Quan hệ xã giao; hẹn hò (yêu đương)",
+        example: "交際を始める。\n(Bắt đầu hẹn hò.)" },
+      { word: "交流", reading: "こうりゅう", type: "Danh từ / Động từ", meaning: "Giao lưu (văn hóa, giữa hai bên)",
+        example: "文化交流を深める。\n(Thúc đẩy giao lưu văn hóa.)" },
+      { word: "月日", reading: "つきひ", type: "Danh từ", meaning: "Thời gian, ngày tháng trôi qua",
+        example: "月日が経つのは早い。\n(Thời gian trôi qua nhanh.)" }
+    ],
+    choices: ["間", "交流", "月日", "交際"],
+    answer: 3,
+    explanation: `<strong>正解：④ 交際（こうさい）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>付き合い</strong> = quan hệ hẹn hò (trong ngữ cảnh kết hôn) = <strong>交際</strong><br>
+・<strong>交際する</strong> = hẹn hò, quan hệ yêu đương → 5年の交際を経て結婚 = sau 5 năm hẹn hò<br>
+・<strong>交流</strong> = giao lưu (thường dùng cho tập thể/văn hóa, không phải đôi lứa)<br>
+・<strong>月日</strong> = thời gian (không phải quan hệ người)<br>
+・<strong>間</strong> = khoảng thời gian/khoảng cách → không nói 5年の間を経て theo nghĩa hẹn hò<br>
+→ 付き合い ≒ <strong>交際</strong>`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `彼は大学を卒業した後、「<u>みずから</u>」会社を立ち上げる。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「みずから」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "みずから", reading: "みずから（自ら）", type: "Phó từ / Đại từ", meaning: "Tự mình, đích thân",
+        example: "自ら手を挙げて立候補した。\n(Đích thân giơ tay ứng cử.)" },
+      { word: "立ち上げる", reading: "たちあげる", type: "Động từ", meaning: "Thành lập, khởi động (doanh nghiệp)",
+        example: "新しい事業を立ち上げる。\n(Thành lập doanh nghiệp mới.)" }
+    ],
+    choices: ["自分で", "すぐに", "仲間と", "しばらくして"],
+    answer: 0,
+    explanation: `<strong>正解：① 自分で（じぶんで）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>みずから（自ら）</strong> = tự mình, đích thân làm → nhấn mạnh chính bản thân hành động<br>
+・<strong>自分で</strong> = tự mình → nghĩa gần nhất<br>
+・<strong>すぐに</strong> = ngay lập tức (thời gian, không phải chủ thể)<br>
+・<strong>仲間と</strong> = cùng với bạn bè (trái nghĩa với tự mình)<br>
+・<strong>しばらくして</strong> = sau một thời gian (thời gian, không phải chủ thể)<br>
+→ みずから ≒ <strong>自分で</strong>`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `来週は天気が「<u>回復する</u>」そうだ。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「回復する」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "回復する", reading: "かいふくする", type: "Động từ", meaning: "Hồi phục, trở lại trạng thái tốt",
+        example: "健康が回復した。\n(Sức khỏe đã hồi phục.)" }
+    ],
+    choices: ["あまり変わらない", "変わりやすい", "よくなる", "悪くなる"],
+    answer: 2,
+    explanation: `<strong>正解：③ よくなる</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>回復する</strong> = hồi phục, trở lại trạng thái tốt → thời tiết xấu sẽ trở nên tốt hơn<br>
+・<strong>よくなる</strong> = trở nên tốt hơn → nghĩa gần nhất<br>
+・<strong>あまり変わらない</strong> = không thay đổi nhiều (trung tính)<br>
+・<strong>変わりやすい</strong> = dễ thay đổi (không ổn định)<br>
+・<strong>悪くなる</strong> = trở nên xấu hơn → trái nghĩa<br>
+→ 回復する ≒ <strong>よくなる</strong>`
+  },
+  {
+    tag: "TÌM NGHĨA GẦN NHẤT • N2 • 語彙",
+    text: `この法律の実施は交通事故を減らすのに「<u>ゆうこう</u>」だ。<br><small style="color:var(--ink-light);font-size:0.85em;">→ 「ゆうこう（有効）」に意味が最も近いものは？</small>`,
+    vocab: [
+      { word: "有効", reading: "ゆうこう", type: "Tính từ -na", meaning: "Có hiệu quả, có giá trị, hợp lệ",
+        example: "有効な対策を取る。\n(Đưa ra biện pháp hiệu quả.)" },
+      { word: "実施", reading: "じっし", type: "Danh từ / Động từ", meaning: "Thực thi, triển khai",
+        example: "新しい法律を実施する。\n(Thực thi luật mới.)" }
+    ],
+    choices: ["よく効く", "効果がない", "時間の制限がある", "時間がかかる"],
+    answer: 0,
+    explanation: `<strong>正解：① よく効く</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>有効</strong> = có hiệu quả, phát huy tác dụng → 減らすのに有効 = có hiệu quả trong việc giảm tai nạn<br>
+・<strong>よく効く</strong> = phát huy tác dụng tốt → nghĩa gần nhất<br>
+・<strong>効果がない</strong> = không có hiệu quả → trái nghĩa<br>
+・<strong>時間の制限がある</strong> = có giới hạn thời gian (đây là nghĩa "有効期限" = hạn hiệu lực, không phải đáp án đúng trong ngữ cảnh này)<br>
+・<strong>時間がかかる</strong> = mất nhiều thời gian → không liên quan đến hiệu quả<br>
+→ ゆうこう（有効）≒ <strong>よく効く</strong>`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-10.html", label: "← Từ vựng · Bài 10" },
+  next: { url: "vocab-12.html", label: "Từ vựng · Bài 12 →" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>
