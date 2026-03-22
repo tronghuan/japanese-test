@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d44235"/>
+      <stop offset="100%" stop-color="#9b2b20"/>
+    </linearGradient>
+    <linearGradient id="innerBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.08)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.12)"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Shadow -->
+  <rect x="1" y="2" width="30" height="30" rx="7" fill="rgba(0,0,0,0.25)"/>
+
+  <!-- Main background -->
+  <rect width="30" height="30" rx="6" fill="url(#bg)"/>
+
+  <!-- Overlay for depth -->
+  <rect width="30" height="30" rx="6" fill="url(#innerBg)"/>
+
+  <!-- Top highlight line -->
+  <rect x="5" y="4" width="20" height="1.5" rx="0.75" fill="rgba(255,255,255,0.25)"/>
+
+  <!-- Thin gold border -->
+  <rect x="0.75" y="0.75" width="28.5" height="28.5" rx="5.5"
+        fill="none" stroke="rgba(201,150,12,0.55)" stroke-width="1"/>
+
+  <!-- Kanji 語 -->
+  <text x="15" y="23"
+    font-family="'Hiragino Mincho ProN','Yu Mincho','MS Mincho','Noto Serif JP',Georgia,serif"
+    font-size="22"
+    font-weight="700"
+    fill="white"
+    text-anchor="middle"
+    letter-spacing="-0.5">語</text>
+</svg>

@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>日本語クイズ • Tổng Hợp Bài Test Tiếng Nhật</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;500&family=Shippori+Mincho:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -179,19 +180,53 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    cursor: pointer;
+    user-select: none;
   }
+  .category-title:hover { color: var(--ink); }
   .category-title::after {
     content: '';
     flex: 1;
     height: 1px;
     background: var(--border);
   }
-
+  .cat-arrow {
+    font-style: normal;
+    font-size: 0.7rem;
+    transition: transform 0.25s;
+    color: var(--muted);
+    flex-shrink: 0;
+    order: 1;
+  }
+  .cat-count {
+    font-size: 0.65rem;
+    background: var(--paper2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 0.1rem 0.5rem;
+    color: var(--muted);
+    display: none;
+    flex-shrink: 0;
+    order: 1;
+  }
+  .category-title.collapsed .cat-arrow { transform: rotate(-90deg); }
+  .category-title.collapsed .cat-count { display: inline; }
   /* ── QUIZ LIST ── */
   .quiz-list {
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
+    overflow: hidden;
+    max-height: 4000px;
+    opacity: 1;
+    transition: max-height 0.35s cubic-bezier(.4,0,.2,1),
+                opacity 0.2s ease,
+                margin-bottom 0.25s ease;
+  }
+  .quiz-list.collapsed {
+    max-height: 0;
+    opacity: 0;
+    margin-bottom: 0;
   }
   .quiz-card {
     background: white;
@@ -873,6 +908,31 @@
 </footer>
 
 <script>
+// Category collapse
+document.querySelectorAll('.category-title').forEach(function(title) {
+  var list = title.nextElementSibling;
+  if (!list || !list.classList.contains('quiz-list')) return;
+
+  // Count real items (not empty-state)
+  var count = list.querySelectorAll('.quiz-card').length;
+  var countLabel = count > 0 ? count + ' bài' : '';
+
+  // Inject arrow + count badge
+  var arrow = document.createElement('i');
+  arrow.className = 'cat-arrow';
+  arrow.textContent = '▾';
+  var badge = document.createElement('span');
+  badge.className = 'cat-count';
+  badge.textContent = countLabel;
+  title.appendChild(badge);
+  title.appendChild(arrow);
+
+  title.addEventListener('click', function() {
+    var collapsed = title.classList.toggle('collapsed');
+    list.classList.toggle('collapsed', collapsed);
+  });
+});
+
 // Tab switching
 document.querySelectorAll('.level-tab').forEach(function(tab) {
   tab.addEventListener('click', function() {
