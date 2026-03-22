@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 聴解 Bài 4</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="聴">
+  <div class="header-badge">N2 JLPT • NGHE ④</div>
+  <h1>N2 聴解<span>クイズ</span>④</h1>
+  <p class="sub">Trắc nghiệm nghe N2 · Bài 4 · 5 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 5</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/5</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 5,
+  questions: [
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-04/n2_1b_6.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-04/quiz1.gif" alt="Câu hỏi 1">`,
+    vocab: [
+      { word: "発想", reading: "はっそう", type: "Danh từ", meaning: "Ý tưởng, cách suy nghĩ, quan niệm",
+        example: "その発想からして間違っている。\n(Ngay cái quan niệm đó đã sai rồi.)" },
+      { word: "後輩", reading: "こうはい", type: "Danh từ", meaning: "Đàn em, người mới vào sau",
+        example: "後輩に仕事を任せる。\n(Giao việc cho đàn em.)" },
+      { word: "注意する", reading: "ちゅういする", type: "Động từ", meaning: "Nhắc nhở, cảnh báo, chú ý",
+        example: "先輩に注意された。\n(Bị senpai nhắc nhở.)" },
+      { word: "態度", reading: "たいど", type: "Danh từ", meaning: "Thái độ, cách cư xử",
+        example: "仕事への態度が大切だ。\n(Thái độ đối với công việc rất quan trọng.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 0,
+    explanation: `<strong>正解：① （後輩が自分たちの仕事なのに「手伝う」という態度だから）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+後輩：先輩、忙しそうですね。<u>手伝います</u>。<br>
+先輩：<u>手伝うってそういう発想からして間違ってるんじゃないの？</u><br>
+先輩：<u>これは私たち二人の仕事だって分かってる？</u>もっと自分からやってくれないと。<br><br>
+<strong>🔑 Lý do chọn ①:</strong><br>
+・敬語を間違えた → 言及なし ✗<br>
+・自分から言わなかった → 後輩は自ら「手伝います」と言った ✗<br>
+・勝手に仕事を進めた → 言及なし ✗<br>
+・<strong>「手伝う」という発想が間違い＝二人の共同作業なのに片方が「手伝う」立場のような態度</strong> ✓<br>
+→ 選択肢①が正解`
+  },
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-04/n2_1b_7.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-04/quiz2.gif" alt="Câu hỏi 2">`,
+    vocab: [
+      { word: "育児休暇", reading: "いくじきゅうか", type: "Danh từ", meaning: "Nghỉ chăm con, nghỉ thai sản / nuôi con",
+        example: "父親も育児休暇を取れるようになった。\n(Người bố cũng có thể nghỉ chăm con rồi.)" },
+      { word: "利用", reading: "りよう", type: "Danh từ / Động từ", meaning: "Sử dụng, tận dụng",
+        example: "育児休暇を半年利用する。\n(Sử dụng nghỉ chăm con nửa năm.)" },
+      { word: "相談", reading: "そうだん", type: "Danh từ / Động từ", meaning: "Bàn bạc, thảo luận, xin ý kiến",
+        example: "妻と相談中です。\n(Đang bàn bạc với vợ.)" },
+      { word: "職場", reading: "しょくば", type: "Danh từ", meaning: "Nơi làm việc, chỗ làm",
+        example: "早く職場に戻りたい。\n(Muốn sớm trở lại nơi làm việc.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 1,
+    explanation: `<strong>正解：② （夫婦二人とも半年ずつ取る）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+女：田中さんは育児休暇はとるんですか？<br>
+男：まだ妻と相談中なんですよ。<u>最初は妻が一年間休む</u>といっていたんですが、やっぱり<u>早く職場に戻りたい</u>というので、<u>最初の半年は妻が、そのあとの半年を僕が</u>とろうと思っています。<br><br>
+<strong>🔑 Lý do chọn ②:</strong><br>
+・夫婦ともに1年ずつ → 会社は1年取れるが、そうはしない ✗<br>
+・妻が1年・夫が取らない → 最初の計画だが変更 ✗<br>
+・夫が1年・妻が取らない → 逆 ✗<br>
+・<strong>妻が前半の半年 + 夫が後半の半年 = 合計二人とも半年ずつ</strong> ✓<br>
+→ 選択肢②が正解`
+  },
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-04/n2_1b_8.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-04/quiz3.gif" alt="Câu hỏi 3">`,
+    vocab: [
+      { word: "驚く", reading: "おどろく", type: "Động từ", meaning: "Bị bất ngờ, ngạc nhiên, giật mình",
+        example: "息子の言葉に驚いた。\n(Bất ngờ trước lời của con trai.)" },
+      { word: "だんだん", reading: "だんだん", type: "Phó từ", meaning: "Dần dần, từ từ",
+        example: "だんだん料理がうまくなってきた。\n(Tay nấu ăn dần dần khéo hơn.)" },
+      { word: "ほめる", reading: "ほめる", type: "Động từ", meaning: "Khen ngợi, tán dương",
+        example: "息子が初めて料理をほめてくれた。\n(Con trai lần đầu khen món ăn.)" },
+      { word: "一度", reading: "いちど", type: "Danh từ / Phó từ", meaning: "Một lần",
+        example: "今まで一度も言ったことがなかった。\n(Chưa bao giờ nói dù một lần.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 2,
+    explanation: `<strong>正解：③ （息子が料理をほめてくれたから）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+女：夫が息子に「<u>ママ、だんだん料理がうまくなってきたな</u>」といったの。そうしたら、息子が「<u>上手になってきたじゃなくて、前から上手なの</u>」って。<u>もうびっくりしちゃった</u>。だって、<u>息子が私の料理を食べて美味しいなんて今まで一度だって言ったことがなかった</u>から。<br><br>
+<strong>🔑 Lý do chọn ③:</strong><br>
+・夫が料理をほめた → 夫は「だんだんうまくなってきた」と言ったが、驚きの理由ではない ✗<br>
+・夫と息子が喧嘩した → 言及なし ✗<br>
+・夫が料理上手になった → 料理しているのは女性 ✗<br>
+・<strong>息子が「前から上手」と言った＝今まで一度も褒めたことがなかった息子が褒めてくれた</strong> ✓<br>
+→ 選択肢③が正解`
+  },
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-04/n2_1b_9.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-04/quiz4.gif" alt="Câu hỏi 4">`,
+    vocab: [
+      { word: "契約書", reading: "けいやくしょ", type: "Danh từ", meaning: "Hợp đồng (văn bản)",
+        example: "お客様に契約書を届ける。\n(Mang hợp đồng đến cho khách hàng.)" },
+      { word: "とんでもない", reading: "とんでもない", type: "Tính từ -i", meaning: "Không thể chấp nhận, thật quá đáng, không tưởng",
+        example: "とんでもないことをしてしまった。\n(Đã làm một chuyện không thể chấp nhận được.)" },
+      { word: "頼む", reading: "たのむ", type: "Động từ", meaning: "Nhờ vả, yêu cầu, nhờ làm",
+        example: "後輩に書類を届けるよう頼んだ。\n(Nhờ đàn em mang tài liệu đến.)" },
+      { word: "勝手に", reading: "かってに", type: "Phó từ", meaning: "Tự ý, theo ý mình, không hỏi ý kiến",
+        example: "勝手にアルバイトを使った。\n(Tự ý dùng nhân viên làm thêm.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 0,
+    explanation: `<strong>正解：① （後輩がアルバイトに書類を届けさせたから）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+女：うちの後輩に<u>お客様に契約書を届けるように頼んだ</u>けど、<u>アルバイトの学生に行かせた</u>んだって。ちゃんと届いたからよかったけど。<br>
+男：<u>とんでもないね</u>。<br><br>
+<strong>🔑 Lý do chọn ①:</strong><br>
+・書類を届けるのを忘れた → ちゃんと届いた ✗<br>
+・後輩がアルバイトの代わりに書類を届けた → 逆（アルバイトに行かせた）✗<br>
+・アルバイトが書類を届けなかった → ちゃんと届いた ✗<br>
+・<strong>後輩が自分で行かず、アルバイトの学生に行かせた</strong>（重要な契約書なのに）✓<br>
+→ 選択肢①が正解`
+  },
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-04/n2_1b_10.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-04/quiz5.gif" alt="Câu hỏi 5">`,
+    vocab: [
+      { word: "停電", reading: "ていでん", type: "Danh từ", meaning: "Mất điện, cúp điện",
+        example: "昨日停電があって大変だった。\n(Hôm qua mất điện vất vả quá.)" },
+      { word: "蝋燭", reading: "ろうそく", type: "Danh từ", meaning: "Nến",
+        example: "停電だから蝋燭をつけた。\n(Vì mất điện nên thắp nến.)" },
+      { word: "つい", reading: "つい", type: "Phó từ", meaning: "Lỡ tay, vô tình, không kìm được",
+        example: "ついウイスキーを飲みすぎた。\n(Lỡ uống whisky quá nhiều.)" },
+      { word: "続く", reading: "つづく", type: "Động từ", meaning: "Tiếp tục, kéo dài",
+        example: "停電が一時間半も続いた。\n(Mất điện kéo dài tới một tiếng rưỡi.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 1,
+    explanation: `<strong>正解：② （お酒を飲みすぎたから）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+女：昨日停電あったね。うち大変だったわ。<br>
+男：うちも<u>一時間半続いた</u>んよ。夕飯を食べたあとだから助かったけど。<br>
+女：調子悪そうだけど、大丈夫？<u>風邪でも引いたの？</u>昨日は寒かったからね。<br>
+男：停電だったから<u>蝋燭をつけて</u>、することもないから、<u>ついウイスキーを飲みすぎちゃった</u>の。<br>
+女：あ、それでか。<br><br>
+<strong>🔑 Lý do chọn ②:</strong><br>
+・風邪を引いた → 女が心配したが、男は否定 ✗<br>
+・寒くて眠れなかった → 言及なし ✗<br>
+・夕飯が食べられなかった → 「夕飯を食べたあとだから助かった」と言った ✗<br>
+・<strong>停電で蝋燭をつけ、することがなくてウイスキーを飲みすぎた</strong> ✓<br>
+→ 選択肢②が正解`
+  }
+  ],
+  navigation: {
+  prev: { url: "listen-03.html", label: "← Nghe · Bài 3" },
+  next: { url: "listen-05.html", label: "→ Nghe · Bài 5" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "vocab-01.html", icon: "📝", label: "Từ vựng" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

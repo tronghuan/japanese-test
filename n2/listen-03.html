@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 聴解 Bài 3</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="聴">
+  <div class="header-badge">N2 JLPT • NGHE ③</div>
+  <h1>N2 聴解<span>クイズ</span>③</h1>
+  <p class="sub">Trắc nghiệm nghe N2 · Bài 3 · 5 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 5</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/5</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 5,
+  questions: [
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-03/n2_1b_1.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-03/quiz1.gif" alt="Câu hỏi 1">`,
+    vocab: [
+      { word: "終了", reading: "しゅうりょう", type: "Danh từ / Động từ", meaning: "Kết thúc, chấm dứt",
+        example: "セールは12時で終了です。\n(Sale kết thúc lúc 12 giờ.)" },
+      { word: "売り切れ", reading: "うりきれ", type: "Danh từ", meaning: "Hết hàng, cháy hàng",
+        example: "人気商品はすぐ売り切れになる。\n(Sản phẩm phổ biến nhanh chóng hết hàng.)" },
+      { word: "諦める", reading: "あきらめる", type: "Động từ", meaning: "Từ bỏ, bỏ cuộc",
+        example: "もう諦めようか。\n(Thôi bỏ cuộc đi.)" },
+      { word: "無理", reading: "むり", type: "Danh từ / Tính từ -na", meaning: "Không thể, vô lý, quá sức",
+        example: "それは無理だ。\n(Điều đó là không thể.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 3,
+    explanation: `<strong>正解：④ （売り切れで買えないと思ったから）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+男：ヤマカスーパーにバターあった？<br>
+女：うん。でも高かったよ。<u>一人一個限り</u>だったし。<br>
+男：僕も行ってこようかな。どこも品薄で買えないよ。<br>
+女：今から行っても<u>間に合わないと思うんだけど。12時で終了</u>だって。<br>
+男：あと10分あるから、十分間に合うよ。<br>
+女：でも、<u>もう一個しか残っていなかった</u>わよ。<br>
+男：それじゃ、<u>無理だ。諦めよう</u>。<br><br>
+<strong>🔑 Lý do chọn ④:</strong><br>
+・「一人一個限り」→ 気にしない ✗<br>
+・「12時で終了・間に合わない」→ 男は「10分あるから大丈夫」と言った ✗<br>
+・値段が高い → 言及なし ✗<br>
+・<strong>もう一個しか残っていない</strong>（実質売り切れ）→ 「無理だ、諦めよう」✓<br>
+→ 選択肢④が正解`
+  },
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-03/n2_1b_2.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-03/quiz2.gif" alt="Câu hỏi 2">`,
+    vocab: [
+      { word: "縮む", reading: "ちぢむ", type: "Động từ", meaning: "Co rút, bị thu nhỏ lại",
+        example: "セーターが縮んでしまった。\n(Áo len bị co lại mất rồi.)" },
+      { word: "洗剤", reading: "せんざい", type: "Danh từ", meaning: "Chất tẩy rửa, bột giặt",
+        example: "ウール用の洗剤を使う。\n(Dùng bột giặt dành cho len.)" },
+      { word: "クリーニング", reading: "クリーニング", type: "Danh từ", meaning: "Giặt khô, tiệm giặt",
+        example: "高いコートはクリーニングに出す。\n(Áo khoác đắt tiền mang đi giặt khô.)" },
+      { word: "洗濯機", reading: "せんたくき", type: "Danh từ", meaning: "Máy giặt",
+        example: "新しい洗濯機はセーターも洗える。\n(Máy giặt mới có thể giặt cả áo len.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 2,
+    explanation: `<strong>正解：③ （お湯で洗ったから）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+息子：おかあさん、何、このセーター。こんなの着られないよ。<br>
+母：あ、ごめんね。ちょっと縮んだね。<br>
+息子：セーターも洗えるって、<u>新しい洗濯機じゃなかったっけ？</u><br>
+母：でも、あなたのお気に入りだから、<u>手で洗った</u>のよ。<br>
+息子：洗剤の間違いとか？<br>
+母：ちゃんと<u>ウール用のを使った</u>から。<u>お湯使ったら熱すぎた</u>みたい。<br>
+息子：だから、クリーニングに出してって言っているのに。<br><br>
+<strong>🔑 Lý do chọn ③:</strong><br>
+・洗濯機で洗った → 手で洗った ✗<br>
+・クリーニングに出した → 出していない ✗<br>
+・ウール用洗剤を使わなかった → ちゃんと使った ✗<br>
+・<strong>お湯で洗った → 熱すぎて縮んだ</strong> ✓<br>
+→ 選択肢③が正解`
+  },
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-03/n2_1b_3.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-03/quiz3.gif" alt="Câu hỏi 3">`,
+    vocab: [
+      { word: "扇風機", reading: "せんぷうき", type: "Danh từ", meaning: "Quạt điện",
+        example: "扇風機をつけて寝る。\n(Bật quạt điện ngủ.)" },
+      { word: "直接", reading: "ちょくせつ", type: "Phó từ / Tính từ -na", meaning: "Trực tiếp",
+        example: "体に直接風を当てない。\n(Không để gió thổi thẳng vào người.)" },
+      { word: "動かす", reading: "うごかす", type: "Động từ", meaning: "Di chuyển, làm cho chuyển động",
+        example: "部屋の空気を動かすだけで涼しくなる。\n(Chỉ cần làm không khí trong phòng lưu thông là mát hơn.)" },
+      { word: "氷枕", reading: "こおりまくら", type: "Danh từ", meaning: "Gối nước đá, túi chườm lạnh",
+        example: "熱があるとき氷枕を使う。\n(Khi bị sốt thì dùng gối nước đá.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 1,
+    explanation: `<strong>正解：② （扇風機をつけて寝ること）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+男：毎日暑くてどうも寝られないな。<br>
+女：エアコンを使えばいいでしょう。<br>
+男：<u>エアコンは冷え過ぎて苦手</u>なんですよ。<br>
+女：夜窓開けたままじゃ危ないしね。じゃ、<u>扇風機は？</u><br>
+男：あれも風の当たるところで冷えるからな。<br>
+女：<u>直接体に風を当てないようにすれば</u>いいよ。部屋の空気を動かすだけでも涼しくなるんじゃない？<br>
+男：そうか。<u>じゃ、そうしてみるか</u>。<br>
+女：それから、氷枕もいいよ。<br>
+男：それは面倒くさいから、いいよ。<br><br>
+<strong>🔑 Lý do chọn ②:</strong><br>
+・エアコンをつけて寝る → 苦手だと断った ✗<br>
+・窓を開けて寝る → 危ないと言われた ✗<br>
+・氷枕をして寝る → 面倒くさいと断った ✗<br>
+・<strong>扇風機を体に直接当てないようにつける</strong>→「じゃ、そうしてみるか」と同意 ✓<br>
+→ 選択肢②が正解`
+  },
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-03/n2_1b_4.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-03/quiz4.gif" alt="Câu hỏi 4">`,
+    vocab: [
+      { word: "資源", reading: "しげん", type: "Danh từ", meaning: "Tài nguyên",
+        example: "資源を大切に使う。\n(Sử dụng tài nguyên tiết kiệm.)" },
+      { word: "無駄", reading: "むだ", type: "Danh từ / Tính từ -na", meaning: "Lãng phí, vô ích",
+        example: "袋をもらうのは資源の無駄だ。\n(Lấy túi nilon mỗi lần là lãng phí tài nguyên.)" },
+      { word: "もったいない", reading: "もったいない", type: "Tính từ -i", meaning: "Tiếc, lãng phí (không nên bỏ đi)",
+        example: "まだ使えるのに、もったいない。\n(Vẫn còn dùng được mà bỏ đi, tiếc quá.)" },
+      { word: "持ち歩く", reading: "もちあるく", type: "Động từ", meaning: "Mang theo người khi đi lại",
+        example: "もらった袋を持ち歩く。\n(Mang theo túi đã nhận.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 2,
+    explanation: `<strong>正解：③ （レジでもらった袋を繰り返し使う）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+女：ねえ、見て見て、買い物用にこれを買ったんだ。エコバッグ。<br>
+男：資源を大切にって流行だもんね。<br>
+女：スーパーで買うたびに袋をもらうのは<u>資源の無駄</u>でしょう？<br>
+男：毎回もらうのね。最近はただじゃない店もあるし。<br>
+女：だからこういうのはいいのよ。<u>布製で丈夫</u>だし、あなたも買えば？<br>
+男：俺はスーパーの袋でいいよ。<br>
+女：え？買うの？もったいないじゃない。<br>
+男：<u>もらった袋を持ち歩くんだよ</u>。<br>
+女：なるほどね。<br><br>
+<strong>🔑 Lý do chọn ③:</strong><br>
+・レジで袋を毎回買う → 「もったいない」と反論されて否定 ✗<br>
+・レジで袋を毎回もらう → 「もらった袋を持ち歩く」= 使い回す ✗<br>
+・布製バッグを買う → 「スーパーの袋でいい」と断った ✗<br>
+・<strong>もらった（スーパーの）袋を持ち歩いて繰り返し使う</strong> ✓<br>
+→ 選択肢③が正解`
+  },
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-03/n2_1b_5.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-03/quiz5.gif" alt="Câu hỏi 5">`,
+    vocab: [
+      { word: "のんびり", reading: "のんびり", type: "Phó từ", meaning: "Thư thả, thoải mái, không vội vàng",
+        example: "海辺でのんびり過ごす。\n(Thư thả ở bãi biển.)" },
+      { word: "昼寝", reading: "ひるね", type: "Danh từ / Động từ", meaning: "Ngủ trưa, chợp mắt",
+        example: "波の音を聞きながら昼寝する。\n(Ngủ trưa trong tiếng sóng biển.)" },
+      { word: "海水浴", reading: "かいすいよく", type: "Danh từ", meaning: "Tắm biển",
+        example: "夏は海水浴に行く。\n(Mùa hè đi tắm biển.)" },
+      { word: "名所", reading: "めいしょ", type: "Danh từ", meaning: "Danh thắng, địa điểm nổi tiếng",
+        example: "島の名所をめぐる。\n(Tham quan các danh thắng trên đảo.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 2,
+    explanation: `<strong>正解：③ （のんびりしに行きます）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+女：私、夏休み、ミヤト島に一週間行くの。海沿いのホテルに泊まるんだ。<br>
+男：いいね。毎日好きなだけ泳げるね。<br>
+女：でも、私、実は<u>泳ぎは苦手</u>で。<br>
+男：え？じゃ、何をしに行くの？観光？<br>
+女：<u>波の音を聞きながらゆっくりするんだ。本を読んだり、昼寝したり</u>。<br>
+男：ミヤト島に行くみんなは泳いだり潜ったりするのが目的だと思ったのよ。<br>
+女：普通はそうかもしれないけど。<br><br>
+<strong>🔑 Lý do chọn ③:</strong><br>
+・海水浴に行く → 泳ぎが苦手と言った ✗<br>
+・名所めぐりに行く → 言及なし ✗<br>
+・海に潜りに行く → 泳ぎが苦手と言った ✗<br>
+・<strong>波の音を聞きながら本を読んだり昼寝したり</strong>＝のんびりする ✓<br>
+→ 選択肢③が正解`
+  }
+  ],
+  navigation: {
+  prev: { url: "listen-02.html", label: "← Nghe · Bài 2" },
+  next: { url: "listen-04.html", label: "→ Nghe · Bài 4" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "vocab-01.html", icon: "📝", label: "Từ vựng" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

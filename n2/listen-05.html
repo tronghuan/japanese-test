@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 聴解 Bài 5</title>
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="聴">
+  <div class="header-badge">N2 JLPT • NGHE ⑤</div>
+  <h1>N2 聴解<span>クイズ</span>⑤</h1>
+  <p class="sub">Trắc nghiệm nghe N2 · Bài 5 · 5 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 5</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/5</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 5,
+  questions: [
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-05/n2_1c_1.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-05/quiz1.jpg" alt="Câu hỏi 1">`,
+    vocab: [
+      { word: "経済成長率", reading: "けいざいせいちょうりつ", type: "Danh từ", meaning: "Tốc độ tăng trưởng kinh tế",
+        example: "今年の経済成長率は2％に迫る。\n(Tốc độ tăng trưởng kinh tế năm nay gần đạt 2%.)" },
+      { word: "景気", reading: "けいき", type: "Danh từ", meaning: "Tình hình kinh tế, cảnh khí",
+        example: "景気の回復傾向がはっきりしてきた。\n(Xu hướng phục hồi kinh tế đã rõ ràng hơn.)" },
+      { word: "傾向", reading: "けいこう", type: "Danh từ", meaning: "Xu hướng, khuynh hướng",
+        example: "回復傾向が続いている。\n(Xu hướng phục hồi đang tiếp diễn.)" },
+      { word: "わずか", reading: "わずか", type: "Phó từ / Tính từ -na", meaning: "Chỉ, vỏn vẹn, rất ít",
+        example: "わずかな伸びにとどまった。\n(Chỉ tăng trưởng rất nhỏ.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 2,
+    explanation: `<strong>正解：③</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+男：長期の経済成長率は一般に<u>1.3％</u>と言われていますが、<u>2008年の成長率は2％に迫る伸び</u>となりました。<u>2006年はマイナス</u>、<u>2007年もわずかな伸びにとどまっていた</u>ことを考えると、景気の回復傾向がはっきりしてきたと言えるでしょう。<br><br>
+<strong>🔑 Lý do chọn ③:</strong><br>
+・2006年：<strong>マイナス成長</strong>（0以下）✓<br>
+・2007年：<strong>わずかな伸び</strong>（0より少し上、1.3%以下）✓<br>
+・2008年：<strong>2%に迫る伸び</strong>（1.3%の長期平均を大きく上回る）✓<br>
+→ 2006年がマイナス → 少し回復 → 大きく回復 の右肩上がりグラフ = 選択肢③が正解`
+  },
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-05/n2_1c_2.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-05/quiz2.jpg" alt="Câu hỏi 2">`,
+    vocab: [
+      { word: "再利用", reading: "さいりよう", type: "Danh từ / Động từ", meaning: "Tái sử dụng, tái chế",
+        example: "ごみを再利用した製品を作る。\n(Tạo ra sản phẩm từ rác tái chế.)" },
+      { word: "圧縮", reading: "あっしゅく", type: "Danh từ / Động từ", meaning: "Nén, ép lại",
+        example: "プラスチックを混ぜて圧縮する。\n(Trộn nhựa rồi ép lại.)" },
+      { word: "布", reading: "ぬの", type: "Danh từ", meaning: "Vải, tấm vải",
+        example: "古いジーンズは布製品だ。\n(Quần jeans cũ là sản phẩm vải.)" },
+      { word: "木製", reading: "もくせい", type: "Danh từ / Tính từ", meaning: "Làm bằng gỗ",
+        example: "木製のように見えるが実はレジ袋でできている。\n(Trông như gỗ nhưng thực ra làm từ túi nilon.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 2,
+    explanation: `<strong>正解：③ （棚＝古いジーンズ）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+男：このベンチ → 木製のように見えるが<u>レジ袋</u>でできている ✗（布ではない）<br>
+　　このカバン → <u>古タイヤ</u>で作られている ✗（布ではない）<br>
+　　この<u>棚</u> → <u>古いジーンズ</u>にプラスチックを混ぜ圧縮したもの ✓（布）<br>
+　　この鉛筆 → <u>古新聞</u>を再利用 ✗（布ではない）<br><br>
+<strong>🔑 Lý do chọn ③:</strong><br>
+・ジーンズ（デニム）は<strong>布（ぬの）</strong>製品 → 棚の材料が布に該当<br>
+・他の3つ（レジ袋・タイヤ・新聞紙）はいずれも布ではない<br>
+→ 選択肢③（棚）が正解`
+  },
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-05/n2_1c_3.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-05/quiz3.gif" alt="Câu hỏi 3">`,
+    vocab: [
+      { word: "故障", reading: "こしょう", type: "Danh từ / Động từ", meaning: "Hỏng hóc, trục trặc",
+        example: "洗濯機が故障した時、修理に来なかった。\n(Khi máy giặt hỏng, họ không đến sửa.)" },
+      { word: "修理", reading: "しゅうり", type: "Danh từ / Động từ", meaning: "Sửa chữa",
+        example: "なかなか修理に来てくれない。\n(Mãi không chịu đến sửa.)" },
+      { word: "なかなか", reading: "なかなか", type: "Phó từ", meaning: "Mãi không, không dễ (khi dùng với phủ định)",
+        example: "なかなか来ない。\n(Mãi không đến.)" },
+      { word: "サービス", reading: "サービス", type: "Danh từ", meaning: "Dịch vụ (sau khi bán hàng)",
+        example: "アフターサービスがいい店を選ぶ。\n(Chọn cửa hàng có dịch vụ hậu mãi tốt.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 1,
+    explanation: `<strong>正解：② （買った後のサービスがいいから）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+女：鈴木電器25万円、田中電器24万円だった。<br>
+男：やっぱり<u>田中電器の方が安い</u>ね。<br>
+女：前あそこで洗濯機を買った時…<br>
+男：<u>故障した時、なかなか修理に来なかった</u>んだ。<br>
+女：<u>あそこは買った後のサービスがよくない</u>んだよね。<br>
+女：鈴木電器は遠いけど、<u>なにかあるとすぐ来てくれる</u>よね。<br>
+男：じゃ、鈴木電器にするか。<br><br>
+<strong>🔑 Lý do chọn ②:</strong><br>
+・値段が安い → 田中電器の方が安い（鈴木電器を選ぶ理由にならない）✗<br>
+・家から近い → 鈴木電器は「遠い」と言っている ✗<br>
+・前に洗濯機を買った → 田中電器で買ったが悪い思い出 ✗<br>
+・<strong>鈴木電器はアフターサービスがよく、何かあるとすぐ来てくれる</strong> ✓<br>
+→ 選択肢②が正解`
+  },
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-05/n2_1c_4.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-05/quiz4.gif" alt="Câu hỏi 4">`,
+    vocab: [
+      { word: "貸す", reading: "かす", type: "Động từ", meaning: "Cho mượn",
+        example: "本を友達に貸した。\n(Cho bạn mượn sách.)" },
+      { word: "借りる", reading: "かりる", type: "Động từ", meaning: "Mượn",
+        example: "先生から本を借りた。\n(Mượn sách của thầy.)" },
+      { word: "返す", reading: "かえす", type: "Động từ", meaning: "Trả lại",
+        example: "今日返さなきゃいけない。\n(Hôm nay phải trả lại.)" },
+      { word: "おいおい", reading: "おいおい", type: "Thán từ", meaning: "Ơi ơi, này này (thể hiện sự phàn nàn)",
+        example: "おいおい、それはないだろう。\n(Này này, thế thì không được đâu.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 0,
+    explanation: `<strong>正解：① （山田さんのところ）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+男：貸してた本持ってきた。<br>
+女：ごめん。<u>今日返せない</u>。<br>
+男：先生に今日返さなきゃいけないのに。<br>
+女：ごめん。<u>山田さんに貸しちゃった</u>。<br>
+男：<u>人に借りたものを人に貸すなよ</u>。<br><br>
+<strong>🔑 本の流れ:</strong><br>
+先生 → 男（借りた）→ 女（貸した）→ <strong>山田さん（女が貸した）</strong><br><br>
+・女のところ → すでに山田さんに貸した ✗<br>
+・男のところ → 女に返してもらっていない ✗<br>
+・先生のところ → まだ返していない ✗<br>
+・<strong>山田さんのところ</strong>（女が貸した）✓<br>
+→ 選択肢①が正解`
+  },
+  {
+    tag: "NGHE • N2 • 聴解",
+    text: `<audio class="listen-audio" controls><source src="assets/listen-05/n2_1c_5.mp3" type="audio/mpeg"></audio><img class="listen-image" src="assets/listen-05/quiz5.gif" alt="Câu hỏi 5">`,
+    vocab: [
+      { word: "法則", reading: "ほうそく", type: "Danh từ", meaning: "Quy tắc, định luật, quy luật",
+        example: "偉くなる人の法則を発見した。\n(Phát hiện ra quy luật của người thành công.)" },
+      { word: "散らかる", reading: "ちらかる", type: "Động từ", meaning: "Bừa bộn, lộn xộn",
+        example: "机の上がものすごく散らかっている。\n(Bàn làm việc bừa bộn kinh khủng.)" },
+      { word: "整理", reading: "せいり", type: "Danh từ / Động từ", meaning: "Sắp xếp, ngăn nắp",
+        example: "頭の中で整理されている。\n(Đã được sắp xếp trong đầu.)" },
+      { word: "偉い", reading: "えらい", type: "Tính từ -i", meaning: "Giỏi giang, có địa vị cao, xuất sắc",
+        example: "早く偉くなる人には法則がある。\n(Có quy luật cho những người thăng tiến nhanh.)" }
+    ],
+    choices: ["①", "②", "③", "④"],
+    answer: 3,
+    explanation: `<strong>正解：④ （机の上が散らかっているが、必要な書類がすぐ出せる人）</strong><br><br>
+<strong>📄 Transcript:</strong><br>
+女：どんなタイプの人がはやく偉くなるかっていう法則を発見したの。<br>
+男：教えてよ。<br>
+女：<u>その時必要な書類がすぐに出せる人</u>よ。<br>
+男：そんなの当たり前じゃないか。<br>
+女：偉くなる人は<u>机の上がものすごく散らかってる</u>の。<u>なのにぱっと出てくる</u>んよね。<u>すべてのことが頭の中で整理されてる</u>んだろうな。<br><br>
+<strong>🔑 Lý do chọn ④:</strong><br>
+・机も頭も整理 → 机は散らかっている ✗<br>
+・机は片付けている → 「ものすごく散らかってる」と言っている ✗<br>
+・机が整理されていて書類がすぐ見つかる → 机は散らかっている ✗<br>
+・<strong>机はぐちゃぐちゃでも、必要な書類がすぐ出せる</strong>（頭の中は整理されている）✓<br>
+→ 選択肢④が正解`
+  }
+  ],
+  navigation: {
+  prev: { url: "listen-04.html", label: "← Nghe · Bài 4" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "vocab-01.html", icon: "📝", label: "Từ vựng" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

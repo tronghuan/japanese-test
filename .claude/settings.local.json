@@ -6,7 +6,19 @@
       "Bash(python -c \"print\\(''hello''\\)\")",
       "Bash(where python:*)",
       "Bash(where node:*)",
-      "Bash(node -e \":*)"
+      "Bash(node -e \":*)",
+      "Bash(for i:*)",
+      "Bash(do curl:*)",
+      "Bash(echo \"n2_1b_$i.mp3 OK\")",
+      "Bash(done)",
+      "Bash(echo \"quiz$i.gif OK\")",
+      "Bash(curl -s -o transcript.pdf \"https://japanesetest4you.com/pdf/n2-listening-3.pdf\")",
+      "Bash(curl -s -o transcript.pdf \"https://japanesetest4you.com/pdf/n2-listening-4.pdf\")",
+      "Bash(mkdir -p d:/JapaneseTest/n2/assets/listen-05)",
+      "Bash(echo \"n2_1c_$i.mp3 OK\")",
+      "Bash(curl -s -o quiz1.jpg \"https://japanesetest4you.com/image/2009_02_listen_quiz11.jpg\")",
+      "Bash(curl -s -o quiz2.jpg \"https://japanesetest4you.com/image/2009_02_listen_quiz12.jpg\")",
+      "Bash(curl -s -o transcript.pdf \"https://japanesetest4you.com/pdf/n2-listening-5.pdf\")"
     ]
   }
 }
