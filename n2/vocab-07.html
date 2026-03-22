@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 7</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ⑦</div>
+  <h1>N2 語彙<span>クイズ</span>⑦</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 7 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `雨は<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>やむでしょう。それまでお茶でも飲んでいましょう。`,
+    vocab: [
+      { word: "じきに", reading: "じきに", type: "Phó từ", meaning: "Ngay thôi, chẳng bao lâu nữa, sắp sửa",
+        example: "じきに春が来る。\n(Chẳng bao lâu nữa mùa xuân sẽ đến.)" },
+      { word: "すでに", reading: "すでに", type: "Phó từ", meaning: "Đã, rồi (sự việc đã xảy ra trước)",
+        example: "試合はすでに終わっている。\n(Trận đấu đã kết thúc rồi.)" },
+      { word: "ただちに", reading: "ただちに", type: "Phó từ", meaning: "Ngay lập tức, lập tức",
+        example: "ただちに行動してください。\n(Hãy hành động ngay lập tức.)" },
+      { word: "ひとりでに", reading: "ひとりでに", type: "Phó từ", meaning: "Tự nhiên, tự động (không có tác động bên ngoài)",
+        example: "ドアがひとりでに開いた。\n(Cánh cửa tự nhiên mở ra.)" }
+    ],
+    choices: ["じきに", "すでに", "ただちに", "ひとりでに"],
+    answer: 0,
+    explanation: `<strong>正解：① じきに</strong><br><br>
+<strong>🔑 Phân biệt 4 phó từ:</strong><br>
+・<strong>じきに</strong> = sắp, chẳng bao lâu nữa → "mưa sắp tạnh, đợi chút uống trà đi" → hoàn toàn phù hợp<br>
+・<strong>すでに</strong> = đã, rồi → sự việc đã xảy ra trong quá khứ (mưa đã tạnh → không cần đợi)<br>
+・<strong>ただちに</strong> = ngay lập tức (mệnh lệnh khẩn cấp, không dùng cho dự đoán thời tiết)<br>
+・<strong>ひとりでに</strong> = tự nhiên, tự động → có thể dùng nhưng ngụ ý "tự nhiên tạnh" không tự nhiên bằng じきに trong câu này<br>
+→ Câu hoàn chỉnh: 雨は<strong>じきに</strong>やむでしょう。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `試験に落ちたからといって<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>しないでください。`,
+    vocab: [
+      { word: "がっかり", reading: "がっかり", type: "Phó từ / Động từ", meaning: "Thất vọng, nản lòng, chán nản",
+        example: "試合に負けてがっかりした。\n(Thất vọng vì thua trận.)" },
+      { word: "しっかり", reading: "しっかり", type: "Phó từ", meaning: "Chắc chắn, vững vàng, kỹ càng",
+        example: "しっかり勉強する。\n(Học hành chăm chỉ, kỹ càng.)" },
+      { word: "すっかり", reading: "すっかり", type: "Phó từ", meaning: "Hoàn toàn, hết sạch",
+        example: "すっかり忘れてしまった。\n(Đã quên mất hoàn toàn.)" },
+      { word: "うっかり", reading: "うっかり", type: "Phó từ", meaning: "Bất cẩn, vô ý, sơ suất",
+        example: "うっかりミスをした。\n(Phạm lỗi vì bất cẩn.)" }
+    ],
+    choices: ["がっかり", "しっかり", "すっかり", "うっかり"],
+    answer: 0,
+    explanation: `<strong>正解：① がっかり</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>がっかりする</strong> = thất vọng, nản lòng → 落ちた（trượt thi）→ cảm xúc thất vọng = logic<br>
+・からといって〜しないで = "dù ~ cũng đừng làm..." → khuyên không nên thất vọng<br>
+・<strong>しっかりする</strong> = cứng cỏi lên (có thể dùng nhưng từ này thường là lời khuyên tích cực)<br>
+・<strong>すっかり</strong> = hoàn toàn (trạng từ mức độ, không phải cảm xúc)<br>
+・<strong>うっかり</strong> = bất cẩn (không liên quan đến thi trượt)<br>
+→ Câu hoàn chỉnh: 試験に落ちたからといって<strong>がっかり</strong>しないでください。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `来月のコンサートの<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>には、好きな曲があまり入っていない。`,
+    vocab: [
+      { word: "スタイル", reading: "スタイル", type: "Danh từ (ngoại lai)", meaning: "Phong cách, kiểu dáng",
+        example: "独自のスタイルを持つ。\n(Có phong cách độc đáo riêng.)" },
+      { word: "リズム", reading: "リズム", type: "Danh từ (ngoại lai)", meaning: "Nhịp điệu, tiết tấu",
+        example: "音楽のリズムに合わせる。\n(Theo nhịp điệu âm nhạc.)" },
+      { word: "プログラム", reading: "プログラム", type: "Danh từ (ngoại lai)", meaning: "Chương trình (buổi biểu diễn); danh mục tiết mục",
+        example: "コンサートのプログラムを見る。\n(Xem chương trình buổi hòa nhạc.)" }
+    ],
+    choices: ["グイヤ", "スタイル", "リズム", "プログラム"],
+    answer: 3,
+    explanation: `<strong>正解：④ プログラム</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>コンサートのプログラム</strong> = danh mục các bài biểu diễn trong buổi hòa nhạc → "bài hát yêu thích không có nhiều trong danh mục"<br>
+・<strong>スタイル</strong> = phong cách (không có "bài hát trong phong cách")<br>
+・<strong>リズム</strong> = nhịp điệu (bài hát không nằm trong nhịp điệu)<br>
+・グイヤ → không phải từ tiếng Nhật<br>
+→ Câu hoàn chỉnh: コンサートの<strong>プログラム</strong>には、好きな曲があまり入っていない。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `病気で入院したのを<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>に、たばこをやめることにした。`,
+    vocab: [
+      { word: "きっかけ", reading: "きっかけ", type: "Danh từ", meaning: "Cơ hội, dịp, nguyên nhân khởi đầu",
+        example: "これをきっかけに友達になった。\n(Nhân dịp này đã trở thành bạn bè.)" },
+      { word: "はじめ", reading: "はじめ", type: "Danh từ / Phó từ", meaning: "Đầu tiên, ban đầu; bao gồm cả",
+        example: "はじめから説明する。\n(Giải thích từ đầu.)" },
+      { word: "おかげ", reading: "おかげ", type: "Danh từ", meaning: "Nhờ vào, berkat (ơn của)",
+        example: "おかげで助かりました。\n(Nhờ vào đó mà được cứu.)" },
+      { word: "こころあたり", reading: "こころあたり", type: "Danh từ", meaning: "Điều gì đó nghi ngờ/nhớ mang máng",
+        example: "こころあたりがある。\n(Có điều gì đó nghi ngờ/mang máng nhớ.)" }
+    ],
+    choices: ["きっかけ", "はじめ", "おかげ", "こころあたり"],
+    answer: 0,
+    explanation: `<strong>正解：① きっかけ</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>〜をきっかけに</strong> = lấy ~ làm cơ hội/dịp → nhập viện là cơ duyên để bỏ thuốc lá<br>
+・Cấu trúc cố định: 〔sự kiện〕をきっかけに〔thay đổi/hành động〕= rất phổ biến<br>
+・<strong>おかげ</strong> = nhờ vào (hàm ý tích cực/ơn huệ) → nhập viện không phải điều may mắn<br>
+・<strong>はじめ</strong> = đầu tiên (thứ tự), <strong>こころあたり</strong> = mang máng nhớ → không phù hợp<br>
+→ Câu hoàん chỉnh: 入院したのを<strong>きっかけ</strong>に、たばこをやめることにした。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `ひさしぶりに<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>がとれたので、一日中何もしないでのんびりした。`,
+    vocab: [
+      { word: "休業", reading: "きゅうぎょう", type: "Danh từ / Động từ", meaning: "Đóng cửa kinh doanh, tạm ngừng hoạt động",
+        example: "本日は休業します。\n(Hôm nay chúng tôi đóng cửa.)" },
+      { word: "休憩", reading: "きゅうけい", type: "Danh từ / Động từ", meaning: "Nghỉ giải lao, giải lao ngắn",
+        example: "10分間の休憩をとる。\n(Nghỉ giải lao 10 phút.)" },
+      { word: "休講", reading: "きゅうこう", type: "Danh từ / Động từ", meaning: "Buổi học bị hủy, nghỉ giảng",
+        example: "今日の授業は休講です。\n(Hôm nay buổi học bị hủy.)" },
+      { word: "休暇", reading: "きゅうか", type: "Danh từ", meaning: "Kỳ nghỉ, ngày nghỉ phép",
+        example: "夏休暇を楽しむ。\n(Tận hưởng kỳ nghỉ hè.)" }
+    ],
+    choices: ["休業", "休憩", "休講", "休暇"],
+    answer: 3,
+    explanation: `<strong>正解：④ 休暇（きゅうか）</strong><br><br>
+<strong>🔑 Phân biệt 4 từ:</strong><br>
+・<strong>休暇</strong> = kỳ nghỉ phép (của cá nhân) → 休暇がとれた = có được ngày nghỉ → phù hợp<br>
+・<strong>休業</strong> = đóng cửa kinh doanh (của công ty/cửa hàng, không phải của cá nhân)<br>
+・<strong>休憩</strong> = giải lao ngắn (vài phút/giờ, không phải cả ngày)<br>
+・<strong>休講</strong> = hủy buổi học (dành cho giáo viên/giáo sư, không phải nhân viên)<br>
+→ Câu hoàn chỉnh: ひさしぶりに<strong>休暇</strong>がとれたので、のんびりした。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>財布を落としてしまい、家へ帰るバス代がない。`,
+    vocab: [
+      { word: "ずっと", reading: "ずっと", type: "Phó từ", meaning: "Liên tục, suốt; cách xa hơn nhiều",
+        example: "ずっと待っていた。\n(Đã đợi suốt.)" },
+      { word: "しっかり", reading: "しっかり", type: "Phó từ", meaning: "Chắc chắn, vững vàng",
+        example: "しっかり荷物を持つ。\n(Cầm hành lý chắc chắn.)" },
+      { word: "こっそり", reading: "こっそり", type: "Phó từ", meaning: "Lén lút, bí mật",
+        example: "こっそり部屋を出た。\n(Lén ra khỏi phòng.)" },
+      { word: "うっかり", reading: "うっかり", type: "Phó từ", meaning: "Bất cẩn, vô ý, sơ suất",
+        example: "うっかり傘を忘れた。\n(Vô ý quên ô.)" }
+    ],
+    choices: ["ずっと", "しっかり", "こっそり", "うっかり"],
+    answer: 3,
+    explanation: `<strong>正解：④ うっかり</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>うっかり財布を落とす</strong> = vô ý đánh rơi ví → bất cẩn không giữ cẩn thận<br>
+・<strong>しっかり</strong> = chắc chắn → "chắc chắn đánh rơi ví" = mâu thuẫn về nghĩa<br>
+・<strong>こっそり</strong> = lén lút (hành động cố ý, không phải vô ý)<br>
+・<strong>ずっと</strong> = liên tục (không kết hợp với 落とす theo nghĩa này)<br>
+→ Câu hoàn chỉnh: <strong>うっかり</strong>財布を落としてしまい、バス代がない。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `車が多くあぶないから、もっと道の<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>を歩きなさい。`,
+    vocab: [
+      { word: "まわり", reading: "まわり", type: "Danh từ", meaning: "Xung quanh, vùng lân cận",
+        example: "学校のまわりに木がある。\n(Xung quanh trường có cây.)" },
+      { word: "はし", reading: "はし", type: "Danh từ", meaning: "Mép, rìa, lề (đường)",
+        example: "道のはしを歩く。\n(Đi bộ ở lề đường.)" },
+      { word: "かど", reading: "かど", type: "Danh từ", meaning: "Góc (đường, nhà)",
+        example: "角を曲がる。\n(Rẽ ở góc đường.)" },
+      { word: "となり", reading: "となり", type: "Danh từ", meaning: "Bên cạnh, hàng xóm",
+        example: "となりの家。\n(Ngôi nhà bên cạnh.)" }
+    ],
+    choices: ["まわり", "はし", "かど", "となり"],
+    answer: 1,
+    explanation: `<strong>正解：② はし（端）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>道のはし</strong> = lề đường, mép đường → đi ở rìa đường để tránh xe<br>
+・<strong>道のまわり</strong> = xung quanh con đường → không phải vị trí trên đường<br>
+・<strong>かど</strong> = góc đường (một điểm, không phải dải dọc theo đường)<br>
+・<strong>となり</strong> = bên cạnh (hàng xóm, không dùng cho đường phố)<br>
+→ Câu hoàん chỉnh: もっと道の<strong>はし</strong>を歩きなさい。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `東京から見て、名古屋は大阪より<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>にある。`,
+    vocab: [
+      { word: "手頃", reading: "てごろ", type: "Tính từ -na", meaning: "Vừa tầm, phải chăng, tiện dụng",
+        example: "手頃な値段で買える。\n(Có thể mua với giá phải chăng.)" },
+      { word: "手前", reading: "てまえ", type: "Danh từ", meaning: "Phía trước (gần phía người nói), bên này",
+        example: "駅の手前に店がある。\n(Có cửa hàng ở trước ga một chút.)" },
+      { word: "手入れ", reading: "てれい", type: "Danh từ / Động từ", meaning: "Bảo dưỡng, chăm sóc",
+        example: "庭の手入れをする。\n(Chăm sóc khu vườn.)" },
+      { word: "手当て", reading: "てあて", type: "Danh từ", meaning: "Phụ cấp, trợ cấp; sơ cứu",
+        example: "けがの手当てをする。\n(Sơ cứu vết thương.)" }
+    ],
+    choices: ["手頃", "手前", "手入れ", "手当て"],
+    answer: 1,
+    explanation: `<strong>正解：② 手前（てまえ）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>手前</strong> = phía trước/bên này (gần phía người nói hơn) → Tokyo → Nagoya → Osaka (theo thứ tự)<br>
+・Từ Tokyo nhìn về hướng Osaka: Nagoya nằm giữa → Nagoya ở <strong>phía trước</strong> (gần Tokyo hơn) so với Osaka<br>
+・<strong>手頃</strong> = phải chăng (giá cả), <strong>手入れ</strong> = bảo dưỡng, <strong>手当て</strong> = phụ cấp → không liên quan đến vị trí địa lý<br>
+→ Câu hoàn chỉnh: 名古屋は大阪より<strong>手前</strong>にある。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `今日は友達の結婚式でスピーチをするので、とても<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>している。`,
+    vocab: [
+      { word: "拡張", reading: "かくちょう", type: "Danh từ / Động từ", meaning: "Mở rộng, khuếch trương",
+        example: "事業を拡張する。\n(Mở rộng hoạt động kinh doanh.)" },
+      { word: "出張", reading: "しゅっちょう", type: "Danh từ / Động từ", meaning: "Công tác, đi công tác",
+        example: "来週東京に出張する。\n(Tuần sau đi công tác Tokyo.)" },
+      { word: "緊張", reading: "きんちょう", type: "Danh từ / Động từ", meaning: "Hồi hộp, căng thẳng",
+        example: "発表の前に緊張する。\n(Hồi hộp trước khi thuyết trình.)" },
+      { word: "主張", reading: "しゅちょう", type: "Danh từ / Động từ", meaning: "Khẳng định, lập luận, nhấn mạnh quan điểm",
+        example: "自分の意見を主張する。\n(Khẳng định ý kiến của mình.)" }
+    ],
+    choices: ["拡張", "出張", "緊張", "主張"],
+    answer: 2,
+    explanation: `<strong>正解：③ 緊張（きんちょう）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>緊張する</strong> = hồi hộp, căng thẳng → phải đọc phát biểu ở đám cưới = hồi hộp là tự nhiên<br>
+・<strong>とても緊張している</strong> = đang rất hồi hộp → phù hợp với ngữ cảnh<br>
+・<strong>拡張</strong> = mở rộng (quy mô), <strong>出張</strong> = công tác → không liên quan đến cảm xúc<br>
+・<strong>主張する</strong> = khẳng định quan điểm → không dùng theo nghĩa cảm xúc<br>
+→ Câu hoàn chỉnh: スピーチをするので、とても<strong>緊張</strong>している。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>いつでもお手伝いさせていただきます。`,
+    vocab: [
+      { word: "喜んで", reading: "よろこんで", type: "Phó từ (dạng て)", meaning: "Vui lòng, sẵn lòng, với niềm vui",
+        example: "喜んでお手伝いします。\n(Tôi sẵn lòng giúp đỡ.)" },
+      { word: "好んで", reading: "このんで", type: "Phó từ (dạng て)", meaning: "Một cách ưa thích, thường xuyên lựa chọn",
+        example: "魚を好んで食べる。\n(Ưa ăn cá.)" },
+      { word: "望んで", reading: "のぞんで", type: "Phó từ (dạng て)", meaning: "Mong muốn, ao ước",
+        example: "平和を望んでいる。\n(Mong muốn hòa bình.)" }
+    ],
+    choices: ["喜んで", "好んで", "望んで", "幸せで"],
+    answer: 0,
+    explanation: `<strong>正解：① 喜んで（よろこんで）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>喜んで〜する</strong> = vui lòng làm ~ → cách diễn đạt lịch sự khi nhận lời giúp đỡ<br>
+・<strong>喜んでお手伝いさせていただきます</strong> = tôi rất sẵn lòng giúp → cụm lịch sự chuẩn mực<br>
+・<strong>好んで</strong> = ưa làm ~ (theo sở thích, không phải sẵn sàng phục vụ người khác)<br>
+・<strong>望んで</strong> = mong muốn (diễn đạt ước muốn của bản thân)<br>
+・<strong>幸せで</strong> = hạnh phúc (tính từ trạng thái, không phải phó từ hành động)<br>
+→ Câu hoàn chỉnh: <strong>喜んで</strong>いつでもお手伝いさせていただきます。`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-06.html", label: "← Từ vựng · Bài 6" },
+  next: { url: "vocab-08.html", label: "→ Từ vựng · Bài 8" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

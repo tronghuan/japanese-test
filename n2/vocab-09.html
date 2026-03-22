@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 9</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ⑨</div>
+  <h1>N2 語彙<span>クイズ</span>⑨</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 9 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `このごろ彼は<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>元気がないようだ。`,
+    vocab: [
+      { word: "なんとなく", reading: "なんとなく", type: "Phó từ", meaning: "Không hiểu sao, mơ hồ, không rõ lý do",
+        example: "なんとなく気分が悪い。\n(Không hiểu sao cảm thấy khó chịu.)" },
+      { word: "なんとか", reading: "なんとか", type: "Phó từ", meaning: "Bằng cách nào đó, cố gắng được",
+        example: "なんとか間に合った。\n(Bằng cách nào đó đã kịp.)" },
+      { word: "なんでも", reading: "なんでも", type: "Phó từ / Đại từ", meaning: "Bất cứ thứ gì; nghe đâu là",
+        example: "なんでも食べます。\n(Tôi ăn bất cứ thứ gì.)" }
+    ],
+    choices: ["なんとなく", "なんとか", "なんで", "なんでも"],
+    answer: 0,
+    explanation: `<strong>正解：① なんとなく</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>なんとなく</strong> = không rõ lý do, cảm giác mơ hồ → "dạo này trông anh ấy không có năng lượng, không biết sao"<br>
+・<strong>なんとか</strong> = cố được, bằng cách nào đó → diễn đạt kết quả đạt được với nỗ lực<br>
+・<strong>なんでも</strong> = bất cứ thứ gì / nghe đâu là → không hợp nghĩa với 元気がない<br>
+・<strong>なんで</strong> = tại sao (câu hỏi), không dùng như phó từ mô tả<br>
+→ Câu hoàん chỉnh: <strong>なんとなく</strong>元気がないようだ。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `今日の会議で、計画の変更を<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>つもりだ。`,
+    vocab: [
+      { word: "提案する", reading: "ていあんする", type: "Động từ", meaning: "Đề xuất, đề nghị, kiến nghị",
+        example: "新しいアイデアを提案する。\n(Đề xuất ý tưởng mới.)" },
+      { word: "展開する", reading: "てんかいする", type: "Động từ", meaning: "Phát triển, triển khai, mở ra",
+        example: "物語が展開する。\n(Câu chuyện phát triển.)" },
+      { word: "観察する", reading: "かんさつする", type: "Động từ", meaning: "Quan sát, theo dõi",
+        example: "自然を観察する。\n(Quan sát thiên nhiên.)" },
+      { word: "投票する", reading: "とうひょうする", type: "Động từ", meaning: "Bỏ phiếu, biểu quyết",
+        example: "選挙で投票する。\n(Bỏ phiếu trong cuộc bầu cử.)" },
+      { word: "変更", reading: "へんこう", type: "Danh từ / Động từ", meaning: "Thay đổi, sửa đổi",
+        example: "計画を変更する。\n(Thay đổi kế hoạch.)" }
+    ],
+    choices: ["提案する", "展開する", "観察する", "投票する"],
+    answer: 0,
+    explanation: `<strong>正解：① 提案する（ていあんする）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>変更を提案する</strong> = đề xuất việc thay đổi → tại cuộc họp đưa ra kiến nghị thay đổi kế hoạch<br>
+・<strong>展開する</strong> = triển khai/phát triển → không dùng khi đề cập đến thay đổi kế hoạch<br>
+・<strong>観察する</strong> = quan sát (theo dõi bên ngoài, không phải đề xuất)<br>
+・<strong>投票する</strong> = bỏ phiếu (sau khi đề xuất, không phải hành động đề xuất)<br>
+→ Câu hoàん chỉnh: 計画の変更を<strong>提案する</strong>つもりだ。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `会議が始まるまでに、この書類の<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>を20人分お願いします。`,
+    vocab: [
+      { word: "テーマ", reading: "テーマ", type: "Danh từ (ngoại lai)", meaning: "Chủ đề, đề tài",
+        example: "今回のテーマは環境問題だ。\n(Chủ đề lần này là vấn đề môi trường.)" },
+      { word: "シーツ", reading: "シーツ", type: "Danh từ (ngoại lai)", meaning: "Ga trải giường",
+        example: "シーツを洗う。\n(Giặt ga trải giường.)" },
+      { word: "カラー", reading: "カラー", type: "Danh từ (ngoại lai)", meaning: "Màu sắc; cổ áo",
+        example: "カラーコピーを作る。\n(Làm bản sao màu.)" },
+      { word: "コピー", reading: "コピー", type: "Danh từ (ngoại lai)", meaning: "Bản sao, phô tô",
+        example: "書類のコピーをとる。\n(Phô tô tài liệu.)" }
+    ],
+    choices: ["テーマ", "シーツ", "カラー", "コピー"],
+    answer: 3,
+    explanation: `<strong>正解：④ コピー</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>書類のコピーを20人分</strong> = phô tô tài liệu cho 20 người → chuẩn bị tài liệu trước cuộc họp<br>
+・<strong>テーマ</strong> = chủ đề (không phô tô được), <strong>シーツ</strong> = ga trải giường (không liên quan)<br>
+・<strong>カラー</strong> = màu sắc → カラーコピー thì đúng nhưng không phải đáp án ở đây vì câu hỏi không đề cập màu<br>
+→ Câu hoàん chỉnh: 書類の<strong>コピー</strong>を20人分お願いします。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `次の文章をよく読んで、<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>をまとめなさい。`,
+    vocab: [
+      { word: "整理", reading: "せいり", type: "Danh từ / Động từ", meaning: "Sắp xếp, chỉnh lý, tổ chức",
+        example: "部屋を整理する。\n(Dọn dẹp sắp xếp phòng.)" },
+      { word: "要旨", reading: "ようし", type: "Danh từ", meaning: "Ý chính, tóm tắt, điểm cốt lõi",
+        example: "講義の要旨をノートにまとめる。\n(Tóm tắt nội dung bài giảng vào vở.)" },
+      { word: "理解", reading: "りかい", type: "Danh từ / Động từ", meaning: "Hiểu, lý giải",
+        example: "内容を理解する。\n(Hiểu nội dung.)" },
+      { word: "要領", reading: "ようりょう", type: "Danh từ", meaning: "Yếu điểm, cách thức; bí quyết",
+        example: "要領よく仕事をする。\n(Làm việc một cách khéo léo.)" }
+    ],
+    choices: ["整理", "要旨", "理解", "要領"],
+    answer: 1,
+    explanation: `<strong>正解：② 要旨（ようし）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>要旨をまとめる</strong> = tóm tắt ý chính của văn bản → bài tập đọc hiểu điển hình<br>
+・<strong>整理</strong> = sắp xếp (không nói 整理をまとめる)<br>
+・<strong>理解</strong> = hiểu (quá trình nhận thức, không phải sản phẩm viết ra)<br>
+・<strong>要領</strong> = bí quyết, cách thức (không phải nội dung văn bản)<br>
+→ Câu hoàん chỉnh: 文章をよく読んで、<strong>要旨</strong>をまとめなさい。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `台風に<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>、十分な注意が必要です。`,
+    vocab: [
+      { word: "したがって", reading: "したがって", type: "Liên từ", meaning: "Vì vậy, do đó (kết quả)",
+        example: "雨が降った。したがって、試合は中止だ。\n(Trời mưa. Vì vậy trận đấu bị hủy.)" },
+      { word: "とって", reading: "とって（にとって）", type: "Cụm trợ từ", meaning: "Đối với (ai/cái gì)",
+        example: "私にとって大切なことだ。\n(Đây là điều quan trọng đối với tôi.)" },
+      { word: "受けて", reading: "うけて", type: "Động từ dạng て", meaning: "Tiếp nhận, chịu (ảnh hưởng)",
+        example: "影響を受けて変わった。\n(Thay đổi do chịu ảnh hưởng.)" },
+      { word: "そなえて", reading: "そなえて（備えて）", type: "Động từ dạng て", meaning: "Chuẩn bị đề phòng, phòng ngừa",
+        example: "地震に備えて食料を用意する。\n(Chuẩn bị lương thực để phòng ngừa động đất.)" }
+    ],
+    choices: ["したがって", "とって", "受けて", "そなえて"],
+    answer: 3,
+    explanation: `<strong>正解：④ そなえて（備えて）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>〜に備えて</strong> = chuẩn bị phòng ngừa ~ → 台風に備えて = đề phòng bão<br>
+・Cấu trúc: 〔nguy hiểm〕に備えて〔hành động chuẩn bị〕= rất phổ biến<br>
+・<strong>したがって</strong> = vì vậy (liên từ, không phải cụm với に)<br>
+・<strong>〜にとって</strong> = đối với → 台風にとって注意が必要 = không đúng nghĩa<br>
+・<strong>〜を受けて</strong> = sau khi chịu ảnh hưởng (thường dùng với を, không phải に)<br>
+→ Câu hoàん chỉnh: 台風に<strong>備えて</strong>、十分な注意が必要です。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>日本へ出発する時が来た。`,
+    vocab: [
+      { word: "いきいき", reading: "いきいき", type: "Phó từ", meaning: "Sinh động, tươi tắn, đầy sức sống",
+        example: "いきいきと話す。\n(Nói chuyện một cách sinh động.)" },
+      { word: "いろいろ", reading: "いろいろ", type: "Phó từ / Tính từ -na", meaning: "Nhiều loại, đủ thứ",
+        example: "いろいろな国を旅する。\n(Du lịch nhiều đất nước khác nhau.)" },
+      { word: "いよいよ", reading: "いよいよ", type: "Phó từ", meaning: "Cuối cùng rồi, đến lúc rồi (cảm xúc chờ đợi)",
+        example: "いよいよ試験が始まる。\n(Cuối cùng kỳ thi bắt đầu rồi.)" },
+      { word: "いちいち", reading: "いちいち", type: "Phó từ", meaning: "Từng cái một, mỗi cái; (hàm ý phiền não)",
+        example: "いちいち確認する。\n(Kiểm tra từng cái một.)" }
+    ],
+    choices: ["いきいき", "いろいろ", "いよいよ", "いちいち"],
+    answer: 2,
+    explanation: `<strong>正解：③ いよいよ</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>いよいよ</strong> = cuối cùng cũng đến lúc rồi → thể hiện cảm xúc hồi hộp/chờ đợi khi sự kiện quan trọng đã đến<br>
+・"いよいよ日本へ出発する時が来た" = Cuối cùng cũng đến lúc khởi hành đi Nhật rồi!<br>
+・<strong>いきいき</strong> = sinh động (trạng thái, không phải thời điểm)<br>
+・<strong>いろいろ</strong> = đủ thứ (không liên quan đến thời điểm xuất phát)<br>
+・<strong>いちいち</strong> = từng cái một (thường mang sắc thái tiêu cực/phàn nàn)<br>
+→ Câu hoàん chỉnh: <strong>いよいよ</strong>日本へ出発する時が来た。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `父からの手紙を読んで、親はありがたいものだと<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>思った。`,
+    vocab: [
+      { word: "せいぜい", reading: "せいぜい", type: "Phó từ", meaning: "Nhiều lắm là, cùng lắm là; cố gắng hết sức",
+        example: "せいぜい100人しか入れない。\n(Nhiều lắm chỉ chứa được 100 người.)" },
+      { word: "しみじみ", reading: "しみじみ", type: "Phó từ", meaning: "Thấm thía, sâu sắc, tận đáy lòng",
+        example: "しみじみと感謝した。\n(Cảm ơn từ tận đáy lòng.)" },
+      { word: "ちかぢか", reading: "ちかぢか", type: "Phó từ", meaning: "Sắp tới, trong thời gian gần đây",
+        example: "ちかぢか訪ねます。\n(Sắp tới tôi sẽ đến thăm.)" },
+      { word: "ひろびろ", reading: "ひろびろ", type: "Phó từ / Tính từ", meaning: "Rộng rãi, mênh mông",
+        example: "ひろびろとした公園。\n(Công viên rộng rãi.)" }
+    ],
+    choices: ["せいぜい", "しみじみ", "ちかぢか", "ひろびろ"],
+    answer: 1,
+    explanation: `<strong>正解：② しみじみ</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>しみじみ思う</strong> = cảm nhận sâu sắc, thấm thía tận đáy lòng<br>
+・Đọc thư của cha → cảm xúc sâu lắng về ơn nghĩa cha mẹ = <strong>しみじみ</strong> rất phù hợp<br>
+・<strong>せいぜい</strong> = cùng lắm là (giới hạn), <strong>ちかぢか</strong> = sắp tới (thời gian) → không liên quan đến cảm xúc<br>
+・<strong>ひろびろ</strong> = rộng rãi (không gian) → không phù hợp<br>
+→ Câu hoàん chỉnh: 親はありがたいものだと<strong>しみじみ</strong>思った。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `この会社では、仕事が忙しい間は、アルバイトを<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>ことにしている。`,
+    vocab: [
+      { word: "えらぶ", reading: "えらぶ（選ぶ）", type: "Động từ nhóm 1", meaning: "Chọn lựa, lựa chọn",
+        example: "チームのメンバーを選ぶ。\n(Chọn thành viên nhóm.)" },
+      { word: "たくわえる", reading: "たくわえる（蓄える）", type: "Động từ nhóm 2", meaning: "Tích trữ, dự trữ; để dành",
+        example: "食料を蓄える。\n(Dự trữ lương thực.)" },
+      { word: "やとう", reading: "やとう（雇う）", type: "Động từ nhóm 1", meaning: "Thuê mướn, tuyển dụng",
+        example: "アルバイトを雇う。\n(Thuê nhân viên bán thời gian.)" },
+      { word: "とらえる", reading: "とらえる（捕える）", type: "Động từ nhóm 2", meaning: "Bắt giữ, nắm bắt",
+        example:="犯人を捕える。\n(Bắt tên tội phạm.)" }
+    ],
+    choices: ["えらぶ", "たくわえる", "やとう", "とらえる"],
+    answer: 2,
+    explanation: `<strong>正解：③ やとう（雇う）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>アルバイトを雇う</strong> = thuê nhân viên bán thời gian → khi bận thì thuê thêm người<br>
+・<strong>えらぶ</strong> = chọn lựa (chọn từ các ứng viên có sẵn, nhưng từ đúng cho tuyển dụng là 雇う)<br>
+・<strong>たくわえる</strong> = tích trữ (vật phẩm, không phải người)<br>
+・<strong>とらえる</strong> = bắt giữ (tội phạm, không phải tuyển dụng)<br>
+→ Câu hoàん chỉnh: アルバイトを<strong>雇う</strong>ことにしている。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>子供なので、自分の思っていることを言わないことが多い。`,
+    vocab: [
+      { word: "懐かしい", reading: "なつかしい", type: "Tính từ -i", meaning: "Nhớ nhung, bồi hồi (kỷ niệm)",
+        example: "懐かしい場所を訪れる。\n(Thăm lại nơi gợi nhiều kỷ niệm.)" },
+      { word: "詳しい", reading: "くわしい", type: "Tính từ -i", meaning: "Chi tiết, tỉ mỉ; rành về",
+        example: "この地域に詳しい人。\n(Người rành về khu vực này.)" },
+      { word: "大人しい", reading: "おとなしい", type: "Tính từ -i", meaning: "Ngoan ngoãn, hiền lành, ít nói",
+        example: "大人しい性格の子供。\n(Đứa trẻ có tính cách hiền lành.)" },
+      { word: "騒がしい", reading: "さわがしい", type: "Tính từ -i", meaning: "Ồn ào, náo loạn",
+        example: "外が騒がしい。\n(Bên ngoài ồn ào.)" }
+    ],
+    choices: ["なつかしい", "くわしい", "おとなしい", "さわがしい"],
+    answer: 2,
+    explanation: `<strong>正解：③ おとなしい（大人しい）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>大人しい子供</strong> = đứa trẻ hiền lành, ít nói → "vì ít nói nên không nói những gì đang nghĩ"<br>
+・Ngữ cảnh: 自分の思っていることを言わない = không nói ra suy nghĩ → tính cách nội tâm, hiền lành<br>
+・<strong>懐かしい</strong> = nhớ nhung (cảm xúc với quá khứ)<br>
+・<strong>詳しい</strong> = rành biết (kiến thức)<br>
+・<strong>騒がしい</strong> = ồn ào → trái nghĩa với ít nói<br>
+→ Câu hoàん chỉnh: <strong>大人しい</strong>子供なので、自分の思っていることを言わないことが多い。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `家具屋でつくえを買って、<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>もらった。`,
+    vocab: [
+      { word: "発達", reading: "はったつ", type: "Danh từ / Động từ", meaning: "Phát triển, tiến bộ",
+        example: "技術が発達する。\n(Công nghệ phát triển.)" },
+      { word: "配達", reading:="はいたつ", type: "Danh từ / Động từ", meaning: "Giao hàng, vận chuyển đến nhà",
+        example: "荷物を配達する。\n(Giao hàng.)" },
+      { word: "速達", reading: "そくたつ", type: "Danh từ", meaning: "Thư nhanh, chuyển phát nhanh",
+        example: "速達で送る。\n(Gửi bằng chuyển phát nhanh.)" },
+      { word: "伝達", reading: "でんたつ", type: "Danh từ /動詞", meaning: "Truyền đạt, thông báo",
+        example: "指示を伝達する。\n(Truyền đạt chỉ thị.)" }
+    ],
+    choices: ["発達して", "配達して", "速達して", "伝達して"],
+    answer: 1,
+    explanation: `<strong>正解：② 配達して（はいたつして）</strong><br><br>
+<strong>🔑 Phân biệt 4 từ:</strong><br>
+・<strong>配達する</strong> = giao hàng đến nhà → mua bàn ở cửa hàng và nhờ giao đến → hoàn toàn phù hợp<br>
+・<strong>発達する</strong> = phát triển (kỹ năng, công nghệ → không giao được bàn)<br>
+・<strong>速達</strong> = thư/bưu kiện chuyển phát nhanh (không dùng cho đồ nội thất lớn)<br>
+・<strong>伝達する</strong> = truyền đạt thông tin (không phải vật chất)<br>
+→ Câu hoàん chỉnh: 家具屋でつくえを買って、<strong>配達して</strong>もらった。`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-08.html", label: "← Từ vựng · Bài 8" },
+  next: { url: "vocab-10.html", label: "→ Từ vựng · Bài 10" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

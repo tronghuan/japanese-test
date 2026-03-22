@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 4</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ④</div>
+  <h1>N2 語彙<span>クイズ</span>④</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 4 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `何をするにも、<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>方法をとっていては、成功はむずかしい。`,
+    vocab: [
+      { word: "安静", reading: "あんせい", type: "Tính từ -na / Danh từ", meaning: "Nghỉ ngơi, tĩnh dưỡng",
+        example: "病気の時は安静にしてください。\n(Khi bệnh hãy nghỉ ngơi tĩnh dưỡng.)" },
+      { word: "安定", reading: "あんてい", type: "Danh từ / Động từ", meaning: "Ổn định, vững chắc",
+        example: "生活が安定している。\n(Cuộc sống ổn định.)" },
+      { word: "安易", reading: "あんい", type: "Tính từ -na", meaning: "Dễ dãi, cẩu thả, thiếu nghiêm túc",
+        example: "安易な考えで仕事をしてはいけない。\n(Không được làm việc với tư duy cẩu thả.)" },
+      { word: "安価", reading: "あんか", type: "Tính từ -na / Danh từ", meaning: "Giá rẻ, giá thấp",
+        example: "安価な商品が人気だ。\n(Sản phẩm giá rẻ được ưa chuộng.)" },
+      { word: "方法", reading: "ほうほう", type: "Danh từ", meaning: "Phương pháp, cách thức",
+        example: "効果的な方法を選ぶ。\n(Chọn phương pháp hiệu quả.)" },
+      { word: "成功", reading: "せいこう", type: "Danh từ / Động từ", meaning: "Thành công",
+        example: "プロジェクトが成功した。\n(Dự án đã thành công.)" }
+    ],
+    choices: ["安静な", "安定な", "安易な", "安価な"],
+    answer: 2,
+    explanation: `<strong>正解：③ 安易な（あんいな）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>安易な方法</strong> = phương pháp dễ dãi, cẩu thả → "cứ chọn cách dễ mà không chịu cố gắng thì khó thành công"<br>
+・<strong>安静</strong> = nghỉ ngơi (dùng cho sức khỏe), <strong>安定</strong> = ổn định, <strong>安価</strong> = giá rẻ → không phù hợp với 方法<br>
+→ Câu hoàn chỉnh: 何をするにも、<strong>安易な</strong>方法をとっていては、成功はむずかしい。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `目が痛かったので、しばらく目を<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>いた。`,
+    vocab: [
+      { word: "下げる", reading: "さげる", type: "Động từ nhóm 2", meaning: "Hạ xuống, treo xuống",
+        example: "頭を下げる。\n(Cúi đầu.)" },
+      { word: "閉める", reading: "しめる", type: "Động từ nhóm 2", meaning: "Đóng, khép (cửa, cửa sổ...)",
+        example: "窓を閉める。\n(Đóng cửa sổ.)" },
+      { word: "閉じる", reading: "とじる", type: "Động từ nhóm 2", meaning: "Nhắm (mắt), khép (sách, cửa)",
+        example: "目を閉じる。\n(Nhắm mắt.)" },
+      { word: "止める", reading: "とめる", type: "Động từ nhóm 2", meaning: "Dừng lại, ngăn chặn",
+        example: "車を止める。\n(Dừng xe.)" }
+    ],
+    choices: ["さげて", "しめて", "とじて", "とめて"],
+    answer: 2,
+    explanation: `<strong>正解：③ とじて（閉じて）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>閉じる</strong> = nhắm mắt / khép (sách, mắt) → 目を閉じる là cụm từ cố định<br>
+・<strong>閉める</strong> = đóng cửa, cửa sổ... → dùng cho vật thể lớn có bản lề, không dùng cho mắt<br>
+・<strong>下げる</strong> = hạ xuống, <strong>止める</strong> = dừng → không kết hợp được với 目<br>
+→ Câu hoàn chỉnh: しばらく目を<strong>閉じて</strong>いた。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `その話に深く<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>して、泣いてしまった。`,
+    vocab: [
+      { word: "強調", reading: "きょうちょう", type: "Danh từ / Động từ", meaning: "Nhấn mạnh, làm nổi bật",
+        example: "重要な点を強調する。\n(Nhấn mạnh điểm quan trọng.)" },
+      { word: "理解", reading: "りかい", type: "Danh từ / Động từ", meaning: "Hiểu, lý giải",
+        example: "内容を理解する。\n(Hiểu nội dung.)" },
+      { word: "暗記", reading: "あんき", type: "Danh từ / Động từ", meaning: "Học thuộc lòng",
+        example: "単語を暗記する。\n(Học thuộc lòng từ vựng.)" },
+      { word: "感動", reading: "かんどう", type: "Danh từ / Động từ", meaning: "Cảm động, xúc động sâu sắc",
+        example: "映画に感動して泣いた。\n(Cảm động vì bộ phim và đã khóc.)" }
+    ],
+    choices: ["強調", "理解", "暗記", "感動"],
+    answer: 3,
+    explanation: `<strong>正解：④ 感動（かんどう）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>感動する</strong> = cảm động, xúc động → dẫn đến việc khóc là rất tự nhiên<br>
+・<strong>深く感動する</strong> = xúc động sâu sắc → cụm từ thường gặp<br>
+・<strong>強調・理解・暗記</strong> → đều là hoạt động nhận thức/trí tuệ, không gây khóc<br>
+→ Câu hoàn chỉnh: その話に深く<strong>感動</strong>して、泣いてしまった。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `むだな抵抗はやめて、<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>武器をすてて出てきなさい。`,
+    vocab: [
+      { word: "げんに", reading: "げんに", type: "Phó từ", meaning: "Nghiêm khắc, một cách nghiêm ngặt",
+        example: "規則をげんに守る。\n(Tuân thủ quy tắc một cách nghiêm ngặt.)" },
+      { word: "ただちに", reading: "ただちに", type: "Phó từ", meaning: "Ngay lập tức, lập tức",
+        example: "ただちに行動してください。\n(Hãy hành động ngay lập tức.)" },
+      { word: "無駄", reading: "むだ", type: "Tính từ -na / Danh từ", meaning: "Lãng phí, vô ích",
+        example: "時間を無駄にしない。\n(Không lãng phí thời gian.)" },
+      { word: "抵抗", reading: "ていこう", type: "Danh từ / Động từ", meaning: "Kháng cự, chống đối",
+        example: "不正に抵抗する。\n(Chống lại sự bất công.)" },
+      { word: "武器", reading: "ぶき", type: "Danh từ", meaning: "Vũ khí",
+        example: "武器を持つ。\n(Mang vũ khí.)" }
+    ],
+    choices: ["げんに", "ただちに", "ついに", "めったに"],
+    answer: 1,
+    explanation: `<strong>正解：② ただちに</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>ただちに</strong> = ngay lập tức → mệnh lệnh "hãy ra ngoài ngay" rất phù hợp với tình huống này<br>
+・<strong>げんに</strong> = nghiêm khắc/thực sự (thường dùng để nhấn mạnh sự thật) → không phù hợp với 武器をすてる<br>
+・<strong>ついに</strong> = cuối cùng (kết quả sau một quá trình), <strong>めったに</strong> = hiếm khi → không phù hợp<br>
+→ Câu hoàn chỉnh: <strong>ただちに</strong>武器をすてて出てきなさい。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `少し走っただけでそんなに疲れるなんて<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>。`,
+    vocab: [
+      { word: "だらしない", reading: "だらしない", type: "Tính từ -i", meaning: "Nhão nhẽo, thiếu ý chí, lười nhác, luộm thuộm",
+        example: "だらしない生活を送っている。\n(Đang sống một cuộc sống luộm thuộm, thiếu kỷ luật.)" },
+      { word: "やかましい", reading: "やかましい", type: "Tính từ -i", meaning: "Ồn ào, lắm lời, khó tính",
+        example: "隣の部屋がやかましい。\n(Phòng bên cạnh ồn ào.)" },
+      { word: "くだらない", reading: "くだらない", type: "Tính từ -i", meaning: "Vô nghĩa, tẻ nhạt, không có giá trị",
+        example: "くだらない話ばかりする。\n(Chỉ nói toàn những chuyện vô nghĩa.)" },
+      { word: "ずうずうしい", reading: "ずうずうしい", type: "Tính từ -i", meaning: "Trơ tráo, vô liêm sỉ, đáo để",
+        example: "ずうずうしくも頼んできた。\n(Trơ tráo mà dám nhờ vả.)" }
+    ],
+    choices: ["だらしない", "やかましい", "くだらない", "ずうずうしい"],
+    answer: 0,
+    explanation: `<strong>正解：① だらしない</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>だらしない</strong> = thiếu ý chí, thể lực yếu, không có kỷ luật → chỉ mới chạy một chút đã mệt = thể hiện sự thiếu rèn luyện<br>
+・<strong>やかましい</strong> = ồn ào, <strong>くだらない</strong> = vô nghĩa, <strong>ずうずうしい</strong> = trơ tráo → không phù hợp với hoàn cảnh mệt sau khi chạy<br>
+→ Câu hoàn chỉnh: 少し走っただけでそんなに疲れるなんて<strong>だらしない</strong>。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `悪い人にだまされて、財産をすべて<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>しまった。`,
+    vocab: [
+      { word: "失う", reading: "うしなう", type: "Động từ nhóm 1", meaning: "Mất, đánh mất",
+        example: "仕事を失う。\n(Mất việc làm.)" },
+      { word: "疑う", reading: "うたがう", type: "Động từ nhóm 1", meaning: "Nghi ngờ, hoài nghi",
+        example: "彼の言葉を疑う。\n(Nghi ngờ lời nói của anh ấy.)" },
+      { word: "補う", reading: "おぎなう", type: "Động từ nhóm 1", meaning: "Bổ sung, bù đắp",
+        example: "不足を補う。\n(Bù đắp sự thiếu hụt.)" },
+      { word: "騙す", reading: "だます", type: "Động từ nhóm 1", meaning: "Lừa dối, đánh lừa",
+        example: "人を騙してはいけない。\n(Không được lừa dối người khác.)" },
+      { word: "財産", reading: "ざいさん", type: "Danh từ", meaning: "Tài sản, của cải",
+        example: "財産を守る。\n(Bảo vệ tài sản.)" }
+    ],
+    choices: ["失って", "疑って", "補って", "払って"],
+    answer: 0,
+    explanation: `<strong>正解：① 失って（うしなって）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・Ngữ cảnh: bị lừa → mất hết tài sản → <strong>失う</strong> = đánh mất hoàn toàn phù hợp<br>
+・<strong>疑う</strong> = nghi ngờ → nhưng đã bị lừa rồi thì nghi ngờ đã muộn, hơn nữa không dùng 財産を疑う<br>
+・<strong>補う</strong> = bổ sung (trái nghĩa với mất), <strong>払う</strong> = trả tiền (chủ động, không phải bị lừa)<br>
+→ Câu hoàn chỉnh: 財産をすべて<strong>失って</strong>しまった。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `弟は毎日、研究所で化学の<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>をしている。`,
+    vocab: [
+      { word: "実行", reading: "じっこう", type: "Danh từ / Động từ", meaning: "Thực hiện, thi hành",
+        example: "計画を実行する。\n(Thực hiện kế hoạch.)" },
+      { word: "実験", reading: "じっけん", type: "Danh từ / Động từ", meaning: "Thí nghiệm, thực nghiệm",
+        example: "化学実験を行う。\n(Tiến hành thí nghiệm hóa học.)" },
+      { word: "実用", reading: "じつよう", type: "Danh từ", meaning: "Thực dụng, dùng thực tế",
+        example: "実用的なデザイン。\n(Thiết kế thực dụng.)" },
+      { word: "実感", reading: "じっかん", type: "Danh từ / Động từ", meaning: "Cảm nhận thực sự, cảm giác thực",
+        example: "成長を実感する。\n(Cảm nhận được sự trưởng thành.)" },
+      { word: "研究所", reading: "けんきゅうじょ", type: "Danh từ", meaning: "Viện nghiên cứu, phòng thí nghiệm",
+        example: "研究所で働く。\n(Làm việc tại viện nghiên cứu.)" },
+      { word: "化学", reading: "かがく", type: "Danh từ", meaning: "Hóa học",
+        example: "化学の実験は楽しい。\n(Thí nghiệm hóa học thú vị.)" }
+    ],
+    choices: ["実行", "実験", "実用", "実感"],
+    answer: 1,
+    explanation: `<strong>正解：② 実験（じっけん）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>化学の実験</strong> = thí nghiệm hóa học → cụm từ cố định, rất phổ biến<br>
+・Địa điểm: 研究所（viện nghiên cứu）→ hoạt động thực nghiệm khoa học = 実験<br>
+・<strong>実行</strong> = thực hiện kế hoạch, <strong>実用</strong> = tính thực dụng, <strong>実感</strong> = cảm nhận → không kết hợp với 化学<br>
+→ Câu hoàn chỉnh: 研究所で化学の<strong>実験</strong>をしている。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `父が死んだ後、わたしたちは悲しみを<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>、今日までがんばってきた。`,
+    vocab: [
+      { word: "乗り換える", reading: "のりかえる", type: "Động từ nhóm 2", meaning: "Chuyển tàu/xe; thay đổi sang cái mới",
+        example: "新宿で電車に乗り換える。\n(Chuyển tàu ở Shinjuku.)" },
+      { word: "乗り越える", reading: "のりこえる", type: "Động từ nhóm 2", meaning: "Vượt qua (khó khăn, chướng ngại)",
+        example: "困難を乗り越える。\n(Vượt qua khó khăn.)" },
+      { word: "乗り上げる", reading: "のりあげる", type: "Động từ nhóm 2", meaning: "Mắc cạn, bị kẹt",
+        example: "船が砂浜に乗り上げた。\n(Tàu bị mắc cạn trên bãi cát.)" },
+      { word: "悲しみ", reading: "かなしみ", type: "Danh từ", meaning: "Nỗi buồn, nỗi đau",
+        example: "悲しみを乗り越える。\n(Vượt qua nỗi buồn.)" }
+    ],
+    choices: ["のりかえて", "のりすぎて", "のりこえて", "のりあげて"],
+    answer: 2,
+    explanation: `<strong>正解：③ のりこえて（乗り越えて）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>乗り越える</strong> = vượt qua (khó khăn, cảm xúc) → 悲しみを乗り越える là cụm từ rất phổ biến<br>
+・<strong>乗り換える</strong> = chuyển phương tiện hoặc "chuyển sang" → không dùng với 悲しみ<br>
+・<strong>のりすぎる</strong> = đi quá trạm (không có trong danh sách thực), <strong>乗り上げる</strong> = mắc cạn → không phù hợp<br>
+→ Câu hoàn chỉnh: 悲しみを<strong>乗り越えて</strong>、今日までがんばってきた。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `病気の母が泣いて止めたけれど、<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>留学したい気持ちは変わらなかった。`,
+    vocab: [
+      { word: "それとも", reading: "それとも", type: "Liên từ", meaning: "Hay là, hoặc là (đưa ra lựa chọn khác)",
+        example: "コーヒーにしますか、それとも紅茶にしますか。\n(Bạn muốn cà phê hay trà?)" },
+      { word: "それで", reading: "それで", type: "Liên từ", meaning: "Vì vậy, do đó (kết quả)",
+        example: "雨が降った。それで試合は中止になった。\n(Trời mưa. Vì vậy trận đấu bị hủy.)" },
+      { word: "それなら", reading: "それなら", type: "Liên từ", meaning: "Nếu vậy, trong trường hợp đó",
+        example: "忙しいですか。それなら後で話しましょう。\n(Bạn bận à? Vậy thì hãy nói sau.)" },
+      { word: "それでも", reading: "それでも", type: "Liên từ", meaning: "Dù vậy, tuy nhiên, mặc dù thế",
+        example: "失敗した。それでもあきらめなかった。\n(Đã thất bại. Dù vậy không từ bỏ.)" }
+    ],
+    choices: ["それとも", "それで", "それなら", "それでも"],
+    answer: 3,
+    explanation: `<strong>正解：④ それでも</strong><br><br>
+<strong>🔑 Phân biệt 4 từ:</strong><br>
+・<strong>それでも</strong> = dù vậy (nghịch chiều) → mẹ ngăn cản NHƯNG vẫn muốn du học = hoàn toàn phù hợp<br>
+・<strong>それで</strong> = vì vậy (thuận chiều) → nếu dùng thì nghĩa là "vì mẹ ngăn nên muốn du học" → vô lý<br>
+・<strong>それなら</strong> = nếu vậy thì → dùng để đề xuất giải pháp, không phải diễn đạt ý chí<br>
+・<strong>それとも</strong> = hay là → dùng khi đưa ra lựa chọn<br>
+→ Câu hoàn chỉnh: 病気の母が泣いて止めたけれど、<strong>それでも</strong>留学したい気持ちは変わらなかった。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `初めて降りた駅で<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>していたら、知らない人が親切に案内してくれた。`,
+    vocab: [
+      { word: "ぶつぶつ", reading: "ぶつぶつ", type: "Phó từ / Danh từ", meaning: "Càu nhàu, lầm bầm; nổi mụn",
+        example: "ぶつぶつ文句を言う。\n(Lầm bầm phàn nàn.)" },
+      { word: "まごまご", reading: "まごまご", type: "Phó từ", meaning: "Lúng túng, bối rối, không biết phải làm gì",
+        example: "知らない場所でまごまごする。\n(Lúng túng ở nơi lạ.)" },
+      { word: "はきはき", reading: "はきはき", type: "Phó từ", meaning: "Dứt khoát, nhanh nhẹn, rõ ràng",
+        example: "はきはきと返事をする。\n(Trả lời một cách dứt khoát.)" },
+      { word: "もともと", reading: "もともと", type: "Phó từ", meaning: "Vốn dĩ, ban đầu, từ đầu",
+        example: "もともとそういう性格だ。\n(Vốn dĩ tính cách như vậy.)" }
+    ],
+    choices: ["ぶつぶつ", "まごまご", "はきはき", "もともと"],
+    answer: 1,
+    explanation: `<strong>正解：② まごまご</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>まごまご</strong> = lúng túng, bối rối vì không biết phải làm gì → lần đầu xuống ga lạ, không biết đường = hoàn toàn phù hợp<br>
+・<strong>ぶつぶつ</strong> = lầm bầm phàn nàn → không có lý do phàn nàn trong tình huống này<br>
+・<strong>はきはき</strong> = nhanh nhẹn, dứt khoát → trái nghĩa với bối rối<br>
+・<strong>もともと</strong> = vốn dĩ → phó từ chỉ nguồn gốc, không dùng làm trạng thái<br>
+→ Câu hoàn chỉnh: 初めて降りた駅で<strong>まごまご</strong>していたら、知らない人が親切に案内してくれた。`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-03.html", label: "← Từ vựng · Bài 3" },
+  next: { url: "vocab-05.html", label: "→ Từ vựng · Bài 5" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

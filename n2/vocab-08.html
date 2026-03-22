@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 8</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ⑧</div>
+  <h1>N2 語彙<span>クイズ</span>⑧</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 8 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `山本さんは、<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>値段のかばんをさがしている。`,
+    vocab: [
+      { word: "気楽", reading: "きらく", type: "Tính từ -na", meaning: "Thoải mái, vô lo, nhàn hạ",
+        example: "気楽な生活を送る。\n(Sống một cuộc sống thoải mái.)" },
+      { word: "謙虚", reading: "けんきょ", type: "Tính từ -na", meaning: "Khiêm tốn, khiêm nhường",
+        example: "謙虚な態度で聞く。\n(Lắng nghe với thái độ khiêm tốn.)" },
+      { word: "粗末", reading: "そまつ", type: "Tính từ -na", meaning: "Thô sơ, giản dị, đối xử tệ",
+        example: "食べ物を粗末にしない。\n(Không lãng phí thức ăn.)" },
+      { word: "手ごろ", reading: "てごろ", type: "Tính từ -na", meaning: "Vừa tầm, phải chăng, tiện dụng",
+        example: "手ごろな値段で売っている。\n(Đang bán với giá phải chăng.)" }
+    ],
+    choices: ["気楽な", "けんきょな", "そまつな", "手ごろな"],
+    answer: 3,
+    explanation: `<strong>正解：④ 手ごろな（てごろな）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>手ごろな値段</strong> = giá cả phải chăng, vừa tầm → đang tìm túi xách với giá hợp lý<br>
+・<strong>気楽な値段</strong> = không phải cụm từ thông thường<br>
+・<strong>謙虚な値段</strong> = không dùng (謙虚 dùng cho tính cách người)<br>
+・<strong>粗末な値段</strong> = không dùng (粗末 dùng cho chất lượng thấp hoặc đối xử tệ)<br>
+→ Câu hoàn chỉnh: <strong>手ごろな</strong>値段のかばんをさがしている。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `今、母の病気が心配で、勉強に<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>できない。`,
+    vocab: [
+      { word: "熱心", reading: "ねっしん", type: "Tính từ -na / Danh từ", meaning: "Nhiệt tình, say mê, tận tâm",
+        example: "熱心に練習する。\n(Luyện tập nhiệt tình.)" },
+      { word: "集中", reading: "しゅうちゅう", type: "Danh từ / Động từ", meaning: "Tập trung",
+        example: "勉強に集中する。\n(Tập trung vào việc học.)" },
+      { word: "上達", reading: "じょうたつ", type: "Danh từ / Động từ", meaning: "Tiến bộ, cải thiện kỹ năng",
+        example: "日本語が上達した。\n(Tiếng Nhật đã tiến bộ.)" },
+      { word: "専門", reading: "せんもん", type: "Danh từ", meaning: "Chuyên môn, chuyên ngành",
+        example: "医学が専門です。\n(Chuyên môn là y học.)" }
+    ],
+    choices: ["熱心", "集中", "上達", "専門"],
+    answer: 1,
+    explanation: `<strong>正解：② 集中（しゅうちゅう）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>〜に集中する</strong> = tập trung vào ~ → 勉強に集中できない = không thể tập trung học<br>
+・<strong>熱心</strong> = nhiệt tình (tính từ -na, không nói 熱心できない)<br>
+・<strong>上達</strong> = tiến bộ (kết quả, không phải trạng thái cần tập trung)<br>
+・<strong>専門</strong> = chuyên môn (danh từ, không kết hợp với できない theo nghĩa này)<br>
+→ Câu hoàn chỉnh: 勉強に<strong>集中</strong>できない。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `年に一度の祭りの日は、町<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>が活気に満ちている。`,
+    vocab: [
+      { word: "全身", reading: "ぜんしん", type: "Danh từ", meaning: "Toàn thân, cả người",
+        example: "全身で音楽を楽しむ。\n(Thưởng thức âm nhạc bằng toàn thân.)" },
+      { word: "全体", reading: "ぜんたい", type: "Danh từ", meaning: "Toàn bộ, cả, tổng thể",
+        example: "クラス全体で決める。\n(Cả lớp cùng quyết định.)" },
+      { word: "全力", reading: "ぜんりょく", type: "Danh từ", meaning: "Toàn lực, hết sức lực",
+        example: "全力で走る。\n(Chạy hết sức.)" },
+      { word: "全集", reading: "ぜんしゅう", type: "Danh từ", meaning: "Toàn tập (tác phẩm)",
+        example: "夏目漱石の全集を読む。\n(Đọc toàn tập của Natsume Soseki.)" },
+      { word: "活気", reading: "かっき", type: "Danh từ", meaning: "Sinh khí, sôi động, năng lượng",
+        example: "市場が活気に満ちている。\n(Chợ tràn ngập sinh khí.)" }
+    ],
+    choices: ["全身", "全体", "全力", "全集"],
+    answer: 1,
+    explanation: `<strong>正解：② 全体（ぜんたい）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>町全体</strong> = cả thị trấn, toàn bộ thị trấn → dùng 全体 cho không gian/tổ chức<br>
+・<strong>全身</strong> = toàn thân (dành cho cơ thể người/động vật, không phải địa điểm)<br>
+・<strong>全力</strong> = toàn lực (sức lực, nỗ lực) → không ghép với 町<br>
+・<strong>全集</strong> = toàn tập sách → không liên quan<br>
+→ Câu hoàn chỉnh: 町<strong>全体</strong>が活気に満ちている。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `あの人は、同僚と<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>を起こすのを恐れて、自分の意見を言わないことが多い。`,
+    vocab: [
+      { word: "競争", reading: "きょうそう", type: "Danh từ / Động từ", meaning: "Cạnh tranh, thi đua",
+        example: "ライバルと競争する。\n(Cạnh tranh với đối thủ.)" },
+      { word: "健闘", reading: "けんとう", type: "Danh từ / Động từ", meaning: "Chiến đấu dũng cảm, cố gắng hết sức",
+        example: "試合で健闘した。\n(Đã chiến đấu dũng cảm trong trận đấu.)" },
+      { word: "摩擦", reading: "まさつ", type: "Danh từ", meaning: "Ma sát; mâu thuẫn, xung đột (quan hệ người)",
+        example: "職場で摩擦が生じる。\n(Xảy ra mâu thuẫn tại nơi làm việc.)" },
+      { word: "損害", reading: "そんがい", type: "Danh từ", meaning: "Thiệt hại, tổn thất",
+        example: "台風で大きな損害を受けた。\n(Chịu thiệt hại lớn vì bão.)" }
+    ],
+    choices: ["競争", "健闘", "摩擦", "損害"],
+    answer: 2,
+    explanation: `<strong>正解：③ 摩擦（まさつ）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>摩擦を起こす</strong> = gây ra mâu thuẫn/xung đột → sợ mâu thuẫn với đồng nghiệp nên không nói ý kiến<br>
+・<strong>競争</strong> = cạnh tranh (tích cực, có mục tiêu, không phải mâu thuẫn tiêu cực)<br>
+・<strong>健闘</strong> = cố gắng dũng cảm → không có nghĩa xung đột<br>
+・<strong>損害</strong> = thiệt hại vật chất → không phù hợp với quan hệ người<br>
+→ Câu hoàn chỉnh: 同僚と<strong>摩擦</strong>を起こすのを恐れて、意見を言わない。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `この大学は就職<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>が高い。`,
+    vocab: [
+      { word: "率", reading: "りつ", type: "Tiếp vĩ ngữ / Danh từ", meaning: "Tỷ lệ, suất",
+        example: "合格率が高い。\n(Tỷ lệ đỗ cao.)" },
+      { word: "割", reading: "わり", type: "Danh từ", meaning: "Tỷ lệ phần trăm theo đơn vị 10%; sự chia",
+        example: "3割引きで買う。\n(Mua với giảm giá 30%.)" },
+      { word: "度", reading: "ど", type: "Tiếp vĩ ngữ", meaning: "Mức độ; lần; nhiệt độ",
+        example: "温度が高い。\n(Nhiệt độ cao.)" },
+      { word: "倍", reading: "ばい", type: "Tiếp vĩ ngữ", meaning: "Lần (gấp bội)",
+        example: "二倍になった。\n(Tăng gấp đôi.)" },
+      { word: "就職", reading: "しゅうしょく", type: "Danh từ / Động từ", meaning: "Xin được việc làm, tìm được việc",
+        example: "大学卒業後に就職する。\n(Tìm việc sau khi tốt nghiệp đại học.)" }
+    ],
+    choices: ["率", "割", "度", "倍"],
+    answer: 0,
+    explanation: `<strong>正解：① 率（りつ）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>就職率</strong> = tỷ lệ xin được việc → cụm từ cố định trong tiếng Nhật<br>
+・<strong>就職割</strong> → không tồn tại (割 dùng theo đơn vị 1/10, không ghép với 就職)<br>
+・<strong>就職度</strong> → không tồn tại (度 dùng cho nhiệt độ, góc độ, lần)<br>
+・<strong>就職倍</strong> → không tồn tại (倍 dùng cho số nhân)<br>
+→ Câu hoàn chỉnh: この大学は就職<strong>率</strong>が高い。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `うちの畑でできるトマトは、<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>はよくないけれど、味がいい。`,
+    vocab: [
+      { word: "見出し", reading: "みだし", type: "Danh từ", meaning: "Tiêu đề, đầu đề (bài báo)",
+        example: "新聞の見出しを読む。\n(Đọc tiêu đề báo.)" },
+      { word: "見かけ", reading: "みかけ", type: "Danh từ", meaning: "Vẻ ngoài, bề ngoài",
+        example: "見かけによらず優しい人だ。\n(Trái với vẻ ngoài, đó là người tốt bụng.)" },
+      { word: "見直し", reading: "みなおし", type: "Danh từ / Động từ", meaning: "Xem lại, xét lại, đánh giá lại",
+        example: "計画を見直す。\n(Xem lại kế hoạch.)" },
+      { word: "見方", reading: "みかた", type: "Danh từ", meaning: "Quan điểm, cách nhìn nhận",
+        example: "違う見方をする。\n(Nhìn nhận theo cách khác.)" }
+    ],
+    choices: ["見出し", "見かけ", "見直し", "見方"],
+    answer: 1,
+    explanation: `<strong>正解：② 見かけ（みかけ）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>見かけはよくないけれど、味がいい</strong> = bề ngoài không đẹp nhưng ngon → đối lập ngoại hình và hương vị<br>
+・<strong>見かけ</strong> = bề ngoài (đặc biệt về ngoại hình) → rất phù hợp để mô tả cà chua<br>
+・<strong>見出し</strong> = tiêu đề báo (không liên quan đến cà chua)<br>
+・<strong>見直し</strong> = xét lại (hành động/quá trình, không phải đặc điểm của cà chua)<br>
+・<strong>見方</strong> = quan điểm (cách nhìn nhận trừu tượng)<br>
+→ Câu hoàん chỉnh: <strong>見かけ</strong>はよくないけれど、味がいい。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `冷蔵庫の奥から古い肉を出し、鼻を<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>においをかいでみた。`,
+    vocab: [
+      { word: "振り向く", reading: "ふりむく", type: "Động từ nhóm 1", meaning: "Quay đầu lại nhìn",
+        example: "声をかけたら振り向いた。\n(Gọi thì quay đầu lại.)" },
+      { word: "付き合う", reading: "つきあう", type: "Động từ nhóm 1", meaning: "Giao du, kết bạn; hẹn hò",
+        example: "友人と付き合う。\n(Giao lưu với bạn bè.)" },
+      { word: "当てはめる", reading: "あてはめる", type: "Động từ nhóm 2", meaning: "Áp dụng, vận dụng vào",
+        example: "ルールを当てはめる。\n(Áp dụng quy tắc.)" },
+      { word: "近づける", reading: "ちかづける", type: "Động từ nhóm 2", meaning: "Đưa lại gần, để gần vào",
+        example: "顔を近づけて見る。\n(Đưa mặt lại gần để nhìn.)" }
+    ],
+    choices: ["ふり向いて", "付き合って", "あてはめて", "近づけて"],
+    answer: 3,
+    explanation: `<strong>正解：④ 近づけて（ちかづけて）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>鼻を近づける</strong> = đưa mũi lại gần → ngửi mùi thịt cũ = hành động tự nhiên<br>
+・<strong>振り向く</strong> = quay đầu nhìn (hướng nhìn, không phải ngửi mùi)<br>
+・<strong>付き合う</strong> = giao lưu (quan hệ người)<br>
+・<strong>当てはめる</strong> = áp dụng (quy tắc, lý thuyết → không phải hành động vật lý với mũi)<br>
+→ Câu hoàん chỉnh: 鼻を<strong>近づけて</strong>においをかいでみた。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>期間で日本語が上手になる方法はありませんか。`,
+    vocab: [
+      { word: "短", reading: "たん", type: "Tiếp đầu ngữ", meaning: "Ngắn (短〜)",
+        example: "短期間で習得する。\n(Tiếp thu trong thời gian ngắn.)" },
+      { word: "半", reading: "はん", type: "Tiếp đầu ngữ / Danh từ", meaning: "Nửa (半〜)",
+        example: "半年で上達した。\n(Tiến bộ trong nửa năm.)" },
+      { word: "前", reading: "ぜん/まえ", type: "Tiếp đầu ngữ", meaning: "Trước (前〜)",
+        example: "前期間の記録。\n(Hồ sơ thời kỳ trước.)" },
+      { word: "小", reading: "しょう/こ", type: "Tiếp đầu ngữ", meaning: "Nhỏ (小〜)",
+        example: "小規模なイベント。\n(Sự kiện quy mô nhỏ.)" }
+    ],
+    choices: ["前", "小", "短", "半"],
+    answer: 2,
+    explanation: `<strong>正解：③ 短（たん）→ 短期間</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>短期間（たんきかん）</strong> = thời gian ngắn → hỏi có cách nào học tiếng Nhật giỏi trong thời gian ngắn không<br>
+・<strong>半期間</strong> → không dùng (nói 半年 hay 半月 chứ không phải 半期間)<br>
+・<strong>前期間</strong> → không phổ biến như từ vựng độc lập<br>
+・<strong>小期間</strong> → không tồn tại<br>
+→ Câu hoàん chỉnh: <strong>短</strong>期間で日本語が上手になる方法はありませんか。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `スープが<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>しまったので、もう一度あたためた。`,
+    vocab: [
+      { word: "冷める", reading: "さめる", type: "Động từ nhóm 2", meaning: "Nguội (thức ăn); tan biến (cảm xúc)",
+        example: "料理が冷めてしまった。\n(Món ăn đã nguội mất.)" },
+      { word: "詰める", reading: "つめる", type: "Động từ nhóm 2", meaning: "Nhét vào, nhồi; đến gần; rút ngắn",
+        example: "荷物を箱に詰める。\n(Nhét đồ vào hộp.)" },
+      { word: "薄める", reading: "うすめる", type: "Động từ nhóm 2", meaning: "Pha loãng, làm nhạt",
+        example: "ジュースを水で薄める。\n(Pha loãng nước ép với nước.)" },
+      { word: "弱める", reading: "よわめる", type: "Động từ nhóm 2", meaning: "Làm yếu đi, giảm nhẹ",
+        example: "火を弱める。\n(Giảm lửa.)" },
+      { word: "温める", reading: "あたためる", type: "Động từ nhóm 2", meaning: "Hâm nóng, làm ấm",
+        example: "スープを温める。\n(Hâm nóng súp.)" }
+    ],
+    choices: ["さめて", "つめて", "うすめて", "よわめて"],
+    answer: 0,
+    explanation: `<strong>正解：① さめて（冷めて）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>スープが冷める</strong> = súp nguội → vì nguội nên hâm lại một lần nữa<br>
+・<strong>冷める</strong> = nguội (thức ăn/đồ uống tự nguội) → đối nghĩa với あたためる<br>
+・<strong>詰める</strong> = nhét vào (không liên quan đến nhiệt độ súp)<br>
+・<strong>薄める</strong> = pha loãng, <strong>弱める</strong> = làm yếu → không dùng cho súp trong ngữ cảnh này<br>
+→ Câu hoàん chỉnh: スープが<strong>冷めて</strong>しまったので、もう一度あたためた。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `この公園は国が<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>している。`,
+    vocab: [
+      { word: "監督", reading: "かんとく", type: "Danh từ / Động từ", meaning: "Giám sát, đạo diễn, huấn luyện viên",
+        example: "現場を監督する。\n(Giám sát tại hiện trường.)" },
+      { word: "管理", reading: "かんり", type: "Danh từ / Động từ", meaning: "Quản lý, quản trị",
+        example: "公園を管理する。\n(Quản lý công viên.)" },
+      { word: "生産", reading: "せいさん", type: "Danh từ / Động từ", meaning: "Sản xuất, sản lượng",
+        example: "食料を生産する。\n(Sản xuất lương thực.)" },
+      { word: "調節", reading: "ちょうせつ", type: "Danh từ / Động từ", meaning: "Điều chỉnh, điều tiết",
+        example: "温度を調節する。\n(Điều chỉnh nhiệt độ.)" }
+    ],
+    choices: ["監督", "管理", "生産", "調節"],
+    answer: 1,
+    explanation: `<strong>正解：② 管理（かんり）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>管理する</strong> = quản lý (cơ sở vật chất, tài sản) → 公園を管理する = quản lý công viên = chuẩn<br>
+・<strong>監督する</strong> = giám sát (công việc/người, thường là giám sát con người hay quá trình)<br>
+・<strong>生産する</strong> = sản xuất → công viên không phải nhà máy<br>
+・<strong>調節する</strong> = điều chỉnh (thông số, nhiệt độ...) → không phù hợp với 公園<br>
+→ Câu hoàん chỉnh: この公園は国が<strong>管理</strong>している。`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-07.html", label: "← Từ vựng · Bài 7" },
+  next: { url: "vocab-09.html", label: "→ Từ vựng · Bài 9" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

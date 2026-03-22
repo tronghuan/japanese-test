@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 5</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ⑤</div>
+  <h1>N2 語彙<span>クイズ</span>⑤</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 5 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `医者に、太りすぎだから<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>の高くない食事をしろと言われた。`,
+    vocab: [
+      { word: "カロリー", reading: "カロリー", type: "Danh từ (ngoại lai)", meaning: "Calo, đơn vị năng lượng thực phẩm",
+        example: "カロリーを控えた食事をする。\n(Ăn uống hạn chế calo.)" },
+      { word: "ナンバー", reading: "ナンバー", type: "Danh từ (ngoại lai)", meaning: "Số, con số",
+        example: "ナンバーワンの選手。\n(Vận động viên số một.)" },
+      { word: "アイデア", reading: "アイデア", type: "Danh từ (ngoại lai)", meaning: "Ý tưởng",
+        example: "新しいアイデアを出す。\n(Đưa ra ý tưởng mới.)" }
+    ],
+    choices: ["カロリー", "ナンバー", "サービス", "アイデア"],
+    answer: 0,
+    explanation: `<strong>正解：① カロリー</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>カロリーの高くない食事</strong> = bữa ăn ít calo → bác sĩ khuyên người béo phì<br>
+・<strong>カロリーが高い/低い</strong> là cụm từ cố định trong tiếng Nhật khi nói về thực phẩm<br>
+・ナンバー・サービス・アイデア → không kết hợp với 高くない食事<br>
+→ Câu hoàn chỉnh: <strong>カロリー</strong>の高くない食事をしろと言われた。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `この辞書は説明がわかりやすく、<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>くわしい。`,
+    vocab: [
+      { word: "さて", reading: "さて", type: "Liên từ / Cảm thán", meaning: "Vậy thì, nào thì; chuyển chủ đề",
+        example: "さて、次の話題に移りましょう。\n(Vậy thì, hãy chuyển sang chủ đề tiếp theo.)" },
+      { word: "ただ", reading: "ただ", type: "Phó từ / Liên từ", meaning: "Chỉ, chỉ là; tuy nhiên (nhưng...)",
+        example: "ただ一つ問題がある。\n(Chỉ có một vấn đề.)" },
+      { word: "しかも", reading: "しかも", type: "Liên từ", meaning: "Hơn nữa, vả lại, thêm vào đó",
+        example: "安くて、しかもおいしい。\n(Rẻ, hơn nữa còn ngon.)" },
+      { word: "または", reading: "または", type: "Liên từ", meaning: "Hoặc là, hay là",
+        example: "電話またはメールで連絡してください。\n(Liên lạc bằng điện thoại hoặc email.)" },
+      { word: "詳しい", reading: "くわしい", type: "Tính từ -i", meaning: "Chi tiết, tỉ mỉ; rành rẽ về",
+        example: "この本は内容が詳しい。\n(Cuốn sách này có nội dung chi tiết.)" }
+    ],
+    choices: ["さて", "ただ", "しかも", "または"],
+    answer: 2,
+    explanation: `<strong>正解：③ しかも</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>しかも</strong> = hơn nữa, thêm vào đó → bổ sung ưu điểm thứ hai (dễ hiểu + chi tiết)<br>
+・Cấu trúc: A（dễ hiểu）、しかも B（chi tiết）→ liệt kê hai điểm tốt liên tiếp<br>
+・<strong>さて</strong> = chuyển chủ đề, <strong>ただ</strong> = nhưng (nghịch chiều), <strong>または</strong> = hoặc → không phù hợp<br>
+→ Câu hoàn chỉnh: 説明がわかりやすく、<strong>しかも</strong>くわしい。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `私は家へ帰ると、いつも<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>まどを開けて空気を入れかえる。`,
+    vocab: [
+      { word: "真っ青", reading: "まっさお", type: "Tính từ -na", meaning: "Xanh lét, xanh nhợt (mặt tái)",
+        example: "顔が真っ青になった。\n(Mặt tái xanh.)" },
+      { word: "真っすぐ", reading: "まっすぐ", type: "Tính từ -na / Phó từ", meaning: "Thẳng, trực tiếp",
+        example: "まっすぐ家に帰る。\n(Về thẳng nhà.)" },
+      { word: "真っ先に", reading: "まっさきに", type: "Phó từ", meaning: "Đầu tiên trong tất cả, ngay lập tức khi vừa...",
+        example: "帰るとまっさきに手を洗う。\n(Về nhà là rửa tay ngay lập tức.)" },
+      { word: "真っ白", reading: "まっしろ", type: "Tính từ -na", meaning: "Trắng tinh, trắng toát",
+        example: "雪で真っ白になった。\n(Trắng tinh vì tuyết.)" }
+    ],
+    choices: ["まつさおに", "まっすぐに", "まっさきに", "まっしろに"],
+    answer: 2,
+    explanation: `<strong>正解：③ まっさきに（真っ先に）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>真っ先に</strong> = đầu tiên trong tất cả, việc đầu tiên làm ngay khi về nhà<br>
+・Ngữ cảnh: "いつも帰ると〜まず窓を開ける" → hành động đầu tiên sau khi về = 真っ先に<br>
+・<strong>まっすぐに</strong> = thẳng (hướng đi, không phải thứ tự), <strong>まっさおに</strong> = tái xanh, <strong>まっしろに</strong> = trắng tinh → không phù hợp<br>
+→ Câu hoàn chỉnh: いつも<strong>まっさきに</strong>まどを開けて空気を入れかえる。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `この仕事は私に<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>ください。`,
+    vocab: [
+      { word: "引き受ける", reading: "ひきうける", type: "Động từ nhóm 2", meaning: "Nhận lãnh, đảm nhận, chịu trách nhiệm",
+        example: "この仕事を引き受ける。\n(Đảm nhận công việc này.)" },
+      { word: "役立つ", reading: "やくだつ", type: "Động từ nhóm 1", meaning: "Có ích, hữu dụng",
+        example: "社会に役立つ仕事をしたい。\n(Muốn làm việc có ích cho xã hội.)" },
+      { word: "任せる", reading: "まかせる", type: "Động từ nhóm 2", meaning: "Giao phó, ủy thác, để người khác quyết định",
+        example: "君に任せるよ。\n(Tôi giao cho anh nhé.)" }
+    ],
+    choices: ["働いて", "引き受けて", "役立って", "任せて"],
+    answer: 3,
+    explanation: `<strong>正解：④ 任せて（まかせて）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>任せる</strong> = giao phó → 私に任せてください = "hãy giao/để cho tôi (làm)"<br>
+・<strong>引き受ける</strong> = đảm nhận (chủ thể tự nguyện nhận) → 私が引き受ける (tôi nhận), không nói 引き受けてください với nghĩa "giao cho tôi"<br>
+・<strong>役立つ</strong> = có ích (không kết hợp với てください theo nghĩa này)<br>
+・<strong>働く</strong> = làm việc (không phải ý nghĩa "giao việc cho ai")<br>
+→ Câu hoàn chỉnh: この仕事は私に<strong>任せて</strong>ください。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `このテープレコーダーは電池が<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>いて、動かない。`,
+    vocab: [
+      { word: "切れる", reading: "きれる", type: "Động từ nhóm 2", meaning: "Hết, cạn kiệt; bị đứt, bị cắt",
+        example: "電池が切れた。\n(Pin hết.)" },
+      { word: "溜まる", reading: "たまる", type: "Động từ nhóm 1", meaning: "Tích tụ, đọng lại",
+        example: "ストレスが溜まる。\n(Căng thẳng tích tụ.)" },
+      { word: "止まる", reading: "とまる", type: "Động từ nhóm 1", meaning: "Dừng lại, ngừng hoạt động",
+        example: "時計が止まっている。\n(Đồng hồ đã dừng.)" },
+      { word: "電池", reading: "でんち", type: "Danh từ", meaning: "Pin, ắc quy",
+        example: "電池を交換する。\n(Thay pin.)" }
+    ],
+    choices: ["きれて", "たまって", "とまって", "おくれて"],
+    answer: 0,
+    explanation: `<strong>正解：① きれて（切れて）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>電池が切れる</strong> = pin hết → cụm từ cố định, rất thông dụng<br>
+・Kết quả: 動かない (không hoạt động) → nguyên nhân phải là pin hết<br>
+・<strong>溜まる</strong> = tích tụ (điện tích tụ không hợp logic), <strong>止まる</strong> = dừng (đây là kết quả, không phải nguyên nhân)<br>
+・<strong>遅れる</strong> = trễ → không liên quan đến pin<br>
+→ Câu hoàn chỉnh: 電池が<strong>切れて</strong>いて、動かない。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `大きな仕事を完成させるためには、人と対立することがあっても<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>と思う。`,
+    vocab: [
+      { word: "やむを得ない", reading: "やむをえない", type: "Thành ngữ", meaning: "Không thể tránh khỏi, bất đắc dĩ",
+        example: "やむを得ない事情で欠席した。\n(Vắng mặt vì lý do bất khả kháng.)" },
+      { word: "完成", reading: "かんせい", type: "Danh từ / Động từ", meaning: "Hoàn thành, hoàn tất",
+        example: "プロジェクトを完成させる。\n(Hoàn thành dự án.)" },
+      { word: "対立", reading: "たいりつ", type: "Danh từ / Động từ", meaning: "Đối lập, mâu thuẫn",
+        example: "意見が対立する。\n(Ý kiến đối lập nhau.)" }
+    ],
+    choices: ["うむをえない", "やむをえらない", "やむをえない", "うむをえらない"],
+    answer: 2,
+    explanation: `<strong>正解：③ やむをえない</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>やむを得ない（やむをえない）</strong> = không thể tránh khỏi, bất đắc dĩ → thành ngữ cố định<br>
+・Cấu trúc: 〜ことがあっても<strong>やむを得ない</strong> = "dù có xảy ra điều đó cũng là không thể tránh"<br>
+・<strong>うむをえない</strong>・<strong>やむをえらない</strong>・<strong>うむをえらない</strong> → đều là hình thức SAI, không tồn tại<br>
+・Chú ý: 「やむ」(止む) = dừng lại, 「を得ない」= không thể → "không thể dừng được" = bất khả kháng<br>
+→ Câu hoàn chỉnh: 対立することがあっても<strong>やむを得ない</strong>と思う。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `信号が青になって、止まっていた車が<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>走り出した。`,
+    vocab: [
+      { word: "いっそう", reading: "いっそう", type: "Phó từ", meaning: "Càng hơn, ngày càng, hơn trước",
+        example: "練習してますますいっそう上手になった。\n(Luyện tập và ngày càng giỏi hơn.)" },
+      { word: "一般に", reading: "いっぱんに", type: "Phó từ", meaning: "Nói chung, thường thì",
+        example: "一般に、日本人は礼儀正しい。\n(Nói chung, người Nhật lịch sự.)" },
+      { word: "一斉に", reading: "いっせいに", type: "Phó từ", meaning: "Đồng thời, cùng một lúc, đồng loạt",
+        example: "全員が一斉に立ち上がった。\n(Tất cả đồng loạt đứng dậy.)" },
+      { word: "いったん", reading: "いったん", type: "Phó từ", meaning: "Một khi đã...; tạm thời",
+        example: "いったん決めたら変えない。\n(Một khi đã quyết định thì không thay đổi.)" },
+      { word: "信号", reading: "しんごう", type: "Danh từ", meaning: "Đèn giao thông, tín hiệu",
+        example: "信号が赤になった。\n(Đèn giao thông chuyển đỏ.)" }
+    ],
+    choices: ["いっそうに", "いっぱんに", "いっせいに", "いったんに"],
+    answer: 2,
+    explanation: `<strong>正解：③ いっせいに（一斉に）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>一斉に</strong> = đồng loạt, cùng một lúc → đèn xanh bật, tất cả xe cùng lúc chạy = hoàn toàn phù hợp<br>
+・<strong>いっそう</strong> = càng hơn (mức độ tăng dần), <strong>一般に</strong> = nói chung, <strong>いったん</strong> = một khi đã → không diễn đạt hành động đồng thời<br>
+・Chú ý: いっそうに・いったんに → thêm に là SAI ngữ pháp (いっそう và いったん đã là phó từ)<br>
+→ Câu hoàn chỉnh: 止まっていた車が<strong>一斉に</strong>走り出した。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `今年文学賞をもらった作家に、新聞記者が<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>をして記事を書いた。`,
+    vocab: [
+      { word: "ステージ", reading: "ステージ", type: "Danh từ (ngoại lai)", meaning: "Sân khấu; giai đoạn",
+        example: "ステージに立つ。\n(Đứng trên sân khấu.)" },
+      { word: "コンクール", reading: "コンクール", type: "Danh từ (ngoại lai)", meaning: "Cuộc thi, hội thi",
+        example: "ピアノコンクールで優勝した。\n(Đoạt giải nhất cuộc thi piano.)" },
+      { word: "インタビュー", reading: "インタビュー", type: "Danh từ (ngoại lai)", meaning: "Phỏng vấn",
+        example: "テレビのインタビューに答える。\n(Trả lời phỏng vấn trên truyền hình.)" },
+      { word: "レクリエーション", reading: "レクリエーション", type: "Danh từ (ngoại lai)", meaning: "Giải trí, hoạt động giải trí",
+        example: "レクリエーションで気分転換する。\n(Thư giãn bằng hoạt động giải trí.)" },
+      { word: "文学賞", reading: "ぶんがくしょう", type: "Danh từ", meaning: "Giải thưởng văn học",
+        example: "有名な文学賞を受賞した。\n(Đoạt giải thưởng văn học nổi tiếng.)" },
+      { word: "作家", reading: "さっか", type: "Danh từ", meaning: "Nhà văn, tác giả",
+        example: "有名な作家の本を読む。\n(Đọc sách của nhà văn nổi tiếng.)" }
+    ],
+    choices: ["ステージ", "コンクール", "インタビュー", "レクリエーション"],
+    answer: 2,
+    explanation: `<strong>正解：③ インタビュー</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>インタビューをする</strong> = thực hiện phỏng vấn → phóng viên phỏng vấn nhà văn để viết bài<br>
+・<strong>新聞記者がインタビューをして記事を書く</strong> = quy trình báo chí tiêu chuẩn<br>
+・<strong>ステージ</strong> = sân khấu, <strong>コンクール</strong> = cuộc thi, <strong>レクリエーション</strong> = giải trí → không phải hoạt động của phóng viên<br>
+→ Câu hoàn chỉnh: 新聞記者が<strong>インタビュー</strong>をして記事を書いた。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `姉は健康のため、プールに通っている。私も姉に<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>、水泳を始めることにした。`,
+    vocab: [
+      { word: "代わる", reading: "かわる", type: "Động từ nhóm 1", meaning: "Thay thế, đổi chỗ cho nhau",
+        example: "父に代わって出席した。\n(Tham dự thay cho cha.)" },
+      { word: "倣う", reading: "ならう", type: "Động từ nhóm 1", meaning: "Noi gương, bắt chước (theo)",
+        example: "先輩に倣って行動する。\n(Hành động theo gương đàn anh.)" },
+      { word: "混ざる", reading: "まざる", type: "Động từ nhóm 1", meaning: "Trộn lẫn, hòa lẫn",
+        example: "水と油は混ざらない。\n(Nước và dầu không hòa tan.)" },
+      { word: "並ぶ", reading: "ならぶ", type: "Động từ nhóm 1", meaning: "Xếp hàng, đứng thành hàng",
+        example: "バス停で並ぶ。\n(Xếp hàng ở trạm xe buýt.)" },
+      { word: "水泳", reading: "すいえい", type: "Danh từ", meaning: "Bơi lội",
+        example: "水泳は全身運動だ。\n(Bơi lội là vận động toàn thân.)" }
+    ],
+    choices: ["かわって", "ならって", "まざって", "ならんで"],
+    answer: 1,
+    explanation: `<strong>正解：② ならって（倣って）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>倣う（ならう）</strong> = noi gương, làm theo → 姉に倣って = noi gương chị<br>
+・<strong>代わる（かわる）</strong> = thay thế → 姉に代わって = thay mặt chị (không phải ý noi gương)<br>
+・<strong>混ざる</strong> = trộn lẫn, <strong>並ぶ</strong> = xếp hàng → không phù hợp với ngữ cảnh noi gương<br>
+・Chú ý: <strong>習う（ならう）</strong> = học từ thầy, còn <strong>倣う（ならう）</strong> = bắt chước theo gương — cùng đọc nhưng khác chữ<br>
+→ Câu hoàn chỉnh: 私も姉に<strong>倣って</strong>、水泳を始めることにした。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `食べたら歯をみがく習慣を<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>ものだ。`,
+    vocab: [
+      { word: "もらう", reading: "もらう", type: "Động từ nhóm 1", meaning: "Nhận được từ người khác",
+        example: "プレゼントをもらう。\n(Nhận quà.)" },
+      { word: "取る", reading: "とる", type: "Động từ nhóm 1", meaning: "Lấy, cầm, giành",
+        example: "資格を取る。\n(Lấy bằng cấp.)" },
+      { word: "付ける", reading: "つける", type: "Động từ nhóm 2", meaning: "Tạo thói quen, gắn vào, bật lên",
+        example: "習慣を付ける。\n(Tạo thói quen.)" },
+      { word: "習慣", reading: "しゅうかん", type: "Danh từ", meaning: "Thói quen, tập quán",
+        example: "良い習慣を身につける。\n(Hình thành thói quen tốt.)" }
+    ],
+    choices: ["もらいたい", "とりたい", "つけたい", "したい"],
+    answer: 2,
+    explanation: `<strong>正解：③ つけたい（付けたい）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>習慣を付ける</strong> = tạo/hình thành thói quen → cụm từ cố định<br>
+・<strong>〜たいものだ</strong> = thật muốn làm điều đó, bày tỏ ước muốn chân thành<br>
+・<strong>習慣をもらう</strong> = nhận thói quen (không dùng), <strong>習慣をとる</strong> = không tự nhiên<br>
+・<strong>習慣をする</strong> → không đúng (する dùng cho hành động, không phải tạo thói quen)<br>
+→ Câu hoàn chỉnh: 歯をみがく習慣を<strong>付けたい</strong>ものだ。`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-04.html", label: "← Từ vựng · Bài 4" },
+  next: { url: "vocab-06.html", label: "→ Từ vựng · Bài 6" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

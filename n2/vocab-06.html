@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 6</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ⑥</div>
+  <h1>N2 語彙<span>クイズ</span>⑥</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 6 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `彼の意見は問題点を<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>指摘している。`,
+    vocab: [
+      { word: "貧しい", reading: "まずしい", type: "Tính từ -i", meaning: "Nghèo khó, thiếu thốn",
+        example: "貧しい家庭に育った。\n(Lớn lên trong gia đình nghèo khó.)" },
+      { word: "親しい", reading: "したしい", type: "Tính từ -i", meaning: "Thân thiết, gần gũi",
+        example: "親しい友達と話す。\n(Nói chuyện với bạn bè thân thiết.)" },
+      { word: "鈍い", reading: "にぶい", type: "Tính từ -i", meaning: "Chậm chạp, đờ đẫn; cùn (dao)",
+        example: "反応が鈍い。\n(Phản ứng chậm chạp.)" },
+      { word: "鋭い", reading: "するどい", type: "Tính từ -i", meaning: "Sắc bén, nhọn; tinh tường, sắc sảo",
+        example: "鋭い洞察力を持つ。\n(Có khả năng nhìn nhận sắc bén.)" },
+      { word: "指摘", reading: "してき", type: "Danh từ / Động từ", meaning: "Chỉ ra, nêu ra (vấn đề)",
+        example: "問題点を指摘する。\n(Chỉ ra điểm vấn đề.)" }
+    ],
+    choices: ["まずしく", "したしく", "にぶく", "するどく"],
+    answer: 3,
+    explanation: `<strong>正解：④ するどく（鋭く）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>鋭く指摘する</strong> = chỉ ra một cách sắc bén → ý kiến chỉ ra vấn đề một cách tinh tường<br>
+・<strong>鈍く</strong> = một cách chậm chạp → trái nghĩa với sắc sảo<br>
+・<strong>貧しく</strong> = nghèo khó, <strong>親しく</strong> = thân mật → không kết hợp được với 指摘する<br>
+→ Câu hoàn chỉnh: 問題点を<strong>鋭く</strong>指摘している。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `「山本さんのお子さん、野球の練習でけがをなさったそうですよ。」<br>「それは<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>。」`,
+    vocab: [
+      { word: "お気の毒に", reading: "おきのどくに", type: "Thành ngữ lịch sự", meaning: "Thật đáng tiếc, thật xin lỗi (bày tỏ đồng cảm khi nghe tin buồn)",
+        example: "ご病気とのこと、お気の毒に存じます。\n(Nghe tin bạn bị bệnh, thật đáng tiếc.)" },
+      { word: "お邪魔します", reading: "おじゃまします", type: "Thành ngữ lịch sự", meaning: "Xin phép làm phiền (khi vào nhà người khác)",
+        example: "では、お邪魔します。\n(Vậy thì, xin phép làm phiền.)" },
+      { word: "お世話になります", reading: "おせわになります", type: "Thành ngữ lịch sự", meaning: "Cảm ơn vì đã quan tâm chăm sóc; nhờ cậy",
+        example: "いつもお世話になっております。\n(Cảm ơn vì luôn quan tâm.)" },
+      { word: "お待ち遠様", reading: "おまちどおさま", type: "Thành ngữ lịch sự", meaning: "Xin lỗi đã để chờ lâu",
+        example: "お待ち遠様でした。\n(Xin lỗi đã để bạn chờ.)" }
+    ],
+    choices: ["おきのどくに", "おじゃまします", "おせわになります", "おまちどおさま"],
+    answer: 0,
+    explanation: `<strong>正解：① お気の毒に</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・Ngữ cảnh: nghe tin con người khác bị thương → phản ứng đồng cảm, chia buồn<br>
+・<strong>お気の毒に</strong> = thật đáng tiếc, xin chia buồn → dùng khi nghe tin buồn/tai nạn của người khác<br>
+・<strong>お邪魔します</strong> = khi vào nhà người khác<br>
+・<strong>お世話になります</strong> = cảm ơn sự quan tâm<br>
+・<strong>お待ち遠様</strong> = xin lỗi để chờ lâu<br>
+→ Câu trả lời phù hợp: それは<strong>お気の毒に</strong>。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `商品の質を<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>するために、さまざまな保存技術が研究されている。`,
+    vocab: [
+      { word: "連続", reading: "れんぞく", type: "Danh từ / Động từ", meaning: "Liên tục, liền tiếp",
+        example: "三連続で優勝した。\n(Vô địch ba lần liên tiếp.)" },
+      { word: "維持", reading: "いじ", type: "Danh từ / Động từ", meaning: "Duy trì, bảo tồn",
+        example: "健康を維持する。\n(Duy trì sức khỏe.)" },
+      { word: "普及", reading: "ふきゅう", type: "Danh từ / Động từ", meaning: "Phổ biến, lan rộng",
+        example: "スマートフォンが普及した。\n(Điện thoại thông minh đã phổ biến.)" },
+      { word: "催促", reading: "さいそく", type: "Danh từ / Động từ", meaning: "Thúc giục, đòi hỏi",
+        example: "返事を催促する。\n(Thúc giục trả lời.)" },
+      { word: "保存", reading: "ほぞん", type: "Danh từ / Động từ", meaning: "Bảo quản, lưu giữ",
+        example: "食品を冷蔵庫で保存する。\n(Bảo quản thực phẩm trong tủ lạnh.)" }
+    ],
+    choices: ["連続", "維持", "普及", "催促"],
+    answer: 1,
+    explanation: `<strong>正解：② 維持（いじ）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>質を維持する</strong> = duy trì chất lượng → mục đích của kỹ thuật bảo quản<br>
+・<strong>連続</strong> = liên tục (chỉ thứ tự thời gian), <strong>普及</strong> = phổ biến (mở rộng phạm vi)<br>
+・<strong>催促</strong> = thúc giục (quan hệ giữa người với người, không dùng cho chất lượng)<br>
+→ Câu hoàn chỉnh: 商品の質を<strong>維持</strong>するために、保存技術が研究されている。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `国会議事堂のまわりは<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>警備されている。`,
+    vocab: [
+      { word: "独特", reading: "どくとく", type: "Tính từ -na / Danh từ", meaning: "Độc đáo, đặc thù riêng",
+        example: "独特のスタイルを持つ。\n(Có phong cách độc đáo riêng.)" },
+      { word: "重大", reading: "じゅうだい", type: "Tính từ -na", meaning: "Nghiêm trọng, quan trọng",
+        example: "重大な問題が起きた。\n(Xảy ra vấn đề nghiêm trọng.)" },
+      { word: "厳重", reading: "げんじゅう", type: "Tính từ -na", meaning: "Nghiêm ngặt, chặt chẽ, an ninh cao",
+        example: "厳重に管理する。\n(Quản lý nghiêm ngặt.)" },
+      { word: "特定", reading: "とくてい", type: "Tính từ -na / Danh từ / Động từ", meaning: "Cụ thể, nhất định; xác định",
+        example: "特定の人物を捜す。\n(Tìm kiếm một người cụ thể.)" },
+      { word: "警備", reading: "けいび", type: "Danh từ / Động từ", meaning: "Cảnh vệ, bảo vệ, canh gác",
+        example: "空港の警備を強化する。\n(Tăng cường an ninh sân bay.)" }
+    ],
+    choices: ["独特に", "重大に", "厳重に", "特定に"],
+    answer: 2,
+    explanation: `<strong>正解：③ 厳重に（げんじゅうに）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>厳重に警備する</strong> = bảo vệ nghiêm ngặt → cụm từ cố định cho an ninh tòa nhà quan trọng<br>
+・<strong>国会議事堂</strong> = tòa nhà Quốc hội → nơi cần an ninh cao nhất<br>
+・<strong>独特に</strong> = một cách độc đáo, <strong>重大に</strong> = không dùng làm phó từ theo nghĩa này<br>
+・<strong>特定に</strong> → không phải phó từ chuẩn (nói 特定の〜 chứ không phải 特定に)<br>
+→ Câu hoàn chỉnh: 国会議事堂のまわりは<strong>厳重に</strong>警備されている。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `私はオリンピックの選手に<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>水泳を始めた。`,
+    vocab: [
+      { word: "目指す", reading: "めざす", type: "Động từ nhóm 1", meaning: "Nhắm đến, hướng tới mục tiêu",
+        example: "医者を目指して勉強する。\n(Học để hướng tới mục tiêu làm bác sĩ.)" },
+      { word: "求める", reading: "もとめる", type: "Động từ nhóm 2", meaning: "Tìm kiếm, mong muốn, đòi hỏi",
+        example: "助けを求める。\n(Tìm kiếm sự giúp đỡ.)" },
+      { word: "張り切る", reading: "はりきる", type: "Động từ nhóm 1", meaning: "Hăng hái, phấn khởi, tràn đầy nhiệt huyết",
+        example: "試合前に張り切る。\n(Hăng hái trước trận đấu.)" },
+      { word: "憧れる", reading: "あこがれる", type: "Động từ nhóm 2", meaning: "Ngưỡng mộ, khao khát, mơ ước",
+        example: "パイロットに憧れる。\n(Ngưỡng mộ phi công.)" }
+    ],
+    choices: ["めざして", "もとめて", "はりきって", "あこがれて"],
+    answer: 3,
+    explanation: `<strong>正解：④ あこがれて（憧れて）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>〜に憧れて</strong> = vì ngưỡng mộ/mơ ước về ~ → bắt đầu bơi vì ngưỡng mộ VĐV Olympic<br>
+・<strong>〜を目指して</strong> = hướng tới mục tiêu (目指す dùng với を, không phải に)<br>
+・<strong>〜を求めて</strong> = tìm kiếm điều gì đó (求める dùng với を)<br>
+・<strong>張り切って</strong> = hăng hái (trạng thái tinh thần, không phải lý do bắt đầu)<br>
+→ Câu hoàn chỉnh: オリンピックの選手に<strong>憧れて</strong>水泳を始めた。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `相手の意見を<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>して、私たちはこの計画を変えた。`,
+    vocab: [
+      { word: "尊敬", reading: "そんけい", type: "Danh từ / Động từ", meaning: "Kính trọng, tôn kính (người)",
+        example: "先生を尊敬する。\n(Kính trọng thầy giáo.)" },
+      { word: "敬意", reading: "けいい", type: "Danh từ", meaning: "Sự kính trọng, lòng kính trọng",
+        example: "敬意を表す。\n(Bày tỏ lòng kính trọng.)" },
+      { word: "尊重", reading: "そんちょう", type: "Danh từ / Động từ", meaning: "Tôn trọng (ý kiến, quyền lợi)",
+        example: "相手の意見を尊重する。\n(Tôn trọng ý kiến của đối phương.)" },
+      { word: "貴重", reading: "きちょう", type: "Tính từ -na", meaning: "Quý giá, có giá trị",
+        example: "貴重な経験をした。\n(Có được kinh nghiệm quý giá.)" }
+    ],
+    choices: ["尊敬", "敬意", "尊重", "貴重"],
+    answer: 2,
+    explanation: `<strong>正解：③ 尊重（そんちょう）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>尊重する</strong> = tôn trọng (ý kiến, quyết định) → 意見を尊重する là cụm cố định<br>
+・<strong>尊敬する</strong> = kính trọng (con người, nhân cách) → 先生を尊敬する, không dùng với 意見<br>
+・<strong>敬意</strong> = danh từ "lòng kính trọng" → dùng: 敬意を表す (không nói 敬意して)<br>
+・<strong>貴重</strong> = tính từ -na "quý giá" → không kết hợp với して<br>
+→ Câu hoàn chỉnh: 相手の意見を<strong>尊重</strong>して、計画を変えた。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `一人ずつ<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>歌ってもらいましょう。`,
+    vocab: [
+      { word: "順番に", reading: "じゅんばんに", type: "Phó từ", meaning: "Theo thứ tự, lần lượt từng người",
+        example: "順番に発表してください。\n(Hãy trình bày theo thứ tự.)" },
+      { word: "順調に", reading: "じゅんちょうに", type: "Phó từ", meaning: "Thuận lợi, suôn sẻ",
+        example: "仕事が順調に進んでいる。\n(Công việc đang tiến triển thuận lợi.)" },
+      { word: "調子", reading: "ちょうし", type: "Danh từ", meaning: "Trạng thái; nhịp điệu; giọng điệu",
+        example: "体の調子がいい。\n(Tình trạng sức khỏe tốt.)" }
+    ],
+    choices: ["番号に", "順番に", "順調に", "調子に"],
+    answer: 1,
+    explanation: `<strong>正解：② 順番に（じゅんばんに）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>一人ずつ順番に</strong> = từng người một theo thứ tự → rất tự nhiên, diễn đạt việc lần lượt<br>
+・<strong>順調に</strong> = thuận lợi, suôn sẻ (nói về tiến trình tốt đẹp, không phải thứ tự)<br>
+・<strong>番号に</strong> = không phải phó từ chuẩn (nói 番号順に thì đúng)<br>
+・<strong>調子に</strong> → 調子に乗る (hăng hái quá mức) nhưng không kết hợp với 歌う theo nghĩa này<br>
+→ Câu hoàn chỉnh: 一人ずつ<strong>順番に</strong>歌ってもらいましょう。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `この法律は学者によって<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>がちがっている。`,
+    vocab: [
+      { word: "解散", reading: "かいさん", type: "Danh từ / Động từ", meaning: "Giải tán, tan rã",
+        example: "国会を解散する。\n(Giải tán quốc hội.)" },
+      { word: "解決", reading: "かいけつ", type: "Danh từ / Động từ", meaning: "Giải quyết, giải quyết vấn đề",
+        example: "問題を解決する。\n(Giải quyết vấn đề.)" },
+      { word: "解放", reading: "かいほう", type: "Danh từ / Động từ", meaning: "Giải phóng, giải thoát",
+        example: "束縛から解放される。\n(Được giải thoát khỏi sự ràng buộc.)" },
+      { word: "解釈", reading: "かいしゃく", type: "Danh từ / Động từ", meaning: "Giải thích, diễn giải, chú giải",
+        example: "法律の解釈が分かれる。\n(Cách diễn giải pháp luật bị chia rẽ.)" }
+    ],
+    choices: ["解散", "解決", "解放", "解釈"],
+    answer: 3,
+    explanation: `<strong>正解：④ 解釈（かいしゃく）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>解釈がちがう</strong> = cách diễn giải khác nhau → các học giả có cách hiểu luật khác nhau<br>
+・<strong>法律の解釈</strong> = diễn giải pháp luật → cụm từ pháp lý rất thông dụng<br>
+・<strong>解散</strong> = giải tán (tổ chức), <strong>解決</strong> = giải quyết (vấn đề), <strong>解放</strong> = giải phóng → không kết hợp với がちがっている<br>
+→ Câu hoàn chỉnh: 学者によって<strong>解釈</strong>がちがっている。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `父の大切なカメラをなくしてしまい、<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>気持ちでいっぱいだ。`,
+    vocab: [
+      { word: "いけない", reading: "いけない", type: "Thành ngữ", meaning: "Không được, sai trái; tệ quá",
+        example: "遅刻してはいけない。\n(Không được đi trễ.)" },
+      { word: "しょうがない", reading: "しょうがない", type: "Thành ngữ", meaning: "Không còn cách nào, đành chịu thôi",
+        example: "失敗してもしょうがない。\n(Dù thất bại cũng đành chịu thôi.)" },
+      { word: "もうしわけない", reading: "もうしわけない", type: "Thành ngữ", meaning: "Xin lỗi, không biết nói gì hơn, thật có lỗi",
+        example: "ご迷惑をおかけして、もうしわけございません。\n(Thật xin lỗi vì đã gây phiền toái.)" },
+      { word: "だらしない", reading: "だらしない", type: "Tính từ -i", meaning: "Luộm thuộm, thiếu kỷ luật",
+        example: "だらしない格好をしている。\n(Ăn mặc luộm thuộm.)" }
+    ],
+    choices: ["いけない", "しょうがない", "もうしわけない", "だらしない"],
+    answer: 2,
+    explanation: `<strong>正解：③ もうしわけない</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>もうしわけない気持ち</strong> = cảm giác có lỗi, không biết nói gì để xin lỗi<br>
+・Ngữ cảnh: làm mất đồ vật quý của cha → cảm giác tội lỗi, xin lỗi sâu sắc<br>
+・<strong>いけない</strong> = sai trái (nhận định), không diễn đạt được cảm xúc nặng nề<br>
+・<strong>しょうがない</strong> = đành chịu thôi (mang nghĩa buông xuôi, không phải xin lỗi)<br>
+・<strong>だらしない</strong> = luộm thuộm (tính cách, không phải cảm xúc hối lỗi)<br>
+→ Câu hoàn chỉnh: <strong>もうしわけない</strong>気持ちでいっぱいだ。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `友だちがしている<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>は、軽くてあたたかそうだ。`,
+    vocab: [
+      { word: "スカーフ", reading: "スカーフ", type: "Danh từ (ngoại lai)", meaning: "Khăn quàng cổ, khăn lụa",
+        example: "首にスカーフを巻く。\n(Quàng khăn quanh cổ.)" },
+      { word: "スクール", reading: "スクール", type: "Danh từ (ngoại lai)", meaning: "Trường học, lớp học",
+        example: "英語スクールに通う。\n(Đi học ở trường tiếng Anh.)" },
+      { word: "スケート", reading: "スケート", type: "Danh từ (ngoại lai)", meaning: "Trượt băng",
+        example: "スケートを楽しむ。\n(Thưởng thức trượt băng.)" },
+      { word: "スカート", reading: "スカート", type: "Danh từ (ngoại lai)", meaning: "Váy, chân váy",
+        example: "長いスカートをはく。\n(Mặc váy dài.)" }
+    ],
+    choices: ["スカーフ", "スクール", "スケート", "スカート"],
+    answer: 0,
+    explanation: `<strong>正解：① スカーフ</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>スカーフ</strong> = khăn quàng cổ → nhẹ (軽い) và ấm (あたたかい) → hoàn toàn phù hợp<br>
+・<strong>している</strong> = đang đeo/mặc → dùng cho phụ kiện như khăn, vòng<br>
+・<strong>スクール</strong> = trường học (không mặc được)<br>
+・<strong>スケート</strong> = trượt băng (không dùng với している theo nghĩa này)<br>
+・<strong>スカート</strong> = váy → nhẹ được nhưng không liên quan đến ấm áp như khăn quàng<br>
+→ Câu hoàn chỉnh: 友だちがしている<strong>スカーフ</strong>は、軽くてあたたかそうだ。`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-05.html", label: "← Từ vựng · Bài 5" },
+  next: { url: "vocab-07.html", label: "→ Từ vựng · Bài 7" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 3</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ③</div>
+  <h1>N2 語彙<span>クイズ</span>③</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 3 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `彼は顔が<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>から、彼に頼めばいい人を紹介してくれるだろう。`,
+    vocab: [
+      { word: "顔が広い", reading: "かおがひろい", type: "Thành ngữ", meaning: "Có nhiều quan hệ rộng, quen biết nhiều người",
+        example: "彼は顔が広いので、どんな業界にも知り合いがいる。\n(Anh ấy quen biết rộng nên có người quen ở bất kỳ lĩnh vực nào.)" },
+      { word: "紹介する", reading: "しょうかいする", type: "Động từ", meaning: "Giới thiệu",
+        example: "友人を上司に紹介した。\n(Giới thiệu bạn bè với cấp trên.)" }
+    ],
+    choices: ["大きい", "太い", "多い", "広い"],
+    answer: 3,
+    explanation: `<strong>正解：④ 広い（顔が広い）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>顔が広い</strong> là thành ngữ cố định nghĩa "có nhiều quan hệ, quen biết nhiều người"<br>
+・<strong>大きい・太い・多い</strong> → không tạo thành thành ngữ với 顔 theo nghĩa này<br>
+→ Câu hoàn chỉnh: 彼は顔が<strong>広い</strong>から、頼めばいい人を紹介してくれるだろう。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `学校の<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>にようちえんがあって、子供が遊んでいるのが教室からよく見える。`,
+    vocab: [
+      { word: "向き", reading: "むき", type: "Danh từ", meaning: "Hướng; thiên hướng; phù hợp với",
+        example: "南向きの部屋は明るい。\n(Phòng hướng nam thì sáng.)" },
+      { word: "向かい", reading: "むかい", type: "Danh từ", meaning: "Đối diện, phía bên kia đường",
+        example: "駅の向かいにカフェがある。\n(Có quán cà phê đối diện ga.)" },
+      { word: "向かう", reading: "むかう", type: "Động từ", meaning: "Đối mặt; hướng về; tiến về phía",
+        example: "空港に向かう。\n(Tiến về phía sân bay.)" },
+      { word: "向け", reading: "むけ", type: "Tiếp vĩ ngữ", meaning: "Dành cho; nhắm đến đối tượng",
+        example: "子供向けの番組。\n(Chương trình dành cho trẻ em.)" }
+    ],
+    choices: ["向き", "向かい", "向かう", "向け"],
+    answer: 1,
+    explanation: `<strong>正解：② 向かい</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>向かい</strong>（名詞）= "phía đối diện, bên kia" → 学校の向かいに = ngay đối diện trường<br>
+・<strong>向き</strong> = hướng (南向き, 北向き) → không dùng để chỉ vị trí đối diện<br>
+・<strong>向かう</strong> = động từ → không dùng làm danh từ vị trí<br>
+・<strong>向け</strong> = dành cho (đối tượng) → 子供向け, ではない vị trí<br>
+→ Câu hoàn chỉnh: 学校の<strong>向かい</strong>にようちえんがあって`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `予算が<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>しまったので、計画は中止になった。`,
+    vocab: [
+      { word: "予算", reading: "よさん", type: "Danh từ", meaning: "Ngân sách, dự toán",
+        example: "今年の予算は厳しい。\n(Ngân sách năm nay rất eo hẹp.)" },
+      { word: "中止", reading: "ちゅうし", type: "Danh từ", meaning: "Đình chỉ, ngừng lại",
+        example: "雨で試合が中止になった。\n(Trận đấu bị hủy vì mưa.)" },
+      { word: "削る", reading: "けずる", type: "Động từ", meaning: "Cắt giảm (ngân sách, chi phí); gọt, bào",
+        example: "予算を削る。\n(Cắt giảm ngân sách.)" }
+    ],
+    choices: ["とじられて", "こすられて", "にげられて", "けずられて"],
+    answer: 3,
+    explanation: `<strong>正解：④ けずられて（削られて）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>削る（けずる）</strong> → thể bị động <strong>削られる</strong> = bị cắt giảm<br>
+・Ngữ cảnh: 予算が削られてしまった = ngân sách bị cắt giảm → kế hoạch bị hủy<br>
+・<strong>とじる</strong> = đóng lại, <strong>こする</strong> = cọ xát, <strong>にげる</strong> = chạy trốn → không phù hợp với 予算<br>
+→ Câu hoàn chỉnh: 予算が<strong>削られて</strong>しまったので、計画は中止になった。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `急な用事ができて、私は子どもを友人の家に<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>ことにした。`,
+    vocab: [
+      { word: "預かる", reading: "あずかる", type: "Động từ", meaning: "Trông giữ hộ, nhận giữ (chủ thể là người nhận giữ)",
+        example: "荷物を預かる。\n(Giữ hộ hành lý.)" },
+      { word: "預ける", reading: "あずける", type: "Động từ", meaning: "Gửi gắm, nhờ trông giữ (chủ thể là người giao đi)",
+        example: "子どもを保育園に預ける。\n(Gửi con vào nhà trẻ.)" },
+      { word: "受け取る", reading: "うけとる", type: "Động từ", meaning: "Nhận, tiếp nhận",
+        example: "荷物を受け取る。\n(Nhận hàng.)" },
+      { word: "与える", reading: "あたえる", type: "Động từ", meaning: "Cho, ban cho, trao",
+        example: "子どもにプレゼントを与える。\n(Tặng quà cho trẻ em.)" }
+    ],
+    choices: ["あずかる", "あずける", "うけとる", "あたえる"],
+    answer: 1,
+    explanation: `<strong>正解：② あずける（預ける）</strong><br><br>
+<strong>🔑 Phân biệt あずかる vs あずける:</strong><br>
+・<strong>預かる</strong> = nhận giữ hộ → 友人が子どもを<strong>預かる</strong>（bạn giữ hộ con）<br>
+・<strong>預ける</strong> = giao/gửi nhờ người khác giữ → 私が子どもを<strong>預ける</strong>（tôi gửi con cho người khác）<br>
+・Chủ ngữ là 私 (tôi), hành động giao con đi → dùng <strong>預ける</strong><br>
+→ Câu hoàn chỉnh: 私は子どもを友人の家に<strong>預ける</strong>ことにした。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `この湖は水がきれいで、まるで<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>ガラスのようだ。`,
+    vocab: [
+      { word: "新鮮", reading: "しんせん", type: "Tính từ -na", meaning: "Tươi, mới mẻ",
+        example: "新鮮な野菜を買う。\n(Mua rau củ tươi.)" },
+      { word: "正確", reading: "せいかく", type: "Tính từ -na", meaning: "Chính xác, đúng đắn",
+        example: "正確な情報を伝える。\n(Truyền đạt thông tin chính xác.)" },
+      { word: "透明", reading: "とうめい", type: "Tính từ -na", meaning: "Trong suốt, rõ ràng",
+        example: "透明な水。\n(Nước trong suốt.)" },
+      { word: "明確", reading: "めいかく", type: "Tính từ -na", meaning: "Rõ ràng, minh bạch",
+        example: "明確な目標を持つ。\n(Có mục tiêu rõ ràng.)" }
+    ],
+    choices: ["新鮮な", "正確な", "透明な", "明確な"],
+    answer: 2,
+    explanation: `<strong>正解：③ 透明な（とうめいな）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>透明</strong> = trong suốt → mô tả vật chất nhìn thấy xuyên qua được<br>
+・"まるで透明なガラスのよう" = như kính trong suốt → tả nước hồ cực kỳ trong<br>
+・<strong>新鮮</strong> = tươi, <strong>正確</strong> = chính xác, <strong>明確</strong> = rõ ràng → không phù hợp để tả tính chất vật lý của nước<br>
+→ Câu hoàn chỉnh: まるで<strong>透明な</strong>ガラスのようだ。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `夜おそく暗い道を一人で歩くのは<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>ものです。`,
+    vocab: [
+      { word: "憎らしい", reading: "にくらしい", type: "Tính từ -i", meaning: "Đáng ghét, khó ưa",
+        example: "あの人は憎らしいことばかり言う。\n(Người đó chỉ nói những điều đáng ghét.)" },
+      { word: "恐ろしい", reading: "おそろしい", type: "Tính từ -i", meaning: "Đáng sợ, kinh khủng",
+        example: "暗い夜道は恐ろしい。\n(Đường tối ban đêm rất đáng sợ.)" },
+      { word: "大人しい", reading: "おとなしい", type: "Tính từ -i", meaning: "Ngoan ngoãn, hiền lành, yên tĩnh",
+        example: "あの子は大人しい性格だ。\n(Đứa bé đó có tính cách hiền lành.)" },
+      { word: "やかましい", reading: "やかましい", type: "Tính từ -i", meaning: "Ồn ào, lắm miệng, khó tính",
+        example: "隣の人がやかましい。\n(Người hàng xóm rất ồn ào.)" }
+    ],
+    choices: ["にくらしい", "おそろしい", "おとなしい", "やかましい"],
+    answer: 1,
+    explanation: `<strong>正解：② おそろしい（恐ろしい）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・Ngữ cảnh: đêm khuya, đường tối, đi một mình → cảm giác <strong>sợ hãi</strong><br>
+・<strong>恐ろしい</strong> = đáng sợ, kinh khủng → hoàn toàn phù hợp<br>
+・<strong>憎らしい</strong> = đáng ghét (cảm xúc tức giận)<br>
+・<strong>大人しい</strong> = hiền lành, yên tĩnh (tính cách người)<br>
+・<strong>やかましい</strong> = ồn ào → trái ngược với cảnh tĩnh lặng<br>
+→ Câu hoàn chỉnh: 夜おそく暗い道を一人で歩くのは<strong>恐ろしい</strong>ものです。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `このホテルは<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>が良いので、お客は満足しているようだ。`,
+    vocab: [
+      { word: "サービス", reading: "サービス", type: "Danh từ (ngoại lai)", meaning: "Dịch vụ; phục vụ; ưu đãi miễn phí",
+        example: "このレストランはサービスがいい。\n(Nhà hàng này có dịch vụ tốt.)" },
+      { word: "チップ", reading: "チップ", type: "Danh từ (ngoại lai)", meaning: "Tiền thưởng (tip); chip",
+        example: "ウェイターにチップを渡す。\n(Đưa tiền tip cho nhân viên phục vụ.)" },
+      { word: "リズム", reading: "リズム", type: "Danh từ (ngoại lai)", meaning: "Nhịp điệu, tiết tấu",
+        example: "音楽のリズムに乗る。\n(Đi theo nhịp điệu của âm nhạc.)" },
+      { word: "スピード", reading: "スピード", type: "Danh từ (ngoại lai)", meaning: "Tốc độ",
+        example: "スピードを上げる。\n(Tăng tốc độ.)" },
+      { word: "満足", reading: "まんぞく", type: "Danh từ / Động từ", meaning: "Hài lòng, thỏa mãn",
+        example: "結果に満足している。\n(Hài lòng với kết quả.)" }
+    ],
+    choices: ["サービス", "チップ", "リズム", "スピード"],
+    answer: 0,
+    explanation: `<strong>正解：① サービス</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>サービスが良い</strong> = dịch vụ tốt → cụm từ cố định dùng cho khách sạn, nhà hàng<br>
+・<strong>チップ</strong> = tiền thưởng (tip) → không nói "チップが良い"<br>
+・<strong>リズム</strong> = nhịp điệu, <strong>スピード</strong> = tốc độ → không liên quan đến chất lượng phục vụ<br>
+→ Câu hoàn chỉnh: このホテルは<strong>サービス</strong>が良いので、お客は満足しているようだ。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `「悲しい」や「うれしい」は<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>を表すことばです。`,
+    vocab: [
+      { word: "感心", reading: "かんしん", type: "Danh từ / Động từ", meaning: "Cảm phục, khâm phục",
+        example: "彼の努力に感心した。\n(Khâm phục nỗ lực của anh ấy.)" },
+      { word: "意見", reading: "いけん", type: "Danh từ", meaning: "Ý kiến, quan điểm",
+        example: "意見を述べる。\n(Trình bày ý kiến.)" },
+      { word: "意志", reading: "いし", type: "Danh từ", meaning: "Ý chí, quyết tâm",
+        example: "強い意志を持つ。\n(Có ý chí mạnh mẽ.)" },
+      { word: "感情", reading: "かんじょう", type: "Danh từ", meaning: "Cảm xúc, tình cảm",
+        example: "感情を表現する。\n(Biểu đạt cảm xúc.)" }
+    ],
+    choices: ["感心", "意見", "意志", "感情"],
+    answer: 3,
+    explanation: `<strong>正解：④ 感情（かんじょう）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・「悲しい」(buồn) và「うれしい」(vui) đều là <strong>cảm xúc</strong><br>
+・<strong>感情</strong> = cảm xúc, tình cảm → hoàn toàn phù hợp<br>
+・<strong>感心</strong> = sự khâm phục (một loại cảm xúc nhưng nghĩa hẹp hơn, không phải từ chung)<br>
+・<strong>意見</strong> = ý kiến (nhận thức), <strong>意志</strong> = ý chí (quyết tâm) → không phải cảm xúc<br>
+→ Câu hoàn chỉnh: 「悲しい」や「うれしい」は<strong>感情</strong>を表すことばです。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `今<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>いる風邪は、高い熱が出る。`,
+    vocab: [
+      { word: "偏る", reading: "かたよる", type: "Động từ", meaning: "Lệch về một phía, thiên lệch",
+        example: "食事が偏る。\n(Ăn uống mất cân bằng.)" },
+      { word: "繋がる", reading: "つながる", type: "Động từ", meaning: "Kết nối, liên kết",
+        example: "インターネットに繋がる。\n(Kết nối internet.)" },
+      { word: "流行る", reading: "はやる", type: "Động từ", meaning: "Thịnh hành, lưu hành rộng rãi (dịch bệnh, thời trang)",
+        example: "この冬はインフルエンザが流行っている。\n(Mùa đông này cúm đang lưu hành.)" },
+      { word: "雇う", reading: "やとう", type: "Động từ", meaning: "Thuê mướn (nhân công)",
+        example: "新しいスタッフを雇う。\n(Thuê nhân viên mới.)" }
+    ],
+    choices: ["かたよって", "つながって", "はやって", "やとって"],
+    answer: 2,
+    explanation: `<strong>正解：③ はやって（流行って）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>流行る（はやる）</strong> = lưu hành, thịnh hành → dùng cho dịch bệnh, xu hướng<br>
+・"今流行っている風邪" = cơn cảm cúm đang lây lan hiện nay → rất tự nhiên<br>
+・<strong>かたよる</strong> = lệch, <strong>つながる</strong> = kết nối, <strong>やとう</strong> = thuê → không phù hợp với 風邪<br>
+→ Câu hoàn chỉnh: 今<strong>流行って</strong>いる風邪は、高い熱が出る。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `他の人はみんなスーツを着ているのに自分だけ<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>着で恥ずかしかった。`,
+    vocab: [
+      { word: "普通", reading: "ふつう", type: "Danh từ / Tính từ -na / Phó từ", meaning: "Bình thường, thông thường",
+        example: "普通の生活を送る。\n(Sống cuộc sống bình thường.)" },
+      { word: "平凡", reading: "へいぼん", type: "Tính từ -na", meaning: "Tầm thường, bình phàm, không có gì đặc biệt",
+        example: "平凡な毎日を過ごす。\n(Trải qua những ngày tháng tẻ nhạt.)" },
+      { word: "普段", reading: "ふだん", type: "Danh từ / Phó từ", meaning: "Thường ngày, hàng ngày",
+        example: "普段着で出かける。\n(Ra ngoài với trang phục hằng ngày.)" },
+      { word: "本来", reading: "ほんらい", type: "Phó từ / Danh từ", meaning: "Về bản chất, vốn dĩ, ban đầu",
+        example: "本来はこうすべきだった。\n(Về bản chất đáng lẽ phải làm như vậy.)" }
+    ],
+    choices: ["普通", "平凡", "普段", "本来"],
+    answer: 2,
+    explanation: `<strong>正解：③ 普段（ふだん）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>普段着（ふだんぎ）</strong> = quần áo mặc hàng ngày (trang phục thường) → từ ghép cố định<br>
+・Ngữ cảnh: người khác mặc suit, mình mặc đồ bình thường → xấu hổ → dùng <strong>普段着</strong> là chuẩn<br>
+・<strong>普通着・平凡着・本来着</strong> → không tồn tại trong tiếng Nhật<br>
+→ Câu hoàn chỉnh: 自分だけ<strong>普段</strong>着で恥ずかしかった。`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-02.html", label: "← Từ vựng · Bài 2" },
+  next: { url: "vocab-04.html", label: "→ Từ vựng · Bài 4" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

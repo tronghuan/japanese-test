@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 語彙 Bài 10</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="語">
+  <div class="header-badge">N2 JLPT • TỪ VỰNG ⑩</div>
+  <h1>N2 語彙<span>クイズ</span>⑩</h1>
+  <p class="sub">Trắc nghiệm từ vựng N2 · Bài 10 · 10 câu hỏi</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  totalQuestions: 10,
+  questions: [
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `大都市は交通、住宅、教育など、さまざまな問題を<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>いる。`,
+    vocab: [
+      { word: "抱える", reading: "かかえる", type: "Động từ nhóm 2", meaning: "Ôm (vấn đề, nợ nần); gánh chịu",
+        example: "多くの問題を抱えている。\n(Đang gánh chịu nhiều vấn đề.)" },
+      { word: "めぐる", reading: "めぐる", type: "Động từ nhóm 1", meaning: "Xoay quanh; đi vòng quanh",
+        example: "この問題をめぐって議論する。\n(Tranh luận xoay quanh vấn đề này.)" },
+      { word: "だく", reading: "だく（抱く）", type: "Động từ nhóm 1", meaning: "Ôm ấp; có (hy vọng, ấn tượng)",
+        example: "赤ちゃんを抱く。\n(Bế em bé.)" },
+      { word: "さわる", reading: "さわる（触る）", type: "Động từ nhóm 1", meaning: "Chạm vào, sờ vào",
+        example: "展示品に触らないでください。\n(Không chạm vào đồ trưng bày.)" }
+    ],
+    choices: ["だいて", "めぐって", "かかえて", "さわって"],
+    answer: 2,
+    explanation: `<strong>正解：③ かかえて（抱えて）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>問題を抱える</strong> = gánh chịu/đang có vấn đề → cụm từ cố định rất thông dụng<br>
+・<strong>めぐる</strong> = xoay quanh → 〜をめぐって議論する (tranh luận về~), không phải 抱える<br>
+・<strong>だく（抱く）</strong> = ôm ấp người/vật, hoặc ấp ủ hy vọng → không phải gánh vấn đề<br>
+・<strong>さわる</strong> = chạm vào (vật lý) → không phù hợp với 問題<br>
+→ Câu hoàん chỉnh: さまざまな問題を<strong>抱えて</strong>いる。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `全国から送られた寄付金の<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>使い方を検討する。`,
+    vocab: [
+      { word: "退屈", reading: "たいくつ", type: "Tính từ -na / Danh từ", meaning: "Buồn chán, tẻ nhạt",
+        example: "退屈な授業。\n(Bài học tẻ nhạt.)" },
+      { word: "無事", reading: "ぶじ", type: "Tính từ -na / Danh từ", meaning: "Bình an, an toàn",
+        example: "無事に到着した。\n(Đã đến nơi bình an.)" },
+      { word: "有効", reading: "ゆうこう", type: "Tính từ -na", meaning: "Có hiệu quả, có giá trị, hợp lệ",
+        example: "有効な方法を使う。\n(Sử dụng phương pháp hiệu quả.)" },
+      { word: "粗末", reading: "そまつ", type: "Tính từ -na", meaning: "Thô sơ, giản dị; đối xử tệ, lãng phí",
+        example: "食べ物を粗末にしない。\n(Không lãng phí thức ăn.)" },
+      { word: "寄付金", reading: "きふきん", type: "Danh từ", meaning: "Tiền quyên góp, tiền đóng góp từ thiện",
+        example: "寄付金を集める。\n(Thu thập tiền quyên góp.)" },
+      { word: "検討", reading: "けんとう", type: "Danh từ / Động từ", meaning: "Xem xét, nghiên cứu kỹ lưỡng",
+        example: "計画を検討する。\n(Xem xét kế hoạch.)" }
+    ],
+    choices: ["退屈な", "無事な", "有効な", "粗末な"],
+    answer: 2,
+    explanation: `<strong>正解：③ 有効な（ゆうこうな）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>有効な使い方</strong> = cách sử dụng hiệu quả → đang xem xét cách dùng tiền quyên góp có hiệu quả<br>
+・<strong>退屈な</strong> = chán (không dùng cho cách dùng tiền)<br>
+・<strong>無事な</strong> = bình an (không phải mô tả cách dùng tiền)<br>
+・<strong>粗末な使い方</strong> = dùng lãng phí (trái nghĩa — đang tìm cách dùng tốt)<br>
+→ Câu hoàん chỉnh: 寄付金の<strong>有効な</strong>使い方を検討する。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `寝る前に、明日持っていくものを<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>かばんの中に入れておきなさい。`,
+    vocab: [
+      { word: "備える", reading: "そなえる", type: "Động từ nhóm 2", meaning: "Chuẩn bị phòng ngừa; trang bị",
+        example: "地震に備える。\n(Chuẩn bị phòng ngừa động đất.)" },
+      { word: "揃える", reading: "そろえる", type: "Động từ nhóm 2", meaning: "Thu thập đầy đủ, chuẩn bị sắp xếp gọn",
+        example: "必要なものを揃える。\n(Chuẩn bị đầy đủ những thứ cần thiết.)" },
+      { word: "蓄える", reading: "たくわえる", type: "Động từ nhóm 2", meaning: "Tích trữ, dự trữ, tiết kiệm",
+        example: "食料を蓄える。\n(Tích trữ lương thực.)" },
+      { word: "例える", reading: "たとえる", type: "Động từ nhóm 2", meaning: "Ví như, so sánh",
+        example: "人生を旅に例える。\n(Ví cuộc đời như chuyến hành trình.)" }
+    ],
+    choices: ["そなえて", "そろえて", "たくわえて", "たとえて"],
+    answer: 1,
+    explanation: `<strong>正解：② そろえて（揃えて）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>揃える</strong> = tập hợp đầy đủ, sắp xếp lại → 持っていくものを揃える = chuẩn bị sắp xếp đồ mang theo<br>
+・<strong>備える</strong> = chuẩn bị phòng ngừa nguy hiểm → 台風に備える (không phải chuẩn bị đồ đi học)<br>
+・<strong>蓄える</strong> = tích trữ dài hạn (lương thực, tiền) → không phù hợp với đồ đi học hàng ngày<br>
+・<strong>例える</strong> = ví như → hoàn toàn không phù hợp<br>
+→ Câu hoàん chỉnh: 持っていくものを<strong>揃えて</strong>かばんの中に入れておきなさい。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `あの人は<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>がよいとみんなに言われている。`,
+    vocab: [
+      { word: "精神", reading: "せいしん", type: "Danh từ", meaning: "Tinh thần, tâm hồn, ý chí",
+        example: "精神的に強い人だ。\n(Người mạnh mẽ về tinh thần.)" },
+      { word: "性格", reading: "せいかく", type: "Danh từ", meaning: "Tính cách, cá tính",
+        example: "明るい性格の人が好きだ。\n(Thích người có tính cách vui vẻ.)" },
+      { word: "心理", reading: "しんり", type: "Danh từ", meaning: "Tâm lý, trạng thái tinh thần",
+        example: "人間の心理を研究する。\n(Nghiên cứu tâm lý con người.)" },
+      { word: "感情", reading: "かんじょう", type: "Danh từ", meaning: "Cảm xúc, tình cảm",
+        example: "感情をコントロールする。\n(Kiểm soát cảm xúc.)" }
+    ],
+    choices: ["精神", "性格", "心理", "感情"],
+    answer: 1,
+    explanation: `<strong>正解：② 性格（せいかく）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>性格がよい</strong> = tính cách tốt → cụm từ cố định để nhận xét về con người<br>
+・<strong>精神がよい</strong> → không phải cụm thông thường (nói 精神が強い/健全 thì đúng hơn)<br>
+・<strong>心理がよい</strong> → không dùng (心理 dùng trong học thuật, nghiên cứu)<br>
+・<strong>感情がよい</strong> → không phải cụm từ nhận xét về người<br>
+→ Câu hoàん chỉnh: あの人は<strong>性格</strong>がよいとみんなに言われている。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `母の母、<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>私の祖母は現在72歳です。`,
+    vocab: [
+      { word: "すなわち", reading: "すなわち", type: "Liên từ", meaning: "Tức là, nói cách khác, hay còn gọi là",
+        example: "首都、すなわち東京に住んでいる。\n(Sống ở thủ đô, tức là Tokyo.)" },
+      { word: "そのうえ", reading: "そのうえ", type: "Liên từ", meaning: "Hơn nữa, thêm vào đó",
+        example: "安くて、そのうえおいしい。\n(Rẻ và hơn nữa còn ngon.)" },
+      { word: "ところが", reading: "ところが", type: "Liên từ", meaning: "Nhưng mà, thế mà (nghịch chiều bất ngờ)",
+        example: "勉強した。ところが試験に落ちた。\n(Đã học. Nhưng mà lại trượt thi.)" },
+      { word: "なぜなら", reading: "なぜなら", type: "Liên từ", meaning: "Bởi vì, lý do là (giải thích nguyên nhân)",
+        example: "彼は優秀だ。なぜなら毎日努力するからだ。\n(Anh ấy xuất sắc. Bởi vì hằng ngày đều cố gắng.)" }
+    ],
+    choices: ["すなわち", "そのうえ", "ところが", "なぜなら"],
+    answer: 0,
+    explanation: `<strong>正解：① すなわち</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>すなわち</strong> = tức là, hay còn gọi là → giải thích/xác định cùng một đối tượng bằng cách khác<br>
+・"母の母、すなわち私の祖母" = mẹ của mẹ, tức là bà nội/ngoại của tôi → cấu trúc giải thích<br>
+・<strong>そのうえ</strong> = hơn nữa (thêm thông tin mới, không phải giải thích cùng một thứ)<br>
+・<strong>ところが</strong> = thế mà (nghịch chiều, không phù hợp)<br>
+・<strong>なぜなら</strong> = bởi vì (nguyên nhân, không phải giải thích danh xưng)<br>
+→ Câu hoàん chỉnh: 母の母、<strong>すなわち</strong>私の祖母は現在72歳です。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `コンサートの<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>は、会場の入り口でもらってください。`,
+    vocab: [
+      { word: "メニュー", reading: "メニュー", type: "Danh từ (ngoại lai)", meaning: "Thực đơn; danh mục",
+        example: "レストランのメニューを見る。\n(Xem thực đơn nhà hàng.)" },
+      { word: "プラン", reading: "プラン", type: "Danh từ (ngoại lai)", meaning: "Kế hoạch, dự án",
+        example: "旅行のプランを立てる。\n(Lập kế hoạch du lịch.)" },
+      { word: "プログラム", reading: "プログラム", type: "Danh từ (ngoại lai)", meaning: "Chương trình (biểu diễn); lịch trình",
+        example: "コンサートのプログラムをもらう。\n(Nhận chương trình buổi hòa nhạc.)" },
+      { word: "リズム", reading: "リズム", type: "Danh từ (ngoại lai)", meaning: "Nhịp điệu, tiết tấu",
+        example: "音楽のリズムに乗る。\n(Theo nhịp điệu âm nhạc.)" }
+    ],
+    choices: ["メニュー", "プラン", "プログラム", "リズム"],
+    answer: 2,
+    explanation: `<strong>正解：③ プログラム</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>コンサートのプログラム</strong> = tờ chương trình buổi hòa nhạc → phát tại cửa vào<br>
+・Từ vựng đã xuất hiện ở Bài 3 Q3 — lần này nhấn mạnh ngữ cảnh nhận tại cửa vào<br>
+・<strong>メニュー</strong> = thực đơn (nhà hàng), <strong>プラン</strong> = kế hoạch, <strong>リズム</strong> = nhịp điệu → không phải tờ giấy phát tại cửa<br>
+→ Câu hoàん chỉnh: コンサートの<strong>プログラム</strong>は、会場の入り口でもらってください。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `今度の家は、近くに公園や川があって<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>がいい。`,
+    vocab: [
+      { word: "場面", reading: "ばめん", type: "Danh từ", meaning: "Cảnh tượng, tình huống",
+        example: "感動的な場面だった。\n(Đó là cảnh tượng cảm động.)" },
+      { word: "結構", reading: "けっこう", type: "Tính từ -na / Phó từ", meaning: "Khá tốt, được rồi; đủ",
+        example: "結構な部屋ですね。\n(Căn phòng khá đẹp nhỉ.)" },
+      { word: "環境", reading: "かんきょう", type: "Danh từ", meaning: "Môi trường, hoàn cảnh sống",
+        example: "自然環境がよい地域に住む。\n(Sống ở khu vực có môi trường tự nhiên tốt.)" },
+      { word: "自然", reading: "しぜん", type: "Danh từ / Tính từ -na", meaning: "Thiên nhiên; tự nhiên",
+        example: "自然に囲まれた場所。\n(Nơi bao quanh bởi thiên nhiên.)" }
+    ],
+    choices: ["場面", "結構", "環境", "自然"],
+    answer: 2,
+    explanation: `<strong>正解：③ 環境（かんきょう）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>環境がいい</strong> = môi trường sống tốt → gần công viên, sông = môi trường lý tưởng<br>
+・<strong>環境がいい/悪い</strong> là cụm cố định khi đánh giá nơi ở<br>
+・<strong>場面</strong> = cảnh tượng (không đánh giá như môi trường sống)<br>
+・<strong>結構</strong> = khá tốt (tính từ/phó từ, không phải danh từ có が)<br>
+・<strong>自然がいい</strong> = có thể dùng nhưng 環境がいい tổng quát hơn và đúng hơn trong ngữ cảnh này<br>
+→ Câu hoàん chỉnh: 近くに公園や川があって<strong>環境</strong>がいい。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `今年の夏の暑さは<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>だったので、毎晩クーラーをつけたままねていた。`,
+    vocab: [
+      { word: "格別", reading: "かくべつ", type: "Tính từ -na / Phó từ", meaning: "Đặc biệt, nổi bật, khác thường",
+        example: "今年の寒さは格別だ。\n(Cái rét năm nay thật đặc biệt.)" },
+      { word: "過剰", reading: "かじょう", type: "Tính từ -na / Danh từ", meaning: "Quá mức, thừa, dư thừa",
+        example: "過剰な反応をする。\n(Phản ứng quá mức.)" },
+      { word: "巨大", reading: "きょだい", type: "Tính từ -na", meaning: "Khổng lồ, to lớn",
+        example: "巨大なビルが建った。\n(Một tòa nhà khổng lồ đã được xây.)" },
+      { word: "強引", reading: "ごういん", type: "Tính từ -na", meaning: "Áp đặt, cưỡng ép, quá mức cứng nhắc",
+        example: "強引に話を進める。\n(Đẩy cuộc trò chuyện theo hướng áp đặt.)" }
+    ],
+    choices: ["格別", "過剰", "巨大", "強引"],
+    answer: 0,
+    explanation: `<strong>正解：① 格別（かくべつ）</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>格別だった</strong> = đặc biệt, khác thường → cái nóng năm nay đặc biệt gay gắt → phải bật điều hòa cả đêm<br>
+・<strong>〜の暑さは格別だ</strong> = cái nóng ~ thật đặc biệt → cụm biểu đạt cảm nhận mạnh<br>
+・<strong>過剰</strong> = dư thừa quá mức (thường dùng cho lượng/số lượng, không phải nhiệt độ)<br>
+・<strong>巨大</strong> = khổng lồ (kích thước vật lý, không mô tả nhiệt độ)<br>
+・<strong>強引</strong> = áp đặt (tính cách/hành động người, không phải thời tiết)<br>
+→ Câu hoàん chỉnh: 今年の夏の暑さは<strong>格別</strong>だったので、毎晩クーラーをつけたままねていた。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `たしかに彼は有能だが、一人でできることには<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>がある。`,
+    vocab: [
+      { word: "欠陥", reading: "けっかん", type: "Danh từ", meaning: "Khuyết điểm, lỗi hỏng, sự thiếu sót",
+        example: "製品に欠陥が見つかった。\n(Phát hiện lỗi trong sản phẩm.)" },
+      { word: "限界", reading: "げんかい", type: "Danh từ", meaning: "Giới hạn, ranh giới tối đa",
+        example: "体力の限界を感じる。\n(Cảm thấy giới hạn của sức lực.)" },
+      { word: "欠点", reading: "けってん", type: "Danh từ", meaning: "Nhược điểm, điểm yếu",
+        example: "自分の欠点を知る。\n(Biết nhược điểm của bản thân.)" },
+      { word: "無限", reading: "むげん", type: "Danh từ / Tính từ -na", meaning: "Vô hạn, không giới hạn",
+        example: "可能性は無限だ。\n(Khả năng là vô hạn.)" }
+    ],
+    choices: ["欠陥", "限界", "欠点", "無限"],
+    answer: 1,
+    explanation: `<strong>正解：② 限界（げんかい）</strong><br><br>
+<strong>🔑 Phân biệt:</strong><br>
+・<strong>〜には限界がある</strong> = có giới hạn với ~ → một mình làm được đến đây là hết khả năng<br>
+・<strong>限界がある</strong> là cụm từ cố định, rất thông dụng<br>
+・<strong>欠陥</strong> = lỗi hỏng (sản phẩm/hệ thống, không phải khả năng cá nhân)<br>
+・<strong>欠点</strong> = nhược điểm tính cách → 欠点がある có thể dùng nhưng 限界がある phù hợp hơn với ngữ cảnh "khả năng tối đa"<br>
+・<strong>無限</strong> = vô hạn (trái nghĩa — câu muốn nói có giới hạn)<br>
+→ Câu hoàん chỉnh: 一人でできることには<strong>限界</strong>がある。`
+  },
+  {
+    tag: "TỪ VỰNG • N2 • 語彙",
+    text: `外は<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>雨が降り出しそうな天気です。`,
+    vocab: [
+      { word: "いつまで", reading: "いつまで", type: "Phó từ", meaning: "Cho đến khi nào, bao lâu nữa",
+        example: "いつまで待つの？\n(Chờ đến khi nào?)" },
+      { word: "いまにも", reading: "いまにも", type: "Phó từ", meaning: "Sắp sửa, bất cứ lúc nào (sắp xảy ra)",
+        example: "いまにも泣き出しそうだ。\n(Trông có vẻ sắp khóc.)" },
+      { word: "いままで", reading: "いままで", type: "Phó từ", meaning: "Cho đến bây giờ, đến tận giờ này",
+        example: "いままでありがとう。\n(Cảm ơn vì tất cả đến tận bây giờ.)" },
+      { word: "いつから", reading: "いつから", type: "Phó từ", meaning: "Từ khi nào",
+        example: "いつからここにいるの？\n(Ở đây từ khi nào?)" }
+    ],
+    choices: ["いつまで", "いまにも", "いままで", "いつから"],
+    answer: 1,
+    explanation: `<strong>正解：② いまにも</strong><br><br>
+<strong>🔑 Giải thích:</strong><br>
+・<strong>いまにも〜そうだ</strong> = sắp sửa ~ bất cứ lúc nào → cấu trúc cố định, rất hay xuất hiện<br>
+・"いまにも雨が降り出しそうな天気" = thời tiết như sắp mưa bất cứ lúc nào<br>
+・<strong>いつまで</strong> = cho đến khi nào (câu hỏi khoảng thời gian)<br>
+・<strong>いままで</strong> = cho đến bây giờ (nhìn về quá khứ)<br>
+・<strong>いつから</strong> = từ khi nào (điểm khởi đầu)<br>
+→ Câu hoàん chỉnh: 外は<strong>いまにも</strong>雨が降り出しそうな天気です。`
+  }
+  ],
+  navigation: {
+  prev: { url: "vocab-09.html", label: "← Từ vựng · Bài 9" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>
