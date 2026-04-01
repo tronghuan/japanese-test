@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N5 漢字 Bài 2</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="漢">
+  <div class="header-badge">N5 JLPT • KANJI ②</div>
+  <h1>N5 漢字<span>クイズ</span>②</h1>
+  <p class="sub">Trắc nghiệm Kanji N5 · Bài 2 · Đọc và viết Hán tự</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  questions: [
+  {
+    tag: "KANJI • N5 • CÁCH ĐỌC",
+    text: "この<u><strong>山</strong></u>には百本のさくらがあります。春にはおおぜいの人が花見にきます。\n\n「山」の読み方は？",
+    vocab: [
+      { word: "山", reading: "やま", type: "Danh từ", meaning: "Núi", example: "やまにのぼる。\n(Leo núi.)" },
+      { word: "桜", reading: "さくら", type: "Danh từ", meaning: "Hoa anh đào", example: "さくらがきれいです。\n(Hoa anh đào đẹp quá.)" },
+      { word: "大勢", reading: "おおぜい", type: "Danh từ", meaning: "Đông người, nhiều người", example: "おおぜいのひとがきた。\n(Có rất nhiều người đến.)" },
+    ],
+    choices: ["まち", "むら", "かわ", "やま"],
+    answer: 3,
+    explanation: `<strong>山（やま）</strong> — núi.<br><br>• 山（やま）: âm kun — dùng khi đứng độc lập hoặc trong từ thuần Nhật<br>• 山（さん/ざん）: âm on — dùng trong từ ghép Hán-Nhật: 富士山（ふじさん）, 登山（とざん）<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>まち（町）</strong>: thị trấn, khu phố<br>• <strong>むら（村）</strong>: làng, xóm<br>• <strong>かわ（川）</strong>: sông<br><br>Địa hình cơ bản N5: 山（やま）núi · 川（かわ）sông · 海（うみ）biển · 島（しま）đảo.<div class="tip">💡 山（やま）= núi (độc lập) | 山（さん）= núi (trong tên riêng: 富士山ふじさん)</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CÁCH ĐỌC",
+    text: "この山には<u><strong>百本</strong></u>のさくらがあります。春にはおおぜいの人が花見にきます。\n\n「百本」の読み方は？",
+    vocab: [
+      { word: "百本", reading: "ひゃっぽん", type: "Danh từ", meaning: "100 cái (dùng cho vật dài)", example: "えんぴつひゃっぽん。\n(100 cây bút chì.)" },
+      { word: "本", reading: "ほん / ぽん / ぼん", type: "Trợ số từ", meaning: "Cái, chiếc (đếm vật dài)", example: "えんぴついっぽん。\n(Một cây bút chì.)" },
+    ],
+    choices: ["ひゃくぼん", "ひゃっぽん", "ひゃっぷん", "ひゃくふん"],
+    answer: 1,
+    explanation: `<strong>百本（ひゃっぽん）</strong> — 100 cái/cây (đếm vật dài).<br><br>• 百（ひゃく→ひゃっ）: 100 → biến âm thành ひゃっ khi đứng trước âm /h/ hoặc /p/<br>• 本（ほん→ぽん）: trợ số từ đếm vật dài → biến âm thành ぽん sau số có âm cuối っ<br><br>Quy tắc biến âm của trợ số từ 本:<br>• ～ほん: 二本（にほん）, 五本（ごほん）, 六本（ろっぽん — sai!）<br>• ～ぽん: 一本（いっぽん）, 六本（ろっぽん）, 八本（はっぽん）, <strong>百本（ひゃっぽん）</strong><br>• ～ぼん: 三本（さんぼん）<br><br>• ひゃっぷん: ぷん là đơn vị phút (分), không phải trợ số từ đếm vật.<div class="tip">💡 本（ぽん）sau số có っ: 一本（いっぽん）・六本（ろっぽん）・八本（はっぽん）・百本（ひゃっぽん）</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CÁCH ĐỌC",
+    text: "この山には百本のさくらがあります。<u><strong>春</strong></u>にはおおぜいの人が花見にきます。\n\n「春」の読み方は？",
+    vocab: [
+      { word: "春", reading: "はる", type: "Danh từ", meaning: "Mùa xuân", example: "はるになった。\n(Xuân đến rồi.)" },
+      { word: "花見", reading: "はなみ", type: "Danh từ", meaning: "Ngắm hoa anh đào", example: "はなみをたのしむ。\n(Thưởng thức ngắm hoa.)" },
+    ],
+    choices: ["はる", "なつ", "あき", "ふゆ"],
+    answer: 0,
+    explanation: `<strong>春（はる）</strong> — mùa xuân.<br><br>• 春（はる）: âm kun của 春 — âm Hán-Việt: xuân<br><br>Bốn mùa trong tiếng Nhật — cần nhớ cả kanji lẫn cách đọc:<br>• <strong>春（はる）</strong>: mùa Xuân (tháng 3–5)<br>• 夏（なつ）: mùa Hè (tháng 6–8)<br>• 秋（あき）: mùa Thu (tháng 9–11)<br>• 冬（ふゆ）: mùa Đông (tháng 12–2)<br><br>Các lựa chọn sai đều là tên mùa khác — đây là câu hỏi yêu cầu nhận biết chữ 春 = mùa xuân, không phải mùa nào khác.<div class="tip">💡 Bốn mùa: 春（はる）Xuân · 夏（なつ）Hè · 秋（あき）Thu · 冬（ふゆ）Đông</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CÁCH ĐỌC",
+    text: "この山には百本のさくらがあります。春にはおおぜいの<u><strong>人</strong></u>が花見にきます。\n\n「人」の読み方は？",
+    vocab: [
+      { word: "人", reading: "ひと / じん / にん", type: "Danh từ", meaning: "Người", example: "あのひとはだれですか。\n(Người kia là ai vậy?)" },
+    ],
+    choices: ["にん", "ひと", "じん", "いと"],
+    answer: 1,
+    explanation: `<strong>人（ひと）</strong> — người (nói chung).<br><br>• 人（ひと）: âm kun — dùng khi nói về "người" một cách chung chung: あの人, この人, おおぜいの人<br>• 人（にん）: âm on — dùng khi đếm người: 三人（さんにん）, 何人（なんにん）<br>• 人（じん）: âm on — dùng trong quốc tịch: 日本人（にほんじん）, アメリカ人（アメリカじん）<br><br>Trong câu này おおぜいの<strong>人</strong>（ひと）= đông người → dùng âm kun ひと.<br>• いと: không phải cách đọc của 人 — 糸（いと）là "sợi chỉ".<div class="tip">💡 人（ひと）= người nói chung | 人（にん）= đếm người | 人（じん）= quốc tịch, thành phần</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CÁCH ĐỌC",
+    text: "この山には百本のさくらがあります。春にはおおぜいの人が<u><strong>花見</strong></u>にきます。\n\n「花見」の読み方は？",
+    vocab: [
+      { word: "花見", reading: "はなみ", type: "Danh từ", meaning: "Ngắm hoa (anh đào)", example: "はなみパーティーをひらく。\n(Tổ chức tiệc ngắm hoa.)" },
+      { word: "花", reading: "はな", type: "Danh từ", meaning: "Hoa", example: "はなをかう。\n(Mua hoa.)" },
+      { word: "見る", reading: "みる", type: "Động từ nhóm 2", meaning: "Nhìn, xem", example: "えいがをみる。\n(Xem phim.)" },
+    ],
+    choices: ["つきみ", "はなみ", "かぜみ", "ゆきみ"],
+    answer: 1,
+    explanation: `<strong>花見（はなみ）</strong> — ngắm hoa anh đào, hoạt động truyền thống Nhật Bản mùa xuân.<br><br>• 花（はな）: hoa → âm kun: はな<br>• 見（み）: nhìn, ngắm → âm kun: み(る)<br><br>Cấu trúc [đối tượng] + 見（み）= ngắm [đối tượng]:<br>• <strong>花見（はなみ）</strong>: ngắm hoa anh đào<br>• 月見（つきみ）: ngắm trăng (rằm tháng 8)<br>• 雪見（ゆきみ）: ngắm tuyết<br><br>Các lựa chọn khác cũng là hoạt động "ngắm ~" nhưng đối tượng khác:<br>• <strong>つきみ</strong>: ngắm 月（つき）= mặt trăng | <strong>ゆきみ</strong>: ngắm 雪（ゆき）= tuyết<br>• <strong>かぜみ</strong>: không phải từ tồn tại (風 = かぜ = gió, không "ngắm gió").<div class="tip">💡 花見（はなみ）= ngắm hoa anh đào — lễ hội mùa xuân quan trọng nhất của Nhật Bản</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CHỮ VIẾT",
+    text: "<u><strong>はは</strong></u>はまいにち、だいがくのとしょかんではたらいています。\n\n「はは」の漢字は？",
+    vocab: [
+      { word: "母", reading: "はは / おかあさん", type: "Danh từ", meaning: "Mẹ (はは = nói về mẹ mình; おかあさん = gọi mẹ hoặc mẹ người khác)", example: "はははせんせいです。\n(Mẹ tôi là giáo viên.)" },
+    ],
+    choices: ["父", "火", "花", "母"],
+    answer: 3,
+    explanation: `<strong>母（はは）</strong> — mẹ (khi nói về mẹ của mình với người ngoài).<br><br>• 母（はは）: âm kun — cách khiêm tốn khi nhắc đến mẹ mình<br>• 母（おかあさん）: cách gọi lịch sự hoặc nói về mẹ người khác<br>• 母（ぼ）: âm on — 母国（ぼこく）= tổ quốc, 父母（ふぼ）= cha mẹ<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>父（ちち/おとうさん）</strong>: cha, bố — chữ giống mẹ về cấu tạo nhưng khác<br>• <strong>火（ひ/か）</strong>: lửa — không liên quan<br>• <strong>花（はな）</strong>: hoa — cùng âm は nhưng khác nghĩa hoàn toàn<div class="tip">💡 母（はは）= mẹ (nói về mẹ mình) | 父（ちち）= bố | おかあさん・おとうさん dùng khi gọi trực tiếp hoặc nói về bố/mẹ người khác</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CHỮ VIẾT",
+    text: "ははは<u><strong>まいにち</strong></u>、だいがくのとしょかんではたらいています。\n\n「まいにち」の漢字は？",
+    vocab: [
+      { word: "毎日", reading: "まいにち", type: "Danh từ / Phó từ", meaning: "Mỗi ngày, hằng ngày", example: "まいにちにほんごをべんきょうする。\n(Mỗi ngày học tiếng Nhật.)" },
+      { word: "毎", reading: "まい", type: "Tiếp đầu ngữ", meaning: "Mỗi, hàng", example: "まいあさ / まいばん / まいつき。\n(Mỗi sáng / mỗi tối / mỗi tháng.)" },
+    ],
+    choices: ["宙日", "週日", "中日", "毎日"],
+    answer: 3,
+    explanation: `<strong>毎日（まいにち）</strong> — mỗi ngày, hằng ngày.<br><br>• 毎（まい）: mỗi, hàng → âm Hán-Việt: mỗi<br>• 日（にち/ひ）: ngày → âm on: にち, âm kun: ひ<br><br>毎 thường ghép với đơn vị thời gian:<br>• 毎日（まいにち）= mỗi ngày | 毎朝（まいあさ）= mỗi sáng<br>• 毎晩（まいばん）= mỗi tối | 毎週（まいしゅう）= mỗi tuần<br>• 毎月（まいつき）= mỗi tháng | 毎年（まいとし/まいねん）= mỗi năm<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>宙日</strong>: 宙（ちゅう）= không trung — không có từ này<br>• <strong>週日</strong>: 週（しゅう）= tuần — 週日 đọc là しゅうじつ = ngày trong tuần (không phải まいにち)<br>• <strong>中日</strong>: đọc là ちゅうにち = giữa chừng hoặc Nhật Trung<div class="tip">💡 毎（まい）+ thời gian = hàng/mỗi: 毎日・毎週・毎月・毎年・毎朝・毎晩</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CHỮ VIẾT",
+    text: "はははまいにち、<u><strong>だいがく</strong></u>のとしょかんではたらいています。\n\n「だいがく」の漢字は？",
+    vocab: [
+      { word: "大学", reading: "だいがく", type: "Danh từ", meaning: "Đại học", example: "だいがくにはいる。\n(Vào đại học.)" },
+      { word: "大学生", reading: "だいがくせい", type: "Danh từ", meaning: "Sinh viên đại học", example: "わたしはだいがくせいです。\n(Tôi là sinh viên đại học.)" },
+    ],
+    choices: ["大核", "退学", "大学", "最核"],
+    answer: 2,
+    explanation: `<strong>大学（だいがく）</strong> — đại học.<br><br>• 大（だい）: lớn, đại → âm on: だい/たい — âm Hán-Việt: đại<br>• 学（がく）: học → âm on: がく — âm Hán-Việt: học<br><br>Hệ thống trường học trong tiếng Nhật:<br>• 小学校（しょうがっこう）= tiểu học | 中学校（ちゅうがっこう）= trung học cơ sở<br>• 高校（こうこう）= trung học phổ thông | <strong>大学（だいがく）</strong>= đại học<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>大核</strong>: 核（かく）= hạt nhân — không có từ này<br>• <strong>退学（たいがく）</strong>: bỏ học, nghỉ học — 退（たい）= lui, rút — chú ý: cùng âm がく nhưng chữ đầu khác!<br>• <strong>最核</strong>: không phải từ tồn tại<div class="tip">💡 大学（だいがく）= đại học | 退学（たいがく）= bỏ học — hai từ đồng âm がく nhưng khác nghĩa hoàn toàn!</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CHỮ VIẾT",
+    text: "はははまいにち、だいがくの<u><strong>としょかん</strong></u>ではたらいています。\n\n「としょかん」の漢字は？",
+    vocab: [
+      { word: "図書館", reading: "としょかん", type: "Danh từ", meaning: "Thư viện", example: "としょかんでほんをかりる。\n(Mượn sách ở thư viện.)" },
+      { word: "図書", reading: "としょ", type: "Danh từ", meaning: "Sách, tài liệu", example: "としょをよむ。\n(Đọc sách.)" },
+    ],
+    choices: ["図書館", "図所館", "読所管", "読書館"],
+    answer: 0,
+    explanation: `<strong>図書館（としょかん）</strong> — thư viện.<br><br>• 図（と）: hình vẽ, sơ đồ → âm on: ず/と — âm Hán-Việt: đồ<br>• 書（しょ）: viết, sách → âm on: しょ — âm Hán-Việt: thư<br>• 館（かん）: tòa nhà công cộng → âm on: かん — âm Hán-Việt: quán/quán<br><br>図書（としょ）= sách vở, tài liệu — là từ ghép cổ cho "sách"<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>図所館</strong>: 所（しょ）= nơi chốn — 図所 không phải từ tồn tại<br>• <strong>読所管</strong>: 読（どく/よ）= đọc, 管（かん）= ống, quản lý — kết hợp sai<br>• <strong>読書館</strong>: 読書（どくしょ）= đọc sách — nghe có vẻ hợp lý nhưng từ chuẩn là 図書館, không phải 読書館<div class="tip">💡 図書館（としょかん）= thư viện — chú ý: 図書 không phải 読書, dù nghĩa gần nhau</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CHỮ VIẾT",
+    text: "はははまいにち、だいがくのとしょかんで<u><strong>はたらいて</strong></u>います。\n\n「はたらいて」の漢字は？",
+    vocab: [
+      { word: "働く", reading: "はたらく", type: "Động từ nhóm 1", meaning: "Làm việc, lao động", example: "まいにちはたらく。\n(Mỗi ngày đi làm.)" },
+    ],
+    choices: ["動いて", "隠いて", "働いて", "行いて"],
+    answer: 2,
+    explanation: `<strong>働いて（はたらいて）</strong> — thể て của 働く（はたらく）= làm việc.<br><br>• 働（はたら）く: làm việc, lao động → âm kun: はたら(く) — âm Hán-Việt: động (lao động)<br>• Thể て: 働く → 働いて<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>動いて（うごいて）</strong>: di chuyển, cử động — 動（うご）く → 動いて. 動 và 働 trông giống nhau! 働 = 動 + 人 (người + di chuyển = làm việc)<br>• <strong>隠いて</strong>: 隠（かく）す = giấu, ẩn — không đọc là はたらく và cũng không chia thể て theo kiểu này<br>• <strong>行いて</strong>: 行（おこな）う = thực hiện → 行って（いって）= đi, 行って（おこなって）= thực hiện — đều không phải はたらく<div class="tip">💡 働く（はたらく）= làm việc | 動く（うごく）= di chuyển — 働 = 動 + 人, nhớ thêm bộ 人 vào 動 để có nghĩa "lao động"</div>`,
+  },
+  ],
+  navigation: {
+  prev: { url: "kanji-01.html", label: "← Kanji · Bài 1" },
+  next: { url: "kanji-03.html", label: "→ Kanji · Bài 3" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "vocab-01.html", icon: "📝", label: "Từ vựng" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

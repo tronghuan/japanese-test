@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N2 文法 Bài 11</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="文">
+  <div class="header-badge">N2 JLPT • NGỮ PHÁP ⑪</div>
+  <h1>N2 文法<span>クイズ</span>⑪</h1>
+  <p class="sub">Trắc nghiệm ngữ pháp N2 · Bài 11 · Giải thích chi tiết</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  questions: [
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "最近、彼は「会社をやめて株　______　で生きていく」と言っている。",
+    vocab: [
+      { word: "株", reading: "かぶ", type: "Danh từ", meaning: "Cổ phiếu, chứng khoán", example: "株で儲ける。\n(Kiếm tiền bằng cổ phiếu.)" },
+      { word: "生きていく", reading: "いきていく", type: "Động từ", meaning: "Sống tiếp, mưu sinh", example: "一人で生きていく。\n(Tự mình mưu sinh.)" },
+    ],
+    choices: ["とか", "もの", "こと", "うえ"],
+    answer: 0,
+    explanation: `Cấu trúc <strong>～とか</strong> dùng để liệt kê ví dụ một cách mơ hồ, hàm ý "kiểu như..., chẳng hạn như...". Ở đây: "Gần đây anh ấy nói kiểu như 'Tôi sẽ nghỉ công ty rồi sống bằng cổ phiếu hay gì đó'". Câu này là lời dẫn trực tiếp mang tính không chắc chắn.<br><br>• <strong>もの</strong>: diễn tả lý do, cảm thán hoặc sự thật hiển nhiên — không hợp ngữ cảnh.<br>• <strong>こと</strong>: biến mệnh đề thành danh từ hóa — không tạo nghĩa "kiểu như".<br>• <strong>うえ</strong>: "hơn nữa, thêm vào đó" (～うえに) hoặc "trên cơ sở" (～たうえで) — đều sai ngữ cảnh.<div class="tip">💡 ～とか = kiểu như..., chẳng hạn... (liệt kê ví dụ mơ hồ, dùng trong văn nói)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "砂糖、塩、しょうゆ、みそ、これらは日本食を作る______　調味料です。",
+    vocab: [
+      { word: "砂糖", reading: "さとう", type: "Danh từ", meaning: "Đường", example: "砂糖を入れる。\n(Cho đường vào.)" },
+      { word: "調味料", reading: "ちょうみりょう", type: "Danh từ", meaning: "Gia vị, nguyên liệu nêm nếm", example: "調味料を加える。\n(Thêm gia vị vào.)" },
+      { word: "欠かせない", reading: "かかせない", type: "Tính từ-i", meaning: "Không thể thiếu, không thể bỏ qua", example: "睡眠は健康に欠かせない。\n(Giấc ngủ không thể thiếu đối với sức khỏe.)" },
+    ],
+    choices: ["のに欠かせない", "ことは欠かさない", "のを欠かさない", "ことも欠かせない"],
+    answer: 0,
+    explanation: `Cấu trúc <strong>～のに欠かせない</strong> nghĩa là "không thể thiếu để..., thiết yếu cho...". の danh từ hóa động từ 作る, に chỉ mục đích. Ở đây: "Đường, muối, xì dầu, miso — đây là những gia vị không thể thiếu để làm món ăn Nhật".<br><br>• <strong>ことは欠かさない</strong>: ことは không ghép với 欠かさない theo nghĩa này; 欠かさない có nghĩa "không bỏ sót" (chủ thể cố ý), không phải "không thể thiếu".<br>• <strong>のを欠かさない</strong>: のを + 欠かさない cũng mang nghĩa "không bao giờ bỏ sót việc làm..." — sai mục đích.<br>• <strong>ことも欠かせない</strong>: ことも hàm ý "cũng cần" nhưng cấu trúc cần の, không phải こと trước に欠かせない.<div class="tip">💡 ～のに欠かせない = không thể thiếu để... (の + に + 欠かせない, nhấn mạnh tính thiết yếu)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "明日は大事な発表会なので、徹夜し　______　きちんとした資料を作らなければならない。",
+    vocab: [
+      { word: "発表会", reading: "はっぴょうかい", type: "Danh từ", meaning: "Buổi thuyết trình, buổi biểu diễn", example: "発表会で緊張した。\n(Đã hồi hộp ở buổi thuyết trình.)" },
+      { word: "徹夜", reading: "てつや", type: "Danh từ・Suru động từ", meaning: "Thức đêm, thức trắng đêm", example: "徹夜して勉強した。\n(Thức trắng đêm để học.)" },
+      { word: "資料", reading: "しりょう", type: "Danh từ", meaning: "Tài liệu", example: "資料を準備する。\n(Chuẩn bị tài liệu.)" },
+    ],
+    choices: ["ながら", "てでも", "てまで", "ようものなら"],
+    answer: 1,
+    explanation: `Cấu trúc <strong>Vてでも</strong> nghĩa là "dù có phải... thì cũng..., kể cả phải... vẫn...". Diễn tả quyết tâm mạnh mẽ — sẵn sàng chấp nhận hy sinh để đạt mục tiêu. Ở đây: "Dù có phải thức trắng đêm, tôi vẫn phải làm tài liệu đàng hoàng".<br><br>• <strong>ながら</strong>: "vừa... vừa..." — diễn tả hai hành động đồng thời, không có sắc thái quyết tâm.<br>• <strong>てまで</strong>: "đến mức phải..." — hàm ý tiêu cực, người nói không muốn làm vậy (ví dụ: 嘘をついてまでやりたくない). Sắc thái khác với てでも.<br>• <strong>ようものなら</strong>: "nếu mà... thì sẽ..." — diễn tả hậu quả xấu nếu điều kiện xảy ra, sai hoàn toàn.<div class="tip">💡 Vてでも = dù có phải V thì cũng... (quyết tâm mạnh, chấp nhận hy sinh để đạt mục tiêu)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "この曲を聞く　______　、ふるさとのことを思い出す。",
+    vocab: [
+      { word: "曲", reading: "きょく", type: "Danh từ", meaning: "Bài hát, bản nhạc", example: "好きな曲を聴く。\n(Nghe bài hát yêu thích.)" },
+      { word: "ふるさと", reading: "ふるさと", type: "Danh từ", meaning: "Quê hương", example: "ふるさとに帰りたい。\n(Muốn về quê hương.)" },
+      { word: "思い出す", reading: "おもいだす", type: "Động từ nhóm 1", meaning: "Nhớ lại, hồi tưởng", example: "昔のことを思い出す。\n(Nhớ lại chuyện ngày xưa.)" },
+    ],
+    choices: ["うちに", "あいだに", "たびに", "ところに"],
+    answer: 2,
+    explanation: `Cấu trúc <strong>～たびに</strong> nghĩa là "mỗi khi..., cứ... là...". Diễn tả kết quả luôn xảy ra mỗi khi điều kiện được thực hiện. Ở đây: "Mỗi khi nghe bài hát này, tôi lại nhớ đến quê hương".<br><br>• <strong>うちに</strong>: "trong khi..., trước khi..." — diễn tả khoảng thời gian, thường hàm ý tận dụng thời điểm.<br>• <strong>あいだに</strong>: "trong khoảng thời gian..." — chỉ một lần xảy ra trong khoảng thời gian đó, không phải lặp lại.<br>• <strong>ところに</strong>: "ngay lúc đang..., đúng lúc..." — chỉ thời điểm gặp nhau tình cờ, không diễn tả sự lặp lại.<div class="tip">💡 ～たびに = mỗi khi... (kết quả nhất quán, lặp đi lặp lại theo một điều kiện)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "この２週間、寒い日が続いているせいで、野菜の値段が上がる______　。",
+    vocab: [
+      { word: "続く", reading: "つづく", type: "Động từ nhóm 1", meaning: "Tiếp diễn, kéo dài", example: "雨が続いている。\n(Mưa vẫn tiếp tục kéo dài.)" },
+      { word: "値段", reading: "ねだん", type: "Danh từ", meaning: "Giá cả", example: "値段が上がった。\n(Giá đã tăng.)" },
+    ],
+    choices: ["ことだ", "がちだ", "まいか", "一方だ"],
+    answer: 3,
+    explanation: `Cấu trúc <strong>～一方だ</strong> (いっぽうだ) nghĩa là "ngày càng..., cứ... mãi không ngừng". Diễn tả xu hướng tiếp tục theo một chiều duy nhất, không có dấu hiệu dừng lại. Ở đây: "Vì hai tuần nay trời lạnh kéo dài nên giá rau ngày càng tăng".<br><br>• <strong>ことだ</strong>: khuyên bảo hoặc nhận xét — không diễn tả xu hướng.<br>• <strong>がちだ</strong>: "hay bị, thường có xu hướng..." — diễn tả thói quen/xu hướng tiêu cực, không nhấn mạnh chiều duy nhất.<br>• <strong>まいか</strong>: "hay không..., có lẽ không..." — diễn tả phỏng đoán phủ định hoặc đề xuất nhẹ, sai ngữ cảnh.<div class="tip">💡 Vる + 一方だ = ngày càng..., cứ tăng/giảm mãi (xu hướng một chiều, không đảo ngược)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "女１「ねえ見て、このゲーム。面白そうだから、買っちゃった。」\n女２「あ、それって、最近雑誌______よく取り上げられてるゲームでしょう？」",
+    vocab: [
+      { word: "取り上げる", reading: "とりあげる", type: "Động từ nhóm 2", meaning: "Đề cập, giới thiệu, đưa tin", example: "ニュースで取り上げられた。\n(Được đưa tin trên bản tin.)" },
+      { word: "雑誌", reading: "ざっし", type: "Danh từ", meaning: "Tạp chí", example: "雑誌で読んだ。\n(Đọc trên tạp chí.)" },
+    ],
+    choices: ["か何かを", "や何かで", "か何かか", "や何かは"],
+    answer: 1,
+    explanation: `Cấu trúc <strong>～や何か</strong> nghĩa là "...và những thứ tương tự, hay gì đó như vậy". で ở đây là trợ từ chỉ phương tiện/nơi chốn — "trên tạp chí hay trên các phương tiện khác". Cụm <strong>雑誌や何かで</strong> = "trên tạp chí hay gì đó". Ở đây: "Đó là trò chơi gần đây hay được đề cập trên tạp chí hay gì đó đó không?"<br><br>• <strong>か何かを</strong>: を chỉ tân ngữ trực tiếp — không hợp vì 取り上げられる là thể bị động, không cần を.<br>• <strong>か何かか</strong>: か cuối câu dùng để hỏi — sai vị trí, tạo cấu trúc lủng củng.<br>• <strong>や何かは</strong>: は chỉ chủ đề — không hợp với văn cảnh phương tiện.<div class="tip">💡 ～や何か = ...hay gì đó, và những thứ tương tự (liệt kê ví dụ mơ hồ, không xác định cụ thể)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "今はインターネット　______　、世界中に情報を発信することが可能になった。",
+    vocab: [
+      { word: "発信", reading: "はっしん", type: "Danh từ・Suru động từ", meaning: "Phát tin, truyền tải thông tin", example: "情報を発信する。\n(Phát tán thông tin.)" },
+      { word: "可能", reading: "かのう", type: "Tính từ -na", meaning: "Có thể, khả thi", example: "それは可能だ。\n(Điều đó là có thể.)" },
+    ],
+    choices: ["をとおして", "にそって", "のもとで", "とともに"],
+    answer: 0,
+    explanation: `Cấu trúc <strong>～をとおして</strong> (を通して) nghĩa là "thông qua..., qua trung gian của...". Diễn tả phương tiện hoặc con đường trung gian để thực hiện điều gì. Ở đây: "Bây giờ, thông qua internet, việc truyền tải thông tin ra khắp thế giới đã trở nên khả thi".<br><br>• <strong>にそって</strong>: "dọc theo, tuân theo" — diễn tả đi theo hướng/quy tắc, không phải phương tiện truyền tải.<br>• <strong>のもとで</strong>: "dưới sự..., trong điều kiện..." — diễn tả điều kiện/sự bảo hộ, không hợp ngữ cảnh.<br>• <strong>とともに</strong>: "cùng với..., đồng thời với..." — diễn tả đồng hành hoặc sự thay đổi song song, không phải phương tiện.<div class="tip">💡 ～をとおして = thông qua..., qua trung gian... (phương tiện, kênh để thực hiện hành động)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "映画の上映______　、試写会が行われた。",
+    vocab: [
+      { word: "上映", reading: "じょうえい", type: "Danh từ・Suru động từ", meaning: "Chiếu phim", example: "映画が上映される。\n(Phim được chiếu.)" },
+      { word: "試写会", reading: "ししゃかい", type: "Danh từ", meaning: "Buổi chiếu thử, suất chiếu thử nghiệm", example: "試写会に招待された。\n(Được mời tham dự suất chiếu thử.)" },
+    ],
+    choices: ["にこたえて", "にしたがって", "にわたって", "にさきだって"],
+    answer: 3,
+    explanation: `Cấu trúc <strong>～にさきだって</strong> (に先立って) nghĩa là "trước khi..., trước thềm...". Diễn tả một hành động xảy ra ngay trước một sự kiện quan trọng. Ở đây: "Trước buổi chiếu chính thức của bộ phim, một suất chiếu thử đã được tổ chức".<br><br>• <strong>にこたえて</strong>: "đáp lại, hồi đáp..." — diễn tả phản hồi theo yêu cầu/kỳ vọng, không phải thứ tự thời gian.<br>• <strong>にしたがって</strong>: "theo..., tuân theo..." — diễn tả tuân thủ hoặc thay đổi tỷ lệ thuận, không phải "trước".<br>• <strong>にわたって</strong>: "suốt..., trải dài..." — diễn tả phạm vi thời gian hoặc không gian, không phải thứ tự.<div class="tip">💡 ～にさきだって = trước khi... (hành động chuẩn bị hoặc tiền đề ngay trước sự kiện chính)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "悩んでいるときは、誰かに話を______　気持ちが楽になる場合もある。",
+    vocab: [
+      { word: "悩む", reading: "なやむ", type: "Động từ nhóm 1", meaning: "Lo lắng, băn khoăn, phiền muộn", example: "将来のことで悩んでいる。\n(Đang lo lắng về tương lai.)" },
+      { word: "気持ち", reading: "きもち", type: "Danh từ", meaning: "Cảm giác, tâm trạng", example: "気持ちが楽になった。\n(Tâm trạng nhẹ nhõm hơn.)" },
+    ],
+    choices: ["聞いてあげることは", "聞いてもらうことで", "聞いてくれることに", "聞いてやることが"],
+    answer: 1,
+    explanation: `Cấu trúc <strong>〜てもらう</strong> nghĩa là "được ai đó làm cho mình". Kết hợp với <strong>ことで</strong> (= "nhờ..., bằng cách...") tạo thành: "nhờ được ai đó lắng nghe → tâm trạng nhẹ nhõm". Chủ thể là người đang buồn phiền, nhận lợi từ hành động nghe của người khác.<br><br>• <strong>聞いてあげることは</strong>: あげる = làm ơn cho người khác — chủ thể là người nghe (làm ơn), ngược chiều với ngữ cảnh.<br>• <strong>聞いてくれることに</strong>: くれる cũng hợp nghĩa nhưng ことに không tạo nghĩa "nhờ đó" mà hàm ý cảm xúc (놀랍게도...). ことで tự nhiên hơn.<br>• <strong>聞いてやることが</strong>: やる = làm cho người dưới — hàm ý bề trên, thiếu tôn trọng và sai chiều.<div class="tip">💡 〜てもらうことで = nhờ được... mà (강조 phương tiện mang lại kết quả tích cực)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N2",
+    text: "今日は午後から晴れるという予報だったが、午後になっても雨はやまず、むしろ　______　ばかりだった。",
+    vocab: [
+      { word: "予報", reading: "よほう", type: "Danh từ・Suru động từ", meaning: "Dự báo", example: "天気予報によると…\n(Theo dự báo thời tiết...)" },
+      { word: "やむ", reading: "やむ", type: "Động từ nhóm 1", meaning: "Tạnh, dừng (mưa, gió)", example: "雨がやんだ。\n(Mưa đã tạnh.)" },
+      { word: "むしろ", reading: "むしろ", type: "Phó từ", meaning: "Trái lại, thậm chí còn", example: "むしろ悪くなった。\n(Thậm chí còn tệ hơn.)" },
+    ],
+    choices: ["強い", "強く", "強かった", "強くなる"],
+    answer: 3,
+    explanation: `Cấu trúc <strong>～ばかりだ</strong> yêu cầu động từ thể từ điển (Vる) đứng trước. Nghĩa: "cứ... mãi, ngày càng...". 強い là tính từ, cần chuyển thành dạng động từ <strong>強くなる</strong> (trở nên mạnh hơn) để nối với ばかりだ. Ở đây: "Thậm chí mưa còn ngày càng to hơn".<br><br>• <strong>強い</strong>: tính từ thể hiện tại — không nối trực tiếp với ばかりだ.<br>• <strong>強く</strong>: thể trạng từ của tính từ — không phải động từ, không nối được.<br>• <strong>強かった</strong>: thể quá khứ của tính từ — sai, ばかりだ cần động từ thể hiện tại.<div class="tip">💡 Vる + ばかりだ = cứ... mãi, ngày càng... (xu hướng tiếp diễn; tính từ cần đổi thành 〜くなる trước ばかりだ)</div>`,
+  },
+  ],
+  navigation: {
+  prev: { url: "grammar-10.html", label: "← Ngữ pháp · Bài 10" },
+  next: { url: "grammar-12.html", label: "→ Ngữ pháp · Bài 12" },
+  categories: [
+    { url: "vocab-01.html", icon: "📝", label: "Từ vựng" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "listen-01.html", icon: "🎧", label: "Nghe" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

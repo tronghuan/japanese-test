@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N5 文法 Bài 1</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="文">
+  <div class="header-badge">N5 JLPT • NGỮ PHÁP ①</div>
+  <h1>N5 文法<span>クイズ</span>①</h1>
+  <p class="sub">Trắc nghiệm ngữ pháp N5 · Bài 1 · Giải thích chi tiết</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  questions: [
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "まいにちしんぶん　______　読みます。",
+    vocab: [
+      { word: "毎日", reading: "まいにち", type: "Danh từ / Phó từ", meaning: "Mỗi ngày, hằng ngày", example: "毎日べんきょうします。\n(Mỗi ngày tôi học bài.)" },
+      { word: "新聞", reading: "しんぶん", type: "Danh từ", meaning: "Báo, tờ báo", example: "しんぶんをよむ。\n(Đọc báo.)" },
+      { word: "読む", reading: "よむ", type: "Động từ nhóm 1", meaning: "Đọc", example: "ほんをよみます。\n(Tôi đọc sách.)" },
+    ],
+    choices: ["へ", "を", "に", "が"],
+    answer: 1,
+    explanation: `Trợ từ <strong>を</strong> đánh dấu <strong>tân ngữ trực tiếp</strong> — tức là đối tượng bị tác động bởi hành động. Động từ 読む (đọc) cần đối tượng được đọc, nên dùng を: しんぶん<strong>を</strong>読む.<br><br>• <strong>へ</strong>: chỉ hướng đi đến (đi về phía...).<br>• <strong>に</strong>: chỉ điểm đến, thời điểm, hoặc đối tượng gián tiếp.<br>• <strong>が</strong>: chỉ chủ ngữ hoặc đối tượng của động từ trạng thái.<div class="tip">💡 Công thức: [danh từ] + を + [động từ hành động] → nêu đối tượng của hành động</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "田中さんは　______　来ていませんよ。",
+    vocab: [
+      { word: "来る", reading: "くる", type: "Động từ đặc biệt", meaning: "Đến, tới", example: "ともだちがきました。\n(Bạn tôi đã đến.)" },
+    ],
+    choices: ["もう", "だけ", "まだ", "まで"],
+    answer: 2,
+    explanation: `<strong>まだ</strong> kết hợp với thể phủ định (～ていません) có nghĩa là <strong>"vẫn chưa..."</strong>. Ở đây: "Anh Tanaka vẫn chưa đến đâu".<br><br>• <strong>もう</strong>: "rồi, đã rồi" — dùng với thể khẳng định (もう来ました = đã đến rồi); với phủ định (もうしません = không làm nữa).<br>• <strong>だけ</strong>: "chỉ..." — hàm ý giới hạn, không hợp ngữ cảnh.<br>• <strong>まで</strong>: "cho đến..., đến tận..." — chỉ giới hạn thời gian/không gian.<div class="tip">💡 まだ + phủ định = vẫn chưa... | もう + khẳng định = đã... rồi</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "ナイフ　______　パンをきりました。",
+    vocab: [
+      { word: "ナイフ", reading: "ナイフ", type: "Danh từ", meaning: "Dao (loại nhỏ)", example: "ナイフでりんごをきる。\n(Cắt táo bằng dao.)" },
+      { word: "パン", reading: "パン", type: "Danh từ", meaning: "Bánh mì", example: "パンをたべる。\n(Ăn bánh mì.)" },
+      { word: "切る", reading: "きる", type: "Động từ nhóm 1", meaning: "Cắt", example: "かみをきる。\n(Cắt giấy.)" },
+    ],
+    choices: ["で", "を", "に", "が"],
+    answer: 0,
+    explanation: `Trợ từ <strong>で</strong> chỉ <strong>phương tiện hoặc công cụ</strong> để thực hiện hành động. Ở đây: "Tôi đã cắt bánh mì <strong>bằng</strong> dao".<br><br>• <strong>を</strong>: chỉ tân ngữ trực tiếp — ở câu này パンを đã là tân ngữ rồi.<br>• <strong>に</strong>: chỉ điểm đến hoặc mục tiêu — không dùng cho công cụ.<br>• <strong>が</strong>: chỉ chủ ngữ — không phù hợp với ナイフ trong câu này.<div class="tip">💡 [công cụ/phương tiện] + で + [hành động] = làm gì đó bằng / với công cụ đó</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "家にかえってねたほう　______　いいですよ。",
+    vocab: [
+      { word: "帰る", reading: "かえる", type: "Động từ nhóm 1", meaning: "Về (nhà)", example: "うちにかえる。\n(Về nhà.)" },
+      { word: "寝る", reading: "ねる", type: "Động từ nhóm 2", meaning: "Ngủ, đi ngủ", example: "はやくねる。\n(Ngủ sớm.)" },
+    ],
+    choices: ["と", "に", "が", "は"],
+    answer: 2,
+    explanation: `Cấu trúc <strong>～たほうがいい</strong> nghĩa là "nên..., tốt hơn là nên...". Đây là cấu trúc cố định: Vた + ほう + <strong>が</strong> + いい. Ở đây: "Bạn nên về nhà và đi ngủ đấy".<br><br>• <strong>と</strong>: "và, khi, nếu" — không dùng trong cấu trúc ～ほうがいい.<br>• <strong>に</strong>: chỉ điểm đến, thời điểm — không hợp.<br>• <strong>は</strong>: chỉ chủ đề — có thể thay が trong một số ngữ cảnh nhưng không phải cấu trúc chuẩn ở đây.<div class="tip">💡 Vた + ほうがいい = nên V (lời khuyên nhẹ nhàng) | Vない + ほうがいい = không nên V</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "お母さん、もうあそびに　______　もいいですか？",
+    vocab: [
+      { word: "遊ぶ", reading: "あそぶ", type: "Động từ nhóm 1", meaning: "Chơi, vui chơi", example: "こうえんであそぶ。\n(Chơi ở công viên.)" },
+      { word: "お母さん", reading: "おかあさん", type: "Danh từ", meaning: "Mẹ (cách gọi lịch sự)", example: "おかあさん、いってきます。\n(Mẹ ơi, con đi đây.)" },
+    ],
+    choices: ["行く", "行って", "行った", "行っている"],
+    answer: 1,
+    explanation: `Cấu trúc <strong>Vて + もいいですか</strong> nghĩa là "có được... không?, tôi có thể... không?". Đây là cách xin phép lịch sự. Thể て của 行く là <strong>行って</strong>. Ở đây: "Mẹ ơi, con có thể đi chơi chưa ạ?"<br><br>• <strong>行く</strong>: thể từ điển — không nối trực tiếp với もいいですか.<br>• <strong>行った</strong>: thể quá khứ — sai ngữ pháp trong cấu trúc xin phép.<br>• <strong>行っている</strong>: thể đang tiến hành — diễn tả trạng thái đang đi, không phải xin phép.<div class="tip">💡 Vて + もいいですか = Tôi có thể V không? (xin phép) | Vて + はいけません = không được V (cấm đoán)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "すいようびには日本語のテスト　______　。",
+    vocab: [
+      { word: "水曜日", reading: "すいようび", type: "Danh từ", meaning: "Thứ Tư", example: "すいようびにテストがある。\n(Thứ Tư có bài kiểm tra.)" },
+      { word: "テスト", reading: "テスト", type: "Danh từ", meaning: "Bài kiểm tra, bài thi", example: "テストをうける。\n(Thi / làm bài kiểm tra.)" },
+    ],
+    choices: ["はいます", "はあります", "がいます", "があります"],
+    answer: 3,
+    explanation: `Dùng <strong>があります</strong> vì:<br>① <strong>が</strong>: trợ từ chỉ chủ ngữ trong câu tồn tại.<br>② <strong>あります</strong>: dùng cho <strong>vật vô tri</strong> (sự kiện, đồ vật). テスト là sự kiện → dùng あります.<br><br>• <strong>がいます</strong>: います chỉ dùng cho <strong>người và động vật</strong> — sai vì テスト là vật/sự kiện.<br>• <strong>はあります / はいます</strong>: は thay ga khi chủ ngữ đã được nhắc đến hoặc mang sắc thái đối lập — không tự nhiên trong câu giới thiệu mới.<div class="tip">💡 あります = tồn tại (đồ vật, sự kiện) | います = tồn tại (người, động vật)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "あなたのかみは　______　よ。",
+    vocab: [
+      { word: "髪", reading: "かみ", type: "Danh từ", meaning: "Tóc", example: "かみがながい。\n(Tóc dài.)" },
+      { word: "長い", reading: "ながい", type: "Tính từ -i", meaning: "Dài", example: "このみちはながい。\n(Con đường này dài.)" },
+      { word: "すぎる", reading: "すぎる", type: "Động từ bổ trợ", meaning: "Quá mức, thái quá", example: "たべすぎる。\n(Ăn quá nhiều.)" },
+    ],
+    choices: ["長ってすぎます", "長くすぎます", "長いすぎます", "長すぎます"],
+    answer: 3,
+    explanation: `Cấu trúc <strong>～すぎる</strong> nghĩa là "quá...". Quy tắc chia:<br>• Tính từ -い: bỏ い → thêm すぎる → 長い → <strong>長すぎる</strong><br>• Tính từ -な: bỏ な → thêm すぎる → 静かな → 静かすぎる<br>• Động từ: thể ます → thêm すぎる → 食べます → 食べすぎる<br><br>Ở đây: "Tóc của bạn <strong>dài quá</strong> đấy".<br><br>• <strong>長ってすぎます</strong>: cách chia sai hoàn toàn — không có dạng này.<br>• <strong>長くすぎます</strong>: 長く là thể trạng từ — không nối với すぎる.<br>• <strong>長いすぎます</strong>: giữ nguyên い trước すぎる — sai quy tắc.<div class="tip">💡 Tính từ -い + すぎる: bỏ い → + すぎる (ví dụ: 高い → 高すぎる, 寒い → 寒すぎる)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "わたしはけいかんに　______　です。",
+    vocab: [
+      { word: "警官", reading: "けいかん", type: "Danh từ", meaning: "Cảnh sát, công an", example: "けいかんになりたい。\n(Muốn trở thành cảnh sát.)" },
+      { word: "なる", reading: "なる", type: "Động từ nhóm 1", meaning: "Trở thành, trở nên", example: "いしゃになる。\n(Trở thành bác sĩ.)" },
+    ],
+    choices: ["なりたい", "したい", "いきたい", "いたい"],
+    answer: 0,
+    explanation: `Cấu trúc <strong>～になりたい</strong> nghĩa là "muốn trở thành...". に ở đây chỉ kết quả biến đổi, なる = trở thành, たい = muốn. Ở đây: "Tôi muốn trở thành cảnh sát".<br><br>• <strong>したい</strong>: "muốn làm..." — cần động từ hành động, không dùng với danh từ nghề nghiệp trực tiếp.<br>• <strong>いきたい</strong>: "muốn đi..." — diễn tả muốn di chuyển đến đâu, không phải muốn trở thành.<br>• <strong>いたい</strong>: "muốn ở..." hoặc "đau" — sai hoàn toàn.<div class="tip">💡 [danh từ nghề nghiệp] + に + なりたい = muốn trở thành... (mơ ước, nghề nghiệp)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "わたしは、これから　______　に行きます。",
+    vocab: [
+      { word: "泳ぐ", reading: "およぐ", type: "Động từ nhóm 1", meaning: "Bơi, bơi lội", example: "うみでおよぐ。\n(Bơi ở biển.)" },
+      { word: "これから", reading: "これから", type: "Phó từ", meaning: "Từ bây giờ, sau đây, sắp tới", example: "これからでかけます。\n(Bây giờ tôi sắp ra ngoài.)" },
+    ],
+    choices: ["およぐ", "およいで", "およぎ", "およいだ"],
+    answer: 2,
+    explanation: `Cấu trúc <strong>Vます形 + に行く</strong> nghĩa là "đi để V, đi V". Thể ます của 泳ぐ là 泳ぎます → bỏ ます → <strong>泳ぎ</strong> + に行く. Ở đây: "Bây giờ tôi đi bơi".<br><br>• <strong>およぐ</strong>: thể từ điển — không nối trực tiếp với に行く theo nghĩa mục đích.<br>• <strong>およいで</strong>: thể て — dùng trong chuỗi hành động (泳いで帰る = bơi rồi về), không phải cấu trúc mục đích.<br>• <strong>およいだ</strong>: thể quá khứ — sai hoàn toàn.<div class="tip">💡 Vます形 (bỏ ます) + に行く = đi để V | ví dụ: 食べ<strong>に</strong>行く, 見<strong>に</strong>行く, 遊び<strong>に</strong>行く</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "あの人たちはどこに行っているん　______　。",
+    vocab: [
+      { word: "あの人たち", reading: "あのひとたち", type: "Danh từ", meaning: "Những người kia, họ", example: "あのひとたちはだれですか。\n(Những người kia là ai vậy?)" },
+      { word: "だろう", reading: "だろう", type: "Trợ động từ", meaning: "Chắc là..., nhỉ... (phỏng đoán)", example: "あしたはあめだろう。\n(Ngày mai chắc là trời mưa.)" },
+    ],
+    choices: ["だろう", "つもりだ", "から", "けれども"],
+    answer: 0,
+    explanation: `<strong>だろう</strong> diễn tả <strong>phỏng đoán hoặc thắc mắc nhẹ</strong>, thường dịch là "chắc là..., nhỉ..., không biết...". Kết hợp với んだ tạo thành んだろう — mang sắc thái "không biết/tự hỏi về điều đó". Ở đây: "Không biết những người kia đang đi đâu nhỉ?"<br><br>• <strong>つもりだ</strong>: "có ý định, dự định..." — diễn tả kế hoạch của chủ ngữ, không hợp khi hỏi về người khác.<br>• <strong>から</strong>: "vì, bởi vì" — liên từ chỉ nguyên nhân, không kết thúc câu phỏng đoán.<br>• <strong>けれども</strong>: "nhưng mà, tuy nhiên" — liên từ tương phản, không hợp.<div class="tip">💡 ～んだろう = không biết... nhỉ (tự hỏi, phỏng đoán về điều mình không chắc)</div>`,
+  },
+  ],
+  navigation: {
+  next: { url: "grammar-02.html", label: "→ Ngữ pháp · Bài 2" },
+  categories: [
+    { url: "vocab-01.html", icon: "📝", label: "Từ vựng" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

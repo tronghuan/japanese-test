@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N5 文法 Bài 3</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="文">
+  <div class="header-badge">N5 JLPT • NGỮ PHÁP ③</div>
+  <h1>N5 文法<span>クイズ</span>③</h1>
+  <p class="sub">Trắc nghiệm ngữ pháp N5 · Bài 3 · Giải thích chi tiết</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  questions: [
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "まっすぐベッドに行きなさい。明日は　______　なりますよ。",
+    vocab: [
+      { word: "まっすぐ", reading: "まっすぐ", type: "Phó từ", meaning: "Thẳng, trực tiếp", example: "まっすぐいえにかえる。\n(Về thẳng về nhà.)" },
+      { word: "忙しい", reading: "いそがしい", type: "Tính từ -i", meaning: "Bận rộn", example: "まいにちいそがしい。\n(Ngày nào cũng bận.)" },
+      { word: "なる", reading: "なる", type: "Động từ nhóm 1", meaning: "Trở thành, trở nên", example: "さむくなる。\n(Trở nên lạnh.)" },
+    ],
+    choices: ["いそがしいに", "いそがしく", "いそがしい", "いそがしくて"],
+    answer: 1,
+    explanation: `Cấu trúc <strong>tính từ -い + くなる</strong> nghĩa là "trở nên...". Để nối tính từ -い với なる, phải đổi đuôi い → <strong>く</strong>: 忙しい → <strong>忙しく</strong> + なる. Ở đây: "Đi thẳng vào giường đi. Ngày mai sẽ bận lắm đấy".<br><br>• <strong>いそがしいに</strong>: tính từ -い không nối với に để chỉ trạng thái biến đổi — sai.<br>• <strong>いそがしい</strong>: thể hiện tại đơn thuần — không tạo nghĩa "trở nên".<br>• <strong>いそがしくて</strong>: thể て dùng để nối hai mệnh đề, không phải biến đổi trạng thái.<div class="tip">💡 Tính từ -い → bỏ い + くなる = trở nên... | Tính từ -な → + になる = trở thành...</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "とうきょうにかえる　______　、もういちどあなたに会いたいです。",
+    vocab: [
+      { word: "帰る", reading: "かえる", type: "Động từ nhóm 1", meaning: "Về (nhà, quê)", example: "くににかえる。\n(Về quê hương.)" },
+      { word: "もう一度", reading: "もういちど", type: "Phó từ", meaning: "Một lần nữa", example: "もういちどきいてください。\n(Xin nghe lại một lần nữa.)" },
+      { word: "会う", reading: "あう", type: "Động từ nhóm 1", meaning: "Gặp, gặp gỡ", example: "ともだちにあう。\n(Gặp bạn bè.)" },
+    ],
+    choices: ["まえ", "まえで", "まえに", "まえには"],
+    answer: 2,
+    explanation: `Cấu trúc <strong>Vる + まえに</strong> nghĩa là <strong>"trước khi V"</strong>. に ở đây là trợ từ chỉ thời điểm. Ở đây: "Trước khi về Tokyo, tôi muốn gặp bạn một lần nữa".<br><br>• <strong>まえ</strong>: thiếu に — không thể đứng độc lập làm trạng ngữ thời gian trong câu này.<br>• <strong>まえで</strong>: で chỉ địa điểm/phương tiện — "ở/tại phía trước", không phải "trước khi".<br>• <strong>まえには</strong>: thêm は mang sắc thái nhấn mạnh hoặc đối lập — không tự nhiên trong câu thông thường.<div class="tip">💡 Vる + まえに = trước khi V | Vた + あとで = sau khi V</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "もうすこし　______　してくださいませんか。",
+    vocab: [
+      { word: "もう少し", reading: "もうすこし", type: "Phó từ", meaning: "Thêm một chút, một chút nữa", example: "もうすこしまってください。\n(Xin chờ thêm một chút.)" },
+      { word: "静か", reading: "しずか", type: "Tính từ -na", meaning: "Yên tĩnh, im lặng", example: "しずかなへや。\n(Căn phòng yên tĩnh.)" },
+    ],
+    choices: ["しずかに", "しずかだ", "しずか", "しずかで"],
+    answer: 0,
+    explanation: `Cấu trúc <strong>tính từ -な + に + する</strong> nghĩa là "làm cho trở nên...". Để dùng tính từ -な làm trạng từ bổ nghĩa cho する, phải thêm <strong>に</strong>: 静か → <strong>静かに</strong> + する. Ở đây: "Bạn có thể làm yên lặng hơn một chút không?"<br><br>• <strong>しずかだ</strong>: thể khẳng định của tính từ — không nối với する theo nghĩa này.<br>• <strong>しずか</strong>: dạng gốc, thiếu に — không đứng trước する được.<br>• <strong>しずかで</strong>: thể て của tính từ -な — dùng để nối hai mệnh đề, không phải trạng từ.<div class="tip">💡 Tính từ -な + に + する = làm cho trở nên... | Tính từ -い + く + する = làm cho... hơn</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "わたしは、あなたに　______　にここに来ました。",
+    vocab: [
+      { word: "会う", reading: "あう", type: "Động từ nhóm 1", meaning: "Gặp, gặp gỡ", example: "せんせいにあう。\n(Gặp thầy giáo.)" },
+      { word: "来る", reading: "くる", type: "Động từ đặc biệt", meaning: "Đến, tới", example: "にほんにきた。\n(Đã đến Nhật.)" },
+    ],
+    choices: ["会う", "会って", "会い", "会います"],
+    answer: 2,
+    explanation: `Cấu trúc <strong>Vます形 + に + 来る/行く</strong> nghĩa là "đến/đi để V". Thể ます của 会う là 会います → bỏ ます → <strong>会い</strong> + に来ました. Ở đây: "Tôi đã đến đây để gặp bạn".<br><br>• <strong>会う</strong>: thể từ điển — không nối trực tiếp với に来る theo nghĩa mục đích.<br>• <strong>会って</strong>: thể て — dùng nối hành động tuần tự (会って話す = gặp rồi nói chuyện), không phải mục đích.<br>• <strong>会います</strong>: thể ます đầy đủ — không bỏ được ます khi đứng trước に来る.<div class="tip">💡 Vます形 (bỏ ます) + に + 来る/行く/帰る = đến/đi/về để V</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "そんなにしんぱい　______　な。彼はぜったい大丈夫だ。",
+    vocab: [
+      { word: "心配", reading: "しんぱい", type: "Danh từ・Suru động từ", meaning: "Lo lắng, lo âu", example: "しんぱいしないで。\n(Đừng lo lắng.)" },
+      { word: "絶対", reading: "ぜったい", type: "Phó từ", meaning: "Chắc chắn, tuyệt đối", example: "ぜったいだいじょうぶ。\n(Chắc chắn ổn thôi.)" },
+      { word: "大丈夫", reading: "だいじょうぶ", type: "Tính từ -na", meaning: "Ổn, không sao", example: "だいじょうぶですか。\n(Bạn có ổn không?)" },
+    ],
+    choices: ["し", "する", "した", "している"],
+    answer: 1,
+    explanation: `Cấu trúc <strong>Vる + な</strong> là <strong>lệnh cấm nam tính/thân mật</strong> — "đừng V!". な ở cuối câu sau thể từ điển mang ý nghĩa cấm đoán thẳng thắn. Ở đây: "Đừng lo lắng nhiều vậy. Anh ấy chắc chắn ổn thôi".<br><br>• <strong>し</strong>: thể ます bỏ ます của する — không tạo lệnh cấm khi đứng trước な.<br>• <strong>した</strong>: thể quá khứ — したな mang nghĩa "đã làm rồi à", không phải cấm đoán.<br>• <strong>している</strong>: thể tiến hành — しているな = "đang làm nhỉ", không phải cấm đoán.<div class="tip">💡 Vる + な = đừng V! (cấm đoán thân mật, thường dùng giữa bạn bè hoặc bề trên với bề dưới)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "わたしたちはもうあの家にすんで　______　。",
+    vocab: [
+      { word: "住む", reading: "すむ", type: "Động từ nhóm 1", meaning: "Ở, cư trú, sống (tại)", example: "とうきょうにすんでいる。\n(Đang sống ở Tokyo.)" },
+    ],
+    choices: ["あります", "いました", "います", "いません"],
+    answer: 3,
+    explanation: `Cấu trúc <strong>住んでいる</strong> = "đang ở, đang cư trú" (trạng thái tiếp diễn). Câu có <strong>もう</strong> + phủ định → "không còn... nữa". Vì chủ thể là người (わたしたち), dùng <strong>いません</strong>. Câu hoàn chỉnh: "Chúng tôi không còn ở ngôi nhà đó nữa rồi".<br><br>• <strong>あります</strong>: あります dùng cho đồ vật, sự việc — không dùng với trạng thái của người.<br>• <strong>いました</strong>: thể quá khứ — "đã từng ở" (không hàm ý "không còn nữa" một cách rõ ràng).<br>• <strong>います</strong>: khẳng định — trái nghĩa với văn cảnh (もう + phủ định).<div class="tip">💡 もう + ～ていません = không còn... nữa (trạng thái đã kết thúc)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "それ、母には　______　ほうがいいですよ。",
+    vocab: [
+      { word: "母", reading: "はは / おかあさん", type: "Danh từ", meaning: "Mẹ (はは = nói về mẹ mình; おかあさん = gọi mẹ hoặc nói về mẹ người khác)", example: "はははいえにいます。\n(Mẹ tôi ở nhà.)" },
+      { word: "言う", reading: "いう", type: "Động từ nhóm 1", meaning: "Nói", example: "ほんとうのことをいう。\n(Nói sự thật.)" },
+    ],
+    choices: ["言うな", "言わないで", "言わない", "言わなくて"],
+    answer: 2,
+    explanation: `Cấu trúc <strong>Vない + ほうがいい</strong> nghĩa là <strong>"không nên V, tốt hơn là đừng V"</strong>. Thể ない của 言う là <strong>言わない</strong> + ほうがいい. Ở đây: "Chuyện đó tốt nhất là đừng nói với mẹ".<br><br>• <strong>言うな</strong>: lệnh cấm trực tiếp "đừng nói!" — thô, không có ほうがいい.<br>• <strong>言わないで</strong>: "đừng nói" (yêu cầu) — đứng trước ください mới hợp (言わないでください), không đứng trước ほうがいい.<br>• <strong>言わなくて</strong>: thể て phủ định — dùng khi nêu lý do hoặc nối mệnh đề, không phù hợp.<div class="tip">💡 Vない + ほうがいい = không nên V | Vた + ほうがいい = nên V</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "こどもたちが先生のまわりに　______　います。",
+    vocab: [
+      { word: "子供たち", reading: "こどもたち", type: "Danh từ", meaning: "Những đứa trẻ, các em nhỏ", example: "こどもたちがあそんでいる。\n(Các em nhỏ đang chơi.)" },
+      { word: "まわり", reading: "まわり", type: "Danh từ", meaning: "Xung quanh, chung quanh", example: "いえのまわりにはなをうえる。\n(Trồng hoa xung quanh nhà.)" },
+      { word: "座る", reading: "すわる", type: "Động từ nhóm 1", meaning: "Ngồi", example: "いすにすわる。\n(Ngồi xuống ghế.)" },
+    ],
+    choices: ["すわり", "すわって", "すわる", "すわった"],
+    answer: 1,
+    explanation: `Cấu trúc <strong>Vて + いる</strong> diễn tả <strong>trạng thái đang diễn ra hoặc kết quả còn tồn tại</strong>. Thể て của 座る là <strong>座って</strong> + います. Ở đây: "Các em nhỏ đang ngồi xung quanh thầy giáo".<br><br>• <strong>すわり</strong>: thể ます bỏ ます — dùng trong ～ながら hoặc nối động từ, không đứng trước います.<br>• <strong>すわる</strong>: thể từ điển — không tạo trạng thái tiếp diễn khi đứng trước います.<br>• <strong>すわった</strong>: thể quá khứ — すわったいます không hợp ngữ pháp.<div class="tip">💡 Vて + います = đang V (hành động tiếp diễn) hoặc đang ở trạng thái sau khi V (kết quả)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "兄はたにんにものを教える　______　上手なんです。",
+    vocab: [
+      { word: "兄", reading: "あに", type: "Danh từ", meaning: "Anh trai (nói về anh mình)", example: "あにはかいしゃいんです。\n(Anh tôi là nhân viên công ty.)" },
+      { word: "他人", reading: "たにん", type: "Danh từ", meaning: "Người khác, người ngoài", example: "たにんのめいわくになるな。\n(Đừng làm phiền người khác.)" },
+      { word: "教える", reading: "おしえる", type: "Động từ nhóm 2", meaning: "Dạy, chỉ bảo", example: "えいごをおしえる。\n(Dạy tiếng Anh.)" },
+      { word: "上手", reading: "じょうず", type: "Tính từ -na", meaning: "Giỏi, thành thạo", example: "りょうりがじょうずだ。\n(Giỏi nấu ăn.)" },
+    ],
+    choices: ["のは", "のが", "ので", "のに"],
+    answer: 1,
+    explanation: `Cấu trúc <strong>Vる + のが + 上手/下手/好き/嫌い</strong>: の danh từ hóa động詞, が chỉ đối tượng đánh giá. Ở đây: "Anh tôi <strong>giỏi</strong> việc dạy người khác".<br><br>• <strong>のは</strong>: danh từ hóa + chủ đề — thường dùng để đối chiếu hoặc nhấn mạnh chủ đề (教えるのは好きだが... = tuy thích dạy nhưng...), không phải câu đơn.<br>• <strong>ので</strong>: "vì, do vậy" — liên từ nguyên nhân, sai nghĩa hoàn toàn.<br>• <strong>のに</strong>: "mặc dù, để làm" — tương phản hoặc mục đích, không hợp.<div class="tip">💡 Vる + のが + 上手 = giỏi V | Vる + のが + 好き = thích V | Vる + のが + 得意 = sở trường là V</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "かのじょのへやはあまりきれい　______　。",
+    vocab: [
+      { word: "彼女", reading: "かのじょ", type: "Danh từ / Đại từ", meaning: "Cô ấy; bạn gái", example: "かのじょはがくせいです。\n(Cô ấy là học sinh.)" },
+      { word: "部屋", reading: "へや", type: "Danh từ", meaning: "Phòng", example: "へやをそうじする。\n(Dọn dẹp phòng.)" },
+      { word: "きれい", reading: "きれい", type: "Tính từ -na", meaning: "Đẹp, gọn gàng, sạch sẽ", example: "きれいなへや。\n(Căn phòng gọn gàng.)" },
+      { word: "あまり", reading: "あまり", type: "Phó từ", meaning: "Không lắm (+ phủ định)", example: "あまりすきじゃない。\n(Không thích lắm.)" },
+    ],
+    choices: ["いません", "じゃいません", "ありません", "じゃありません"],
+    answer: 3,
+    explanation: `きれい là <strong>tính từ -な</strong>. Phủ định của tính từ -な là <strong>じゃありません</strong> (thể lịch sự) hoặc じゃない (thể thường). Ở đây: "Phòng của cô ấy không sạch sẽ lắm".<br><br>• <strong>いません</strong>: phủ định của います — chỉ dùng cho người/động vật tồn tại, không dùng cho tính từ.<br>• <strong>じゃいません</strong>: không phải cấu trúc chuẩn trong tiếng Nhật.<br>• <strong>ありません</strong>: phủ định của あります — dùng cho danh từ (～ではありません) hoặc sự vật tồn tại, không phải tính từ -な trực tiếp.<div class="tip">💡 Tính từ -な: khẳng định = ～です | phủ định = ～じゃありません / ～ではありません</div>`,
+  },
+  ],
+  navigation: {
+  prev: { url: "grammar-02.html", label: "← Ngữ pháp · Bài 2" },
+  next: { url: "grammar-04.html", label: "→ Ngữ pháp · Bài 4" },
+  categories: [
+    { url: "vocab-01.html", icon: "📝", label: "Từ vựng" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

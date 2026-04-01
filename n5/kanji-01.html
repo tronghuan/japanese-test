@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N5 漢字 Bài 1</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="漢">
+  <div class="header-badge">N5 JLPT • KANJI ①</div>
+  <h1>N5 漢字<span>クイズ</span>①</h1>
+  <p class="sub">Trắc nghiệm Kanji N5 · Bài 1 · Đọc Hán tự</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  questions: [
+  {
+    tag: "KANJI • N5 • CÁCH ĐỌC",
+    text: "しけんは<u><strong>来月</strong></u>の七月八日、木よう日、九時からです。\n\n「来月」の読み方は？",
+    vocab: [
+      { word: "来月", reading: "らいげつ", type: "Danh từ", meaning: "Tháng sau, tháng tới", example: "らいげつにほんにいきます。\n(Tháng sau tôi đi Nhật.)" },
+      { word: "試験", reading: "しけん", type: "Danh từ", meaning: "Bài thi, kỳ thi", example: "しけんをうける。\n(Thi, dự kỳ thi.)" },
+    ],
+    choices: ["くげつ", "らいがつ", "くがつ", "らいげつ"],
+    answer: 3,
+    explanation: `<strong>来月（らいげつ）</strong> — tháng sau, tháng tới.<br><br>• 来（らい）: đến, tới → âm on: らい — âm Hán-Việt: lai<br>• 月（げつ）: tháng → âm on: げつ / がつ<br><br>Chú ý phân biệt cách đọc của 月:<br>• <strong>～月（がつ）</strong>: dùng khi nói tên tháng cụ thể → 七月（しちがつ）= tháng 7<br>• <strong>～月（げつ）</strong>: dùng trong các từ ghép chỉ khoảng thời gian → 来月（らいげつ）, 今月（こんげつ）, 先月（せんげつ）<br><br>• くがつ（九月）= tháng 9 — đây là tên tháng, không phải "tháng sau".<div class="tip">💡 来月（らいげつ）= tháng sau | 今月（こんげつ）= tháng này | 先月（せんげつ）= tháng trước</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CÁCH ĐỌC",
+    text: "しけんは来月の<u><strong>七月</strong></u>八日、木よう日、九時からです。\n\n「七月」の読み方は？",
+    vocab: [
+      { word: "七月", reading: "しちがつ", type: "Danh từ", meaning: "Tháng Bảy", example: "しちがつにうまれました。\n(Tôi sinh vào tháng Bảy.)" },
+      { word: "七", reading: "しち / なな", type: "Số từ", meaning: "Số bảy", example: "しちじ / ななじ。\n(7 giờ.)" },
+    ],
+    choices: ["しちがつ", "しちげつ", "なのがつ", "なのげつ"],
+    answer: 0,
+    explanation: `<strong>七月（しちがつ）</strong> — tháng Bảy.<br><br>• 七（しち）: số 7 → âm on: しち, âm kun: なな/なの<br>• 月（がつ）: tháng (tên tháng) → âm on: がつ<br><br>Quy tắc đọc tháng: tất cả tên tháng đều dùng <strong>～月（がつ）</strong>:<br>一月・二月・三月・四月・五月・六月・七月・八月・九月・十月・十一月・十二月<br><br>• なの là cách đọc kun của 七 (七日 = なのか = ngày 7), không dùng để đọc tháng.<br>• げつ dùng trong từ ghép (今月・来月), không dùng cho tên tháng.<div class="tip">💡 Tháng luôn đọc là ～がつ | Ngày trong tháng có nhiều ngoại lệ: 七日（なのか）, 八日（ようか）…</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CÁCH ĐỌC",
+    text: "しけんは来月の七月八日、<u><strong>木よう日</strong></u>、九時からです。\n\n「木よう日」の読み方は？",
+    vocab: [
+      { word: "木曜日", reading: "もくようび", type: "Danh từ", meaning: "Thứ Năm", example: "もくようびにあいましょう。\n(Hãy gặp nhau vào thứ Năm.)" },
+      { word: "曜日", reading: "ようび", type: "Danh từ", meaning: "Thứ (trong tuần)", example: "きょうはなんようびですか。\n(Hôm nay là thứ mấy?)" },
+    ],
+    choices: ["きにょうび", "すいようび", "かようび", "もくようび"],
+    answer: 3,
+    explanation: `<strong>木曜日（もくようび）</strong> — thứ Năm.<br><br>• 木（もく）: gỗ, cây → âm on: もく — âm Hán-Việt: mộc<br>• 曜日（ようび）: thứ trong tuần<br><br>7 ngày trong tuần — âm on của chữ đầu:<br>• 月（げつ）曜日 = thứ Hai | 火（か）曜日 = thứ Ba<br>• 水（すい）曜日 = thứ Tư | <strong>木（もく）曜日 = thứ Năm</strong><br>• 金（きん）曜日 = thứ Sáu | 土（ど）曜日 = thứ Bảy | 日（にち）曜日 = Chủ Nhật<br><br>• すいようび = thứ Tư (水曜日) | かようび = thứ Ba (火曜日) — đều sai.<div class="tip">💡 Mẹo nhớ: 月火水木金土日 = Hai Ba Tư Năm Sáu Bảy CN (tương ứng: Mặt trăng・Lửa・Nước・Gỗ・Vàng・Đất・Mặt trời)</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CÁCH ĐỌC",
+    text: "しけんは来月の七月八日、木よう日、<u><strong>九時</strong></u>からです。\n\n「九時」の読み方は？",
+    vocab: [
+      { word: "九時", reading: "くじ", type: "Danh từ", meaning: "9 giờ", example: "くじにおきます。\n(Tôi thức dậy lúc 9 giờ.)" },
+      { word: "九", reading: "く / きゅう", type: "Số từ", meaning: "Số chín", example: "くがつ / きゅうえん。\n(Tháng 9 / 9 yên.)" },
+    ],
+    choices: ["くうじ", "きゅじ", "くじ", "きゅうじ"],
+    answer: 2,
+    explanation: `<strong>九時（くじ）</strong> — 9 giờ.<br><br>• 九（く）: số 9 → có hai cách đọc: <strong>く</strong> và きゅう<br>• 時（じ）: giờ → âm on: じ<br><br>Quy tắc đọc giờ — chú ý các ngoại lệ:<br>• 一時（いちじ）・二時（にじ）・三時（さんじ）・四時（よじ）<br>• 五時（ごじ）・六時（ろくじ）・七時（しちじ）・八時（はちじ）<br>• <strong>九時（くじ）</strong>・十時（じゅうじ）・十一時（じゅういちじ）・十二時（じゅうにじ）<br><br>九 đọc là <strong>く</strong> khi đứng trước 時 (giờ) và 月 (tháng 9 = くがつ).<br>きゅう dùng khi đứng độc lập hoặc trước danh từ khác (きゅうえん = 9 yên).<div class="tip">💡 Chú ý ngoại lệ giờ: 四時（よじ）không phải しじ, 九時（くじ）không phải きゅうじ</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CÁCH ĐỌC",
+    text: "ふうとうに<u><strong>お金</strong></u>が八万円入っていました。\n\n「お金」の読み方は？",
+    vocab: [
+      { word: "お金", reading: "おかね", type: "Danh từ", meaning: "Tiền", example: "おかねをはらう。\n(Trả tiền.)" },
+      { word: "封筒", reading: "ふうとう", type: "Danh từ", meaning: "Phong bì, bao thư", example: "ふうとうにてがみをいれる。\n(Cho thư vào phong bì.)" },
+    ],
+    choices: ["おちゃ", "おかし", "おさら", "おかね"],
+    answer: 3,
+    explanation: `<strong>お金（おかね）</strong> — tiền.<br><br>• お: tiếp đầu ngữ lịch sự (kính ngữ)<br>• 金（かね）: tiền, kim loại → âm kun: かね, âm on: きん/こん<br><br>Phân biệt với các lựa chọn sai (đều bắt đầu bằng お nhưng khác nghĩa):<br>• <strong>おちゃ（お茶）</strong>: trà<br>• <strong>おかし（お菓子）</strong>: bánh kẹo<br>• <strong>おさら（お皿）</strong>: đĩa, dĩa<br><br>金 khi đọc là きん: 金曜日（きんようび）= thứ Sáu, お金持ち（おかねもち）= người giàu.<div class="tip">💡 金（かね）= tiền (âm kun) | 金（きん）= vàng, kim loại (âm on) — お金 luôn đọc là おかね</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CÁCH ĐỌC",
+    text: "ふうとうにお金が<u><strong>八万円</strong></u>入っていました。\n\n「八万円」の読み方は？",
+    vocab: [
+      { word: "八万円", reading: "はちまんえん", type: "Danh từ", meaning: "80,000 yên", example: "はちまんえんのかばん。\n(Cái túi 80.000 yên.)" },
+      { word: "万", reading: "まん / ばん", type: "Số từ", meaning: "Vạn (10.000)", example: "いちまんえん。\n(10.000 yên.)" },
+    ],
+    choices: ["はちまんえん", "はっせんえん", "はちばんえん", "はっけんえん"],
+    answer: 0,
+    explanation: `<strong>八万円（はちまんえん）</strong> — 80.000 yên.<br><br>• 八（はち）: số 8 → âm on: はち<br>• 万（まん）: vạn = 10.000 → âm on: まん<br>• 円（えん）: yên (tiền Nhật) → âm on: えん<br><br>Cấu trúc số lớn trong tiếng Nhật:<br>• 1.000 = 千（せん） | 10.000 = 一万（いちまん）<br>• 80.000 = 八万（はちまん）<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>はっせんえん（八千円）</strong>: 8.000 yên — 千 = nghìn, khác với 万 = vạn<br>• <strong>はちばんえん</strong>: ばん không phải cách đọc của 万 trong số học<br>• <strong>はっけんえん</strong>: không phải từ tồn tại<div class="tip">💡 Số đếm lớn: 百（ひゃく）= trăm | 千（せん）= nghìn | 万（まん）= vạn (10.000)</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CÁCH ĐỌC",
+    text: "ふうとうにお金が八万円<u><strong>入って</strong></u>いました。\n\n「入って」の読み方は？",
+    vocab: [
+      { word: "入る", reading: "はいる", type: "Động từ nhóm 1", meaning: "Vào, đi vào, có chứa", example: "へやにはいる。\n(Vào phòng.)" },
+      { word: "入れる", reading: "いれる", type: "Động từ nhóm 2", meaning: "Cho vào, bỏ vào", example: "かばんにいれる。\n(Cho vào túi.)" },
+    ],
+    choices: ["いれって", "いって", "はって", "はいって"],
+    answer: 3,
+    explanation: `<strong>入って（はいって）</strong> — thể て của 入る（はいる）= đi vào, có chứa bên trong.<br><br>• 入（はい）る: đi vào, có chứa → âm kun: はい(る)<br>• Thể て: はいる → はいって<br><br>Phân biệt hai động từ hay nhầm:<br>• <strong>入る（はいる）</strong>: tự vào, có chứa → ふうとうに入っている = có chứa trong phong bì<br>• <strong>入れる（いれる）</strong>: cho vào (chủ động) → ふうとうに入れる = cho vào phong bì<br><br>Trong câu này, tiền tự "nằm trong" phong bì → dùng 入る（はいる）.<br>• いって = 行って（đi） — chữ khác, nghĩa khác!<div class="tip">💡 入る（はいる）= tự vào / có chứa | 入れる（いれる）= cho vào (tác động)</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CÁCH ĐỌC",
+    text: "きょうは<u><strong>天気</strong></u>がいいです。がっこうの5かいのまどから、北に白い山がよく見えます。\n\n「天気」の読み方は？",
+    vocab: [
+      { word: "天気", reading: "てんき", type: "Danh từ", meaning: "Thời tiết", example: "てんきがいい。\n(Thời tiết đẹp.)" },
+      { word: "天", reading: "てん", type: "Danh từ", meaning: "Bầu trời, thiên", example: "てんきよほう。\n(Dự báo thời tiết.)" },
+    ],
+    choices: ["げんき", "けんき", "てんき", "でんき"],
+    answer: 2,
+    explanation: `<strong>天気（てんき）</strong> — thời tiết.<br><br>• 天（てん）: trời, bầu trời → âm on: てん — âm Hán-Việt: thiên<br>• 気（き）: khí, cảm giác → âm on: き — âm Hán-Việt: khí<br><br>Phân biệt với các lựa chọn sai (đều có âm き):<br>• <strong>げんき（元気）</strong>: khỏe mạnh, tràn đầy năng lượng — chữ 元 khác với 天<br>• <strong>けんき</strong>: không phải từ thông dụng<br>• <strong>でんき（電気）</strong>: điện, đèn điện — chữ 電 khác với 天<br><br>Cách phân biệt: 天 (thiên = trời) ≠ 元 (nguyên = gốc) ≠ 電 (điện).<div class="tip">💡 天気（てんき）= thời tiết | 元気（げんき）= khỏe mạnh | 電気（でんき）= điện</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CÁCH ĐỌC",
+    text: "きょうは天気がいいです。がっこうの5かいのまどから、<u><strong>北</strong></u>に白い山がよく見えます。\n\n「北」の読み方は？",
+    vocab: [
+      { word: "北", reading: "きた", type: "Danh từ", meaning: "Phía Bắc", example: "きたにすすむ。\n(Đi về phía Bắc.)" },
+    ],
+    choices: ["みなみ", "きた", "ひがし", "にし"],
+    answer: 1,
+    explanation: `<strong>北（きた）</strong> — phía Bắc.<br><br>• 北（きた）: phía Bắc → âm kun: きた, âm on: ほく/ほっ<br><br>Bốn hướng chính — cần nhớ cả chữ lẫn cách đọc:<br>• <strong>北（きた）</strong> = Bắc | 南（みなみ）= Nam<br>• 東（ひがし）= Đông | 西（にし）= Tây<br><br>Các lựa chọn sai đều là hướng khác:<br>• <strong>みなみ（南）</strong>: phía Nam — ngược với Bắc<br>• <strong>ひがし（東）</strong>: phía Đông<br>• <strong>にし（西）</strong>: phía Tây<br><br>Âm on của 北 (ほく): 北海道（ほっかいどう）= Hokkaido, 北極（ほっきょく）= Bắc Cực.<div class="tip">💡 Bốn hướng: 北（きた）Bắc · 南（みなみ）Nam · 東（ひがし）Đông · 西（にし）Tây</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CÁCH ĐỌC",
+    text: "きょうは天気がいいです。がっこうの5かいのまどから、北に<u><strong>白い</strong></u>山がよく見えます。\n\n「白い」の読み方は？",
+    vocab: [
+      { word: "白い", reading: "しろい", type: "Tính từ -i", meaning: "Trắng", example: "しろいかみ。\n(Tờ giấy trắng.)" },
+      { word: "見える", reading: "みえる", type: "Động từ nhóm 2", meaning: "Nhìn thấy, trông thấy", example: "やまがみえる。\n(Nhìn thấy núi.)" },
+    ],
+    choices: ["たかい", "ひろい", "しろい", "おかい"],
+    answer: 2,
+    explanation: `<strong>白い（しろい）</strong> — (màu) trắng.<br><br>• 白（しろ）: màu trắng → âm kun: しろ, âm on: はく/びゃく<br><br>Màu sắc cơ bản trong tiếng Nhật:<br>• <strong>白い（しろい）</strong>: trắng | 黒い（くろい）: đen<br>• 赤い（あかい）: đỏ | 青い（あおい）: xanh dương / xanh lá<br>• 黄色い（きいろい）: vàng<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>たかい（高い）</strong>: cao (giá cao, chiều cao) — chữ 高<br>• <strong>ひろい（広い）</strong>: rộng — chữ 広<br>• <strong>おかい</strong>: không phải từ tồn tại<br><br>Âm on của 白 (はく): 白紙（はくし）= tờ giấy trắng / trắng tay.<div class="tip">💡 白い（しろい）= trắng | 白（しろ）= màu trắng (danh từ) | 白紙（はくし）= giấy trắng / trắng tay</div>`,
+  },
+  ],
+  navigation: {
+  next: { url: "kanji-02.html", label: "→ Kanji · Bài 2" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "vocab-01.html", icon: "📝", label: "Từ vựng" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>

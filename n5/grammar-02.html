@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N5 文法 Bài 2</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="文">
+  <div class="header-badge">N5 JLPT • NGỮ PHÁP ②</div>
+  <h1>N5 文法<span>クイズ</span>②</h1>
+  <p class="sub">Trắc nghiệm ngữ pháp N5 · Bài 2 · Giải thích chi tiết</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  questions: [
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "この本は　______　読みました。",
+    vocab: [
+      { word: "本", reading: "ほん", type: "Danh từ", meaning: "Sách", example: "ほんをよむ。\n(Đọc sách.)" },
+      { word: "読む", reading: "よむ", type: "Động từ nhóm 1", meaning: "Đọc", example: "まいにちほんをよみます。\n(Mỗi ngày tôi đọc sách.)" },
+    ],
+    choices: ["どう", "もう", "も", "まだ"],
+    answer: 1,
+    explanation: `<strong>もう</strong> kết hợp với thể khẳng định có nghĩa là <strong>"đã... rồi"</strong>. Ở đây: "Cuốn sách này tôi <strong>đã đọc rồi</strong>".<br><br>• <strong>どう</strong>: "thế nào, như thế nào" — dùng để hỏi cảm nhận/cách thức, không hợp ngữ cảnh.<br>• <strong>も</strong>: "cũng" — hàm ý liệt kê hoặc nhấn mạnh, không phù hợp ở đây.<br>• <strong>まだ</strong>: "vẫn chưa" — dùng với thể phủ định (まだ読んでいません = chưa đọc).<div class="tip">💡 もう + khẳng định = đã... rồi | まだ + phủ định = vẫn chưa...</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "山田さんはたいへんいい人ですよ。なにもわるいことはきいたことが　______　わ。",
+    vocab: [
+      { word: "たいへん", reading: "たいへん", type: "Phó từ / Tính từ -na", meaning: "Rất, hết sức; vất vả", example: "たいへんおいしい。\n(Rất ngon.)" },
+      { word: "悪い", reading: "わるい", type: "Tính từ -i", meaning: "Xấu, tệ, tồi", example: "わるいひと。\n(Người xấu.)" },
+      { word: "聞く", reading: "きく", type: "Động từ nhóm 1", meaning: "Nghe, hỏi", example: "はなしをきく。\n(Nghe câu chuyện.)" },
+    ],
+    choices: ["しません", "いません", "なりません", "ありません"],
+    answer: 3,
+    explanation: `Cấu trúc <strong>～たことがある</strong> nghĩa là "đã từng...". Phủ định là <strong>～たことがない / ありません</strong> = "chưa từng...". Ở đây: "Tôi chưa từng nghe điều gì xấu về anh ấy cả".<br><br>ことがある/ない → こと là danh từ hóa, が là trợ từ chủ ngữ, nên cần dùng <strong>ある/ない</strong> (tồn tại của sự việc), không phải các động từ khác.<br><br>• <strong>しません</strong>: "không làm" — động từ する, không hợp với cấu trúc ～たことが.<br>• <strong>いません</strong>: "không có (người/động vật)" — sai loại.<br>• <strong>なりません</strong>: "không được, không trở thành" — sai hoàn toàn.<div class="tip">💡 Vた + ことがあります = đã từng V | Vた + ことがありません = chưa từng V</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "ここにじゅうしょを書いて　______　か？",
+    vocab: [
+      { word: "住所", reading: "じゅうしょ", type: "Danh từ", meaning: "Địa chỉ", example: "じゅうしょをかく。\n(Viết địa chỉ.)" },
+      { word: "書く", reading: "かく", type: "Động từ nhóm 1", meaning: "Viết", example: "なまえをかいてください。\n(Xin hãy viết tên.)" },
+    ],
+    choices: ["ください", "くださいます", "くださいません", "くださいましょうか"],
+    answer: 2,
+    explanation: `Cấu trúc <strong>Vて + くださいませんか</strong> là cách <strong>nhờ vả lịch sự</strong>, thậm chí còn lịch sự hơn くださいますか vì dùng thể phủ định để hỏi nhẹ nhàng. Nghĩa: "Bạn có thể viết địa chỉ vào đây không (ạ)?"<br><br>• <strong>ください</strong>: "xin hãy..." — mệnh lệnh lịch sự, ít mềm mỏng hơn, không có か.<br>• <strong>くださいます</strong> + か: "bạn sẽ...?" — lịch sự nhưng kém nhờ vả hơn くださいませんか.<br>• <strong>くださいましょうか</strong>: dạng này không tồn tại trong tiếng Nhật chuẩn.<div class="tip">💡 Vて + ください = xin hãy V | Vて + くださいませんか = bạn có thể V không? (nhờ vả lịch sự hơn)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "あなたはあそこへ行って　______　いけませんよ。",
+    vocab: [
+      { word: "あそこ", reading: "あそこ", type: "Đại từ chỉ nơi chốn", meaning: "Chỗ kia, đằng kia", example: "あそこにいく。\n(Đi đến chỗ kia.)" },
+      { word: "いけない", reading: "いけない", type: "Cấu trúc ngữ pháp", meaning: "Không được, cấm", example: "はしってはいけません。\n(Không được chạy.)" },
+    ],
+    choices: ["が", "は", "と", "に"],
+    answer: 1,
+    explanation: `Cấu trúc <strong>Vて + は + いけない</strong> nghĩa là <strong>"không được V, cấm V"</strong>. は ở đây là trợ từ chủ đề, kết hợp với いけない tạo thành lệnh cấm. Ở đây: "Bạn không được đi đến chỗ đó đấy".<br><br>• <strong>が</strong>: trợ từ chủ ngữ — 行ってが không phải cấu trúc chuẩn.<br>• <strong>と</strong>: "và, khi, nếu" — tạo nghĩa điều kiện tự nhiên, không phải cấm đoán.<br>• <strong>に</strong>: chỉ điểm đến, mục đích — không tạo nghĩa cấm đoán.<div class="tip">💡 Vて + は + いけません = không được V (cấm đoán) | Vて + も + いいです = được V (cho phép)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "どれ　______　ここではたらいていましたか？",
+    vocab: [
+      { word: "どれくらい", reading: "どれくらい", type: "Phó từ / Đại từ", meaning: "Bao lâu, bao nhiêu, khoảng bao nhiêu", example: "どれくらいかかりますか。\n(Mất bao lâu vậy?)" },
+      { word: "働く", reading: "はたらく", type: "Động từ nhóm 1", meaning: "Làm việc", example: "まいにちはたらく。\n(Mỗi ngày đi làm.)" },
+    ],
+    choices: ["まで", "もう", "より", "くらい"],
+    answer: 3,
+    explanation: `<strong>どれくらい</strong> (hoặc どのくらい) nghĩa là <strong>"bao lâu, khoảng bao nhiêu"</strong> — dùng để hỏi về lượng hoặc thời gian. Ở đây: "Bạn đã làm việc ở đây khoảng bao lâu?"<br><br>• <strong>まで</strong>: "cho đến..." — chỉ giới hạn điểm cuối (どこまで = đến đâu), không hỏi khoảng thời gian.<br>• <strong>もう</strong>: "đã..., thêm" — phó từ chỉ trạng thái hoàn thành hoặc thêm vào, không hỏi lượng.<br>• <strong>より</strong>: "hơn, so với" — dùng so sánh, không hỏi lượng.<div class="tip">💡 どれくらい / どのくらい = bao lâu, bao nhiêu (hỏi về lượng, thời gian, khoảng cách)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "わたしはおんがくをきく______　好きです。",
+    vocab: [
+      { word: "音楽", reading: "おんがく", type: "Danh từ", meaning: "Âm nhạc", example: "おんがくをきく。\n(Nghe âm nhạc.)" },
+      { word: "聞く", reading: "きく", type: "Động từ nhóm 1", meaning: "Nghe", example: "うたをきく。\n(Nghe bài hát.)" },
+      { word: "好き", reading: "すき", type: "Tính từ -na", meaning: "Thích, yêu thích", example: "りょうりがすきです。\n(Tôi thích nấu ăn.)" },
+    ],
+    choices: ["のが", "ので", "のに", "のは"],
+    answer: 0,
+    explanation: `Cấu trúc <strong>Vる + のが + 好き</strong> nghĩa là "thích V". の danh từ hóa mệnh đề (きく → きくの = việc nghe), が là trợ từ chỉ đối tượng của 好き. Ở đây: "Tôi thích nghe âm nhạc".<br><br>• <strong>ので</strong>: "vì, bởi vì" — diễn tả lý do, không dùng để nói "thích làm gì".<br>• <strong>のに</strong>: "mặc dù, để làm..." — diễn tả tương phản hoặc mục đích, sai ngữ cảnh.<br>• <strong>のは</strong>: danh từ hóa + chủ đề — thường dùng trong cấu trúc nhấn mạnh (きくのは好きだが... = tuy thích nghe nhưng...), không phải câu đơn giản.<div class="tip">💡 Vる + のが + 好き/嫌い/上手/下手 = thích/ghét/giỏi/kém về việc V</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "わたしは一人でクリスマスをすごす　______　です。",
+    vocab: [
+      { word: "一人", reading: "ひとり", type: "Danh từ", meaning: "Một mình", example: "ひとりでたべる。\n(Ăn một mình.)" },
+      { word: "クリスマス", reading: "クリスマス", type: "Danh từ", meaning: "Giáng sinh, Noel", example: "クリスマスをいわう。\n(Mừng Giáng sinh.)" },
+      { word: "過ごす", reading: "すごす", type: "Động từ nhóm 1", meaning: "Trải qua, dành (thời gian)", example: "たのしくすごす。\n(Trải qua (thời gian) vui vẻ.)" },
+    ],
+    choices: ["たい", "つもり", "だろう", "ほう"],
+    answer: 1,
+    explanation: `<strong>～つもりです</strong> nghĩa là <strong>"có ý định..., dự định..."</strong> — diễn tả kế hoạch rõ ràng của người nói. Ở đây: "Tôi <strong>có dự định</strong> đón Giáng sinh một mình".<br><br>• <strong>たい</strong>: "muốn..." — diễn tả mong muốn/ước ao, không phải kế hoạch cụ thể.<br>• <strong>だろう</strong>: "chắc là..." — phỏng đoán, không hợp khi nói về kế hoạch của chính mình.<br>• <strong>ほう</strong>: dùng trong cấu trúc ～ほうがいい (nên làm gì) — không đứng cuối câu độc lập.<div class="tip">💡 Vる + つもりです = có dự định V (kế hoạch đã quyết) | Vたい = muốn V (mong muốn chủ quan)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "______　ながら水を飲まないでください。",
+    vocab: [
+      { word: "歩く", reading: "あるく", type: "Động từ nhóm 1", meaning: "Đi bộ", example: "こうえんをあるく。\n(Đi bộ trong công viên.)" },
+      { word: "水", reading: "みず", type: "Danh từ", meaning: "Nước (lạnh)", example: "みずをのむ。\n(Uống nước.)" },
+      { word: "飲む", reading: "のむ", type: "Động từ nhóm 1", meaning: "Uống", example: "おちゃをのむ。\n(Uống trà.)" },
+    ],
+    choices: ["あるく", "あるいて", "あるき", "あるかな"],
+    answer: 2,
+    explanation: `Cấu trúc <strong>Vます形 + ながら</strong> nghĩa là <strong>"vừa V vừa..."</strong> — hai hành động xảy ra đồng thời. Thể ます của 歩く là 歩きます → bỏ ます → <strong>歩き</strong> + ながら. Ở đây: "Xin đừng uống nước trong khi đang đi bộ".<br><br>• <strong>あるく</strong>: thể từ điển — không nối trực tiếp với ながら.<br>• <strong>あるいて</strong>: thể て — dùng để nối hành động tuần tự, không phải đồng thời.<br>• <strong>あるかな</strong>: không phải dạng từ tồn tại — sai hoàn toàn.<div class="tip">💡 Vます形 (bỏ ます) + ながら = vừa V₁ vừa V₂ | ví dụ: 歌い<strong>ながら</strong>歩く, 音楽を聞き<strong>ながら</strong>勉強する</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "れいぞうこにビールが入っている　______　、そこにすわって飲みましょう。",
+    vocab: [
+      { word: "冷蔵庫", reading: "れいぞうこ", type: "Danh từ", meaning: "Tủ lạnh", example: "れいぞうこにいれる。\n(Cho vào tủ lạnh.)" },
+      { word: "ビール", reading: "ビール", type: "Danh từ", meaning: "Bia", example: "ビールをのむ。\n(Uống bia.)" },
+      { word: "座る", reading: "すわる", type: "Động từ nhóm 1", meaning: "Ngồi", example: "いすにすわる。\n(Ngồi xuống ghế.)" },
+    ],
+    choices: ["から", "と", "なら", "たら"],
+    answer: 0,
+    explanation: `<strong>から</strong> diễn tả <strong>lý do, nguyên nhân</strong> — "vì..., bởi vì...". Ở đây: "<strong>Vì</strong> trong tủ lạnh có bia, nên hãy ngồi xuống đó uống nào".<br><br>• <strong>と</strong>: "và" hoặc điều kiện tự nhiên/khám phá — ở đây không hợp vì vế sau là lời rủ (～ましょう).<br>• <strong>なら</strong>: "nếu (giả sử), trong trường hợp..." — điều kiện giả định, hàm ý chưa chắc có bia.<br>• <strong>たら</strong>: "nếu/khi... thì..." — điều kiện hoặc thời gian, hàm ý chưa biết chắc, không hợp khi sự thật đã rõ.<div class="tip">💡 ～から、～ = vì...nên... (nêu lý do rõ ràng) | ～ので、～ = vì...nên... (lịch sự hơn, thường dùng văn viết)</div>`,
+  },
+  {
+    tag: "NGỮ PHÁP • N5",
+    text: "わたしのことをいつまでも　______　ください。",
+    vocab: [
+      { word: "いつまでも", reading: "いつまでも", type: "Phó từ", meaning: "Mãi mãi, cho đến bao giờ cũng", example: "いつまでもともだちでいよう。\n(Hãy là bạn mãi mãi nhé.)" },
+      { word: "忘れる", reading: "わすれる", type: "Động từ nhóm 2", meaning: "Quên", example: "たんじょうびをわすれた。\n(Tôi quên mất sinh nhật.)" },
+    ],
+    choices: ["わすれない", "わすれないて", "わすれなくて", "わすれないで"],
+    answer: 3,
+    explanation: `Cấu trúc <strong>Vないで + ください</strong> nghĩa là <strong>"xin đừng V"</strong> — đây là cách yêu cầu không làm gì đó một cách lịch sự. Thể ない của 忘れる là 忘れない → <strong>忘れないで</strong> + ください. Ở đây: "Xin đừng quên tôi mãi nhé".<br><br>• <strong>わすれない</strong>: thể phủ định đơn thuần — không nối với ください.<br>• <strong>わすれないて</strong>: dạng này không tồn tại — sai ngữ pháp (ないで mới đúng, không phải ないて).<br>• <strong>わすれなくて</strong>: thể て của tính từ phủ định — dùng khi nêu lý do, không phải yêu cầu.<div class="tip">💡 Vないで + ください = xin đừng V | Vて + ください = xin hãy V</div>`,
+  },
+  ],
+  navigation: {
+  prev: { url: "grammar-01.html", label: "← Ngữ pháp · Bài 1" },
+  next: { url: "grammar-03.html", label: "→ Ngữ pháp · Bài 3" },
+  categories: [
+    { url: "vocab-01.html", icon: "📝", label: "Từ vựng" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" },
+    { url: "kanji-01.html", icon: "🈁", label: "Kanji" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>
