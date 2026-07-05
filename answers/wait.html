@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<script src="https://quge5.com/88/tag.min.js" data-zone="256472" async data-cfasync="false"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đang chuẩn bị đáp án... • 日本語クイズ</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+<link rel="stylesheet" href="../css/answers.css">
+</head>
+<body>
+
+<header data-bg-char="待">
+  <div class="header-badge">JLPT • THÁNG 7/2026</div>
+  <h1>Đang Chuẩn Bị<span> Đáp Án</span></h1>
+  <p class="sub">Vui lòng chờ trong giây lát...</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<main class="wait-main">
+  <div class="wait-box">
+    <div class="wait-circle"><span id="waitCount">15</span></div>
+    <p class="wait-msg">Đáp án <strong id="waitLevelLabel">N?</strong> sẽ mở khóa sau <span id="waitCount2">15</span> giây</p>
+    <p class="wait-hint">Cảm ơn bạn đã xem quảng cáo để ủng hộ trang 🙏</p>
+    <div class="wait-ad-slot">Quảng cáo</div>
+  </div>
+</main>
+
+<script>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var level = (params.get('level') || '').toLowerCase();
+  var validLevels = ['n1', 'n2', 'n3', 'n4', 'n5'];
+
+  if (validLevels.indexOf(level) === -1) {
+    window.location.href = '../index.html';
+    return;
+  }
+
+  document.getElementById('waitLevelLabel').textContent = level.toUpperCase();
+
+  var remaining = 15;
+  var countEl = document.getElementById('waitCount');
+  var count2El = document.getElementById('waitCount2');
+
+  var timer = setInterval(function () {
+    remaining--;
+    if (remaining <= 0) {
+      clearInterval(timer);
+      window.location.href = level + '.html';
+      return;
+    }
+    countEl.textContent = remaining;
+    count2El.textContent = remaining;
+  }, 1000);
+})();
+</script>
+</body>
+</html>

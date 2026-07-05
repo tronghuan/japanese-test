@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<script src="https://quge5.com/88/tag.min.js" data-zone="256472" async data-cfasync="false"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đáp Án JLPT N3 Tháng 7/2026 • 日本語クイズ</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+<link rel="stylesheet" href="../css/answers.css">
+</head>
+<body>
+
+<header data-bg-char="答">
+  <div class="header-badge">JLPT N3 • THÁNG 7/2026</div>
+  <h1>Đáp Án<span> N3</span></h1>
+  <p class="sub">Đề thi JLPT N3 · Kỳ thi tháng 7/2026</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<main class="dl-main">
+  <div class="dl-card">
+    <div class="dl-icon">🎧</div>
+    <div class="dl-body">
+      <div class="dl-title">Phần Nghe（聴解）</div>
+      <div class="dl-desc">Đáp án chi tiết phần Nghe hiểu N3</div>
+    </div>
+    <button class="dl-btn" onclick="openDownloadModal('listening')">Tải xuống</button>
+  </div>
+
+  <div class="dl-card">
+    <div class="dl-icon">📖</div>
+    <div class="dl-body">
+      <div class="dl-title">Phần Đọc（言語知識・読解）</div>
+      <div class="dl-desc">Đáp án chi tiết phần Chữ Hán - Từ vựng - Ngữ pháp - Đọc hiểu N3</div>
+    </div>
+    <button class="dl-btn" onclick="openDownloadModal('reading')">Tải xuống</button>
+  </div>
+</main>
+
+<div class="dl-modal-overlay" id="dlModalOverlay">
+  <div class="dl-modal">
+    <button class="dl-modal-close" onclick="closeDownloadModal()">✕</button>
+    <h3 id="dlModalTitle">Tải xuống</h3>
+    <p class="dl-modal-desc">Nhấn <strong>"Lấy mã"</strong>, chờ 15 giây để nhận mã xác nhận gồm 6 ký tự, nhập mã vào ô bên dưới rồi nhấn <strong>"Xác nhận"</strong> để tải xuống.</p>
+
+    <div class="dl-code-display" id="dlCodeDisplay">Mã của bạn:<span id="dlGeneratedCode"></span></div>
+
+    <div class="dl-input-row">
+      <input type="text" id="dlCodeInput" maxlength="6" placeholder="Nhập mã 6 ký tự" autocomplete="off">
+      <button class="dl-get-code-btn" id="dlGetCodeBtn" onclick="requestDownloadCode()">Lấy mã</button>
+    </div>
+
+    <div class="dl-timer" id="dlTimer"></div>
+    <div class="dl-error" id="dlError"></div>
+
+    <button class="dl-confirm-btn" id="dlConfirmBtn" onclick="confirmDownloadCode()">Xác nhận</button>
+  </div>
+</div>
+
+<script>
+window.DOWNLOAD_LINKS = {
+  listening: "PASTE_MEDIAFIRE_LINK_N3_NGHE_HERE",
+  reading: "PASTE_MEDIAFIRE_LINK_N3_DOC_HERE"
+};
+</script>
+<script src="../js/answers.js"></script>
+</body>
+</html>

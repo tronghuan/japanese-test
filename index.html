@@ -79,6 +79,97 @@
     letter-spacing: 0.05em;
   }
 
+  /* ── ANSWER KEY BANNER ── */
+  .answer-key-section {
+    max-width: 800px;
+    margin: 1.8rem auto 0;
+    padding: 0 1.5rem;
+  }
+  .answer-key-box {
+    background: linear-gradient(135deg, var(--red) 0%, #7a1d13 100%);
+    border-radius: 8px;
+    padding: 1.5rem 1.5rem 1.7rem;
+    box-shadow: 0 8px 32px var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  .answer-key-box::before {
+    content: '答';
+    position: absolute;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 10rem;
+    color: rgba(255,255,255,0.08);
+    right: -1rem;
+    top: -2rem;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .answer-key-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    color: white;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    padding: 0.2rem 0.7rem;
+    border-radius: 2px;
+    margin-bottom: 0.6rem;
+    position: relative;
+    z-index: 1;
+  }
+  .answer-key-box h2 {
+    font-family: 'Shippori Mincho', serif;
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+  }
+  .answer-key-box p {
+    color: rgba(255,255,255,0.85);
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    margin-bottom: 1.1rem;
+    position: relative;
+    z-index: 1;
+  }
+  .answer-key-grid {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+  .answer-key-card {
+    flex: 1;
+    min-width: 4.2rem;
+    background: rgba(255,255,255,0.95);
+    border-radius: 6px;
+    padding: 0.7rem 0.5rem;
+    text-align: center;
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+  }
+  .answer-key-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  }
+  .answer-key-card .ak-kanji {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+  }
+  .answer-key-card .ak-label {
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
   /* ── NAV TABS ── */
   .level-nav {
     max-width: 800px;
@@ -330,6 +421,37 @@
   <h1>日本語<span>練習</span></h1>
   <p class="sub">Tổng hợp bài trắc nghiệm tiếng Nhật · Từ N5 đến N1</p>
 </header>
+
+<!-- Answer key banner -->
+<section class="answer-key-section">
+  <div class="answer-key-box">
+    <span class="answer-key-badge">🔥 MỚI CẬP NHẬT</span>
+    <h2>Đáp Án Đề Thi JLPT Tháng 7/2026</h2>
+    <p>Chọn cấp độ để xem đáp án phần Nghe và phần Đọc</p>
+    <div class="answer-key-grid">
+      <a class="answer-key-card" href="answers/wait.html?level=n5">
+        <span class="ak-kanji level-n5">N5</span>
+        <span class="ak-label">初級前半</span>
+      </a>
+      <a class="answer-key-card" href="answers/wait.html?level=n4">
+        <span class="ak-kanji level-n4">N4</span>
+        <span class="ak-label">初級後半</span>
+      </a>
+      <a class="answer-key-card" href="answers/wait.html?level=n3">
+        <span class="ak-kanji level-n3">N3</span>
+        <span class="ak-label">中級</span>
+      </a>
+      <a class="answer-key-card" href="answers/wait.html?level=n2">
+        <span class="ak-kanji level-n2">N2</span>
+        <span class="ak-label">中上級</span>
+      </a>
+      <a class="answer-key-card" href="answers/wait.html?level=n1">
+        <span class="ak-kanji level-n1">N1</span>
+        <span class="ak-label">上級</span>
+      </a>
+    </div>
+  </div>
+</section>
 
 <!-- Level tabs -->
 <nav class="level-nav" id="levelNav">

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語クイズ • N5 漢字 Bài 3</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/quiz-common.css">
+</head>
+<body>
+
+<header data-bg-char="漢">
+  <div class="header-badge">N5 JLPT • KANJI ③</div>
+  <h1>N5 漢字<span>クイズ</span>③</h1>
+  <p class="sub">Trắc nghiệm Kanji N5 · Bài 3 · Đọc và viết Hán tự</p>
+</header>
+
+<a class="back-link" href="../index.html">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+  Quay về trang chủ
+</a>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-text" id="progressText">1 / 10</span>
+  <span class="score-badge" id="scoreBadge">0 điểm</span>
+</div>
+
+<main>
+  <div class="quiz-card" id="quizCard">
+    <div class="q-header">
+      <span class="q-num" id="qNum">Q1</span>
+      <div class="q-body">
+        <span class="q-tag" id="qTag"></span>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="vocab-strip" id="vocabStrip">
+      <span class="vocab-label">🔍 TRA TỪ:</span>
+    </div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation">
+      <div class="exp-head">· GIẢI THÍCH ·</div>
+      <div class="exp-body" id="expBody"></div>
+    </div>
+    <div class="card-footer">
+      <button class="exp-toggle" id="expToggle" onclick="toggleExp()">📖 Xem giải thích</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+        Câu tiếp theo
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-kanji" id="resultKanji">合格</div>
+    <div class="result-title" id="resultTitle">Xuất sắc!</div>
+    <div class="result-sub" id="resultSub">Bạn đã hoàn thành bài trắc nghiệm</div>
+    <div class="result-score-big" id="resultScore">0<span>/10</span></div>
+    <div class="result-label">SỐ CÂU ĐÚNG</div>
+    <button class="restart-btn" onclick="restart()">🔄 Làm lại từ đầu</button>
+  </div>
+</main>
+
+<div class="vocab-popup" id="vocabPopup" onclick="closeVocab(event)">
+  <div class="vocab-popup-box">
+    <div class="vp-top">
+      <div>
+        <div class="vp-word" id="vpWord"></div>
+        <div class="vp-reading" id="vpReading"></div>
+      </div>
+      <button class="vp-close" onclick="closeVocabBtn()">✕</button>
+    </div>
+    <div class="vp-body">
+      <div class="vp-type" id="vpType"></div>
+      <div class="vp-meaning" id="vpMeaning"></div>
+      <div class="vp-example" id="vpExample"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var QUIZ_CONFIG = {
+  backUrl: "../index.html",
+  backLabel: "← Quay về trang chủ",
+  questions: [
+  {
+    tag: "KANJI • N5 • CHỮ VIẾT",
+    text: "あには、<u><strong>ちいさい</strong></u>らじおをぽけっとにいれてでかけます。\n\n「ちいさい」の漢字は？",
+    vocab: [
+      { word: "兄", reading: "あに", type: "Danh từ", meaning: "Anh trai (nói về anh mình)", example: "あにはかいしゃいんです。\n(Anh tôi là nhân viên công ty.)" },
+      { word: "小さい", reading: "ちいさい", type: "Tính từ -i", meaning: "Nhỏ, bé", example: "ちいさいこども。\n(Đứa trẻ nhỏ.)" },
+    ],
+    choices: ["中さい", "少さい", "小さい", "大さい"],
+    answer: 2,
+    explanation: `<strong>小さい（ちいさい）</strong> — nhỏ, bé.<br><br>• 小（しょう/こ/ちい）: nhỏ → âm on: しょう, âm kun: ちい(さい) / こ<br><br>Bốn chữ hay nhầm — kích thước và số lượng:<br>• <strong>小（しょう）</strong>: nhỏ → 小さい（ちいさい）<br>• <strong>大（だい）</strong>: lớn → 大きい（おおきい）<br>• <strong>中（ちゅう）</strong>: vừa, ở giữa → 中（なか）= bên trong<br>• <strong>少（しょう）</strong>: ít → 少し（すこし）= một chút<br><br>Chú ý: 小 và 少 trông gần giống nhau! 小 (3 nét) vs 少 (4 nét, có thêm nét sổ).<div class="tip">💡 小さい（ちいさい）= nhỏ | 大きい（おおきい）= lớn | 小（こ）ghép trong từ: 小学校（しょうがっこう）</div>`,
+  },
+  {
+    tag: "KATAKANA • N5 • CHỮ VIẾT",
+    text: "あには、ちいさい<u><strong>らじお</strong></u>をぽけっとにいれてでかけます。\n\n「らじお」のカタカナは？",
+    vocab: [
+      { word: "ラジオ", reading: "らじお", type: "Danh từ (ngoại lai)", meaning: "Đài radio, máy thu thanh", example: "ラジオをきく。\n(Nghe đài radio.)" },
+    ],
+    choices: ["ラゾオ", "ラジオ", "ウゾオ", "ウジオ"],
+    answer: 1,
+    explanation: `<strong>ラジオ</strong> — radio (từ tiếng Anh "radio").<br><br>Phân tích từng kana:<br>• ら → <strong>ラ</strong> (không phải ウ)<br>• じ → <strong>ジ</strong> (không phải ゾ — ジ có nét chấm đôi ở phải, ゾ cũng vậy nhưng hình dạng khác)<br>• お → <strong>オ</strong> (không phải ウ — オ có thêm nét ngang)<br><br>Phân biệt các cặp katakana hay nhầm:<br>• <strong>ラ vs ウ</strong>: ラ trông như chữ L có thêm nét, ウ trông như vành mũ<br>• <strong>ジ vs ゾ</strong>: ジ = シ + dấu đục | ゾ = ソ + dấu đục — hình dạng cơ bản khác nhau<div class="tip">💡 Từ ngoại lai (外来語) viết bằng katakana: ラジオ(radio)・テレビ(TV)・ポケット(pocket)・カメラ(camera)</div>`,
+  },
+  {
+    tag: "KATAKANA • N5 • CHỮ VIẾT",
+    text: "あには、ちいさいらじおを<u><strong>ぽけっと</strong></u>にいれてでかけます。\n\n「ぽけっと」のカタカナは？",
+    vocab: [
+      { word: "ポケット", reading: "ぽけっと", type: "Danh từ (ngoại lai)", meaning: "Túi áo, túi quần (pocket)", example: "ぽけっとにてをいれる。\n(Cho tay vào túi.)" },
+    ],
+    choices: ["ポケット", "パクット", "ポクット", "パケット"],
+    answer: 0,
+    explanation: `<strong>ポケット</strong> — túi (pocket).<br><br>Phân tích từng kana:<br>• ぽ → <strong>ポ</strong> (không phải パ — ポ = ホ + maru ° | パ = ハ + maru °)<br>• け → <strong>ケ</strong> (không phải ク — ケ có 3 nét, ク có 2 nét)<br>• っ → <strong>ッ</strong> (âm ngắt, viết nhỏ hơn)<br>• と → <strong>ト</strong><br><br>Phân biệt các lựa chọn:<br>• <strong>パクット</strong>: パ = pa, ク = ku → "pakutto" — sai âm đầu và âm giữa<br>• <strong>ポクット</strong>: ク = ku → "pokutto" — sai âm giữa (cần ケ = ke)<br>• <strong>パケット</strong>: パ = pa → "paketto" — sai âm đầu (cần ポ = po)<div class="tip">💡 Phân biệt: ポ(po) vs パ(pa) | ケ(ke) vs ク(ku) | ト(to) — đây là các cặp katakana hay nhầm</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CHỮ VIẾT",
+    text: "あには、ちいさいらじおをぽけっとにいれて<u><strong>でかけ</strong></u>ます。\n\n「でかけ」の漢字は？",
+    vocab: [
+      { word: "出かける", reading: "でかける", type: "Động từ nhóm 2", meaning: "Ra ngoài, xuất phát, đi đâu đó", example: "あさはやくでかける。\n(Ra ngoài từ sáng sớm.)" },
+      { word: "出る", reading: "でる", type: "Động từ nhóm 2", meaning: "Ra, xuất", example: "いえをでる。\n(Ra khỏi nhà.)" },
+    ],
+    choices: ["外かけ", "行かけ", "来かけ", "出かけ"],
+    answer: 3,
+    explanation: `<strong>出かける（でかける）</strong> — ra ngoài, đi ra ngoài.<br><br>• 出（で）: ra, xuất → âm kun: で(る)/だ(す) — âm Hán-Việt: xuất<br>• かける: ra ngoài (tiếp vĩ ngữ)<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>外（そと/がい）</strong>: bên ngoài — 外かける không phải từ tồn tại; 外 và 出 đều liên quan đến "ngoài" nhưng 外 là danh từ/tính từ<br>• <strong>行（い）く</strong>: đi — 行かける không phải từ tồn tại trong tiếng Nhật<br>• <strong>来（く）る</strong>: đến — 来かける không phải từ tồn tại<br><br>出 trong các từ thông dụng: 出口（でぐち）= lối ra, 出発（しゅっぱつ）= xuất phát.<div class="tip">💡 出かける（でかける）= ra ngoài (tổng quát) | 外出する（がいしゅつする）= ra ngoài (trang trọng hơn)</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CHỮ VIẾT",
+    text: "そして、<u><strong>でんしゃ</strong></u>のなかでききながらかいしゃにいきます。\n\n「でんしゃ」の漢字は？",
+    vocab: [
+      { word: "電車", reading: "でんしゃ", type: "Danh từ", meaning: "Tàu điện, xe điện", example: "でんしゃにのる。\n(Đi tàu điện.)" },
+      { word: "電", reading: "でん", type: "Bộ thủ", meaning: "Điện", example: "でんき・でんわ・でんしゃ。\n(Điện / điện thoại / tàu điện.)" },
+    ],
+    choices: ["電車", "雷車", "電東", "雷東"],
+    answer: 0,
+    explanation: `<strong>電車（でんしゃ）</strong> — tàu điện, tàu điện ngầm/mặt đất.<br><br>• 電（でん）: điện → âm Hán-Việt: điện<br>• 車（しゃ）: xe → âm on: しゃ, âm kun: くるま — âm Hán-Việt: xa<br><br>Phân biệt 電 vs 雷:<br>• <strong>電（でん）</strong>: điện (điện năng, điện tử) → 電気・電話・電車<br>• <strong>雷（かみなり/らい）</strong>: sấm sét → 雷 trông giống 電 nhưng không có bộ 申 bên trên<br><br>Phân biệt 車 vs 東:<br>• <strong>車（くるま/しゃ）</strong>: xe → 電車・自転車・自動車<br>• <strong>東（ひがし/とう）</strong>: phía Đông → 東京（とうきょう）<br><br>→ Chỉ có <strong>電車</strong> mới đúng cả hai chữ.<div class="tip">💡 電 = điện: 電気（でんき）điện · 電話（でんわ）điện thoại · 電車（でんしゃ）tàu điện</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CHỮ VIẾT",
+    text: "そして、でんしゃのなかで<u><strong>きき</strong></u>ながらかいしゃにいきます。\n\n「きき」の漢字は？",
+    vocab: [
+      { word: "聞く", reading: "きく", type: "Động từ nhóm 1", meaning: "Nghe; hỏi", example: "おんがくをきく。\n(Nghe nhạc.)" },
+    ],
+    choices: ["聞き", "開き", "閉き", "間き"],
+    answer: 0,
+    explanation: `<strong>聞き（ききます）</strong> — thể ます của 聞く（きく）= nghe.<br><br>• 聞（き）く: nghe, hỏi → âm kun: き(く) — âm Hán-Việt: văn<br><br>Phân biệt bốn chữ trông giống nhau — đều có bộ 門 (cổng):<br>• <strong>聞（きく）</strong>: nghe — bên trong cổng 門 là chữ 耳（みみ）= tai → cái tai ở trong cổng = nghe ngóng<br>• <strong>開（あく/ひらく）</strong>: mở ra — 開く（ひらく）= mở<br>• <strong>閉（とじる/しめる）</strong>: đóng lại — 閉める（しめる）= đóng<br>• <strong>間（あいだ/ま）</strong>: khoảng cách, giữa — 時間（じかん）= thời gian<br><br>Trong câu: ラジオをききながら = vừa nghe radio vừa... → rõ ràng cần chữ 聞 (nghe).<div class="tip">💡 Mẹo nhớ 聞: 門（cổng）+ 耳（tai）= nghe ngóng qua cổng | 開 = 門 + 廾 | 閉 = 門 + 才</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CHỮ VIẾT",
+    text: "そして、でんしゃのなかでききながら<u><strong>かいしゃ</strong></u>にいきます。\n\n「かいしゃ」の漢字は？",
+    vocab: [
+      { word: "会社", reading: "かいしゃ", type: "Danh từ", meaning: "Công ty", example: "かいしゃにつとめる。\n(Làm việc tại công ty.)" },
+      { word: "会社員", reading: "かいしゃいん", type: "Danh từ", meaning: "Nhân viên công ty", example: "かいしゃいんです。\n(Tôi là nhân viên công ty.)" },
+    ],
+    choices: ["社員", "社会", "会計", "会社"],
+    answer: 3,
+    explanation: `<strong>会社（かいしゃ）</strong> — công ty.<br><br>• 会（かい）: gặp gỡ, hội → âm on: かい — âm Hán-Việt: hội<br>• 社（しゃ）: đền, công ty → âm on: しゃ — âm Hán-Việt: xã<br><br>Phân biệt với các lựa chọn sai — dùng cùng hai chữ 会 và 社 nhưng thứ tự hoặc kết hợp khác:<br>• <strong>社員（しゃいん）</strong>: nhân viên công ty (社 + 員) — đây là người trong công ty, không phải công ty<br>• <strong>社会（しゃかい）</strong>: xã hội (社 + 会) — thứ tự ngược lại với 会社!<br>• <strong>会計（かいけい）</strong>: kế toán, tính tiền (会 + 計) — 計 không phải 社<br><br>Cần nhớ: <strong>会社</strong> (かいしゃ) ≠ <strong>社会</strong> (しゃかい) — cùng hai chữ nhưng đảo thứ tự = nghĩa khác hoàn toàn!<div class="tip">💡 会社（かいしゃ）= công ty | 社会（しゃかい）= xã hội — cùng hai chữ, đảo thứ tự = nghĩa khác!</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CÁCH ĐỌC",
+    text: "<u><strong>先</strong></u>に食べてください。わたしは後で食べます。\n\n「先」の読み方は？",
+    vocab: [
+      { word: "先に", reading: "さきに", type: "Phó từ", meaning: "Trước, đi trước", example: "さきにどうぞ。\n(Mời đi trước.)" },
+      { word: "先生", reading: "せんせい", type: "Danh từ", meaning: "Thầy/cô giáo, giáo viên", example: "せんせいにきく。\n(Hỏi thầy giáo.)" },
+    ],
+    choices: ["せん", "つぎ", "すぐ", "さき"],
+    answer: 3,
+    explanation: `<strong>先（さき）</strong> — phía trước, trước (về thứ tự).<br><br>• 先（さき）: phía trước, đầu tiên → âm kun: さき — dùng trong 先に（さきに）= đi trước<br>• 先（せん）: âm on → dùng trong từ ghép: 先生（せんせい）, 先週（せんしゅう）= tuần trước<br><br>Trong câu <strong>先に食べてください</strong> = "Hãy ăn trước đi" → さき (âm kun, nghĩa thứ tự "trước").<br><br>Phân biệt với các lựa chọn sai:<br>• <strong>せん</strong>: cũng là cách đọc của 先 nhưng là âm on, dùng trong từ ghép, không phải 先に<br>• <strong>つぎ（次）</strong>: tiếp theo, sau — 次に（つぎに）= tiếp theo<br>• <strong>すぐ</strong>: ngay lập tức — phó từ độc lập, không phải cách đọc của 先<div class="tip">💡 先に（さきに）= trước, đi trước | 後で（あとで）= sau, sau này — cặp từ đối nghĩa thường xuất hiện cùng nhau</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CÁCH ĐỌC",
+    text: "先に<u><strong>食べて</strong></u>ください。わたしは後で食べます。\n\n「食べて」の読み方は？",
+    vocab: [
+      { word: "食べる", reading: "たべる", type: "Động từ nhóm 2", meaning: "Ăn", example: "ごはんをたべる。\n(Ăn cơm.)" },
+      { word: "食", reading: "たべ / しょく", meaning: "Ăn, thức ăn", type: "Bộ thủ / tiếp đầu ngữ", example: "しょくじ（食事）= bữa ăn." },
+    ],
+    choices: ["とべて", "のべて", "たべて", "くべて"],
+    answer: 2,
+    explanation: `<strong>食べて（たべて）</strong> — thể て của 食べる（たべる）= ăn.<br><br>• 食（た）べる: ăn → âm kun: た(べる) — âm Hán-Việt: thực/ẩm<br>• 食（しょく）: âm on trong từ ghép → 食事（しょくじ）= bữa ăn, 食堂（しょくどう）= nhà ăn<br><br>Phân biệt với các lựa chọn sai — tất cả đều không phải cách đọc của 食べ:<br>• <strong>とべて</strong>: gợi nhớ 飛ぶ（とぶ）= bay, nhảy<br>• <strong>のべて</strong>: gợi nhớ 述べる（のべる）= phát biểu, trình bày<br>• <strong>くべて</strong>: không phải từ thông dụng<br><br>Chỉ có <strong>たべて</strong> mới là cách đọc đúng của 食べて.<div class="tip">💡 食べる（たべる）= ăn | 飲む（のむ）= uống | 食事（しょくじ）= bữa ăn | 食堂（しょくどう）= căn-tin</div>`,
+  },
+  {
+    tag: "KANJI • N5 • CÁCH ĐỌC",
+    text: "先に食べてください。わたしは<u><strong>後で</strong></u>食べます。\n\n「後で」の読み方は？",
+    vocab: [
+      { word: "後で", reading: "あとで", type: "Phó từ", meaning: "Sau, sau này, sau đó", example: "あとでれんらくします。\n(Sau tôi sẽ liên lạc.)" },
+      { word: "後", reading: "あと / ご / のち", type: "Danh từ / Tiếp vĩ ngữ", meaning: "Sau, phía sau", example: "しょくごにさんぽする。\n(Đi dạo sau bữa ăn.)" },
+    ],
+    choices: ["あとで", "のちで", "ごで", "こうで"],
+    answer: 0,
+    explanation: `<strong>後で（あとで）</strong> — sau, sau đó.<br><br>• 後（あと）: sau (về thứ tự hoặc thời gian) → âm kun: あと — dùng trong 後で（あとで）= sau này<br><br>Các cách đọc khác của 後:<br>• 後（のち）: sau (văn viết, trang trọng) → 後ほど（のちほど）= sau chút nữa (lịch sự)<br>• 後（ご）: âm on trong từ ghép → 食後（しょくご）= sau bữa ăn, 午後（ごご）= buổi chiều<br>• 後（こう）: âm on khác → 後半（こうはん）= nửa sau<br><br>Trong câu thông thường 後で = <strong>あとで</strong> (âm kun, thể口語).<br>• <strong>のちで</strong>: のち đúng là cách đọc của 後 nhưng dùng một mình のちで không tự nhiên bằng あとで<br>• <strong>ごで・こうで</strong>: âm on không kết hợp với で theo kiểu này<div class="tip">💡 後で（あとで）= sau đó (thông thường) | 後ほど（のちほど）= sau chút nữa (lịch sự) | 食後（しょくご）= sau bữa ăn</div>`,
+  },
+  ],
+  navigation: {
+  prev: { url: "kanji-02.html", label: "← Kanji · Bài 2" },
+  next: { url: "kanji-04.html", label: "→ Kanji · Bài 4" },
+  categories: [
+    { url: "grammar-01.html", icon: "✍️", label: "Ngữ pháp" },
+    { url: "vocab-01.html", icon: "📝", label: "Từ vựng" },
+    { url: "reading-01.html", icon: "📖", label: "Đọc hiểu" }
+  ]
+  }
+};
+</script>
+<script src="../js/quiz-engine.js"></script>
+</body>
+</html>
